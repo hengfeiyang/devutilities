@@ -21,12 +21,12 @@ All 14 tools are ✅ **Complete**:
 11. **SQL Formatter** - Format and minify SQL with syntax validation
 12. **HTML Formatter** - Format and minify HTML with proper indentation
 13. **JWT Encoder/Decoder** - HMAC algorithms with CryptoKit security
-14. **Parquet Viewer** - DuckDB integration for Parquet/Arrow file reading
+14. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
 
 ## Architecture & Technical Stack
 - **Platform**: macOS 14.0+ SwiftUI
 - **Navigation**: NavigationSplitView with sidebar search
-- **Dependencies**: DuckDB, Arrow, CodeMirror-SwiftUI via SPM
+- **Dependencies**: CodeMirror-SwiftUI via SPM, ParquetViewer (Rust FFI)
 - **Security**: CryptoKit for JWT HMAC operations
 
 ## Build Commands
@@ -41,7 +41,14 @@ xcodebuild -project DevHelper.xcodeproj -scheme DevHelper build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
-## Recent Updates (v1.10.2)
+## Recent Updates (v1.10.3)
+- **Parquet Viewer**: Simplified with unified ParquetViewer API
+- **Dependency Cleanup**: Removed DuckDB-swift and arrow-swift dependencies  
+- **Architecture**: Single Rust-based backend for both Parquet and Arrow files
+- **Performance**: Faster loading with direct JSON output from ParquetViewer
+- **UI Simplification**: Removed SQL editor, focusing on core file viewing functionality
+
+## Previous Updates (v1.10.2)
 - **JSON Formatter**: Enhanced with visual CodeMirror diff editor
 - **CodeDiffEditor**: New component for side-by-side JSON comparison
 - **Improved UX**: Replaced text-based diff with visual highlighting

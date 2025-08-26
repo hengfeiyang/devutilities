@@ -415,31 +415,33 @@ Each tool follows a consistent pattern:
 **File**: `ParquetViewerView.swift`
 
 **Features**:
-- Complete Parquet file reading using DuckDB Swift library
-- Support arrow file reading using arrow Swift library
-- Schema extraction with column details (name, type, nullable)
-- Data preview with native SwiftUI table
-- File metadata display via `parquet_file_metadata()`
-- Key-value metadata display via `parquet_kv_metadata()`
+- Unified Parquet and Arrow file reading using Rust-based ParquetViewer API
+- Schema extraction with column details (name, type)
+- Data preview with native SwiftUI table (first 50 rows)
+- Comprehensive file metadata display (file size, rows, columns, format version)
+- Key-value metadata extraction and display
 - CSV and JSON export options for data and schema
+- Drag and drop file loading with visual feedback
+- Support for .parquet, .arrow, .feather, and .ipc file extensions
 
 **UI Components**:
-- Tabbed interface (Data/Schema/Metadata)
+- Tabbed interface (Schema/Data/Metadata)
+- Drag and drop zone with animated visual feedback
 - File selection button and filename display
-- Native SwiftUI table with fixed column widths (150px)
-- Schema table with column_name, data_type, nullable columns
-- Two-section metadata display
-- Export dropdown menu for each tab
+- Native SwiftUI table with NSTableView representables for performance
+- Schema table with column name, data type, and nullable columns
+- Structured metadata table with key-value pairs
+- Export buttons for CSV/JSON on each tab
+- Loading indicators and error messages
 
 **Implementation Details**:
-- DuckDB Swift package integration via SPM
-- Arrow Swfit package integration via SPM
-- SQL queries for data extraction
-- `DESCRIBE SELECT` for schema information
-- `parquet_file_metadata()` and `parquet_kv_metadata()` functions
-- Fixed-width table columns for consistent display
-- CSV formatting with proper escaping
-- JSON export with structured data
+- Single ParquetViewer Rust library via FFI (Foreign Function Interface)
+- Direct JSON parsing from ParquetViewer batch output
+- Simplified data flow: ParquetViewer → JSON → SwiftUI display
+- Security-scoped resource access for sandboxed file operations
+- NSTableView-backed SwiftUI representables for large data performance
+- Automatic file type detection based on extension
+- Comprehensive metadata extraction including row groups and format version
 
 ## UI Design Principles
 
@@ -523,11 +525,14 @@ enum ToolType: String, CaseIterable, Identifiable {
 - **CryptoKit**: JWT HMAC signature generation and verification
 
 #### Swift Package Manager Dependencies
-- **DuckDB**: Swift package for Parquet file reading (branch: v1.4.0-dev1354)
-- **Arrow**: Apache Arrow Swift implementation (v21.0.0)
 - **CodeMirror-SwiftUI**: Code editor integration (github.com/hengfeiyang/CodeMirror-SwiftUI)
-- **FlatBuffers**: Google FlatBuffers (v25.2.10) - Arrow dependency
-- **Swift-Atomics**: Apple Swift Atomics (v1.3.0) - Arrow dependency
+
+#### Custom Native Dependencies
+- **ParquetViewer**: Rust-based library for Parquet/Arrow file reading
+  - `ParquetViewer.swift`: Swift wrapper and API interface
+  - `libparquet_viewer.dylib`: Compiled Rust library 
+  - `parquet_viewer.h`: C header for FFI bridge
+  - Single unified API for both Parquet and Arrow formats
 
 ## Testing Strategy
 

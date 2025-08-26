@@ -10,11 +10,12 @@
 		9301315A2E4B1C5D00B838C3 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 930131592E4B1C5D00B838C3 /* FirebaseAnalytics */; };
 		9332C0382E589984009E68BE /* CodeMirror-SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9332C0372E589984009E68BE /* CodeMirror-SwiftUI */; };
 		9332C0392E589984009E68BE /* CodeMirror-SwiftUI in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 9332C0372E589984009E68BE /* CodeMirror-SwiftUI */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		935539782E477F9600A1BC3B /* Arrow in Frameworks */ = {isa = PBXBuildFile; productRef = 935539772E477F9600A1BC3B /* Arrow */; };
 		93A6A9212E588B98006A2798 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A6A9202E588B98006A2798 /* Constants.swift */; };
+		93B500A02E5D81D500F38E50 /* ParquetViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B5009E2E5D81D500F38E50 /* ParquetViewer.swift */; };
+		93B500A12E5D81D500F38E50 /* libparquet_viewer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 93B5009C2E5D81D500F38E50 /* libparquet_viewer.dylib */; };
+		93B500A22E5D81EB00F38E50 /* libparquet_viewer.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 93B5009C2E5D81D500F38E50 /* libparquet_viewer.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		93C47C912E3312690069B278 /* IPQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822A4CAC32A426BA9E4E438123457 /* IPQueryView.swift */; };
 		93C47C932E3312A00069B278 /* CodeEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C47C922E3312A00069B278 /* CodeEditor.swift */; };
-		93F48DE72E442FBE007F279B /* DuckDB in Frameworks */ = {isa = PBXBuildFile; productRef = 93F48DE62E442FBE007F279B /* DuckDB */; };
 		D5F4E7F42C5A1B2E00123456 /* DevHelperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4E7F32C5A1B2E00123456 /* DevHelperApp.swift */; };
 		D5F4E7F62C5A1B2E00123456 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4E7F52C5A1B2E00123456 /* ContentView.swift */; };
 		D5F4E7F82C5A1B2F00123456 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5F4E7F72C5A1B2F00123456 /* Assets.xcassets */; };
@@ -46,6 +47,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				9332C0392E589984009E68BE /* CodeMirror-SwiftUI in Embed Frameworks */,
+				93B500A22E5D81EB00F38E50 /* libparquet_viewer.dylib in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -54,6 +56,9 @@
 
 /* Begin PBXFileReference section */
 		93A6A9202E588B98006A2798 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		93B5009C2E5D81D500F38E50 /* libparquet_viewer.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libparquet_viewer.dylib; sourceTree = "<group>"; };
+		93B5009D2E5D81D500F38E50 /* parquet_viewer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parquet_viewer.h; sourceTree = "<group>"; };
+		93B5009E2E5D81D500F38E50 /* ParquetViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParquetViewer.swift; sourceTree = "<group>"; };
 		93C47C922E3312A00069B278 /* CodeEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEditor.swift; sourceTree = "<group>"; };
 		B822A4CAC32A426BA9E4E438123457 /* IPQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPQueryView.swift; sourceTree = "<group>"; };
 		D5F4E7F02C5A1B2E00123456 /* DevHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,18 +92,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				9332C0382E589984009E68BE /* CodeMirror-SwiftUI in Frameworks */,
-				935539782E477F9600A1BC3B /* Arrow in Frameworks */,
+				93B500A12E5D81D500F38E50 /* libparquet_viewer.dylib in Frameworks */,
 				9301315A2E4B1C5D00B838C3 /* FirebaseAnalytics in Frameworks */,
-				93F48DE72E442FBE007F279B /* DuckDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		93B5009F2E5D81D500F38E50 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				93B5009C2E5D81D500F38E50 /* libparquet_viewer.dylib */,
+				93B5009D2E5D81D500F38E50 /* parquet_viewer.h */,
+				93B5009E2E5D81D500F38E50 /* ParquetViewer.swift */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
 		D5F4E7E72C5A1B2E00123456 = {
 			isa = PBXGroup;
 			children = (
+				93B5009F2E5D81D500F38E50 /* Frameworks */,
 				D5F4E7F22C5A1B2E00123456 /* DevHelper */,
 				D5F4E7F12C5A1B2E00123456 /* Products */,
 			);
@@ -222,8 +237,6 @@
 			);
 			mainGroup = D5F4E7E72C5A1B2E00123456;
 			packageReferences = (
-				93F48DE52E442FBE007F279B /* XCRemoteSwiftPackageReference "duckdb-swift" */,
-				935539762E477F9600A1BC3B /* XCRemoteSwiftPackageReference "arrow-swift" */,
 				930131582E4B1C5D00B838C3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				9332C0332E5897DC009E68BE /* XCRemoteSwiftPackageReference "CodeMirror-SwiftUI" */,
 			);
@@ -275,6 +288,7 @@
 				TCI4F7812C5A1B3000987654 /* TimestampConversionIntent.swift in Sources */,
 				D5F4E7F62C5A1B2E00123456 /* ContentView.swift in Sources */,
 				D5F4E7F42C5A1B2E00123456 /* DevHelperApp.swift in Sources */,
+				93B500A02E5D81D500F38E50 /* ParquetViewer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,6 +447,10 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				MARKETING_VERSION = 1.10.2;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhelper.DevHelper;
@@ -469,6 +487,10 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				MARKETING_VERSION = 1.10.2;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
@@ -519,22 +541,6 @@
 				kind = branch;
 			};
 		};
-		935539762E477F9600A1BC3B /* XCRemoteSwiftPackageReference "arrow-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apache/arrow-swift.git";
-			requirement = {
-				kind = exactVersion;
-				version = 21.0.0;
-			};
-		};
-		93F48DE52E442FBE007F279B /* XCRemoteSwiftPackageReference "duckdb-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/duckdb/duckdb-swift";
-			requirement = {
-				branch = "v1.4.0-dev1354";
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -547,16 +553,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9332C0332E5897DC009E68BE /* XCRemoteSwiftPackageReference "CodeMirror-SwiftUI" */;
 			productName = "CodeMirror-SwiftUI";
-		};
-		935539772E477F9600A1BC3B /* Arrow */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 935539762E477F9600A1BC3B /* XCRemoteSwiftPackageReference "arrow-swift" */;
-			productName = Arrow;
-		};
-		93F48DE62E442FBE007F279B /* DuckDB */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 93F48DE52E442FBE007F279B /* XCRemoteSwiftPackageReference "duckdb-swift" */;
-			productName = DuckDB;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

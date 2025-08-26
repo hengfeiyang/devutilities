@@ -16,9 +16,6 @@
 import SwiftUI
 import UniformTypeIdentifiers
 import AppKit
-import DuckDB
-import Arrow
-import FlatBuffers
 import FirebaseAnalytics
 
 // Data row structure for Table view
@@ -74,17 +71,6 @@ struct ParquetViewerView: View {
     @State private var fileSize: String = ""
     
     @State private var selectedRows = Set<ParquetRow.ID>()
-
-    // SQL playground state
-    @State private var sqlInput: String = "SELECT * FROM tbl LIMIT 50"
-    @State private var resolvedSQL: String = ""
-    @State private var sqlIsRunning: Bool = false
-    @State private var sqlErrorMessage: String?
-    @State private var sqlRows: [ParquetRow] = []
-    @State private var sqlColumnNames: [String] = []
-    @State private var sqlColumnTypes: [String] = []
-    @State private var sqlReturnedRowCount: Int = 0
-    @State private var showSQLEditor: Bool = false
     @State private var isDragOver: Bool = false
 
     private let maxPreviewRows = 50
@@ -204,9 +190,6 @@ struct ParquetViewerView: View {
             if isLoading {
                 ProgressView("Loading data...")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else if sqlIsRunning {
-                ProgressView("Running SQL…")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if !tableRows.isEmpty {
                 tableContentView
             } else {
@@ -228,12 +211,6 @@ struct ParquetViewerView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
-                if fileType == .parquet {
-                    Toggle("SQL Editor", isOn: $showSQLEditor)
-                        .toggleStyle(.switch)
-                        .controlSize(.small)
-                        .help("Show SQL editor")
-                }
                 Button(action: exportToCSV) {
                     Label("Export CSV", systemImage: "square.and.arrow.up")
                 }
@@ -246,38 +223,6 @@ struct ParquetViewerView: View {
                 .disabled(tableRows.isEmpty)
             }
             .padding(.horizontal)
-
-            if showSQLEditor {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack(spacing: 8) {
-                    Text("SQL")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                    Text("Use \"tbl\" as the table for the selected Parquet file")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                    Spacer()
-                    Button(action: runSQLQuery) {
-                        Label(sqlIsRunning ? "Running…" : "Run", systemImage: sqlIsRunning ? "hourglass" : "play.fill")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(fileURL == nil || sqlIsRunning || sqlInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-                }
-                CodeEditor.sql(text: $sqlInput)
-                    .frame(minHeight: 80, maxHeight: 80)
-                if let sqlErrorMessage = sqlErrorMessage {
-                    HStack {
-                        Image(systemName: "exclamationmark.triangle").foregroundColor(.red)
-                        Text(sqlErrorMessage).font(.caption).foregroundColor(.red)
-                            .textSelection(.enabled)
-                    }
-                    .padding(6)
-                    .background(Color.red.opacity(0.1))
-                    .cornerRadius(8)
-                }
-            }
-            .padding(.horizontal)
-            }
         }
     }
     
@@ -399,71 +344,6 @@ struct ParquetViewerView: View {
         }
     }
 
-    private var sqlTableContentView: some View {
-        ScrollView([.horizontal, .vertical]) {
-            VStack(alignment: .leading, spacing: 0) {
-                // Header row
-                HStack(spacing: 0) {
-                    ForEach(Array(sqlColumnNames.enumerated()), id: \.offset) { index, columnName in
-                        sqlHeaderCell(columnName: columnName, index: index)
-                    }
-                }
-
-                // Data rows
-                ForEach(Array(sqlRows.enumerated()), id: \.element.id) { rowIndex, row in
-                    HStack(spacing: 0) {
-                        ForEach(0..<sqlColumnNames.count, id: \.self) { colIndex in
-                            sqlDataCell(value: row[colIndex], rowIndex: rowIndex)
-                        }
-                    }
-                }
-            }
-        }
-        .background(Color.gray.opacity(0.05))
-    }
-
-    @ViewBuilder
-    private func sqlHeaderCell(columnName: String, index: Int) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(columnName)
-                .font(.system(.caption, design: .monospaced))
-                .fontWeight(.bold)
-                .lineLimit(1)
-                .truncationMode(.tail)
-            if index < sqlColumnTypes.count {
-                Text(sqlColumnTypes[index])
-                    .font(.system(size: 10, design: .monospaced))
-                    .foregroundColor(.secondary)
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-            }
-        }
-        .padding(8)
-        .frame(width: 150, alignment: .leading)
-        .background(AppConstants.lightGrayBackground)
-        .overlay(
-            Rectangle()
-                .stroke(Color.gray.opacity(0.3), lineWidth: 0.5)
-        )
-    }
-
-    @ViewBuilder
-    private func sqlDataCell(value: String, rowIndex: Int) -> some View {
-        Text(value)
-            .font(.system(.caption, design: .monospaced))
-            .lineLimit(1)
-            .truncationMode(.tail)
-            .padding(8)
-            .frame(width: 150, alignment: .leading)
-            .background(rowIndex % 2 == 0 ? Color.clear : Color.gray.opacity(0.05))
-            .overlay(
-                Rectangle()
-                    .stroke(Color.gray.opacity(0.3), lineWidth: 0.5)
-            )
-            .textSelection(.enabled)
-            .help(value)
-    }
-
     private var metadataView: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
@@ -561,15 +441,6 @@ struct ParquetViewerView: View {
         fileSize = ""
         errorMessage = nil
         selectedRows = Set<ParquetRow.ID>()
-        // Reset SQL state
-        sqlInput = "SELECT * FROM tbl LIMIT 50"
-        resolvedSQL = ""
-        sqlIsRunning = false
-        sqlErrorMessage = nil
-        sqlRows = []
-        sqlColumnNames = []
-        sqlColumnTypes = []
-        sqlReturnedRowCount = 0
         selectedTab = "schema"
     }
     
@@ -603,66 +474,92 @@ struct ParquetViewerView: View {
         }
         
         Task {
-            if fileType == .arrow {
-                await parseArrowFile(url)
-            } else {
-                await parseParquetFileWithDuckDB(url)
-            }
+            await parseFileWithParquetViewer(url)
         }
     }
     
-    private func parseParquetFileWithDuckDB(_ url: URL) async {
-        do {
-            // Create in-memory database
-            let database = try Database(store: .inMemory)
-            let connection = try database.connect()
-            
-            // Get row count first
-            let countResult = try connection.query("""
-                SELECT COUNT(*) FROM read_parquet('\(url.path)')
-            """)
-            
-            if let countColumn = countResult.first {
-                let count = countColumn.cast(to: Int64.self)[DBInt(0)] ?? 0
-                await MainActor.run {
-                    self.rowCount = Int(count)
-                }
+    private func parseFileWithParquetViewer(_ url: URL) async {
+        guard url.startAccessingSecurityScopedResource() else {
+            await MainActor.run {
+                self.errorMessage = "Failed to access file"
+                self.isLoading = false
             }
+            return
+        }
+        
+        defer {
+            url.stopAccessingSecurityScopedResource()
+        }
+        
+        do {
+            let filePath = url.path
             
-            // Get schema information
-            let schemaResult = try connection.query("""
-                DESCRIBE SELECT * FROM read_parquet('\(url.path)')
-            """)
+            // Read schema
+            let schema = try ParquetViewer.readSchema(filePath: filePath)
             
+            // Read metadata
+            let metadata = try ParquetViewer.readMetadata(filePath: filePath)
+            
+            // Read data
+            let batches = try ParquetViewer.readData(filePath: filePath, batchSize: UInt(maxPreviewRows))
+            
+            // Process schema
             var colNames: [String] = []
             var colTypes: [String] = []
             var schemaInfoRows: [SchemaInfo] = []
             
-            if schemaResult.count >= 3 {
-                let columnNameCol = schemaResult[0]
-                let columnTypeCol = schemaResult[1]
-                let nullableCol = schemaResult[2]
+            for field in schema.fields {
+                colNames.append(field.name)
+                colTypes.append(field.type)
                 
-                let nameStrings = columnNameCol.cast(to: String.self)
-                let typeStrings = columnTypeCol.cast(to: String.self)
-                let nullableStrings = nullableCol.cast(to: String.self)
-                
-                for i in 0..<nameStrings.count {
-                    let idx = DBInt(i)
-                    let name = nameStrings[idx] ?? "unknown"
-                    let type = typeStrings[idx] ?? "unknown"
-                    let nullable = nullableStrings[idx] ?? "unknown"
+                schemaInfoRows.append(SchemaInfo(
+                    columnName: field.name,
+                    dataType: field.type,
+                    nullable: "Unknown" // ParquetViewer doesn't expose nullable info yet
+                ))
+            }
+            
+            // Process data from first batch
+            var rows: [ParquetRow] = []
+            if let firstBatch = batches.first, !firstBatch.json.isEmpty {
+                // Parse JSON data
+                if let jsonData = firstBatch.json.data(using: .utf8),
+                   let jsonArray = try? JSONSerialization.jsonObject(with: jsonData) as? [[String: Any]] {
                     
-                    colNames.append(name)
-                    colTypes.append(type)
-                    
-                    // Create schema info row for table display
-                    schemaInfoRows.append(SchemaInfo(
-                        columnName: name,
-                        dataType: type,
-                        nullable: nullable == "YES" ? "Yes" : "No"
-                    ))
+                    for jsonRow in jsonArray.prefix(maxPreviewRows) {
+                        var rowValues: [String] = []
+                        for colName in colNames {
+                            if let value = jsonRow[colName] {
+                                if value is NSNull {
+                                    rowValues.append("NULL")
+                                } else {
+                                    rowValues.append(String(describing: value))
+                                }
+                            } else {
+                                rowValues.append("")
+                            }
+                        }
+                        rows.append(ParquetRow(values: rowValues))
+                    }
                 }
+            }
+            
+            // Build metadata information
+            var metadataRows: [MetadataRow] = []
+            metadataRows.append(MetadataRow(key: "File Name", value: fileName))
+            metadataRows.append(MetadataRow(key: "File Size", value: fileSize))
+            metadataRows.append(MetadataRow(key: "Total Columns", value: String(metadata.totalFields)))
+            metadataRows.append(MetadataRow(key: "Total Rows", value: String(metadata.totalRecords)))
+            metadataRows.append(MetadataRow(key: "Total Row Groups", value: String(metadata.totalRowGroups)))
+            metadataRows.append(MetadataRow(key: "Format Version", value: String(metadata.version)))
+            
+            if let createdBy = metadata.createdBy {
+                metadataRows.append(MetadataRow(key: "Created By", value: createdBy))
+            }
+            
+            // Add key-value metadata
+            for kv in metadata.keyValueMetadata {
+                metadataRows.append(MetadataRow(key: kv.key, value: kv.value))
             }
             
             await MainActor.run {
@@ -670,425 +567,21 @@ struct ParquetViewerView: View {
                 self.columnTypes = colTypes
                 self.columnCount = colNames.count
                 self.schemaRows = schemaInfoRows
-            }
-            
-            // Do not auto-populate preview rows; the Data tab will be driven by SQL input
-            
-            // Get Parquet file metadata
-            var metadataRows: [MetadataRow] = []
-            metadataRows.append(MetadataRow(key: "File Name", value: fileName))
-            
-            // Query parquet_metadata function
-            let fileMetadataResult = try connection.query("""
-                SELECT * FROM parquet_file_metadata('\(url.path)')
-            """)
-            
-            if !fileMetadataResult.isEmpty && fileMetadataResult[0].count > 0 {
-                // Extract metadata fields
-                if fileMetadataResult.count >= 6 {
-                    let createdByCol = fileMetadataResult[1].cast(to: String.self)
-                    let numRowsCol = fileMetadataResult[2].cast(to: Int64.self) 
-                    let numRowGroupsCol = fileMetadataResult[3].cast(to: Int64.self)
-                    let formatVersionCol = fileMetadataResult[4].cast(to: Int64.self)
-                    let encryptionAlgorithmCol = fileMetadataResult[5].cast(to: String.self)
-                    
-                    if let createdBy = createdByCol[0] {
-                        metadataRows.append(MetadataRow(key: "Created By", value: createdBy))
-                    }
-                    if !fileSize.isEmpty {
-                        metadataRows.append(MetadataRow(key: "File Size", value: fileSize))
-                    }
-                    metadataRows.append(MetadataRow(key: "Total Columns", value: String(columnCount)))
-                    if let numRows = numRowsCol[0] {
-                        metadataRows.append(MetadataRow(key: "Total Rows", value: String(numRows)))
-                    }
-                    if let numRowGroups = numRowGroupsCol[0] {
-                        metadataRows.append(MetadataRow(key: "Total Row Groups", value: String(numRowGroups)))
-                    }
-                    if let formatVersion = formatVersionCol[0] {
-                        metadataRows.append(MetadataRow(key: "Format Version", value: String(formatVersion)))
-                    }
-                    if let encryptionAlgorithm = encryptionAlgorithmCol[0] {
-                        metadataRows.append(MetadataRow(key: "Encryption Algorithm", value: encryptionAlgorithm))
-                    } 
-                }
-            }
-            
-            // Query parquet_kv_metadata function
-            let kvMetadataResult = try connection.query("""
-                SELECT file_name::STRING, key::STRING, value::STRING FROM (SELECT * FROM parquet_kv_metadata('\(url.path)'))
-            """)
-            
-            if !kvMetadataResult.isEmpty && kvMetadataResult.count > 0 {
-                _ = kvMetadataResult[0].cast(to: String.self) // file_name column
-                let keyCol = kvMetadataResult[1].cast(to: String.self)
-                let valueCol = kvMetadataResult[2].cast(to: String.self)
-                
-                // Iterate through all rows in the result set
-                for i in 0..<keyCol.count {
-                    let idx = DBInt(i)
-                    if let key = keyCol[idx], let value = valueCol[idx] {
-                        metadataRows.append(MetadataRow(key: key, value: value))
-                    }
-                }
-            } else {
-                metadataRows.append(MetadataRow(key: "Key-Value Metadata", value: "None found"))
-            }
-            
-            await MainActor.run {
+                self.tableRows = rows
+                self.rowCount = Int(metadata.totalRecords)
                 self.metadataRows = metadataRows
-                // Generate the text version for the copy button
                 self.metadata = self.generateMetadataText(from: metadataRows)
                 self.isLoading = false
-                // Default to Schema tab on load
                 self.selectedTab = "schema"
-                // Auto-run default SQL once file is loaded so Data is ready when user switches
-                self.sqlInput = "SELECT * FROM tbl LIMIT \(maxPreviewRows)"
-                self.runSQLQuery()
             }
             
         } catch {
             await MainActor.run {
-                self.errorMessage = "Failed to load Parquet file: \(error.localizedDescription)"
+                self.errorMessage = "Failed to load file: \(error.localizedDescription)"
                 self.isLoading = false
             }
         }
     }
-    
-    private func parseArrowFile(_ url: URL) async {
-        // Read the Arrow file using ArrowReader
-        let arrowReader = ArrowReader()
-        let result = arrowReader.fromFile(url)
-        
-        switch result {
-        case .success(let arrowResult):
-                // Calculate total row count
-                var totalRows = 0
-                for batch in arrowResult.batches {
-                    totalRows += Int(batch.length)
-                }
-                
-                // Get column count from schema
-                let columnCount = arrowResult.schema?.fields.count ?? 0
-                
-                await MainActor.run {
-                    self.rowCount = totalRows
-                    self.columnCount = columnCount
-                }
-                
-                // Extract schema information
-                var colNames: [String] = []
-                var colTypes: [String] = []
-                var schemaInfoRows: [SchemaInfo] = []
-                
-                for field in arrowResult.schema?.fields ?? [] {
-                    let name = field.name
-                    let typeStr = getArrowTypeDescription(field.type)
-                    let nullable = field.isNullable ? "Yes" : "No"
-                    
-                    colNames.append(name)
-                    colTypes.append(typeStr)
-                    
-                    schemaInfoRows.append(SchemaInfo(
-                        columnName: name,
-                        dataType: typeStr,
-                        nullable: nullable
-                    ))
-                }
-                
-                await MainActor.run {
-                    self.columnNames = colNames
-                    self.columnTypes = colTypes
-                    self.schemaRows = schemaInfoRows
-                }
-                
-                // Load data preview (first maxPreviewRows rows from all batches)
-                var rows: [ParquetRow] = []
-                var rowsLoaded = 0
-                
-                for batch in arrowResult.batches {
-                    if rowsLoaded >= maxPreviewRows {
-                        break
-                    }
-                    
-                    let rowsToLoad = min(Int(batch.length), maxPreviewRows - rowsLoaded)
-                    
-                    // Get the number of columns from the schema
-                    let numColumns = arrowResult.schema?.fields.count ?? 0
-                    
-                    for rowIndex in 0..<rowsToLoad {
-                        var rowValues: [String] = []
-                        
-                        // Extract value for each column
-                        for colIndex in 0..<numColumns {
-                            let value = extractValueFromBatch(batch, columnIndex: colIndex, rowIndex: rowIndex)
-                            rowValues.append(value)
-                        }
-                        
-                        rows.append(ParquetRow(values: rowValues))
-                        rowsLoaded += 1
-                    }
-                }
-                
-                await MainActor.run {
-                    self.tableRows = rows
-                }
-                
-                // Build metadata information
-                var metadataRows: [MetadataRow] = []
-                metadataRows.append(MetadataRow(key: "File Name", value: fileName))
-                metadataRows.append(MetadataRow(key: "File Size", value: fileSize))
-                metadataRows.append(MetadataRow(key: "Total Columns", value: String(columnCount)))
-                metadataRows.append(MetadataRow(key: "Total Batches", value: String(arrowResult.batches.count)))
-                metadataRows.append(MetadataRow(key: "Total Rows", value: String(totalRows)))
-                metadataRows.append(MetadataRow(key: "Format", value: "Apache Arrow IPC"))
-                
-                // Arrow Swift doesn't expose schema metadata
-                metadataRows.append(MetadataRow(key: "Schema Metadata", value: "Not available"))
-                
-                await MainActor.run {
-                    self.metadataRows = metadataRows
-                    // Generate the text version for the copy button
-                    self.metadata = self.generateMetadataText(from: metadataRows)
-                    self.isLoading = false
-                    // For Arrow files, we don't have SQL support, so don't auto-run SQL
-                    self.showSQLEditor = false
-                }
-                
-        case .failure(let error):
-            await MainActor.run {
-                self.errorMessage = "Failed to load Arrow file: \(error.localizedDescription)"
-                self.isLoading = false
-            }
-        }
-    }
-    
-    private func getArrowTypeDescription(_ type: ArrowType) -> String {
-        switch type.id {
-        case .boolean: return "Boolean"
-        case .int8: return "Int8"
-        case .int16: return "Int16"
-        case .int32: return "Int32"
-        case .int64: return "Int64"
-        case .uint8: return "UInt8"
-        case .uint16: return "UInt16"
-        case .uint32: return "UInt32"
-        case .uint64: return "UInt64"
-        case .float: return "Float32"
-        case .double: return "Float64"
-        case .string: return "String"
-        case .binary: return "Binary"
-        case .date32: return "Date32"
-        case .date64: return "Date64"
-        case .time32: return "Time32"
-        case .time64: return "Time64"
-        case .timestamp: return "Timestamp"
-        case .decimal128: return "Decimal128"
-        case .decimal256: return "Decimal256"
-        case .list: return "List"
-        case .strct: return "Struct"
-        default: return "Unknown"
-        }
-    }
-    
-    private func extractValueFromBatch(_ batch: RecordBatch, columnIndex: Int, rowIndex: Int) -> String {
-        // Get the field type for this column
-        let schema = batch.schema
-        guard let field = schema.fields[safe: columnIndex] else {
-            return "ERROR"
-        }
-        
-        let rowIdx = UInt(rowIndex)
-        
-        // Based on the field type, extract the appropriate data
-        switch field.type.id {
-        case .boolean:
-            let array: ArrowArray<Bool> = batch.data(for: columnIndex)
-            return array[rowIdx] != nil ? String(array[rowIdx]!) : "NULL"
-            
-        case .int8:
-            let array: ArrowArray<Int8> = batch.data(for: columnIndex)
-            return array[rowIdx] != nil ? String(array[rowIdx]!) : "NULL"
-            
-        case .int16:
-            let array: ArrowArray<Int16> = batch.data(for: columnIndex)
-            return array[rowIdx] != nil ? String(array[rowIdx]!) : "NULL"
-            
-        case .int32:
-            let array: ArrowArray<Int32> = batch.data(for: columnIndex)
-            return array[rowIdx] != nil ? String(array[rowIdx]!) : "NULL"
-            
-        case .int64:
-            let array: ArrowArray<Int64> = batch.data(for: columnIndex)
-            return array[rowIdx] != nil ? String(array[rowIdx]!) : "NULL"
-            
-        case .uint8:
-            let array: ArrowArray<UInt8> = batch.data(for: columnIndex)
-            return array[rowIdx] != nil ? String(array[rowIdx]!) : "NULL"
-            
-        case .uint16:
-            let array: ArrowArray<UInt16> = batch.data(for: columnIndex)
-            return array[rowIdx] != nil ? String(array[rowIdx]!) : "NULL"
-            
-        case .uint32:
-            let array: ArrowArray<UInt32> = batch.data(for: columnIndex)
-            return array[rowIdx] != nil ? String(array[rowIdx]!) : "NULL"
-            
-        case .uint64:
-            let array: ArrowArray<UInt64> = batch.data(for: columnIndex)
-            return array[rowIdx] != nil ? String(array[rowIdx]!) : "NULL"
-            
-        case .float:
-            let array: ArrowArray<Float> = batch.data(for: columnIndex)
-            return array[rowIdx] != nil ? String(array[rowIdx]!) : "NULL"
-            
-        case .double:
-            let array: ArrowArray<Double> = batch.data(for: columnIndex)
-            return array[rowIdx] != nil ? String(array[rowIdx]!) : "NULL"
-            
-        case .string:
-            let array: ArrowArray<String> = batch.data(for: columnIndex)
-            return array[rowIdx] ?? "NULL"
-            
-        case .date32:
-            let array: ArrowArray<Date32> = batch.data(for: columnIndex)
-            if let days = array[rowIdx] {
-                let date = Date(timeIntervalSince1970: TimeInterval(days) * 86400)
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd"
-                return formatter.string(from: date)
-            }
-            return "NULL"
-            
-        case .date64:
-            let array: ArrowArray<Date64> = batch.data(for: columnIndex)
-            if let milliseconds = array[rowIdx] {
-                let date = Date(timeIntervalSince1970: TimeInterval(milliseconds) / 1000)
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                return formatter.string(from: date)
-            }
-            return "NULL"
-            
-        default:
-            return "Unsupported"
-        }
-    }
-
-    private func runSQLQuery() {
-        guard !parquetFilePath.isEmpty else { return }
-        sqlIsRunning = true
-        sqlErrorMessage = nil
-        sqlRows = []
-        sqlColumnNames = []
-        sqlColumnTypes = []
-        sqlReturnedRowCount = 0
-        // Build actual SQL by replacing tbl with read_parquet('<file>') under the hood
-        resolvedSQL = buildResolvedSQL(from: sqlInput)
-
-        Task {
-            do {
-                let database = try Database(store: .inMemory)
-                let connection = try database.connect()
-
-                // Expose the parquet file as a view named `tbl`
-                let escapedPath = parquetFilePath.replacingOccurrences(of: "'", with: "''")
-                _ = try connection.query("""
-                    CREATE OR REPLACE VIEW tbl AS SELECT * FROM read_parquet('\(escapedPath)')
-                """)
-
-                let trimmed = sqlInput.trimmingCharacters(in: .whitespacesAndNewlines)
-                if isSelectOrWithQuery(trimmed) {
-                    // Get schema for result
-                    let describeResult = try connection.query("""
-                        DESCRIBE \(trimmed)
-                    """)
-
-                    var colNames: [String] = []
-                    var colTypes: [String] = []
-                    if describeResult.count >= 2 {
-                        let nameCol = describeResult[0].cast(to: String.self)
-                        let typeCol = describeResult[1].cast(to: String.self)
-                        for i in 0..<(nameCol.count) {
-                            let idx = DBInt(i)
-                            colNames.append(nameCol[idx] ?? "")
-                            colTypes.append(typeCol[idx] ?? "")
-                        }
-                    }
-
-                    let dataResult = try connection.query(trimmed)
-
-                    var rows: [ParquetRow] = []
-                    if !dataResult.isEmpty {
-                        let numRows = dataResult[0].count
-                        for rowIdx in 0..<numRows {
-                            var rowValues: [String] = []
-                            for column in dataResult {
-                                let value = extractValueFromColumn(column, at: rowIdx)
-                                rowValues.append(value)
-                            }
-                            rows.append(ParquetRow(values: rowValues))
-                        }
-                    }
-
-            await MainActor.run {
-                // Reflect results to the main data table
-                self.columnNames = colNames
-                self.columnTypes = colTypes
-                self.tableRows = rows
-                self.rowCount = rows.count
-                self.columnCount = colNames.count
-                // Keep SQL-specific mirrors in sync (optional)
-                self.sqlColumnNames = colNames
-                self.sqlColumnTypes = colTypes
-                self.sqlRows = rows
-                self.sqlReturnedRowCount = rows.count
-                self.sqlIsRunning = false
-            }
-                } else {
-                    // Non-SELECT statements
-                    _ = try connection.query(trimmed)
-                    await MainActor.run {
-                        self.tableRows = []
-                        self.columnNames = []
-                        self.columnTypes = []
-                        self.rowCount = 0
-                        self.columnCount = 0
-                        self.sqlRows = []
-                        self.sqlColumnNames = []
-                        self.sqlColumnTypes = []
-                        self.sqlReturnedRowCount = 0
-                        self.sqlIsRunning = false
-                    }
-                }
-            } catch {
-                await MainActor.run {
-                    self.sqlErrorMessage = "SQL error: \(error.localizedDescription)"
-                    self.sqlIsRunning = false
-                }
-            }
-        }
-    }
-
-    private func isSelectOrWithQuery(_ sql: String) -> Bool {
-        let lower = sql.lowercased()
-        return lower.hasPrefix("select") || lower.hasPrefix("with ")
-    }
-
-    private func buildResolvedSQL(from input: String) -> String {
-        guard !parquetFilePath.isEmpty else { return input }
-        let escapedPath = parquetFilePath.replacingOccurrences(of: "'", with: "''")
-        let replacement = "read_parquet('\(escapedPath)')"
-        // Replace word-boundary occurrences of tbl (case-insensitive)
-        do {
-            let regex = try NSRegularExpression(pattern: "(?i)\\btbl\\b")
-            let range = NSRange(location: 0, length: (input as NSString).length)
-            return regex.stringByReplacingMatches(in: input, options: [], range: range, withTemplate: replacement)
-        } catch {
-            return input.replacingOccurrences(of: "tbl", with: replacement)
-        }
-    }
-
     
     private func exportToCSV() {
         let savePanel = NSSavePanel()
@@ -1208,64 +701,6 @@ struct ParquetViewerView: View {
         let formatter = ByteCountFormatter()
         formatter.countStyle = .file
         return formatter.string(fromByteCount: bytes)
-    }
-    
-    private func extractValueFromColumn(_ column: DuckDB.Column<Void>, at index: Int) -> String {
-        let idx = DBInt(index)
-        
-        // Try to cast to various types and extract the value
-        // The cast method doesn't return optional, so we access directly
-        
-        // First try String as it's most common
-        let stringColumn = column.cast(to: String.self)
-        if let value = stringColumn[idx] {
-            return value
-        }
-        
-        // Try Int64
-        let int64Column = column.cast(to: Int64.self)
-        if let value = int64Column[idx] {
-            return String(value)
-        }
-        
-        // Try Int32
-        let int32Column = column.cast(to: Int32.self)
-        if let value = int32Column[idx] {
-            return String(value)
-        }
-        
-        // Try Double
-        let doubleColumn = column.cast(to: Double.self)
-        if let value = doubleColumn[idx] {
-            // Format double with reasonable precision
-            if value.truncatingRemainder(dividingBy: 1) == 0 {
-                return String(Int(value))
-            } else {
-                return String(value)
-            }
-        }
-        
-        // Try Float
-        let floatColumn = column.cast(to: Float.self)
-        if let value = floatColumn[idx] {
-            return String(value)
-        }
-        
-        // Try Bool
-        let boolColumn = column.cast(to: Bool.self)
-        if let value = boolColumn[idx] {
-            return value ? "true" : "false"
-        }
-        
-        // Try DuckDB.Date (not Foundation.Date)
-        let dateColumn = column.cast(to: DuckDB.Date.self)
-        if let value = dateColumn[idx] {
-            // DuckDB.Date has a description property
-            return String(describing: value)
-        }
-        
-        // If all else fails, return NULL
-        return "NULL"
     }
     
     private func copyToClipboard(_ text: String) {
