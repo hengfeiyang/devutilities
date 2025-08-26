@@ -17,7 +17,6 @@ import SwiftUI
 import AppKit
 import CryptoKit
 import Foundation
-import FirebaseAnalytics
 
 enum JWTTab: String, CaseIterable {
     case encode = "encode"
@@ -264,9 +263,6 @@ struct JWTView: View {
                 payloadText = defaultPayload
             }
             encodeJWT()
-            Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-                AnalyticsParameterScreenName: screenName
-            ])
         }
     }
     

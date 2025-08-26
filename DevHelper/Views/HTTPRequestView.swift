@@ -17,7 +17,6 @@ import SwiftUI
 import AppKit
 import Foundation
 import Combine
-import FirebaseAnalytics
 
 struct HTTPRequestView: View {
     let screenName = "HTTP Request"
@@ -238,9 +237,6 @@ struct HTTPRequestView: View {
         .onAppear {
             setupURLSession()
             loadState()
-            Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-                AnalyticsParameterScreenName: screenName
-            ])
         }
         .onDisappear {
             saveState()

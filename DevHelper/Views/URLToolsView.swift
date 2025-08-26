@@ -15,7 +15,6 @@
 
 import SwiftUI
 import AppKit
-import FirebaseAnalytics
 
 struct URLToolsView: View {
     let screenName = "URL Tools"
@@ -58,9 +57,6 @@ struct URLToolsView: View {
         .padding()
         .onAppear {
             loadState()
-            Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-                AnalyticsParameterScreenName: screenName
-            ])
         }
         .onDisappear {
             saveState()

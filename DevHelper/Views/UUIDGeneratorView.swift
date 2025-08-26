@@ -14,7 +14,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import SwiftUI
-import FirebaseAnalytics
 
 struct UUIDGeneratorView: View {
     let screenName = "UUID Generator"
@@ -162,9 +161,6 @@ struct UUIDGeneratorView: View {
         .padding()
         .onAppear {
             loadState()
-            Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-                AnalyticsParameterScreenName: screenName
-            ])
         }
         .onDisappear {
             saveState()

@@ -15,7 +15,6 @@
 
 import SwiftUI
 import AppKit
-import FirebaseAnalytics
 
 struct JSONFormatterView: View {
     let screenName = "JSON Formatter"
@@ -216,9 +215,6 @@ struct JSONFormatterView: View {
         .padding()
         .onAppear {
             loadState()
-            Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-                AnalyticsParameterScreenName: screenName
-            ])
         }
         .onDisappear {
             saveState()

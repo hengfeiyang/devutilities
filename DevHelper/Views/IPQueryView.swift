@@ -15,7 +15,6 @@
 
 import SwiftUI
 import AppKit
-import FirebaseAnalytics
 
 struct IPQueryView: View {
     let screenName = "IP Query"
@@ -226,9 +225,6 @@ struct IPQueryView: View {
         .padding()
         .onAppear {
             loadState()
-            Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-                AnalyticsParameterScreenName: screenName
-            ])
         }
         .onDisappear {
             saveState()

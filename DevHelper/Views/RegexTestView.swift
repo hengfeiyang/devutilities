@@ -15,7 +15,6 @@
 
 import SwiftUI
 import AppKit
-import FirebaseAnalytics
 
 struct RegexTestView: View {
     let screenName = "Regex Test"
@@ -199,11 +198,7 @@ struct RegexTestView: View {
             Spacer()
         }
         .padding()
-        .onAppear {
-            Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-                AnalyticsParameterScreenName: screenName
-            ])
-        }
+        .onAppear {}
     }
     
     @ViewBuilder

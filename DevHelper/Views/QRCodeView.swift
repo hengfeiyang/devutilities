@@ -20,7 +20,6 @@ import CoreImage.CIFilterBuiltins
 import AVFoundation
 import Vision
 import UniformTypeIdentifiers
-import FirebaseAnalytics
 
 enum QRCodeTab: String, CaseIterable {
     case generate = "generate"
@@ -141,11 +140,7 @@ struct QRCodeView: View {
                 generateQRCode()
             }
         }
-        .onAppear {
-            Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-                AnalyticsParameterScreenName: screenName
-            ])
-        }
+        .onAppear {}
     }
     
     private var generateView: some View {

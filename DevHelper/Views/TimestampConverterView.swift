@@ -15,7 +15,6 @@
 
 import SwiftUI
 import AppKit
-import FirebaseAnalytics
 
 struct TimestampConverterView: View {
     let screenName = "Timestamp Converter"
@@ -126,9 +125,6 @@ struct TimestampConverterView: View {
         .padding()
         .onAppear {
             loadState()
-            Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-                AnalyticsParameterScreenName: screenName
-            ])
         }
         .onDisappear {
             saveState()
