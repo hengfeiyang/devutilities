@@ -20,9 +20,16 @@ public struct CFileMetadata {
     public let keyValueCount: UInt
 }
 
+/// C-compatible field structure
+public struct CField {
+    public let name: UnsafeMutablePointer<CChar>?
+    public let dataType: UnsafeMutablePointer<CChar>?
+    public let nullable: Int32
+}
+
 /// C-compatible schema structure
 public struct CSchema {
-    public let json: UnsafeMutablePointer<CChar>?
+    public let fields: UnsafeMutablePointer<CField>?
     public let numFields: UInt
 }
 
@@ -122,7 +129,8 @@ public struct FileMetadata {
 /// Swift representation of a schema field
 public struct SchemaField {
     public let name: String
-    public let type: String
+    public let dataType: String
+    public let nullable: Bool
 }
 
 /// Swift representation of a schema
@@ -133,20 +141,13 @@ public struct Schema {
     init(cSchema: CSchema) {
         self.numFields = cSchema.numFields
         
-        if let jsonPtr = cSchema.json {
-            let jsonString = String(cString: jsonPtr)
-            if let data = jsonString.data(using: .utf8),
-               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-               let fieldsArray = json["fields"] as? [[String: Any]] {
-                self.fields = fieldsArray.compactMap { fieldDict in
-                    guard let name = fieldDict["name"] as? String,
-                          let type = fieldDict["type"] as? String else {
-                        return nil
-                    }
-                    return SchemaField(name: name, type: type)
-                }
-            } else {
-                self.fields = []
+        if let fieldsPtr = cSchema.fields, cSchema.numFields > 0 {
+            let fieldsArray = Array(UnsafeBufferPointer(start: fieldsPtr, count: Int(cSchema.numFields)))
+            self.fields = fieldsArray.map { cField in
+                let name = cField.name.map { String(cString: $0) } ?? ""
+                let dataType = cField.dataType.map { String(cString: $0) } ?? ""
+                let nullable = cField.nullable != 0
+                return SchemaField(name: name, dataType: dataType, nullable: nullable)
             }
         } else {
             self.fields = []
@@ -156,6 +157,12 @@ public struct Schema {
     // Test initializer for unit tests
     init(fields: [SchemaField], numFields: UInt) {
         self.fields = fields
+        self.numFields = numFields
+    }
+    
+    // Convenience initializer for backward compatibility
+    init(fields: [(name: String, dataType: String, nullable: Bool)], numFields: UInt) {
+        self.fields = fields.map { SchemaField(name: $0.name, dataType: $0.dataType, nullable: $0.nullable) }
         self.numFields = numFields
     }
 }

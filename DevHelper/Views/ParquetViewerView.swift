@@ -16,7 +16,6 @@
 import SwiftUI
 import UniformTypeIdentifiers
 import AppKit
-import FirebaseAnalytics
 
 // Data row structure for Table view
 struct ParquetRow: Identifiable {
@@ -73,7 +72,7 @@ struct ParquetViewerView: View {
     @State private var selectedRows = Set<ParquetRow.ID>()
     @State private var isDragOver: Bool = false
 
-    private let maxPreviewRows = 50
+    private let maxPreviewRows = 100
     
     var body: some View {
         VStack(spacing: 20) {
@@ -175,11 +174,7 @@ struct ParquetViewerView: View {
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onAppear {
-            Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-                AnalyticsParameterScreenName: screenName
-            ])
-        }
+        .onAppear {}
     }
     
     @ViewBuilder
@@ -510,12 +505,12 @@ struct ParquetViewerView: View {
             
             for field in schema.fields {
                 colNames.append(field.name)
-                colTypes.append(field.type)
+                colTypes.append(field.dataType)
                 
                 schemaInfoRows.append(SchemaInfo(
                     columnName: field.name,
-                    dataType: field.type,
-                    nullable: "Unknown" // ParquetViewer doesn't expose nullable info yet
+                    dataType: field.dataType,
+                    nullable: field.nullable ? "Yes" : "No"
                 ))
             }
             

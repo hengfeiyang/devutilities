@@ -31,10 +31,19 @@ typedef struct CFileMetadata {
 } CFileMetadata;
 
 /**
+ * Schema field structure
+ */
+typedef struct CField {
+    char* name;
+    char* data_type;
+    int nullable;  // 1 for nullable, 0 for not nullable
+} CField;
+
+/**
  * Schema structure
  */
 typedef struct CSchema {
-    char* json;  // JSON representation of the schema
+    CField* fields;  // Array of fields
     size_t num_fields;
 } CSchema;
 
