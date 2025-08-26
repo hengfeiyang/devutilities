@@ -496,7 +496,7 @@ struct ParquetViewerView: View {
             let metadata = try ParquetViewer.readMetadata(filePath: filePath)
             
             // Read data
-            let batches = try ParquetViewer.readData(filePath: filePath, batchSize: UInt(maxPreviewRows))
+            let batches = try ParquetViewer.readData(filePath: filePath, batchSize: UInt(maxPreviewRows), limit: UInt(maxPreviewRows))
             
             // Process schema
             var colNames: [String] = []

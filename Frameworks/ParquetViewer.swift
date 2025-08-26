@@ -55,7 +55,10 @@ private func parquet_viewer_read_schema(_ filePath: UnsafePointer<CChar>?) -> Un
 private func parquet_viewer_read_metadata(_ filePath: UnsafePointer<CChar>?) -> UnsafeMutablePointer<CFileMetadata>?
 
 @_silgen_name("parquet_viewer_read_data")
-private func parquet_viewer_read_data(_ filePath: UnsafePointer<CChar>?, _ batchSize: UInt) -> UnsafeMutablePointer<CRecordBatchArray>?
+private func parquet_viewer_read_data(_ filePath: UnsafePointer<CChar>?, _ batchSize: UInt, _ limit: UInt) -> UnsafeMutablePointer<CRecordBatchArray>?
+
+@_silgen_name("parquet_viewer_read_data_with_projection")
+private func parquet_viewer_read_data_with_projection(_ filePath: UnsafePointer<CChar>?, _ columnIndices: UnsafePointer<UInt>?, _ columnCount: UInt, _ batchSize: UInt, _ limit: UInt) -> UnsafeMutablePointer<CRecordBatchArray>?
 
 @_silgen_name("parquet_viewer_free_schema")
 private func parquet_viewer_free_schema(_ schema: UnsafeMutablePointer<CSchema>?)
@@ -245,15 +248,53 @@ public class ParquetViewer {
     /// - Parameters:
     ///   - filePath: Path to the file
     ///   - batchSize: Optional batch size (0 for default)
+    ///   - limit: Optional maximum number of rows to read (0 for no limit)
     /// - Returns: Array of record batches
     /// - Throws: ParquetViewerError if the operation fails
-    public static func readData(filePath: String, batchSize: UInt = 0) throws -> [RecordBatch] {
+    public static func readData(filePath: String, batchSize: UInt = 0, limit: UInt = 0) throws -> [RecordBatch] {
         guard let cFilePath = filePath.cString(using: .utf8) else {
             throw ParquetViewerError.invalidFilePath
         }
         
         let cDataPtr = cFilePath.withUnsafeBufferPointer { buffer in
-            parquet_viewer_read_data(buffer.baseAddress, batchSize)
+            parquet_viewer_read_data(buffer.baseAddress, batchSize, limit)
+        }
+        
+        guard let cDataPtr = cDataPtr else {
+            throw ParquetViewerError.operationFailed
+        }
+        
+        defer {
+            parquet_viewer_free_data(cDataPtr)
+        }
+        
+        let cData = cDataPtr.pointee
+        
+        if let batchesPtr = cData.batches, cData.count > 0 {
+            let batchesArray = Array(UnsafeBufferPointer(start: batchesPtr, count: Int(cData.count)))
+            return batchesArray.map { RecordBatch(cBatch: $0) }
+        } else {
+            return []
+        }
+    }
+    
+    /// Read data with projection from a Parquet or Arrow file
+    /// - Parameters:
+    ///   - filePath: Path to the file
+    ///   - columnIndices: Array of column indices to read
+    ///   - batchSize: Optional batch size (0 for default)
+    ///   - limit: Optional maximum number of rows to read (0 for no limit)
+    /// - Returns: Array of record batches
+    /// - Throws: ParquetViewerError if the operation fails
+    public static func readDataWithProjection(filePath: String, columnIndices: [UInt], batchSize: UInt = 0, limit: UInt = 0) throws -> [RecordBatch] {
+        guard let cFilePath = filePath.cString(using: .utf8) else {
+            throw ParquetViewerError.invalidFilePath
+        }
+        
+        let cDataPtr = cFilePath.withUnsafeBufferPointer { buffer in
+            columnIndices.withUnsafeBufferPointer { indicesBuffer in
+                parquet_viewer_read_data_with_projection(buffer.baseAddress, indicesBuffer.baseAddress, UInt(columnIndices.count), batchSize, limit)
+            }
         }
         
         guard let cDataPtr = cDataPtr else {

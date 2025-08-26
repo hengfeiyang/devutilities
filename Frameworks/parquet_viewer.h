@@ -87,10 +87,24 @@ CFileMetadata* parquet_viewer_read_metadata(const char* file_path);
  * 
  * @param file_path Path to the file (null-terminated string)
  * @param batch_size Batch size for reading (0 for default)
+ * @param limit Maximum number of rows to read (0 for no limit)
  * @return Pointer to CRecordBatchArray on success, NULL on error.
  *         Caller must free with parquet_viewer_free_data()
  */
-CRecordBatchArray* parquet_viewer_read_data(const char* file_path, size_t batch_size);
+CRecordBatchArray* parquet_viewer_read_data(const char* file_path, size_t batch_size, size_t limit);
+
+/**
+ * Read data with projection from a Parquet or Arrow file
+ * 
+ * @param file_path Path to the file (null-terminated string)
+ * @param column_indices Array of column indices to read
+ * @param column_count Number of column indices
+ * @param batch_size Batch size for reading (0 for default)
+ * @param limit Maximum number of rows to read (0 for no limit)
+ * @return Pointer to CRecordBatchArray on success, NULL on error.
+ *         Caller must free with parquet_viewer_free_data()
+ */
+CRecordBatchArray* parquet_viewer_read_data_with_projection(const char* file_path, const size_t* column_indices, size_t column_count, size_t batch_size, size_t limit);
 
 /**
  * Free a CSchema structure
