@@ -12,7 +12,7 @@ A native macOS application for developers, containing 14 essential tools commonl
 - **SQL Formatter** - Format and minify SQL queries with syntax validation
 - **HTML Formatter** - Format and minify HTML with proper tag indentation
 - **Base64 Encode/Decode** - Encode and decode Base64 strings
-- **JWT Encoder/Decoder** - Encode and decode JSON Web Tokens with HMAC signature support
+- **JWT Encoder/Decoder** - Encode and decode JSON Web Tokens with HMAC and RSA signature support
 - **Regex Test** - Test regular expressions with pattern matching
 - **UUID Generator** - Generate UUIDs in various formats including v7 with timestamp extraction
 - **URL Tools** - URL encoding/decoding and parsing
@@ -41,7 +41,7 @@ A native macOS application for developers, containing 14 essential tools commonl
 
 ## Version
 
-Current version: 1.10.2
+Current version: 1.11.1
 
 ## Screenshots
 

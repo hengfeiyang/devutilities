@@ -36,10 +36,31 @@ enum JWTAlgorithm: String, CaseIterable {
     case hs256 = "HS256"
     case hs384 = "HS384"
     case hs512 = "HS512"
+    case rs256 = "RS256"
+    case rs384 = "RS384"
+    case rs512 = "RS512"
     case none = "none"
     
     var title: String {
         return self.rawValue
+    }
+    
+    var isRSA: Bool {
+        switch self {
+        case .rs256, .rs384, .rs512:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    var isHMAC: Bool {
+        switch self {
+        case .hs256, .hs384, .hs512:
+            return true
+        default:
+            return false
+        }
     }
 }
 
@@ -51,6 +72,8 @@ struct JWTView: View {
     @State private var payloadText: String = ""
     @State private var signatureText: String = ""
     @State private var secretKey: String = "your-256-bit-secret"
+    @State private var privateKey: String = ""
+    @State private var publicKey: String = ""
     @State private var isValidSignature: Bool = false
     @State private var selectedAlgorithm: JWTAlgorithm = .hs256
     @State private var errorMessage: String = ""
@@ -59,6 +82,49 @@ struct JWTView: View {
     // Sample JWT with known secret key
     private let sampleJWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
     private let sampleSecretKey = "your-256-bit-secret"
+    
+    // Sample RSA key pair for testing
+    private let sampleRSAPrivateKey = """
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEpQIBAAKCAQEAzT/5NnNPBYrhbnwpU8ERvePPKC5R+BwG1rxexCCW5486FElP
+    A97SlnRFc4rW3RlaE554pPZ++VI3iHJMZ7bSzTX+QNZXQT4zlIgF1hifMKB9N1zU
+    nXJuxtEgF0gyooWnnuXS6G8NEJWLeQLtdR4wOD5O33HQkO936zxtG3rXrZjDTjO2
+    i+sxvn012bicWtufN7WzFw8TB5G1uVdJClJjte4KrtAE/YHLAuUNZm2j4cqKBOu2
+    bITIPyFG4XmL+upZdQyD2KL0WzSeH9upoXkpPrHrCXp8uWxZ7tkEl76sQPRQCKjS
+    Zk2SnDaaD3nq/A0cF+YKrgmkUR8oaHpO8ZOKlQIDAQABAoIBAFvizXNSeOh+zcBU
+    Jn4/22z63SVcY0bjaS5eI0DDZDtjM/mb/hs5+GXxxJve5qUR8fEBi3oyfhKo+4KC
+    xPDTeJj1GI+3RVXIfnf60z4PRMkUuCn+TZL1BWHNgoPZxw1aL3nj4qE7AgrQICH7
+    LQo3CxhK0K2Yuun/wtxVb3UTcBXfFdn7DhHn+UiNnMRxHcdLYvFDmxrAqhMgr6mu
+    6Phfou6xlyTsWB+al5eAxkylFgg8Ulk4g7vIy4GCmIrbwLYerNp3m7TqxhGe2Vym
+    WciysjeN/XKz4C/6gmMmaA/P89vto3kwtbuT040BUi2tzCUYJvNs/kG6sOc7o1mH
+    uOzJ8nsCgYEA2SuikNhHak0lx7eofeEYzSeRvXo2bpXJDxeEVKJotye2JqAYL682
+    pjiVjhUkMSea2w9/v5J1VtRaoU3aN6Z3oXIXRqKMaXG+HpiCH09jR7CtVpSglyps
+    E/sV/QhmN8vSR59pY/LfFtxTOiDb+XyVOzRT3Y0nImt43AqdDJYUmosCgYEA8fK1
+    cdTdqFlypF2Uh67yC4BU7GHlFPyrLrytCpVgMYCN2Lf6hpS9p5etkEsnZ4Dp7D3O
+    B6VJ40pF12Y4qlDZkNZjhdQZ/35UC8FXbwbsunDXs1n+7I/hcFAUKmB8RXagALv2
+    nS1vgwqH881WnmkvbkZ4T/9rOIVqmAGKMGZ9s18CgYEAiOH0CZAJE3ulAIlGbnFf
+    DJCQT/mkLXfDzvtnsWDc1/Tz3syx8fxiWcr4mSHCOilYdhMC1mEeDKi0p09G6CTI
+    6r3a5e62yg+jYe2Gtu13CkzWNOhhgGaA0OdGKMMOisSxuetEpncDHomo+86SWGKq
+    PTLyWYcKz6sl9qvJ6ZD/U5kCgYEAr/2i/A0hus5ttJ+ZZeTcjX8oxtUipFRyVEnL
+    +RHU6c0f4M9avUA+gES1bGsuW3yLK1t9nVQe3eTtzpO9ji3HRDKeK/+vdYg3rGFT
+    ryAzXB6u1/gTlZHHI0IsmPKcEo8KLd6LsaMWJRSo9a+cXRgX9zftVgttu6xYb/9W
+    vIQg1TMCgYEA1FpBKeQdjI8JNaxeZWwA06Fr3Al8OhjkFpxW7veCCCzNW6Y2vH34
+    pBQFqC41Ao2YPsRyB8abn3BHpcq09vLvZjnKtoyTzDOlZfkpeQxv1D1gqHcQjexV
+    MHGb/3fFzS0sPLCYSq/hNp4SF2cAgz4rJd7VTMC/4rzMnJOtTPO9Jzc=
+    -----END RSA PRIVATE KEY-----
+    """
+    
+    private let sampleRSAPublicKey = """
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzT/5NnNPBYrhbnwpU8ER
+    vePPKC5R+BwG1rxexCCW5486FElPA97SlnRFc4rW3RlaE554pPZ++VI3iHJMZ7bS
+    zTX+QNZXQT4zlIgF1hifMKB9N1zUnXJuxtEgF0gyooWnnuXS6G8NEJWLeQLtdR4w
+    OD5O33HQkO936zxtG3rXrZjDTjO2i+sxvn012bicWtufN7WzFw8TB5G1uVdJClJj
+    te4KrtAE/YHLAuUNZm2j4cqKBOu2bITIPyFG4XmL+upZdQyD2KL0WzSeH9upoXkp
+    PrHrCXp8uWxZ7tkEl76sQPRQCKjSZk2SnDaaD3nq/A0cF+YKrgmkUR8oaHpO8ZOK
+    lQIDAQAB
+    -----END PUBLIC KEY-----
+    """
     
     private let defaultHeader = """
     {
@@ -117,6 +183,10 @@ struct JWTView: View {
                             .frame(width: 100)
                             .onChange(of: selectedAlgorithm) { _, _ in
                                 updateHeaderAlgorithm()
+                                if selectedAlgorithm.isRSA && privateKey.isEmpty {
+                                    privateKey = sampleRSAPrivateKey
+                                    publicKey = sampleRSAPublicKey
+                                }
                                 encodeJWT()
                             }
                         }
@@ -165,16 +235,53 @@ struct JWTView: View {
                     .frame(maxHeight: .infinity)
                     
                     if selectedAlgorithm != .none {
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text("Secret Key")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                            
-                            TextField("Secret key", text: $secretKey)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .onChange(of: secretKey) { _, _ in
-                                    encodeJWT()
+                        if selectedAlgorithm.isHMAC {
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text("Secret Key")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                
+                                TextField("Secret key", text: $secretKey)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                    .onChange(of: secretKey) { _, _ in
+                                        encodeJWT()
+                                    }
+                            }
+                        } else if selectedAlgorithm.isRSA {
+                            VStack(alignment: .leading, spacing: 10) {
+                                VStack(alignment: .leading, spacing: 5) {
+                                    HStack {
+                                        Text("Private Key (for signing)")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                        Spacer()
+                                        Button("Use Sample") {
+                                            privateKey = sampleRSAPrivateKey
+                                            publicKey = sampleRSAPublicKey
+                                            encodeJWT()
+                                        }
+                                        .buttonStyle(.borderless)
+                                        .font(.caption)
+                                    }
+                                    
+                                    TextEditor(text: $privateKey)
+                                        .font(.system(.caption, design: .monospaced))
+                                        .frame(height: 80)
+                                        .onChange(of: privateKey) { _, _ in
+                                            encodeJWT()
+                                        }
                                 }
+                                
+                                VStack(alignment: .leading, spacing: 5) {
+                                    Text("Public Key (for verification)")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                    
+                                    TextEditor(text: $publicKey)
+                                        .font(.system(.caption, design: .monospaced))
+                                        .frame(height: 80)
+                                }
+                            }
                         }
                     }
                 }
@@ -302,24 +409,55 @@ struct JWTView: View {
                             decodeJWT()
                         }
                     
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text("Secret Key (for signature verification)")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                        
-                        HStack {
-                            TextField("Secret key", text: $secretKey)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .onChange(of: secretKey) { _, _ in
+                    // Get algorithm from token to show appropriate key input
+                    let tokenAlgorithm = getAlgorithmFromToken()
+                    
+                    if tokenAlgorithm?.isHMAC == true || tokenAlgorithm == nil {
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("Secret Key (for signature verification)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            
+                            HStack {
+                                TextField("Secret key", text: $secretKey)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                    .onChange(of: secretKey) { _, _ in
+                                        if !jwtToken.isEmpty {
+                                            verifySignature()
+                                        }
+                                    }
+                                
+                                if !jwtToken.isEmpty {
+                                    Image(systemName: isValidSignature ? "checkmark.circle.fill" : "xmark.circle.fill")
+                                        .foregroundColor(isValidSignature ? .green : .red)
+                                        .help(isValidSignature ? "Signature Valid" : "Signature Invalid")
+                                }
+                            }
+                        }
+                    } else if tokenAlgorithm?.isRSA == true {
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("Public Key (for signature verification)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            
+                            VStack {
+                                TextEditor(text: $publicKey)
+                                    .font(.system(.caption, design: .monospaced))
+                                    .frame(height: 80)
+                                    .onChange(of: publicKey) { _, _ in
+                                        if !jwtToken.isEmpty {
+                                            verifySignature()
+                                        }
+                                    }
+                                
+                                HStack {
+                                    Spacer()
                                     if !jwtToken.isEmpty {
-                                        verifySignature()
+                                        Image(systemName: isValidSignature ? "checkmark.circle.fill" : "xmark.circle.fill")
+                                            .foregroundColor(isValidSignature ? .green : .red)
+                                            .help(isValidSignature ? "Signature Valid" : "Signature Invalid")
                                     }
                                 }
-                            
-                            if !jwtToken.isEmpty {
-                                Image(systemName: isValidSignature ? "checkmark.circle.fill" : "xmark.circle.fill")
-                                    .foregroundColor(isValidSignature ? .green : .red)
-                                    .help(isValidSignature ? "Signature Valid" : "Signature Invalid")
                             }
                         }
                     }
@@ -525,31 +663,56 @@ struct JWTView: View {
         let signingInput = "\(parts[0]).\(parts[1])"
         let providedSignature = String(parts[2])
         
-        if let expectedSignature = createSignature(signingInput: signingInput, secret: secretKey, algorithm: algorithm) {
-            isValidSignature = expectedSignature == providedSignature
+        if algorithm.isHMAC {
+            if let expectedSignature = createSignature(signingInput: signingInput, secret: secretKey, algorithm: algorithm) {
+                isValidSignature = expectedSignature == providedSignature
+            } else {
+                isValidSignature = false
+            }
+        } else if algorithm.isRSA {
+            guard let signingData = signingInput.data(using: .utf8),
+                  let signatureData = base64URLDecode(providedSignature) else {
+                isValidSignature = false
+                return
+            }
+            
+            isValidSignature = verifyRSASignature(data: signingData, signature: signatureData, publicKey: publicKey, algorithm: algorithm)
         } else {
             isValidSignature = false
         }
     }
     
     private func createSignature(signingInput: String, secret: String, algorithm: JWTAlgorithm) -> String? {
-        guard let signingData = signingInput.data(using: .utf8),
-              let keyData = secret.data(using: .utf8) else {
+        guard let signingData = signingInput.data(using: .utf8) else {
             return nil
         }
         
         let signature: Data
         
         switch algorithm {
-        case .hs256:
+        case .hs256, .hs384, .hs512:
+            guard let keyData = secret.data(using: .utf8) else {
+                return nil
+            }
             let key = SymmetricKey(data: keyData)
-            signature = Data(HMAC<SHA256>.authenticationCode(for: signingData, using: key))
-        case .hs384:
-            let key = SymmetricKey(data: keyData)
-            signature = Data(HMAC<SHA384>.authenticationCode(for: signingData, using: key))
-        case .hs512:
-            let key = SymmetricKey(data: keyData)
-            signature = Data(HMAC<SHA512>.authenticationCode(for: signingData, using: key))
+            
+            switch algorithm {
+            case .hs256:
+                signature = Data(HMAC<SHA256>.authenticationCode(for: signingData, using: key))
+            case .hs384:
+                signature = Data(HMAC<SHA384>.authenticationCode(for: signingData, using: key))
+            case .hs512:
+                signature = Data(HMAC<SHA512>.authenticationCode(for: signingData, using: key))
+            default:
+                return nil
+            }
+            
+        case .rs256, .rs384, .rs512:
+            guard let rsaSignature = createRSASignature(data: signingData, privateKey: privateKey, algorithm: algorithm) else {
+                return nil
+            }
+            signature = rsaSignature
+            
         case .none:
             return ""
         }
@@ -606,6 +769,91 @@ struct JWTView: View {
         payloadText = ""
         signatureText = ""
         isValidSignature = false
+    }
+    
+    private func createRSASignature(data: Data, privateKey: String, algorithm: JWTAlgorithm) -> Data? {
+        guard let keyData = parsePEMKey(privateKey) else {
+            return nil
+        }
+        
+        let keyDict: [String: Any] = [
+            kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
+            kSecAttrKeyClass as String: kSecAttrKeyClassPrivate
+        ]
+        
+        var error: Unmanaged<CFError>?
+        guard let secKey = SecKeyCreateWithData(keyData as CFData, keyDict as CFDictionary, &error) else {
+            return nil
+        }
+        
+        let signatureAlgorithm: SecKeyAlgorithm
+        switch algorithm {
+        case .rs256:
+            signatureAlgorithm = .rsaSignatureMessagePKCS1v15SHA256
+        case .rs384:
+            signatureAlgorithm = .rsaSignatureMessagePKCS1v15SHA384
+        case .rs512:
+            signatureAlgorithm = .rsaSignatureMessagePKCS1v15SHA512
+        default:
+            return nil
+        }
+        
+        guard let signature = SecKeyCreateSignature(secKey, signatureAlgorithm, data as CFData, &error) else {
+            return nil
+        }
+        
+        return signature as Data
+    }
+    
+    private func verifyRSASignature(data: Data, signature: Data, publicKey: String, algorithm: JWTAlgorithm) -> Bool {
+        guard let keyData = parsePEMKey(publicKey) else {
+            return false
+        }
+        
+        let keyDict: [String: Any] = [
+            kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
+            kSecAttrKeyClass as String: kSecAttrKeyClassPublic
+        ]
+        
+        var error: Unmanaged<CFError>?
+        guard let secKey = SecKeyCreateWithData(keyData as CFData, keyDict as CFDictionary, &error) else {
+            return false
+        }
+        
+        let signatureAlgorithm: SecKeyAlgorithm
+        switch algorithm {
+        case .rs256:
+            signatureAlgorithm = .rsaSignatureMessagePKCS1v15SHA256
+        case .rs384:
+            signatureAlgorithm = .rsaSignatureMessagePKCS1v15SHA384
+        case .rs512:
+            signatureAlgorithm = .rsaSignatureMessagePKCS1v15SHA512
+        default:
+            return false
+        }
+        
+        return SecKeyVerifySignature(secKey, signatureAlgorithm, data as CFData, signature as CFData, &error)
+    }
+    
+    private func parsePEMKey(_ pemString: String) -> Data? {
+        let lines = pemString.components(separatedBy: .newlines)
+        let base64Lines = lines.filter { line in
+            !line.hasPrefix("-----") && !line.isEmpty
+        }
+        
+        let base64String = base64Lines.joined()
+        return Data(base64Encoded: base64String)
+    }
+    
+    private func getAlgorithmFromToken() -> JWTAlgorithm? {
+        let parts = jwtToken.split(separator: ".")
+        guard parts.count >= 2,
+              let headerData = base64URLDecode(String(parts[0])),
+              let headerJSON = try? JSONSerialization.jsonObject(with: headerData, options: []) as? [String: Any],
+              let algString = headerJSON["alg"] as? String else {
+            return nil
+        }
+        return JWTAlgorithm(rawValue: algString)
     }
     
     private func copyToClipboard(_ text: String) {

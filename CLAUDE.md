@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevHelper is a native macOS application built with SwiftUI that provides 14 essential developer utilities. Version 1.10.2 with enhanced JSON diff functionality.
+DevHelper is a native macOS application built with SwiftUI that provides 14 essential developer utilities. Version 1.11.1 with enhanced JWT RSA support.
 
 ## Key Tools & Status
 
@@ -20,14 +20,14 @@ All 14 tools are ✅ **Complete**:
 10. **QR Code** - Generation and scanning with multiple sizes and error correction
 11. **SQL Formatter** - Format and minify SQL with syntax validation
 12. **HTML Formatter** - Format and minify HTML with proper indentation
-13. **JWT Encoder/Decoder** - HMAC algorithms with CryptoKit security
+13. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
 14. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
 
 ## Architecture & Technical Stack
 - **Platform**: macOS 14.0+ SwiftUI
 - **Navigation**: NavigationSplitView with sidebar search
 - **Dependencies**: CodeMirror-SwiftUI via SPM, ParquetViewer (Rust FFI)
-- **Security**: CryptoKit for JWT HMAC operations
+- **Security**: CryptoKit for JWT HMAC operations, Security framework for RSA operations
 
 ## Build Commands
 ```bash
@@ -41,7 +41,14 @@ xcodebuild -project DevHelper.xcodeproj -scheme DevHelper build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
-## Recent Updates (v1.10.3)
+## Recent Updates (v1.11.1)
+- **JWT Encoder/Decoder**: Enhanced with RSA algorithm support (RS256, RS384, RS512)
+- **RSA Cryptography**: Implemented using iOS Security framework for key management and signing
+- **Dynamic UI**: Interface adapts to show appropriate fields (secret key for HMAC, RSA keys for RSA)
+- **Key Management**: Support for PEM-formatted RSA keys with auto-population sample keys
+- **Algorithm Detection**: Real-time detection of JWT algorithm type for verification
+
+## Previous Updates (v1.10.3)
 - **Parquet Viewer**: Simplified with unified ParquetViewer API
 - **Dependency Cleanup**: Removed DuckDB-swift and arrow-swift dependencies  
 - **Architecture**: Single Rust-based backend for both Parquet and Arrow files
