@@ -62,12 +62,9 @@ struct JSONFormatterView: View {
                     
                     CodeDiffEditor.json(leftContent: $jsonInput, rightContent: $jsonInput2, readOnly: false)
                         .frame(maxHeight: .infinity)
-                        .onChange(of: jsonInput) { _, _ in
-                            processJSON()
-                        }
-                        .onChange(of: jsonInput2) { _, _ in
-                            processJSON()
-                        }
+                        // .onChange(of: jsonInput) { _, _ in
+                        //     processJSON()
+                        // }
                     
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {
