@@ -112,11 +112,13 @@ struct ContentView: View {
                     QRCodeView()
                 case .parquetViewer:
                     ParquetViewerView()
+                case .cryptoTools:
+                    CryptoToolsView()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .frame(minWidth: 1000, minHeight: 600)
+        .frame(minWidth: 1000, minHeight: 680)
         .onChange(of: selectedTool) { oldValue, newValue in
             Task.detached {
                 await EventManager.shared.reportModuleSwitch(

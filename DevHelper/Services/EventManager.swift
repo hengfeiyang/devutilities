@@ -340,6 +340,7 @@ extension ToolType {
         case .htmlFormatter: return "html_formatter"
         case .jwt: return "jwt_codec"
         case .parquetViewer: return "parquet_viewer"
+        case .cryptoTools: return "crypto_tools"
         }
     }
 }

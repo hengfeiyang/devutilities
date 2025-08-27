@@ -3,11 +3,11 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevHelper is a native macOS application built with SwiftUI that provides 14 essential developer utilities. Version 1.11.1 with enhanced JWT RSA support.
+DevHelper is a native macOS application built with SwiftUI that provides 15 essential developer utilities. Version 1.12.0 with comprehensive cryptographic tools.
 
 ## Key Tools & Status
 
-All 14 tools are ✅ **Complete**:
+All 15 tools are ✅ **Complete**:
 1. **Timestamp Converter** - Bidirectional timestamp conversion with timezone support
 2. **Unit Converter** - 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
 3. **JSON Formatter** - Format, validate, escape/unescape, **visual CodeMirror diff editor**
@@ -22,6 +22,7 @@ All 14 tools are ✅ **Complete**:
 12. **HTML Formatter** - Format and minify HTML with proper indentation
 13. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
 14. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
+15. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
 
 ## Architecture & Technical Stack
 - **Platform**: macOS 14.0+ SwiftUI
@@ -41,7 +42,15 @@ xcodebuild -project DevHelper.xcodeproj -scheme DevHelper build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
-## Recent Updates (v1.11.1)
+## Recent Updates (v1.12.0)
+- **Crypto Tools**: New comprehensive cryptographic utility suite addressing GitHub issues #13 and #14
+- **Hash Functions**: MD5, CRC32, SHA-1, SHA-256, SHA-384, SHA-512 with real-time computation
+- **Symmetric Encryption**: AES-GCM-256 encrypt/decrypt with key generation and Base64 encoding
+- **Asymmetric Encryption**: RSA-2048/4096 encrypt/decrypt using Security framework
+- **Unified Interface**: Three-tab design (Hash/Symmetric/Asymmetric) with consistent UX patterns
+- **API Authentication**: Perfect for generating tokens for third-party interface calls
+
+## Previous Updates (v1.11.1)
 - **JWT Encoder/Decoder**: Enhanced with RSA algorithm support (RS256, RS384, RS512)
 - **RSA Cryptography**: Implemented using iOS Security framework for key management and signing
 - **Dynamic UI**: Interface adapts to show appropriate fields (secret key for HMAC, RSA keys for RSA)
