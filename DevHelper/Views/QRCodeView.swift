@@ -90,6 +90,7 @@ enum QRCodeSize: String, CaseIterable {
 
 struct QRCodeView: View {
     let screenName = "QR Code"
+    let module = "qr_code"
     @State private var inputText: String = ""
     @State private var qrCodeImage: NSImage?
     @State private var scanResult: String = ""
@@ -140,7 +141,15 @@ struct QRCodeView: View {
                 generateQRCode()
             }
         }
-        .onAppear {}
+        .onChange(of: selectedTab) { oldValue, newValue in
+            Task.detached {
+                await EventManager.shared.reportSubmoduleSwitch(
+                    module: module,
+                    from: oldValue.rawValue,
+                    to: newValue.rawValue
+                )
+            }
+        }
     }
     
     private var generateView: some View {

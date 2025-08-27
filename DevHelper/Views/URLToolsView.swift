@@ -18,6 +18,7 @@ import AppKit
 
 struct URLToolsView: View {
     let screenName = "URL Tools"
+    let module = "url_tools"
     @State private var selectedTab: URLTab = .encoder
     @State private var textInput: String = ""
     @State private var encodedOutput: String = ""
@@ -60,6 +61,15 @@ struct URLToolsView: View {
         }
         .onDisappear {
             saveState()
+        }
+        .onChange(of: selectedTab) { oldValue, newValue in
+            Task.detached {
+                await EventManager.shared.reportSubmoduleSwitch(
+                    module: module,
+                    from: "\(oldValue)".lowercased(),
+                    to: "\(newValue)".lowercased()
+                )
+            }
         }
     }
     

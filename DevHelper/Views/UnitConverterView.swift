@@ -17,6 +17,7 @@ import SwiftUI
 
 struct UnitConverterView: View {
     let screenName = "Unit Converter"
+    let module = "unit_converter"
     @State private var selectedCategory: UnitCategory = .data
     @State private var fromUnit: String = ""
     @State private var toUnit: String = ""
@@ -111,6 +112,15 @@ struct UnitConverterView: View {
         }
         .onDisappear {
             saveState()
+        }
+        .onChange(of: selectedCategory) { oldValue, newValue in
+            Task.detached {
+                await EventManager.shared.reportSubmoduleSwitch(
+                    module: module,
+                    from: oldValue.rawValue,
+                    to: newValue.rawValue
+                )
+            }
         }
     }
     

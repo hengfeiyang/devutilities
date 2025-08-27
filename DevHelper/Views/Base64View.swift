@@ -18,6 +18,7 @@ import AppKit
 
 struct Base64View: View {
     let screenName = "Base64 Encode/Decode"
+    let module = "base64_codec"
     @State private var textInput: String = ""
     @State private var base64Output: String = ""
     @State private var base64Input: String = ""
@@ -232,6 +233,15 @@ struct Base64View: View {
         }
         .onDisappear {
             saveState()
+        }
+        .onChange(of: selectedTab) { oldValue, newValue in
+            Task.detached {
+                await EventManager.shared.reportSubmoduleSwitch(
+                    module: module,
+                    from: "\(oldValue)".lowercased(),
+                    to: "\(newValue)".lowercased()
+                )
+            }
         }
     }
     

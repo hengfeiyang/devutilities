@@ -66,6 +66,7 @@ enum JWTAlgorithm: String, CaseIterable {
 
 struct JWTView: View {
     let screenName = "JWT Encoder/Decoder"
+    let module = "jwt_codec"
     @State private var selectedTab: JWTTab = .decode
     @State private var jwtToken: String = ""
     @State private var headerText: String = ""
@@ -163,6 +164,15 @@ struct JWTView: View {
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onChange(of: selectedTab) { oldValue, newValue in
+            Task.detached {
+                await EventManager.shared.reportSubmoduleSwitch(
+                    module: module,
+                    from: oldValue.rawValue,
+                    to: newValue.rawValue
+                )
+            }
+        }
     }
     
     private var encodeView: some View {

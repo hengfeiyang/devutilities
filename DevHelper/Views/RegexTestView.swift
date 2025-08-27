@@ -18,6 +18,7 @@ import AppKit
 
 struct RegexTestView: View {
     let screenName = "Regex Test"
+    let module = "regex_test"
     @State private var regexPattern: String = ""
     @State private var testString: String = ""
     @State private var replacementString: String = ""
@@ -198,7 +199,15 @@ struct RegexTestView: View {
             Spacer()
         }
         .padding()
-        .onAppear {}
+        .onChange(of: selectedMode) { oldValue, newValue in
+            Task.detached {
+                await EventManager.shared.reportSubmoduleSwitch(
+                    module: module,
+                    from: "\(oldValue)".lowercased(),
+                    to: "\(newValue)".lowercased()
+                )
+            }
+        }
     }
     
     @ViewBuilder

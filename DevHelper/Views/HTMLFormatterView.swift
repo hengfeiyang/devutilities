@@ -18,6 +18,7 @@ import AppKit
 
 struct HTMLFormatterView: View {
     let screenName = "HTML Formatter"
+    let module = "html_formatter"
     @State private var htmlInput: String = ""
     @State private var htmlOutput: String = ""
     @State private var selectedMode: HTMLMode = .format
@@ -150,6 +151,15 @@ struct HTMLFormatterView: View {
         }
         .onDisappear {
             saveState()
+        }
+        .onChange(of: selectedMode) { oldValue, newValue in
+            Task.detached {
+                await EventManager.shared.reportSubmoduleSwitch(
+                    module: module,
+                    from: "\(oldValue)".lowercased().replacingOccurrences(of: "extracttext", with: "extract_text"),
+                    to: "\(newValue)".lowercased().replacingOccurrences(of: "extracttext", with: "extract_text")
+                )
+            }
         }
     }
     

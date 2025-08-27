@@ -23,6 +23,11 @@ struct DevHelperApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear {
+                    Task.detached {
+                        await EventManager.shared.reportAppStart()
+                    }
+                }
         }
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)

@@ -18,6 +18,7 @@ import AppKit
 
 struct JSONFormatterView: View {
     let screenName = "JSON Formatter"
+    let module = "json_formatter"
     @State private var jsonInput: String = ""
     @State private var jsonInput2: String = ""
     @State private var jsonOutput: String = ""
@@ -218,6 +219,15 @@ struct JSONFormatterView: View {
         }
         .onDisappear {
             saveState()
+        }
+        .onChange(of: selectedMode) { oldValue, newValue in
+            Task.detached {
+                await EventManager.shared.reportSubmoduleSwitch(
+                    module: module,
+                    from: "\(oldValue)".lowercased(),
+                    to: "\(newValue)".lowercased()
+                )
+            }
         }
     }
     

@@ -13,6 +13,11 @@
 		93B500A02E5D81D500F38E50 /* ParquetViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B5009E2E5D81D500F38E50 /* ParquetViewer.swift */; };
 		93B500A12E5D81D500F38E50 /* libparquet_viewer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 93B5009C2E5D81D500F38E50 /* libparquet_viewer.dylib */; };
 		93B500A22E5D81EB00F38E50 /* libparquet_viewer.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 93B5009C2E5D81D500F38E50 /* libparquet_viewer.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		93B55B4E2E5EF944001ECD91 /* EventBatchProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B55B492E5EF944001ECD91 /* EventBatchProcessor.swift */; };
+		93B55B4F2E5EF944001ECD91 /* EventStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B55B4C2E5EF944001ECD91 /* EventStorage.swift */; };
+		93B55B502E5EF944001ECD91 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B55B4A2E5EF944001ECD91 /* EventManager.swift */; };
+		93B55B512E5EF944001ECD91 /* AppEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B55B482E5EF944001ECD91 /* AppEvent.swift */; };
+		93B55B522E5EF944001ECD91 /* EventNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B55B4B2E5EF944001ECD91 /* EventNetworkService.swift */; };
 		93C47C912E3312690069B278 /* IPQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822A4CAC32A426BA9E4E438123457 /* IPQueryView.swift */; };
 		93C47C932E3312A00069B278 /* CodeEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C47C922E3312A00069B278 /* CodeEditor.swift */; };
 		D5F4E7F42C5A1B2E00123456 /* DevHelperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4E7F32C5A1B2E00123456 /* DevHelperApp.swift */; };
@@ -58,6 +63,11 @@
 		93B5009C2E5D81D500F38E50 /* libparquet_viewer.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libparquet_viewer.dylib; sourceTree = "<group>"; };
 		93B5009D2E5D81D500F38E50 /* parquet_viewer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parquet_viewer.h; sourceTree = "<group>"; };
 		93B5009E2E5D81D500F38E50 /* ParquetViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParquetViewer.swift; sourceTree = "<group>"; };
+		93B55B482E5EF944001ECD91 /* AppEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEvent.swift; sourceTree = "<group>"; };
+		93B55B492E5EF944001ECD91 /* EventBatchProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBatchProcessor.swift; sourceTree = "<group>"; };
+		93B55B4A2E5EF944001ECD91 /* EventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
+		93B55B4B2E5EF944001ECD91 /* EventNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventNetworkService.swift; sourceTree = "<group>"; };
+		93B55B4C2E5EF944001ECD91 /* EventStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStorage.swift; sourceTree = "<group>"; };
 		93C47C922E3312A00069B278 /* CodeEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEditor.swift; sourceTree = "<group>"; };
 		B822A4CAC32A426BA9E4E438123457 /* IPQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPQueryView.swift; sourceTree = "<group>"; };
 		D5F4E7F02C5A1B2E00123456 /* DevHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,6 +118,18 @@
 			path = Frameworks;
 			sourceTree = "<group>";
 		};
+		93B55B4D2E5EF944001ECD91 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				93B55B482E5EF944001ECD91 /* AppEvent.swift */,
+				93B55B492E5EF944001ECD91 /* EventBatchProcessor.swift */,
+				93B55B4A2E5EF944001ECD91 /* EventManager.swift */,
+				93B55B4B2E5EF944001ECD91 /* EventNetworkService.swift */,
+				93B55B4C2E5EF944001ECD91 /* EventStorage.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		D5F4E7E72C5A1B2E00123456 = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +150,7 @@
 		D5F4E7F22C5A1B2E00123456 /* DevHelper */ = {
 			isa = PBXGroup;
 			children = (
+				93B55B4D2E5EF944001ECD91 /* Services */,
 				93A6A9202E588B98006A2798 /* Constants.swift */,
 				D5F4E7F32C5A1B2E00123456 /* DevHelperApp.swift */,
 				D5F4E7F52C5A1B2E00123456 /* ContentView.swift */,
@@ -282,6 +305,11 @@
 				SQL8E8092C5A1B3000123457 /* SQLFormatterView.swift in Sources */,
 				JWT4E8102C5A1B3000765432 /* JWTView.swift in Sources */,
 				TSE4F7812C5A1B3000876543 /* TimestampEntity.swift in Sources */,
+				93B55B4E2E5EF944001ECD91 /* EventBatchProcessor.swift in Sources */,
+				93B55B4F2E5EF944001ECD91 /* EventStorage.swift in Sources */,
+				93B55B502E5EF944001ECD91 /* EventManager.swift in Sources */,
+				93B55B512E5EF944001ECD91 /* AppEvent.swift in Sources */,
+				93B55B522E5EF944001ECD91 /* EventNetworkService.swift in Sources */,
 				TCI4F7812C5A1B3000987654 /* TimestampConversionIntent.swift in Sources */,
 				D5F4E7F62C5A1B2E00123456 /* ContentView.swift in Sources */,
 				D5F4E7F42C5A1B2E00123456 /* DevHelperApp.swift in Sources */,

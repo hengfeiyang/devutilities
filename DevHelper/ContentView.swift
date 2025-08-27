@@ -18,6 +18,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var selectedTool: ToolType = .timestampConverter
     @State private var searchText: String = ""
+    @State private var previousTool: ToolType?
     
     private var appVersion: String {
         if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
@@ -116,6 +117,23 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(minWidth: 1000, minHeight: 600)
+        .onChange(of: selectedTool) { oldValue, newValue in
+            Task.detached {
+                await EventManager.shared.reportModuleSwitch(
+                    from: oldValue.eventModuleName,
+                    to: newValue.eventModuleName
+                )
+            }
+        }
+        .onAppear {
+            // Report initial module selection
+            Task.detached {
+                await EventManager.shared.reportModuleSwitch(
+                    from: nil,
+                    to: selectedTool.eventModuleName
+                )
+            }
+        }
     }
 }
 

@@ -18,6 +18,7 @@ import AppKit
 
 struct SQLFormatterView: View {
     let screenName = "SQL Formatter"
+    let module = "sql_formatter"
     @State private var sqlInput: String = ""
     @State private var sqlOutput: String = ""
     @State private var selectedMode: SQLMode = .format
@@ -150,6 +151,15 @@ struct SQLFormatterView: View {
         }
         .onDisappear {
             saveState()
+        }
+        .onChange(of: selectedMode) { oldValue, newValue in
+            Task.detached {
+                await EventManager.shared.reportSubmoduleSwitch(
+                    module: module,
+                    from: "\(oldValue)".lowercased(),
+                    to: "\(newValue)".lowercased()
+                )
+            }
         }
     }
     
