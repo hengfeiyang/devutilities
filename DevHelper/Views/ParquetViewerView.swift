@@ -474,16 +474,12 @@ struct ParquetViewerView: View {
     }
     
     private func parseFileWithParquetViewer(_ url: URL) async {
-        guard url.startAccessingSecurityScopedResource() else {
-            await MainActor.run {
-                self.errorMessage = "Failed to access file"
-                self.isLoading = false
-            }
-            return
-        }
+        let isSecurityScoped = url.startAccessingSecurityScopedResource()
         
         defer {
-            url.stopAccessingSecurityScopedResource()
+            if isSecurityScoped {
+                url.stopAccessingSecurityScopedResource()
+            }
         }
         
         do {
