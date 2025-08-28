@@ -2,3 +2,4 @@ DevHelper.xcodeproj/project.xcworkspace/xcuserdata/hengfeiyang.xcuserdatad/UserI
 temp/
 tools/
 build/
+*.dmg

@@ -18,19 +18,36 @@ import AppIntents
 
 @main
 struct DevHelperApp: App {
+    @StateObject private var updateChecker = UpdateChecker()
+    
     init() {}
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(updateChecker)
                 .onAppear {
                     Task.detached {
                         await EventManager.shared.reportAppStart()
+                    }
+                    
+                    // Check for updates after a short delay to not block startup
+                    Task {
+                        try await Task.sleep(for: .seconds(2))
+                        updateChecker.checkForUpdate()
                     }
                 }
         }
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
         .defaultSize(width: 1000, height: 800)
+        .commands {
+            CommandGroup(after: .appInfo) {
+                Button("Check for Updates...") {
+                    updateChecker.checkForUpdate(manualCheck: true)
+                }
+                .keyboardShortcut("u", modifiers: [.command])
+            }
+        }
     }
 }

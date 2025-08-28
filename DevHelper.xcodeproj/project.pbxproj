@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		9332C0382E589984009E68BE /* CodeMirror-SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9332C0372E589984009E68BE /* CodeMirror-SwiftUI */; };
 		9332C0392E589984009E68BE /* CodeMirror-SwiftUI in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 9332C0372E589984009E68BE /* CodeMirror-SwiftUI */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		934569062E5FFCD600491835 /* UpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934569042E5FFCD600491835 /* UpdateChecker.swift */; };
+		934569072E5FFCD600491835 /* VersionComparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934569052E5FFCD600491835 /* VersionComparator.swift */; };
 		93A6A9212E588B98006A2798 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A6A9202E588B98006A2798 /* Constants.swift */; };
 		93B500A02E5D81D500F38E50 /* ParquetViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B5009E2E5D81D500F38E50 /* ParquetViewer.swift */; };
 		93B500A12E5D81D500F38E50 /* libparquet_viewer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 93B5009C2E5D81D500F38E50 /* libparquet_viewer.dylib */; };
@@ -20,6 +22,7 @@
 		93B55B522E5EF944001ECD91 /* EventNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B55B4B2E5EF944001ECD91 /* EventNetworkService.swift */; };
 		93C47C912E3312690069B278 /* IPQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822A4CAC32A426BA9E4E438123457 /* IPQueryView.swift */; };
 		93C47C932E3312A00069B278 /* CodeEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C47C922E3312A00069B278 /* CodeEditor.swift */; };
+		B41BCA88D09D488EA2A4ABAC /* CryptoToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41BCA88D09D488EA2A4ABAB /* CryptoToolsView.swift */; };
 		D5F4E7F42C5A1B2E00123456 /* DevHelperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4E7F32C5A1B2E00123456 /* DevHelperApp.swift */; };
 		D5F4E7F62C5A1B2E00123456 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4E7F52C5A1B2E00123456 /* ContentView.swift */; };
 		D5F4E7F82C5A1B2F00123456 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5F4E7F72C5A1B2F00123456 /* Assets.xcassets */; };
@@ -36,7 +39,6 @@
 		HTML8E8092C5A1B3000123456 /* HTMLFormatterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = HTML8E8082C5A1B3000123456 /* HTMLFormatterView.swift */; };
 		HTTP4E7F2C5A1B3000654321 /* HTTPRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = HTTP4E7F2C5A1B3000654322 /* HTTPRequestView.swift */; };
 		JWT4E8102C5A1B3000765432 /* JWTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = JWT4E8112C5A1B3000765432 /* JWTView.swift */; };
-		B41BCA88D09D488EA2A4ABAC /* CryptoToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41BCA88D09D488EA2A4ABAB /* CryptoToolsView.swift */; };
 		PQ3DE90A2C5A1B3000234567 /* ParquetViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = PQ3DE9092C5A1B3000234567 /* ParquetViewerView.swift */; };
 		QR2CE8092C5A1B3000123456 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = QR2CE8082C5A1B3000123456 /* QRCodeView.swift */; };
 		SQL8E8092C5A1B3000123457 /* SQLFormatterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SQL8E8082C5A1B3000123457 /* SQLFormatterView.swift */; };
@@ -60,6 +62,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		934569042E5FFCD600491835 /* UpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateChecker.swift; sourceTree = "<group>"; };
+		934569052E5FFCD600491835 /* VersionComparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionComparator.swift; sourceTree = "<group>"; };
 		93A6A9202E588B98006A2798 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		93B5009C2E5D81D500F38E50 /* libparquet_viewer.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libparquet_viewer.dylib; sourceTree = "<group>"; };
 		93B5009D2E5D81D500F38E50 /* parquet_viewer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parquet_viewer.h; sourceTree = "<group>"; };
@@ -70,6 +74,7 @@
 		93B55B4B2E5EF944001ECD91 /* EventNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventNetworkService.swift; sourceTree = "<group>"; };
 		93B55B4C2E5EF944001ECD91 /* EventStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStorage.swift; sourceTree = "<group>"; };
 		93C47C922E3312A00069B278 /* CodeEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEditor.swift; sourceTree = "<group>"; };
+		B41BCA88D09D488EA2A4ABAB /* CryptoToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoToolsView.swift; sourceTree = "<group>"; };
 		B822A4CAC32A426BA9E4E438123457 /* IPQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPQueryView.swift; sourceTree = "<group>"; };
 		D5F4E7F02C5A1B2E00123456 /* DevHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5F4E7F32C5A1B2E00123456 /* DevHelperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevHelperApp.swift; sourceTree = "<group>"; };
@@ -89,7 +94,6 @@
 		HTML8E8082C5A1B3000123456 /* HTMLFormatterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLFormatterView.swift; sourceTree = "<group>"; };
 		HTTP4E7F2C5A1B3000654322 /* HTTPRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPRequestView.swift; sourceTree = "<group>"; };
 		JWT4E8112C5A1B3000765432 /* JWTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTView.swift; sourceTree = "<group>"; };
-		B41BCA88D09D488EA2A4ABAB /* CryptoToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoToolsView.swift; sourceTree = "<group>"; };
 		PQ3DE9092C5A1B3000234567 /* ParquetViewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParquetViewerView.swift; sourceTree = "<group>"; };
 		QR2CE8082C5A1B3000123456 /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		SQL8E8082C5A1B3000123457 /* SQLFormatterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLFormatterView.swift; sourceTree = "<group>"; };
@@ -123,6 +127,8 @@
 		93B55B4D2E5EF944001ECD91 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				934569042E5FFCD600491835 /* UpdateChecker.swift */,
+				934569052E5FFCD600491835 /* VersionComparator.swift */,
 				93B55B482E5EF944001ECD91 /* AppEvent.swift */,
 				93B55B492E5EF944001ECD91 /* EventBatchProcessor.swift */,
 				93B55B4A2E5EF944001ECD91 /* EventManager.swift */,
@@ -295,6 +301,8 @@
 				D5F4E8042C5A1B3000123456 /* UnitConverterView.swift in Sources */,
 				D5F4E8062C5A1B3000123456 /* JSONFormatterView.swift in Sources */,
 				D5F4E8082C5A1B3000123456 /* Base64View.swift in Sources */,
+				934569062E5FFCD600491835 /* UpdateChecker.swift in Sources */,
+				934569072E5FFCD600491835 /* VersionComparator.swift in Sources */,
 				D5F4E80C2C5A1B3000123456 /* RegexTestView.swift in Sources */,
 				D5F4E80E2C5A1B3000123456 /* UUIDGeneratorView.swift in Sources */,
 				D5F4E8102C5A1B3000123456 /* URLToolsView.swift in Sources */,
@@ -480,7 +488,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 1.12.0;
+				MARKETING_VERSION = 1.11.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhelper.DevHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -521,7 +529,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 1.12.0;
+				MARKETING_VERSION = 1.11.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhelper.DevHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";

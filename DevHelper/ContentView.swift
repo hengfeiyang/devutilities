@@ -19,6 +19,7 @@ struct ContentView: View {
     @State private var selectedTool: ToolType = .timestampConverter
     @State private var searchText: String = ""
     @State private var previousTool: ToolType?
+    @EnvironmentObject var updateChecker: UpdateChecker
     
     private var appVersion: String {
         if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
@@ -119,6 +120,38 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(minWidth: 1000, minHeight: 680)
+        .alert("Update Available", isPresented: $updateChecker.showUpdateAlert) {
+            Button("Download") {
+                updateChecker.openDownloadPage()
+            }
+            Button("Close", role: .cancel) {
+                updateChecker.dismissAlert()
+            }
+        } message: {
+            if let updateInfo = updateChecker.updateAvailable {
+                let currentVersionText = "Current version: \(VersionComparator.formatVersionForDisplay(updateInfo.currentVersion))"
+                let newVersionText = "A new version \(VersionComparator.formatVersionForDisplay(updateInfo.latestVersion)) is available!"
+                
+                if let releaseNotes = updateInfo.releaseNotes, !releaseNotes.isEmpty {
+                    let cleanReleaseNotes = releaseNotes.replacingOccurrences(of: "\r\n", with: "\n")
+                    // Limit release notes to 200 characters to keep alert manageable
+                    let truncatedNotes = cleanReleaseNotes.count > 200 
+                        ? String(cleanReleaseNotes.prefix(200)) + "..." 
+                        : cleanReleaseNotes
+                    
+                    Text("\(newVersionText)\n\n\(currentVersionText)\n\nWhat's new:\n\n\(truncatedNotes)")
+                } else {
+                    Text("\(newVersionText)\n\n\(currentVersionText)")
+                }
+            }
+        }
+        .alert("No Updates Available", isPresented: $updateChecker.showNoUpdateAlert) {
+            Button("OK") {
+                updateChecker.dismissNoUpdateAlert()
+            }
+        } message: {
+            Text("You're already using the latest version of DevHelper.")
+        }
         .onChange(of: selectedTool) { oldValue, newValue in
             Task.detached {
                 await EventManager.shared.reportModuleSwitch(
@@ -141,4 +174,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environmentObject(UpdateChecker())
 }
