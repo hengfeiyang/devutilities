@@ -40,7 +40,7 @@ struct DevHelperApp: App {
         }
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
-        .defaultSize(width: 1000, height: 800)
+        .defaultSize(width: 1024, height: 800)
         .commands {
             CommandGroup(after: .appInfo) {
                 Button("Check for Updates...") {

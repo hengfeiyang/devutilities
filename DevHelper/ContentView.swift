@@ -115,11 +115,13 @@ struct ContentView: View {
                     ParquetViewerView()
                 case .cryptoTools:
                     CryptoToolsView()
+                case .aiChat:
+                    AIChatView()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .frame(minWidth: 1000, minHeight: 650)
+        .frame(minWidth: 1024, minHeight: 650)
         .alert("Update Available", isPresented: $updateChecker.showUpdateAlert) {
             Button("Download") {
                 updateChecker.openDownloadPage()

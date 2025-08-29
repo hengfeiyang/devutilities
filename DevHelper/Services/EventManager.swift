@@ -341,6 +341,7 @@ extension ToolType {
         case .jwt: return "jwt_codec"
         case .parquetViewer: return "parquet_viewer"
         case .cryptoTools: return "crypto_tools"
+        case .aiChat: return "ai_chat"
         }
     }
 }

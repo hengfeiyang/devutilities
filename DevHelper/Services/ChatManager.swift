@@ -1,0 +1,433 @@
+// Copyright 2025 Hengfei Yang.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import Foundation
+import SwiftUI
+
+@Observable
+class ChatManager {
+    var chatSessions: [ChatSession] = []
+    private let storage = ChatStorage()
+    private let openAIClient = OpenAIClient()
+    
+    // MARK: - Session Management
+    
+    func loadChatSessions() {
+        chatSessions = storage.loadChatSessions()
+    }
+    
+    func createNewChat() -> ChatSession {
+        let session = ChatSession()
+        chatSessions.insert(session, at: 0) // Add to beginning for recent-first order
+        storage.saveChatSession(session)
+        return session
+    }
+    
+    func deleteChat(_ session: ChatSession) {
+        chatSessions.removeAll { $0.id == session.id }
+        storage.deleteChatSession(session.id)
+    }
+    
+    func duplicateChat(_ session: ChatSession) -> ChatSession {
+        var duplicated = session
+        duplicated = ChatSession(
+            title: "\(session.title) (Copy)",
+            selectedModel: session.selectedModel
+        )
+        // Copy all messages except system messages
+        let userAndAssistantMessages = session.messages.filter { $0.role != .system }
+        for message in userAndAssistantMessages {
+            let copiedMessage = ChatMessage(
+                role: message.role,
+                content: message.content,
+                isStreaming: false
+            )
+            duplicated.addMessage(copiedMessage)
+        }
+        
+        chatSessions.insert(duplicated, at: 0)
+        storage.saveChatSession(duplicated)
+        return duplicated
+    }
+    
+    func renameChat(_ session: ChatSession, to title: String) {
+        if let index = chatSessions.firstIndex(where: { $0.id == session.id }) {
+            chatSessions[index].updateTitle(title)
+            storage.saveChatSession(chatSessions[index])
+        }
+    }
+    
+    // MARK: - Message Handling
+    
+    func sendMessage(
+        _ content: String,
+        in sessionId: UUID,
+        with settings: AISettings,
+        isLoading: Binding<Bool>,
+        errorMessage: Binding<String?>
+    ) async {
+        print("📱 ChatManager: Starting sendMessage for session: \(sessionId)")
+        
+        await MainActor.run {
+            isLoading.wrappedValue = true
+            errorMessage.wrappedValue = nil
+        }
+        
+        // Find the session and add user message
+        let userMessage = ChatMessage(role: .user, content: content)
+        guard let sessionIndex = await MainActor.run(body: {
+            chatSessions.firstIndex(where: { $0.id == sessionId })
+        }) else {
+            await MainActor.run {
+                errorMessage.wrappedValue = "Chat session not found."
+                isLoading.wrappedValue = false
+            }
+            return
+        }
+        
+        await MainActor.run {
+            chatSessions[sessionIndex].addMessage(userMessage)
+            storage.saveChatSession(chatSessions[sessionIndex])
+        }
+        
+        do {
+            let model = await MainActor.run {
+                chatSessions[sessionIndex].selectedModel ?? settings.defaultModel
+            }
+            
+            // Validate API key
+            print("📱 ChatManager: Using model: \(model.displayName)")
+            guard let apiKey = settings.getOpenAIAPIKey(), !apiKey.isEmpty else {
+                print("❌ ChatManager: No OpenAI API key found")
+                await MainActor.run {
+                    errorMessage.wrappedValue = "No OpenAI API key configured. Please add your API key in settings."
+                    isLoading.wrappedValue = false
+                }
+                return
+            }
+            print("✅ ChatManager: OpenAI API key found")
+            
+            // Get current session messages
+            let currentMessages = await MainActor.run {
+                chatSessions[sessionIndex].messages
+            }
+            
+            // Choose streaming or non-streaming based on settings
+            print("📱 ChatManager: Sending \(currentMessages.count) messages to OpenAI API (streaming: \(settings.streamingEnabled))")
+            
+            if settings.streamingEnabled {
+                // Create placeholder streaming message
+                let streamingMessage = ChatMessage(role: .assistant, content: "", isStreaming: true)
+                await MainActor.run {
+                    chatSessions[sessionIndex].addMessage(streamingMessage)
+                    storage.saveChatSession(chatSessions[sessionIndex])
+                }
+                
+                let streamingMessageIndex = await MainActor.run { 
+                    chatSessions[sessionIndex].messages.count - 1 
+                }
+                
+                // Start streaming
+                openAIClient.sendMessageStreaming(
+                    currentMessages,
+                    model: model,
+                    apiKey: apiKey,
+                    onToken: { [weak self] token in
+                        guard let self = self else { return }
+                        
+                        // Update streaming message content
+                        if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
+                           streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
+                            self.chatSessions[sessionIdx].messages[streamingMessageIndex].content += token
+                            self.storage.saveChatSession(self.chatSessions[sessionIdx])
+                        }
+                    },
+                    onComplete: { [weak self] in
+                        guard let self = self else { return }
+                        
+                        // Mark streaming as complete
+                        if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
+                           streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
+                            self.chatSessions[sessionIdx].messages[streamingMessageIndex].isStreaming = false
+                            self.storage.saveChatSession(self.chatSessions[sessionIdx])
+                        }
+                        
+                        isLoading.wrappedValue = false
+                        print("✅ ChatManager: Streaming completed")
+                    },
+                    onError: { error in
+                        print("❌ ChatManager: Streaming error: \(error)")
+                        errorMessage.wrappedValue = "Failed to send message: \(error.localizedDescription)"
+                        isLoading.wrappedValue = false
+                    }
+                )
+            } else {
+                // Non-streaming (original implementation)
+                let response = try await openAIClient.sendMessage(
+                    currentMessages,
+                    model: model,
+                    apiKey: apiKey
+                )
+                print("✅ ChatManager: Received response from OpenAI: \(response.prefix(100))...")
+                
+                // Add AI response
+                let assistantMessage = ChatMessage(role: .assistant, content: response)
+                await MainActor.run {
+                    chatSessions[sessionIndex].addMessage(assistantMessage)
+                    storage.saveChatSession(chatSessions[sessionIndex])
+                    isLoading.wrappedValue = false
+                }
+                print("✅ ChatManager: Message added to session, total messages: \(await MainActor.run { chatSessions[sessionIndex].messages.count })")
+            }
+            
+        } catch {
+            print("❌ ChatManager: Error sending message: \(error)")
+            await MainActor.run {
+                errorMessage.wrappedValue = "Failed to send message: \(error.localizedDescription)"
+                isLoading.wrappedValue = false
+            }
+        }
+    }
+}
+
+// MARK: - Chat Storage
+
+class ChatStorage {
+    private let fileManager = FileManager.default
+    private let documentsDirectory: URL
+    
+    init() {
+        documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        createDirectoryIfNeeded()
+    }
+    
+    private func createDirectoryIfNeeded() {
+        let chatDirectory = documentsDirectory.appendingPathComponent("DevHelper/AIChats")
+        try? fileManager.createDirectory(at: chatDirectory, withIntermediateDirectories: true)
+    }
+    
+    private var chatDirectory: URL {
+        documentsDirectory.appendingPathComponent("DevHelper/AIChats")
+    }
+    
+    func loadChatSessions() -> [ChatSession] {
+        do {
+            let fileURLs = try fileManager.contentsOfDirectory(
+                at: chatDirectory,
+                includingPropertiesForKeys: [.contentModificationDateKey],
+                options: [.skipsHiddenFiles]
+            )
+            
+            let chatFiles = fileURLs.filter { $0.pathExtension == "json" }
+            
+            var sessions: [ChatSession] = []
+            
+            for fileURL in chatFiles {
+                if let data = try? Data(contentsOf: fileURL),
+                   let session = try? JSONDecoder().decode(ChatSession.self, from: data) {
+                    sessions.append(session)
+                }
+            }
+            
+            // Sort by last updated (most recent first)
+            sessions.sort { $0.updatedAt > $1.updatedAt }
+            
+            return sessions
+        } catch {
+            print("Failed to load chat sessions: \(error)")
+            return []
+        }
+    }
+    
+    func saveChatSession(_ session: ChatSession) {
+        do {
+            let data = try JSONEncoder().encode(session)
+            let fileURL = chatDirectory.appendingPathComponent("\(session.id.uuidString).json")
+            try data.write(to: fileURL)
+        } catch {
+            print("Failed to save chat session: \(error)")
+        }
+    }
+    
+    func deleteChatSession(_ sessionId: UUID) {
+        let fileURL = chatDirectory.appendingPathComponent("\(sessionId.uuidString).json")
+        try? fileManager.removeItem(at: fileURL)
+    }
+}
+
+// MARK: - OpenAI API Client
+
+class OpenAIClient {
+    private let session = URLSession.shared
+    
+    func sendMessage(
+        _ messages: [ChatMessage],
+        model: AIModel,
+        apiKey: String
+    ) async throws -> String {
+        
+        let url = URL(string: "\(OpenAIConfig.baseURL)/chat/completions")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        // Convert ChatMessage to OpenAI format
+        let openAIMessages = messages.map { message in
+            return [
+                "role": message.role.rawValue,
+                "content": message.content
+            ]
+        }
+        
+        let requestBody: [String: Any] = [
+            "model": model.name,
+            "messages": openAIMessages,
+            "stream": false // Phase 1: non-streaming only
+        ]
+        
+        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
+        
+        let (data, response) = try await session.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw APIError.invalidResponse
+        }
+        
+        guard 200...299 ~= httpResponse.statusCode else {
+            let errorMessage = String(data: data, encoding: .utf8) ?? "Unknown error"
+            throw APIError.httpError(httpResponse.statusCode, errorMessage)
+        }
+        
+        guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            throw APIError.invalidJSON
+        }
+        
+        // Parse OpenAI response
+        guard let choices = json["choices"] as? [[String: Any]],
+              let firstChoice = choices.first,
+              let message = firstChoice["message"] as? [String: Any],
+              let content = message["content"] as? String else {
+            throw APIError.invalidResponse
+        }
+        
+        return content.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
+    // MARK: - Streaming Support
+    
+    func sendMessageStreaming(
+        _ messages: [ChatMessage],
+        model: AIModel,
+        apiKey: String,
+        onToken: @escaping (String) -> Void,
+        onComplete: @escaping () -> Void,
+        onError: @escaping (Error) -> Void
+    ) {
+        Task {
+            do {
+                let url = URL(string: "\(OpenAIConfig.baseURL)/chat/completions")!
+                
+                var request = URLRequest(url: url)
+                request.httpMethod = "POST"
+                request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                // Convert ChatMessage to OpenAI format
+                let openAIMessages = messages.map { message in
+                    return [
+                        "role": message.role.rawValue,
+                        "content": message.content
+                    ]
+                }
+                
+                let requestBody: [String: Any] = [
+                    "model": model.name,
+                    "messages": openAIMessages,
+                    "stream": true // Enable streaming
+                ]
+                
+                request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
+                
+                let (data, response) = try await session.bytes(for: request)
+                
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    await MainActor.run { onError(APIError.invalidResponse) }
+                    return
+                }
+                
+                guard 200...299 ~= httpResponse.statusCode else {
+                    let errorData = try await data.reduce(into: Data()) { $0.append($1) }
+                    let errorMessage = String(data: errorData, encoding: .utf8) ?? "Unknown error"
+                    await MainActor.run { onError(APIError.httpError(httpResponse.statusCode, errorMessage)) }
+                    return
+                }
+                
+                // Process streaming response
+                for try await line in data.lines {
+                    // Skip empty lines and metadata
+                    guard !line.isEmpty, line.hasPrefix("data: ") else { continue }
+                    
+                    let jsonString = String(line.dropFirst(6)) // Remove "data: " prefix
+                    
+                    // Check for completion signal
+                    if jsonString == "[DONE]" {
+                        await MainActor.run { onComplete() }
+                        break
+                    }
+                    
+                    // Parse JSON chunk
+                    guard let jsonData = jsonString.data(using: .utf8),
+                          let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any],
+                          let choices = json["choices"] as? [[String: Any]],
+                          let firstChoice = choices.first,
+                          let delta = firstChoice["delta"] as? [String: Any],
+                          let content = delta["content"] as? String else {
+                        continue
+                    }
+                    
+                    // Send token to UI
+                    await MainActor.run { onToken(content) }
+                }
+                
+            } catch {
+                await MainActor.run { onError(error) }
+            }
+        }
+    }
+}
+
+// MARK: - API Error Types
+
+enum APIError: LocalizedError {
+    case invalidResponse
+    case invalidJSON
+    case httpError(Int, String)
+    case missingAPIKey
+    
+    var errorDescription: String? {
+        switch self {
+        case .invalidResponse:
+            return "Invalid response from AI service"
+        case .invalidJSON:
+            return "Invalid JSON response"
+        case .httpError(let code, let message):
+            return "HTTP Error \(code): \(message)"
+        case .missingAPIKey:
+            return "Missing OpenAI API key"
+        }
+    }
+}
