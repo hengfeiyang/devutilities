@@ -53,19 +53,30 @@ struct ChatSession: Identifiable, Codable, Hashable {
     }
 }
 
+enum MessageContentType: String, Codable, CaseIterable {
+    case text = "text"
+    case image = "image"
+}
+
 struct ChatMessage: Identifiable, Codable, Hashable {
     let id: UUID
     let role: MessageRole
     var content: String
     let timestamp: Date
     var isStreaming: Bool
+    var contentType: MessageContentType = .text
+    var imageURL: String? = nil
+    var imagePrompt: String? = nil
     
-    init(role: MessageRole, content: String, isStreaming: Bool = false) {
+    init(role: MessageRole, content: String, isStreaming: Bool = false, contentType: MessageContentType = .text, imageURL: String? = nil, imagePrompt: String? = nil) {
         self.id = UUID()
         self.role = role
         self.content = content
         self.timestamp = Date()
         self.isStreaming = isStreaming
+        self.contentType = contentType
+        self.imageURL = imageURL
+        self.imagePrompt = imagePrompt
     }
 }
 
@@ -83,19 +94,26 @@ enum MessageRole: String, Codable, CaseIterable {
     }
 }
 
+enum ModelType: String, Codable, CaseIterable {
+    case chat = "chat"
+    case image = "image"
+}
+
 struct AIModel: Identifiable, Codable, Hashable {
     let id: String
     let name: String
     let displayName: String
     let maxTokens: Int
     let contextWindow: Int
+    let type: ModelType
     
-    init(id: String, name: String, displayName: String, maxTokens: Int, contextWindow: Int = 8192) {
+    init(id: String, name: String, displayName: String, maxTokens: Int, contextWindow: Int = 8192, type: ModelType = .chat) {
         self.id = id
         self.name = name
         self.displayName = displayName
         self.maxTokens = maxTokens
         self.contextWindow = contextWindow
+        self.type = type
     }
 }
 
@@ -162,13 +180,20 @@ extension AIModel {
         name: "dall-e-3",
         displayName: "DALL-E 3",
         maxTokens: 4096,
-        contextWindow: 8192
+        contextWindow: 8192,
+        type: .image
     )
     
-    // All available models
-    static let allModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .o3DeepResearch, .o4MiniDeepResearch, .dalle3]
+    // Chat models only (for regular conversation)
+    static let chatModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .o3DeepResearch, .o4MiniDeepResearch]
     
-    // Default model
+    // Image models (for image generation)
+    static let imageModels: [AIModel] = [.dalle3]
+    
+    // All available models
+    static let allModels: [AIModel] = chatModels + imageModels
+    
+    // Default model (must be a chat model)
     static let defaultModel: AIModel = .gpt5Mini
 }
 

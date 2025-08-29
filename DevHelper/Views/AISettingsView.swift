@@ -70,7 +70,7 @@ struct AISettingsView: View {
                         Text("Default Model")
                         Spacer()
                         Picker("", selection: $selectedDefaultModel) {
-                            ForEach(AIModel.allModels, id: \.id) { model in
+                            ForEach(AIModel.chatModels, id: \.id) { model in
                                 Text(model.displayName)
                                     .tag(model)
                             }

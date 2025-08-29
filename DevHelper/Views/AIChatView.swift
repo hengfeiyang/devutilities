@@ -121,15 +121,14 @@ struct ChatSidebarView: View {
                     Button(action: { showingSettings = true }) {
                         Image(systemName: "gearshape")
                             .font(.system(size: 16))
-                            .foregroundColor(settingsButtonHovered ? .primary : .secondary)
+                            .foregroundColor(.secondary)
                             .frame(width: 28, height: 28)
                             .background(
                                 settingsButtonHovered 
-                                ? Color.secondary.opacity(0.2)
-                                : Color.secondary.opacity(0.1)
+                                ? Color.secondary.opacity(0.1)
+                                : Color.clear
                             )
                             .clipShape(Circle())
-                            .scaleEffect(settingsButtonHovered ? 1.05 : 1.0)
                     }
                     .buttonStyle(PlainButtonStyle())
                     .help("Settings")
@@ -142,15 +141,14 @@ struct ChatSidebarView: View {
                     Button(action: createNewChat) {
                         Image(systemName: "plus")
                             .font(.system(size: 16))
-                            .foregroundColor(.white)
+                            .foregroundColor(.secondary)
                             .frame(width: 28, height: 28)
                             .background(
                                 newChatButtonHovered 
-                                ? Color.accentColor.opacity(0.8)
-                                : Color.accentColor
+                                ? Color.secondary.opacity(0.1)
+                                : Color.clear
                             )
                             .clipShape(Circle())
-                            .scaleEffect(newChatButtonHovered ? 1.05 : 1.0)
                     }
                     .buttonStyle(PlainButtonStyle())
                     .help("New Chat")
@@ -420,7 +418,7 @@ struct ChatSessionRow: View {
             RoundedRectangle(cornerRadius: 8)
                 .fill(
                     isSelected 
-                    ? Color.accentColor.opacity(0.2)
+                    ? Color.secondary.opacity(0.2)
                     : (isHovered ? Color.secondary.opacity(0.1) : Color.clear)
                 )
         )
@@ -465,6 +463,7 @@ struct ChatContentView: View {
                 ChatInputView(
                     currentMessage: $currentMessage,
                     isLoading: isLoading,
+                    selectedModel: session.selectedModel ?? aiSettings.defaultModel,
                     onSend: { sendMessage() }
                 )
             } else {
@@ -537,8 +536,8 @@ struct ChatHeaderView: View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
                 Text(currentSession?.title ?? "New Chat")
-                    .font(.headline)
-                    .lineLimit(1)
+                    .font(.body)
+                    .lineLimit(1).background(Color.gray).padding(0)
                 
                 HStack(spacing: 4) {
                     Circle()
@@ -549,7 +548,7 @@ struct ChatHeaderView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
-            }
+            }.background(Color.green).padding(0)
             
             Spacer()
             
@@ -697,7 +696,7 @@ struct ChatMessagesView: View {
                         }
                     }) {
                         Circle()
-                            .fill(Color.accentColor)
+                            .fill(Color.secondary)
                             .frame(width: 40, height: 40)
                             .overlay {
                                 Image(systemName: "arrow.down")
@@ -752,23 +751,6 @@ struct ChatMessageView: View {
     
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
-            if !isUser {
-                // AI Avatar
-                Circle()
-                    .fill(LinearGradient(
-                        gradient: Gradient(colors: [Color(red: 0.2, green: 0.7, blue: 1.0), Color(red: 0.5, green: 0.3, blue: 1.0)]),
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    ))
-                    .frame(width: 28, height: 28)
-                    .overlay {
-                        Image(systemName: "sparkles")
-                            .font(.system(size: 12, weight: .medium))
-                            .foregroundColor(.white)
-                    }
-                
-                Spacer(minLength: 12)
-            }
             
             // Message Content
             VStack(alignment: isUser ? .trailing : .leading, spacing: 6) {
@@ -779,30 +761,64 @@ struct ChatMessageView: View {
                             Spacer(minLength: 60)
                             
                             Text(message.content)
-                                .font(.system(size: 15))
-                                .foregroundColor(.white)
+                                .font(.body)
+                                //.foregroundColor(.white)
                                 .textSelection(.enabled)
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 12)
-                                .background(
-                                    LinearGradient(
-                                        gradient: Gradient(colors: [Color.accentColor, Color.accentColor.opacity(0.8)]),
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
+                                .background(Color.secondary.opacity(0.1))
                                 .clipShape(RoundedRectangle(cornerRadius: 18))
                                 .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 1)
                         }
                     } else {
-                        // Assistant messages: modern bubble with markdown
+                        // Assistant messages: modern bubble with markdown or image
                         HStack {
-                            MarkdownView(content: message.content)
+                            if message.contentType == .image {
+                                // Image message
+                                VStack(alignment: .leading, spacing: 8) {
+                                    if message.isStreaming {
+                                        HStack {
+                                            ProgressView()
+                                                .scaleEffect(0.8)
+                                            Text(message.content)
+                                                .font(.system(size: 14))
+                                                .foregroundColor(.secondary)
+                                        }
+                                        .padding(.horizontal, 16)
+                                        .padding(.vertical, 12)
+                                    } else if let imageURL = message.imageURL {
+                                        AsyncImage(url: URL(string: imageURL)) { image in
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                        } placeholder: {
+                                            ProgressView()
+                                                .frame(width: 200, height: 200)
+                                        }
+                                        .frame(maxWidth: 300, maxHeight: 300)
+                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                        .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
+                                        
+                                        if !message.content.isEmpty {
+                                            Text(message.content)
+                                                .font(.system(size: 13))
+                                                .foregroundColor(.secondary)
+                                                .padding(.horizontal, 4)
+                                        }
+                                    }
+                                }
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 12)
                                 .background(Color(NSColor.controlBackgroundColor))
                                 .clipShape(RoundedRectangle(cornerRadius: 18))
-                                .shadow(color: Color.black.opacity(0.05), radius: 1, x: 0, y: 1)
+                            } else {
+                                // Text message with markdown
+                                MarkdownView(content: message.content)
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 12)
+                                    .background(Color(NSColor.controlBackgroundColor))
+                                    .clipShape(RoundedRectangle(cornerRadius: 18))
+                            }
                             
                             Spacer(minLength: 60)
                         }
@@ -895,19 +911,6 @@ struct ChatMessageView: View {
                 }
             }
             
-            if isUser {
-                Spacer(minLength: 12)
-                
-                // User Avatar
-                Circle()
-                    .fill(Color.accentColor.opacity(0.1))
-                    .frame(width: 28, height: 28)
-                    .overlay {
-                        Image(systemName: "person.fill")
-                            .font(.system(size: 12, weight: .medium))
-                            .foregroundColor(.accentColor)
-                    }
-            }
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 8)
@@ -922,6 +925,7 @@ struct ChatMessageView: View {
 struct ChatInputView: View {
     @Binding var currentMessage: String
     let isLoading: Bool
+    let selectedModel: AIModel
     let onSend: () -> Void
     
     var body: some View {
@@ -938,9 +942,10 @@ struct ChatInputView: View {
                     .disabled(isLoading)
                     .overlay(alignment: .topLeading) {
                         if currentMessage.isEmpty {
-                            Text("Message")
+                            Text(selectedModel.type == .image ? "Describe the image you want to generate..." : "Message")
                                 .font(.system(size: 16))
                                 .foregroundColor(.secondary)
+                                .background(Color.clear)
                                 .allowsHitTesting(false)
                                 .padding(.top, 8)
                                 .padding(.leading, 4)

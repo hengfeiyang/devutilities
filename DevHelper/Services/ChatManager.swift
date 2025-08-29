@@ -124,6 +124,13 @@ class ChatManager {
                 chatSessions[sessionIndex].messages
             }
             
+            // Handle image generation when DALL-E 3 is selected
+            if model.type == .image {
+                print("🎨 ChatManager: Using DALL-E 3 for image generation")
+                await generateImage(content, sessionIndex: sessionIndex, apiKey: apiKey, isLoading: isLoading, errorMessage: errorMessage)
+                return
+            }
+            
             // Choose streaming or non-streaming based on settings
             print("📱 ChatManager: Sending \(currentMessages.count) messages to OpenAI API (streaming: \(settings.streamingEnabled))")
             
@@ -429,5 +436,111 @@ enum APIError: LocalizedError {
         case .missingAPIKey:
             return "Missing OpenAI API key"
         }
+    }
+}
+
+// MARK: - Image Generation Extension
+
+extension ChatManager {
+    private func generateImage(
+        _ prompt: String, 
+        sessionIndex: Int, 
+        apiKey: String, 
+        isLoading: Binding<Bool>, 
+        errorMessage: Binding<String?>
+    ) async {
+        do {
+            print("🎨 Generating image with DALL-E 3...")
+            
+            // Create placeholder image message
+            let imageMessage = ChatMessage(
+                role: .assistant, 
+                content: "Generating image...", 
+                isStreaming: true,
+                contentType: .image,
+                imagePrompt: prompt
+            )
+            
+            await MainActor.run {
+                chatSessions[sessionIndex].addMessage(imageMessage)
+                storage.saveChatSession(chatSessions[sessionIndex])
+            }
+            
+            // Call DALL-E 3 API
+            let imageURL = try await generateImageWithDallE3(prompt: prompt, apiKey: apiKey)
+            
+            // Update the message with the generated image
+            await MainActor.run {
+                if let lastIndex = chatSessions[sessionIndex].messages.lastIndex(where: { $0.contentType == .image && $0.isStreaming }) {
+                    chatSessions[sessionIndex].messages[lastIndex].content = "Generated image for: \"\(prompt)\""
+                    chatSessions[sessionIndex].messages[lastIndex].imageURL = imageURL
+                    chatSessions[sessionIndex].messages[lastIndex].isStreaming = false
+                    chatSessions[sessionIndex].updatedAt = Date()
+                    
+                    storage.saveChatSession(chatSessions[sessionIndex])
+                    print("✅ Image generated successfully: \(imageURL)")
+                }
+                
+                isLoading.wrappedValue = false
+            }
+            
+        } catch {
+            print("❌ Failed to generate image: \(error)")
+            await MainActor.run {
+                errorMessage.wrappedValue = "Failed to generate image: \(error.localizedDescription)"
+                isLoading.wrappedValue = false
+                
+                // Remove the failed message
+                if let lastIndex = chatSessions[sessionIndex].messages.lastIndex(where: { $0.contentType == .image && $0.isStreaming }) {
+                    chatSessions[sessionIndex].messages.remove(at: lastIndex)
+                }
+            }
+        }
+    }
+    
+    private func generateImageWithDallE3(prompt: String, apiKey: String) async throws -> String {
+        let url = URL(string: "\(OpenAIConfig.baseURL)/images/generations")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let requestBody: [String: Any] = [
+            "model": "dall-e-3",
+            "prompt": prompt,
+            "n": 1,
+            "size": "1024x1024",
+            "quality": "standard"
+        ]
+        
+        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw URLError(.badServerResponse)
+        }
+        
+        print("🎨 DALL-E 3 API Response Status: \(httpResponse.statusCode)")
+        
+        if httpResponse.statusCode != 200 {
+            if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let error = errorData["error"] as? [String: Any],
+               let message = error["message"] as? String {
+                throw NSError(domain: "OpenAIError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "HTTP Error \(httpResponse.statusCode): \(message)"])
+            } else {
+                throw NSError(domain: "OpenAIError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "HTTP Error \(httpResponse.statusCode)"])
+            }
+        }
+        
+        guard let jsonResponse = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let dataArray = jsonResponse["data"] as? [[String: Any]],
+              let firstImage = dataArray.first,
+              let imageURL = firstImage["url"] as? String else {
+            throw NSError(domain: "OpenAIError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid response format"])
+        }
+        
+        return imageURL
     }
 }
