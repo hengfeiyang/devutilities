@@ -35,7 +35,8 @@ struct AIChatView: View {
                 showingSettings: $showingSettings
             )
             .frame(minWidth: 220, maxWidth: 300)
-            .background(Color(NSColor.controlBackgroundColor))
+            .padding(.top, 44)
+            .ignoresSafeArea(edges: .top)
             
             // Main Chat Area
             ChatContentView(
@@ -47,7 +48,8 @@ struct AIChatView: View {
                 errorMessage: $errorMessage
             )
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(NSColor.controlBackgroundColor))
+            .padding(.top, 44)
+            .ignoresSafeArea(edges: .top)
         }
         .onAppear {
             chatManager.loadChatSessions()
@@ -113,8 +115,8 @@ struct ChatSidebarView: View {
             HStack(spacing: 12) {
                 Text("AI Chat")
                     .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.primary)
+                    .fontWeight(.medium)
+                    .padding(.leading, 8)
                 
                 Spacer()
                 
@@ -165,39 +167,30 @@ struct ChatSidebarView: View {
             
             // Search Bar
             HStack {
-                HStack(spacing: 8) {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundColor(.secondary)
-                    
-                    TextField("Search conversations...", text: $searchText)
-                        .textFieldStyle(PlainTextFieldStyle())
-                        .foregroundColor(.primary)
-                    
-                    if !searchText.isEmpty {
-                        Button(action: { 
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                searchText = "" 
-                            }
-                        }) {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.secondary)
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.secondary)
+                TextField("Search conversations...", text: $searchText)
+                    .textFieldStyle(PlainTextFieldStyle())
+                
+                if !searchText.isEmpty {
+                    Button(action: { 
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            searchText = "" 
                         }
-                        .buttonStyle(PlainButtonStyle())
-                        .transition(.opacity)
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.secondary)
                     }
+                    .buttonStyle(PlainButtonStyle())
+                    .transition(.opacity)
                 }
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .background(Color(NSColor.textBackgroundColor))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
-                )
-                .clipShape(RoundedRectangle(cornerRadius: 8))
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
-            .background(Color(NSColor.controlBackgroundColor))
+            .background(AppConstants.controlBackground)
+            .cornerRadius(10)
+            .padding(.horizontal, 16)
+            .padding(.bottom, 2)
             
             // Search Results Count
             if !searchText.isEmpty {
@@ -209,7 +202,6 @@ struct ChatSidebarView: View {
                 }
                 .padding(.horizontal, 16)
                 .padding(.bottom, 4)
-                .background(Color(NSColor.controlBackgroundColor))
             }
             
             // Chat List
@@ -273,12 +265,12 @@ struct ChatSidebarView: View {
                             }
                         }
                 }
-                .background(Color(NSColor.controlBackgroundColor))
+                .background(Color.clear)
                 .scrollContentBackground(.hidden)
             }
         }
-        .frame(minWidth: 220)
-        .background(Color(NSColor.controlBackgroundColor))
+        .frame(maxWidth: .infinity)
+        .background(Color.clear)
         .alert("Rename Chat", isPresented: $showingRenameAlert) {
             TextField("Chat Title", text: $newChatTitle)
             Button("Cancel") {
@@ -541,7 +533,7 @@ struct ChatHeaderView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(currentSession?.title ?? "New Chat")
                     .font(.body)
-                    .lineLimit(1).background(Color.gray).padding(0)
+                    .lineLimit(1)
                 
                 HStack(spacing: 4) {
                     Circle()
@@ -552,7 +544,7 @@ struct ChatHeaderView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
-            }.background(Color.green).padding(0)
+            }
             
             Spacer()
             
