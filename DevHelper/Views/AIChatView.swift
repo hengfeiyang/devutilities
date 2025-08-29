@@ -733,18 +733,81 @@ struct ChatMessageView: View {
     }
     
     private func copyMessageContent() {
-        NSPasteboard.general.clearContents()
-        NSPasteboard.general.setString(message.content, forType: .string)
-        
-        // Show feedback
-        withAnimation(.easeInOut(duration: 0.2)) {
-            showCopiedFeedback = true
-        }
-        
-        // Hide feedback after delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+        if message.contentType == .image {
+            // Copy image to clipboard
+            if let imageURL = message.imageURL, let url = URL(string: imageURL) {
+                Task {
+                    do {
+                        let (data, _) = try await URLSession.shared.data(from: url)
+                        if let image = NSImage(data: data) {
+                            DispatchQueue.main.async {
+                                NSPasteboard.general.clearContents()
+                                NSPasteboard.general.setData(image.tiffRepresentation, forType: .tiff)
+                                
+                                // Show feedback
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    showCopiedFeedback = true
+                                }
+                                
+                                // Hide feedback after delay
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                    withAnimation(.easeInOut(duration: 0.2)) {
+                                        showCopiedFeedback = false
+                                    }
+                                }
+                            }
+                        }
+                    } catch {
+                        print("❌ Failed to copy image: \(error)")
+                    }
+                }
+            }
+        } else {
+            // Copy text content
+            NSPasteboard.general.clearContents()
+            NSPasteboard.general.setString(message.content, forType: .string)
+            
+            // Show feedback
             withAnimation(.easeInOut(duration: 0.2)) {
-                showCopiedFeedback = false
+                showCopiedFeedback = true
+            }
+            
+            // Hide feedback after delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    showCopiedFeedback = false
+                }
+            }
+        }
+    }
+    
+    private func saveImage() {
+        guard message.contentType == .image,
+              let imageURL = message.imageURL,
+              let url = URL(string: imageURL) else { return }
+        
+        Task {
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                
+                DispatchQueue.main.async {
+                    let savePanel = NSSavePanel()
+                    savePanel.title = "Save Generated Image"
+                    savePanel.nameFieldStringValue = "generated_image.png"
+                    savePanel.allowedContentTypes = [.png, .jpeg]
+                    savePanel.canCreateDirectories = true
+                    
+                    if savePanel.runModal() == .OK, let saveURL = savePanel.url {
+                        do {
+                            try data.write(to: saveURL)
+                            print("✅ Image saved to: \(saveURL.path)")
+                        } catch {
+                            print("❌ Failed to save image: \(error)")
+                        }
+                    }
+                }
+            } catch {
+                print("❌ Failed to download image: \(error)")
             }
         }
     }
@@ -845,14 +908,26 @@ struct ChatMessageView: View {
                                     .foregroundColor(.green)
                                     .transition(.opacity)
                                 } else {
-                                    Image(systemName: "doc.on.doc")
+                                    Image(systemName: message.contentType == .image ? "photo.on.rectangle" : "doc.on.doc")
                                         .font(.system(size: 11))
                                         .foregroundColor(.secondary)
                                 }
                             }
                             .buttonStyle(PlainButtonStyle())
-                            .help("Copy message")
+                            .help(message.contentType == .image ? "Copy image" : "Copy message")
                             .opacity(isHovered || showCopiedFeedback ? 1.0 : 0.6)
+                            
+                            // Save button for images
+                            if message.contentType == .image {
+                                Button(action: saveImage) {
+                                    Image(systemName: "square.and.arrow.down")
+                                        .font(.system(size: 11))
+                                        .foregroundColor(.secondary)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                .help("Save image")
+                                .opacity(isHovered ? 1.0 : 0.6)
+                            }
                         }
                         .padding(.leading, 8)
                         
