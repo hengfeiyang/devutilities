@@ -159,6 +159,22 @@ extension AIModel {
         contextWindow: 128000
     )
     
+    static let gpt41Mini = AIModel(
+        id: "gpt-4.1-mini",
+        name: "gpt-4.1-mini",
+        displayName: "GPT-4.1 Mini",
+        maxTokens: 16384,
+        contextWindow: 128000
+    )
+    
+    static let gpt41Nano = AIModel(
+        id: "gpt-4.1-nano",
+        name: "gpt-4.1-nano",
+        displayName: "GPT-4.1 Nano",
+        maxTokens: 8192,
+        contextWindow: 64000
+    )
+    
     static let o3DeepResearch = AIModel(
         id: "o3-deep-research",
         name: "o3-deep-research",
@@ -185,7 +201,7 @@ extension AIModel {
     )
     
     // Chat models only (for regular conversation)
-    static let chatModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .o3DeepResearch, .o4MiniDeepResearch]
+    static let chatModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .gpt41Mini, .gpt41Nano, .o3DeepResearch, .o4MiniDeepResearch]
     
     // Image models (for image generation)
     static let imageModels: [AIModel] = [.dalle3]

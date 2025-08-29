@@ -47,6 +47,7 @@ struct AIChatView: View {
                 errorMessage: $errorMessage
             )
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color(NSColor.controlBackgroundColor))
         }
         .onAppear {
             chatManager.loadChatSessions()
@@ -272,9 +273,12 @@ struct ChatSidebarView: View {
                             }
                         }
                 }
+                .background(Color(NSColor.controlBackgroundColor))
+                .scrollContentBackground(.hidden)
             }
         }
         .frame(minWidth: 220)
+        .background(Color(NSColor.controlBackgroundColor))
         .alert("Rename Chat", isPresented: $showingRenameAlert) {
             TextField("Chat Title", text: $newChatTitle)
             Button("Cancel") {
@@ -629,6 +633,7 @@ struct ChatMessagesView: View {
     @State private var showScrollToBottom = false
     @State private var scrollViewHeight: CGFloat = 0
     @State private var contentHeight: CGFloat = 0
+    @State private var isAtBottom = true
     
     private var currentSession: ChatSession? {
         return chatManager.chatSessions.first(where: { $0.id == sessionId })
@@ -648,6 +653,12 @@ struct ChatMessagesView: View {
                         Color.clear
                             .frame(height: 1)
                             .id("bottom")
+                            .onAppear {
+                                isAtBottom = true
+                            }
+                            .onDisappear {
+                                isAtBottom = false
+                            }
                     }
                     .padding(16)
                 }
@@ -688,8 +699,8 @@ struct ChatMessagesView: View {
                     }
                 }
                 
-                // Scroll to bottom button
-                if showScrollToBottom {
+                // Scroll to bottom button (only show when not at bottom and has messages)
+                if showScrollToBottom && !isAtBottom {
                     Button(action: {
                         withAnimation(.easeOut(duration: 0.3)) {
                             proxy.scrollTo("bottom", anchor: .bottom)
@@ -697,7 +708,7 @@ struct ChatMessagesView: View {
                     }) {
                         Circle()
                             .fill(Color.secondary)
-                            .frame(width: 40, height: 40)
+                            .frame(width: 32, height: 32)
                             .overlay {
                                 Image(systemName: "arrow.down")
                                     .font(.system(size: 16, weight: .medium))
@@ -1003,31 +1014,65 @@ struct ChatInputView: View {
     let selectedModel: AIModel
     let onSend: () -> Void
     
+    // Calculate dynamic height based on content
+    private var calculatedHeight: CGFloat {
+        let lineHeight: CGFloat = 20
+        let padding: CGFloat = 60
+        let minHeight: CGFloat = lineHeight + padding
+        let maxHeight: CGFloat = 200
+        
+        if currentMessage.isEmpty {
+            return minHeight
+        }
+        
+        // Estimate height based on content
+        let lineCount = max(1, currentMessage.components(separatedBy: .newlines).count)
+        let estimatedHeight = CGFloat(lineCount) * lineHeight
+        
+        return min(maxHeight, max(minHeight, estimatedHeight))
+    }
+
     var body: some View {
         // Clean input area without section background - just the input box
         HStack(alignment: .bottom, spacing: 0) {
-            // Text Input with integrated send button
-            HStack(alignment: .bottom, spacing: 8) {
+            // Text Input with overlaid send button
+            ZStack(alignment: .bottomTrailing) {
                 // Auto-expanding TextEditor
                 TextEditor(text: $currentMessage)
-                    .font(.system(size: 16))
+                    .font(.body)
                     .scrollContentBackground(.hidden)
-                    .background(Color.clear)
-                    .frame(minHeight: 24, maxHeight: 200) // Allow more expansion like ChatGPT
+                    .frame(height: calculatedHeight)
                     .disabled(isLoading)
+                    .onKeyPress { key in
+                        if key.key == .return {
+                            if key.modifiers.contains(.shift) {
+                                // Shift+Enter: Insert new line
+                                currentMessage += "\n"
+                                return .ignored
+                            } else {
+                                // Enter: Send message
+                                if !currentMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !isLoading {
+                                    onSend()
+                                }
+                                return .handled
+                            }
+                        }
+                        return .ignored
+                    }
                     .overlay(alignment: .topLeading) {
                         if currentMessage.isEmpty {
-                            Text(selectedModel.type == .image ? "Describe the image you want to generate..." : "Message")
-                                .font(.system(size: 16))
+                            Text(selectedModel.type == .image ? "Describe the image you want to generate..." : "Ask anything...")
+                                .font(.body)
                                 .foregroundColor(.secondary)
                                 .background(Color.clear)
                                 .allowsHitTesting(false)
-                                .padding(.top, 8)
+                                .padding(.top, 4)
                                 .padding(.leading, 4)
                         }
                     }
                 
-                // Send Button (integrated inside the input area)
+
+                // Send Button (overlaid on bottom right)
                 Button(action: onSend) {
                     Circle()
                         .fill(
@@ -1046,22 +1091,14 @@ struct ChatInputView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 .disabled(currentMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !isLoading)
-                .padding(.bottom, 4) // Align with text baseline
+                .padding(.bottom, 8)
+                .padding(.trailing, 8)
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(Color(NSColor.controlBackgroundColor))
-            .overlay(
-                RoundedRectangle(cornerRadius: 22)
-                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
-            )
-            .clipShape(RoundedRectangle(cornerRadius: 22))
-            .shadow(color: Color.black.opacity(0.04), radius: 1, x: 0, y: 1)
+            .shadow(color: Color.black.opacity(0.2), radius: 1, x: 0, y: 1)
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 16)
-        // No section background - just transparent
-        .background(Color.clear)
+        .animation(.easeInOut(duration: 0.2), value: calculatedHeight)
     }
 }
 
@@ -1147,6 +1184,47 @@ struct MarkdownView: View {
             // Blockquotes
             else if line.hasPrefix("> ") {
                 elements.append(.blockquote(text: String(line.dropFirst(2))))
+            }
+            // Tables
+            else if line.contains("|") && !line.hasPrefix("|") {
+                var tableLines: [String] = [line]
+                var j = i + 1
+                
+                // Collect all table lines
+                while j < lines.count {
+                    let nextLine = lines[j].trimmingCharacters(in: .whitespaces)
+                    if nextLine.contains("|") {
+                        tableLines.append(nextLine)
+                        j += 1
+                    } else {
+                        break
+                    }
+                }
+                
+                // Parse table
+                if tableLines.count >= 2 {
+                    let headers = parseTableRow(tableLines[0])
+                    var rows: [[String]] = []
+                    
+                    // Skip separator row (usually contains | --- | --- |)
+                    let startIndex = tableLines[1].contains("---") || tableLines[1].contains("===") ? 2 : 1
+                    
+                    for k in startIndex..<tableLines.count {
+                        let rowData = parseTableRow(tableLines[k])
+                        if !rowData.isEmpty {
+                            rows.append(rowData)
+                        }
+                    }
+                    
+                    if !headers.isEmpty {
+                        elements.append(.table(headers: headers, rows: rows))
+                        i = j - 1 // Adjust index to continue after table
+                    } else {
+                        elements.append(.paragraph(text: line))
+                    }
+                } else {
+                    elements.append(.paragraph(text: line))
+                }
             }
             // Regular paragraph
             else {
@@ -1256,10 +1334,78 @@ struct MarkdownView: View {
             .padding(.vertical, 8)
             .padding(.leading, 16)
             
+        case .table(let headers, let rows):
+            VStack(alignment: .leading, spacing: 0) {
+                // Table headers
+                HStack(spacing: 0) {
+                    ForEach(headers.indices, id: \.self) { index in
+                        Text(headers[index])
+                            .font(.system(.body, weight: .semibold))
+                            .foregroundColor(.primary)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 10)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(AppConstants.controlBackground.opacity(0.5))
+                        
+                        if index < headers.count - 1 {
+                            Divider()
+                        }
+                    }
+                }
+                .overlay(
+                    Rectangle()
+                        .stroke(Color.secondary.opacity(0.3), lineWidth: 1)
+                )
+                
+                // Table rows
+                ForEach(rows.indices, id: \.self) { rowIndex in
+                    HStack(spacing: 0) {
+                        ForEach(rows[rowIndex].indices, id: \.self) { colIndex in
+                            Text(colIndex < rows[rowIndex].count ? rows[rowIndex][colIndex] : "")
+                                .font(.body)
+                                .foregroundColor(.primary)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 8)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .background(rowIndex % 2 == 0 ? Color.clear : AppConstants.controlBackground.opacity(0.2))
+                            
+                            if colIndex < max(headers.count, rows[rowIndex].count) - 1 {
+                                Divider()
+                            }
+                        }
+                    }
+                    .overlay(
+                        Rectangle()
+                            .stroke(Color.secondary.opacity(0.3), lineWidth: 1)
+                    )
+                }
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .padding(.vertical, 8)
+            
         case .spacing:
             Spacer()
                 .frame(height: 8)
         }
+    }
+    
+    private func parseTableRow(_ row: String) -> [String] {
+        let trimmedRow = row.trimmingCharacters(in: .whitespaces)
+        
+        // Remove leading and trailing pipes if present
+        var cleanRow = trimmedRow
+        if cleanRow.hasPrefix("|") {
+            cleanRow = String(cleanRow.dropFirst())
+        }
+        if cleanRow.hasSuffix("|") {
+            cleanRow = String(cleanRow.dropLast())
+        }
+        
+        // Split by pipes and clean up
+        let cells = cleanRow.components(separatedBy: "|")
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+        
+        return cells
     }
     
     private func renderInlineMarkdown(_ text: String) -> AttributedString {
@@ -1356,6 +1502,7 @@ enum MarkdownElement {
     case listItem(text: String)
     case numberedListItem(text: String)
     case blockquote(text: String)
+    case table(headers: [String], rows: [[String]])
     case spacing
     
     var id: String {
@@ -1366,6 +1513,7 @@ enum MarkdownElement {
         case .listItem(let text): return "li-\(text.hashValue)"
         case .numberedListItem(let text): return "nli-\(text.hashValue)"
         case .blockquote(let text): return "bq-\(text.hashValue)"
+        case .table(let headers, let rows): return "table-\(headers.joined().hashValue)-\(rows.flatMap{$0}.joined().hashValue)"
         case .spacing: return "sp-\(UUID().uuidString)"
         }
     }

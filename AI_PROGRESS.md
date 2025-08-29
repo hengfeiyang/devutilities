@@ -281,7 +281,6 @@ DevHelper/
 
 ## Future Enhancements (Optional)
 - **Advanced Search**: Search within specific date ranges or by model used
-- **Chat Folders**: Organize chats into categories or projects
 - **Conversation Templates**: Pre-defined prompts for common development tasks
 
 ---
