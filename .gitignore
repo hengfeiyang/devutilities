@@ -3,3 +3,5 @@ temp/
 tools/
 build/
 *.dmg
+.DS_Store
+*/.DS_Store
