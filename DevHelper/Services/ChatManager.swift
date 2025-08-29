@@ -131,73 +131,54 @@ class ChatManager {
                 return
             }
             
-            // Choose streaming or non-streaming based on settings
-            print("📱 ChatManager: Sending \(currentMessages.count) messages to OpenAI API (streaming: \(settings.streamingEnabled))")
+            // Always use streaming for better UX
+            print("📱 ChatManager: Sending \(currentMessages.count) messages to OpenAI API (streaming: enabled)")
             
-            if settings.streamingEnabled {
-                // Create placeholder streaming message
-                let streamingMessage = ChatMessage(role: .assistant, content: "", isStreaming: true)
-                await MainActor.run {
-                    chatSessions[sessionIndex].addMessage(streamingMessage)
-                    storage.saveChatSession(chatSessions[sessionIndex])
-                }
-                
-                let streamingMessageIndex = await MainActor.run { 
-                    chatSessions[sessionIndex].messages.count - 1 
-                }
-                
-                // Start streaming
-                openAIClient.sendMessageStreaming(
-                    currentMessages,
-                    model: model,
-                    apiKey: apiKey,
-                    onToken: { [weak self] token in
-                        guard let self = self else { return }
-                        
-                        // Update streaming message content
-                        if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
-                           streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
-                            self.chatSessions[sessionIdx].messages[streamingMessageIndex].content += token
-                            self.storage.saveChatSession(self.chatSessions[sessionIdx])
-                        }
-                    },
-                    onComplete: { [weak self] in
-                        guard let self = self else { return }
-                        
-                        // Mark streaming as complete
-                        if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
-                           streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
-                            self.chatSessions[sessionIdx].messages[streamingMessageIndex].isStreaming = false
-                            self.storage.saveChatSession(self.chatSessions[sessionIdx])
-                        }
-                        
-                        isLoading.wrappedValue = false
-                        print("✅ ChatManager: Streaming completed")
-                    },
-                    onError: { error in
-                        print("❌ ChatManager: Streaming error: \(error)")
-                        errorMessage.wrappedValue = "Failed to send message: \(error.localizedDescription)"
-                        isLoading.wrappedValue = false
+            // Create placeholder streaming message
+            let streamingMessage = ChatMessage(role: .assistant, content: "", isStreaming: true)
+            await MainActor.run {
+                chatSessions[sessionIndex].addMessage(streamingMessage)
+                storage.saveChatSession(chatSessions[sessionIndex])
+            }
+            
+            let streamingMessageIndex = await MainActor.run { 
+                chatSessions[sessionIndex].messages.count - 1 
+            }
+            
+            // Start streaming
+            openAIClient.sendMessageStreaming(
+                currentMessages,
+                model: model,
+                apiKey: apiKey,
+                onToken: { [weak self] token in
+                    guard let self = self else { return }
+                    
+                    // Update streaming message content
+                    if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
+                       streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
+                        self.chatSessions[sessionIdx].messages[streamingMessageIndex].content += token
+                        self.storage.saveChatSession(self.chatSessions[sessionIdx])
                     }
-                )
-            } else {
-                // Non-streaming (original implementation)
-                let response = try await openAIClient.sendMessage(
-                    currentMessages,
-                    model: model,
-                    apiKey: apiKey
-                )
-                print("✅ ChatManager: Received response from OpenAI: \(response.prefix(100))...")
-                
-                // Add AI response
-                let assistantMessage = ChatMessage(role: .assistant, content: response)
-                await MainActor.run {
-                    chatSessions[sessionIndex].addMessage(assistantMessage)
-                    storage.saveChatSession(chatSessions[sessionIndex])
+                },
+                onComplete: { [weak self] in
+                    guard let self = self else { return }
+                    
+                    // Mark streaming as complete
+                    if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
+                       streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
+                        self.chatSessions[sessionIdx].messages[streamingMessageIndex].isStreaming = false
+                        self.storage.saveChatSession(self.chatSessions[sessionIdx])
+                    }
+                    
+                    isLoading.wrappedValue = false
+                    print("✅ ChatManager: Streaming completed")
+                },
+                onError: { error in
+                    print("❌ ChatManager: Streaming error: \(error)")
+                    errorMessage.wrappedValue = "Failed to send message: \(error.localizedDescription)"
                     isLoading.wrappedValue = false
                 }
-                print("✅ ChatManager: Message added to session, total messages: \(await MainActor.run { chatSessions[sessionIndex].messages.count })")
-            }
+            )
             
         } catch {
             print("❌ ChatManager: Error sending message: \(error)")

@@ -21,7 +21,6 @@ struct AISettingsView: View {
     
     @State private var openAIKey = ""
     @State private var selectedDefaultModel: AIModel = .defaultModel
-    @State private var streamingEnabled = true
     @State private var maxHistoryChats = 100
     @State private var showingKeySecurely = false
     
@@ -89,7 +88,6 @@ struct AISettingsView: View {
                             .foregroundColor(.secondary)
                     }
                     
-                    Toggle("Enable Streaming", isOn: $streamingEnabled)
                 }
         }
         .formStyle(GroupedFormStyle())
@@ -120,7 +118,6 @@ struct AISettingsView: View {
     private func loadCurrentSettings() {
         openAIKey = settings.openAIAPIKey
         selectedDefaultModel = settings.defaultModel
-        streamingEnabled = settings.streamingEnabled
         maxHistoryChats = settings.maxHistoryChats
         showingKeySecurely = false
     }
@@ -128,7 +125,6 @@ struct AISettingsView: View {
     private func saveSettings() {
         settings.openAIAPIKey = openAIKey.trimmingCharacters(in: .whitespacesAndNewlines)
         settings.defaultModel = selectedDefaultModel
-        settings.streamingEnabled = streamingEnabled
         settings.maxHistoryChats = maxHistoryChats
     }
 }

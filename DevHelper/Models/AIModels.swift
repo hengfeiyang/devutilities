@@ -248,10 +248,6 @@ class AISettings {
         }
     }
     
-    var streamingEnabled: Bool {
-        get { userDefaults.object(forKey: "ai_streaming_enabled") as? Bool ?? true }
-        set { userDefaults.set(newValue, forKey: "ai_streaming_enabled") }
-    }
     
     var maxHistoryChats: Int {
         get { userDefaults.object(forKey: "ai_max_history_chats") as? Int ?? 100 }

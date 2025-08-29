@@ -91,6 +91,9 @@ struct ChatSidebarView: View {
     @State private var settingsButtonHovered = false
     @State private var newChatButtonHovered = false
     
+    // Detect current color scheme
+    @Environment(\.colorScheme) var colorScheme
+    
     private var filteredChatSessions: [ChatSession] {
         if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return chatManager.chatSessions
@@ -187,7 +190,7 @@ struct ChatSidebarView: View {
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
-            .background(AppConstants.controlBackground)
+            .background(colorScheme == .dark ? AppConstants.controlBackground : Color.gray.opacity(0.1))
             .cornerRadius(10)
             .padding(.horizontal, 16)
             .padding(.bottom, 2)
