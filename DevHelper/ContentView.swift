@@ -81,7 +81,7 @@ struct ContentView: View {
                         .tag(tool)
                 }
             }
-            .frame(minWidth: 210, maxWidth: .infinity, alignment: .leading)
+            .navigationSplitViewColumnWidth(min: 220, ideal: 220, max: 220)
         } detail: {
             Group {
                 switch selectedTool {
@@ -119,7 +119,7 @@ struct ContentView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .frame(minWidth: 1000, minHeight: 680)
+        .frame(minWidth: 1000, minHeight: 650)
         .alert("Update Available", isPresented: $updateChecker.showUpdateAlert) {
             Button("Download") {
                 updateChecker.openDownloadPage()
