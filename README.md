@@ -1,26 +1,27 @@
 # DevHelper
 
-A native macOS application for developers, containing 15 essential tools commonly used in software development.
+A native macOS application for developers, containing 16 essential tools commonly used in software development.
 
 > This tool was 100% developed by `Claude Code`.
 
 ## Features
 
-- **Timestamp Converter** - Convert between timestamps and human-readable dates with multiple format support
-- **Unit Converter** - Convert between different units (Data, Time, Length, Weight, Temperature, Area, Volume)
-- **JSON Formatter** - Format, validate, and compare JSON data with visual CodeMirror diff editor
-- **SQL Formatter** - Format and minify SQL queries with syntax validation
-- **HTML Formatter** - Format and minify HTML with proper tag indentation
-- **Base64 Encode/Decode** - Encode and decode Base64 strings
-- **JWT Encoder/Decoder** - Encode and decode JSON Web Tokens with HMAC and RSA signature support
-- **Regex Test** - Test regular expressions with pattern matching
-- **UUID Generator** - Generate UUIDs in various formats including v7 with timestamp extraction
-- **URL Tools** - URL encoding/decoding and parsing
-- **HTTP Request** - Full-featured HTTP client with method selection, headers, auth, response handling, and JSON tree view
-- **IP Query** - Discover your IP address and query geolocation data for any IP
-- **QR Code** - Generate QR codes with multiple sizes and error correction levels, scan QR codes from images
-- **Parquet Viewer** - Read and explore Parquet / arrow files with schema inspection and data export
-- **Crypto Tools** - Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA family), symmetric encryption (AES), and asymmetric encryption (RSA)
+- **Timestamp Converter** - Bidirectional timestamp conversion with timezone support and multiple format options
+- **Unit Converter** - Convert between different units across 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
+- **JSON Formatter** - Format, validate, escape/unescape, and compare JSON data with visual CodeMirror diff editor
+- **Base64 Encode/Decode** - Text encoding/decoding with URL-safe variant and automatic detection
+- **Regex Test** - Pattern matching with capture groups, flags, and common pattern library
+- **UUID Generator** - Multiple versions (v1, v4, v5, v7) with bulk generation and timestamp extraction
+- **URL Tools** - Encoding/decoding and comprehensive URL parsing with component breakdown
+- **IP Query** - Dual IP detection (international vs China networks) and geolocation queries
+- **HTTP Request** - Full HTTP client with SSE streaming, JSON tree view, and request history
+- **QR Code** - Generation and scanning with multiple sizes, error correction, and file operations
+- **SQL Formatter** - Format and minify SQL with syntax validation and proper indentation
+- **HTML Formatter** - Format and minify HTML with proper tag indentation and structure validation
+- **JWT Encoder/Decoder** - Complete JWT support with HMAC and RSA algorithms using CryptoKit security
+- **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading with schema inspection
+- **Crypto Tools** - **NEW** Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA-1/256/384/512), symmetric encryption (AES-GCM-256), and asymmetric encryption (RSA-2048/4096)
+- **AI Chat** - **LATEST** Intelligent AI assistant for development questions, code review, and technical guidance with context-aware responses
 
 ## Key Features
 
@@ -42,4 +43,4 @@ A native macOS application for developers, containing 15 essential tools commonl
 
 ## Version
 
-Current version: 1.12.0
+Current version: 1.13.0

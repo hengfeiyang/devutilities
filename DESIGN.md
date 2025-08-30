@@ -1,7 +1,7 @@
 # DevHelper - Design Document
 
 ## Overview
-DevHelper is a native macOS application built with SwiftUI that provides essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+DevHelper is a native macOS application built with SwiftUI that provides 16 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
 
 ## Architecture
 
@@ -16,21 +16,23 @@ DevHelper/
 │   ├── ContentView.swift           # Navigation split view
 │   ├── Models/
 │   │   └── ToolType.swift          # Tool definitions
-│   ├── Views/                      # All 14 tool implementations
+│   ├── Views/                      # All 16 tool implementations
 │   │   ├── TimestampConverterView.swift
 │   │   ├── UnitConverterView.swift
 │   │   ├── JSONFormatterView.swift
-│   │   ├── SQLFormatterView.swift
-│   │   ├── HTMLFormatterView.swift
 │   │   ├── Base64View.swift
-│   │   ├── JWTView.swift
-│   │   ├── URLToolsView.swift
 │   │   ├── RegexTestView.swift
 │   │   ├── UUIDGeneratorView.swift
-│   │   ├── HTTPRequestView.swift
+│   │   ├── URLToolsView.swift
 │   │   ├── IPQueryView.swift
+│   │   ├── HTTPRequestView.swift
 │   │   ├── QRCodeView.swift
-│   │   └── ParquetViewerView.swift
+│   │   ├── SQLFormatterView.swift
+│   │   ├── HTMLFormatterView.swift
+│   │   ├── JWTView.swift
+│   │   ├── ParquetViewerView.swift
+│   │   ├── CryptoToolsView.swift
+│   │   └── AIChatView.swift
 │   ├── Components/                 # Shared UI components
 │   │   ├── CodeEditor.swift        # CodeMirror integration & diff editor
 │   │   └── TextEditor.swift        # Custom text editor
@@ -443,6 +445,69 @@ Each tool follows a consistent pattern:
 - Automatic file type detection based on extension
 - Comprehensive metadata extraction including row groups and format version
 
+### 15. Crypto Tools
+**File**: `CryptoToolsView.swift`
+
+**Features**:
+- **Hash Functions**: MD5, CRC32, SHA-1, SHA-256, SHA-384, SHA-512 with real-time computation
+- **Symmetric Encryption**: AES-GCM-256 encrypt/decrypt with key generation and Base64 encoding
+- **Asymmetric Encryption**: RSA-2048/4096 encrypt/decrypt using Security framework
+- Real-time hash computation as user types
+- Key generation functionality for both AES and RSA
+- Base64 encoding/decoding for encrypted data
+- Sample data buttons for testing all operations
+- Perfect for API authentication token generation
+
+**UI Components**:
+- Three-tab interface (Hash/Symmetric/Asymmetric)
+- Hash selection dropdown with all supported algorithms
+- Key generation buttons with secure random generation
+- Two-column layout for encrypt/decrypt operations
+- Key size selection for RSA (2048/4096 bits)
+- Real-time processing indicators
+- Copy functionality throughout all tabs
+- PEM format support for RSA keys
+
+**Implementation Details**:
+- Uses `CryptoKit` for hash functions and AES encryption
+- `CommonCrypto` for MD5 and CRC32 legacy support
+- iOS Security framework for RSA key generation and operations
+- Secure random key generation using `SystemRandomNumberGenerator`
+- Base64 encoding for all encrypted outputs
+- Error handling for key format validation
+- Thread-safe operations with proper error messaging
+
+### 16. AI Chat
+**File**: `AIChatView.swift`
+
+**Features**:
+- **Intelligent Assistant**: AI-powered chat interface for development questions and guidance
+- **Code Review**: Context-aware code analysis and suggestions
+- **Technical Guidance**: Expert-level responses for programming challenges and best practices
+- **Real-time Chat**: Interactive conversation interface with message history
+- **Developer Context**: Specialized knowledge for software development workflows
+- **Multi-language Support**: Assistance across various programming languages and frameworks
+- **Problem Solving**: Step-by-step guidance for debugging and implementation
+- **Best Practices**: Recommendations following industry standards and conventions
+
+**UI Components**:
+- Chat message interface with user and assistant messages
+- Text input field with send functionality
+- Message history with scrollable conversation view
+- Code syntax highlighting in responses
+- Copy functionality for code snippets and responses
+- Clear conversation button for fresh starts
+- Typing indicators and response status
+
+**Implementation Details**:
+- Integration with AI service APIs for intelligent responses
+- Message persistence and history management
+- Markdown rendering for formatted responses
+- Code syntax highlighting using SwiftUI components
+- Real-time message streaming for better user experience
+- Error handling for network issues and API limitations
+- Context management for coherent conversations
+
 ## UI Design Principles
 
 ### Color Scheme
@@ -475,10 +540,10 @@ Each tool follows a consistent pattern:
 ### ToolType Enum
 ```swift
 enum ToolType: String, CaseIterable, Identifiable {
-    case timestampConverter, unitConverter, jsonFormatter, 
-         sqlFormatter, htmlFormatter, base64, jwt, 
-         urlTools, regexTest, uuidGenerator, httpRequest, 
-         ipQuery, qrCode, parquetViewer
+    case timestampConverter, unitConverter, jsonFormatter, base64, 
+         regexTest, uuidGenerator, urlTools, ipQuery, httpRequest, 
+         qrCode, sqlFormatter, htmlFormatter, jwt, parquetViewer, 
+         cryptoTools, aiChat
     
     var title: String { /* Display names */ }
     var iconName: String { /* SF Symbols */ }
@@ -499,13 +564,15 @@ enum ToolType: String, CaseIterable, Identifiable {
 - `HTTPHeader` and `HTTPResponseData` for request/response handling
 - `RequestTab`, `ResponseTab`, and `ResponseViewMode` for HTTP UI state
 - `QRCodeTab`, `QRCodeSize`, and `QRCodeCorrectionLevel` for QR code options
+- `CryptoTab`, `HashAlgorithm`, and `RSAKeySize` for crypto tool operations
+- `ChatMessage`, `MessageRole`, and `ChatState` for AI chat functionality
 
 ## Build Configuration
 
 ### Target Settings
 - **Minimum macOS**: 14.0
 - **Bundle Identifier**: com.devhelper.DevHelper
-- **Version**: 1.9.0 (Build 1)
+- **Version**: 1.13.0 (Build 1)
 - **Swift Version**: 5.0
 - **App Sandbox**: Enabled
 - **Hardened Runtime**: Enabled

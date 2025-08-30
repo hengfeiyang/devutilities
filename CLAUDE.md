@@ -3,11 +3,11 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevHelper is a native macOS application built with SwiftUI that provides 15 essential developer utilities. Version 1.12.0 with comprehensive cryptographic tools.
+DevHelper is a native macOS application built with SwiftUI that provides 16 essential developer utilities. Version 1.13.0 with comprehensive cryptographic tools and AI chat assistant.
 
 ## Key Tools & Status
 
-All 15 tools are ✅ **Complete**:
+All 16 tools are ✅ **Complete**:
 1. **Timestamp Converter** - Bidirectional timestamp conversion with timezone support
 2. **Unit Converter** - 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
 3. **JSON Formatter** - Format, validate, escape/unescape, **visual CodeMirror diff editor**
@@ -23,6 +23,7 @@ All 15 tools are ✅ **Complete**:
 13. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
 14. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
 15. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
+16. **AI Chat** - **Intelligent AI assistant** for development questions, code review, and technical guidance
 
 ## Architecture & Technical Stack
 - **Platform**: macOS 14.0+ SwiftUI
@@ -42,7 +43,15 @@ xcodebuild -project DevHelper.xcodeproj -scheme DevHelper build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
-## Recent Updates (v1.12.0)
+## Recent Updates (v1.13.0)
+- **AI Chat**: New intelligent AI assistant for development questions and code review
+- **Chat Interface**: Interactive conversation with context-aware responses
+- **Developer Context**: Specialized knowledge for software development workflows
+- **Code Analysis**: Real-time code review and technical guidance
+- **Multi-language Support**: Assistance across various programming languages and frameworks
+- **Message History**: Persistent chat sessions with conversation management
+
+## Previous Updates (v1.12.0)
 - **Crypto Tools**: New comprehensive cryptographic utility suite addressing GitHub issues #13 and #14
 - **Hash Functions**: MD5, CRC32, SHA-1, SHA-256, SHA-384, SHA-512 with real-time computation
 - **Symmetric Encryption**: AES-GCM-256 encrypt/decrypt with key generation and Base64 encoding
