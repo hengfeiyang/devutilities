@@ -727,7 +727,7 @@ body {
 
 .screenshot-card {
     background: var(--white);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-sm);
     overflow: hidden;
     box-shadow: var(--shadow-md);
     transition: all var(--transition-normal);
@@ -742,8 +742,8 @@ body {
 
 .screenshot-card img {
     width: 100%;
-    height: 200px;
-    object-fit: cover;
+    height: 100%;
+    object-fit: fill;
     transition: all var(--transition-normal);
 }
 

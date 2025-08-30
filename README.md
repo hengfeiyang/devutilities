@@ -1,107 +1,89 @@
-# DevHelper Website
+# DevHelper
 
-This is the marketing website for DevHelper, showcasing all 15 developer tools in a modern, responsive design.
+A native macOS application for developers, containing 15 essential tools commonly used in software development.
+
+> This tool was 100% developed by `Claude Code`.
 
 ## Features
 
-- **Responsive Design** - Works perfectly on desktop, tablet, and mobile devices
-- **Modern UI** - Clean, professional design matching the app's branding
-- **Performance Optimized** - Fast loading with lazy loading images and optimized assets
-- **Interactive Gallery** - Click on screenshots to view them in full size
-- **Smooth Animations** - Subtle animations and transitions for better UX
-- **SEO Optimized** - Proper meta tags, structured data, and semantic HTML
+- **Timestamp Converter** - Convert between timestamps and human-readable dates with multiple format support
+- **Unit Converter** - Convert between different units (Data, Time, Length, Weight, Temperature, Area, Volume)
+- **JSON Formatter** - Format, validate, and compare JSON data with visual CodeMirror diff editor
+- **SQL Formatter** - Format and minify SQL queries with syntax validation
+- **HTML Formatter** - Format and minify HTML with proper tag indentation
+- **Base64 Encode/Decode** - Encode and decode Base64 strings
+- **JWT Encoder/Decoder** - Encode and decode JSON Web Tokens with HMAC and RSA signature support
+- **Regex Test** - Test regular expressions with pattern matching
+- **UUID Generator** - Generate UUIDs in various formats including v7 with timestamp extraction
+- **URL Tools** - URL encoding/decoding and parsing
+- **HTTP Request** - Full-featured HTTP client with method selection, headers, auth, response handling, and JSON tree view
+- **IP Query** - Discover your IP address and query geolocation data for any IP
+- **QR Code** - Generate QR codes with multiple sizes and error correction levels, scan QR codes from images
+- **Parquet Viewer** - Read and explore Parquet / arrow files with schema inspection and data export
+- **Crypto Tools** - Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA family), symmetric encryption (AES), and asymmetric encryption (RSA)
 
-## Structure
+## Key Features
 
-```
-website/
-├── index.html          # Main HTML file
-├── css/
-│   └── style.css      # All styles and responsive design
-├── js/
-│   └── main.js        # Interactive functionality
-└── images/
-    ├── icon.png       # App icon
-    ├── favicon.png    # Website favicon
-    ├── hero-screenshot.png  # Hero section image
-    ├── devhelper-og.png     # Open Graph/social sharing image
-    └── screenshots/   # All app screenshots
-```
+- **Search Functionality** - Quickly find tools using the search bar in the sidebar
+- **Selectable Results** - Copy results directly from the output areas
+- **Modern UI** - Clean, intuitive interface designed for macOS
+- **Real-time Conversion** - Instant results as you type
 
-## Development
+## Requirements
 
-The website is built with vanilla HTML, CSS, and JavaScript for maximum compatibility and performance.
+- macOS 14.0 or later
+- Xcode 15.4 or later (for development)
 
-### Key Technologies Used
+## Installation
 
-- **HTML5** - Semantic markup with accessibility in mind
-- **CSS3** - Modern CSS with CSS Grid, Flexbox, and custom properties
-- **JavaScript ES6+** - Modern JavaScript with progressive enhancement
-- **Inter Font** - Professional typography from Google Fonts
+1. Clone this repository
+2. Open `DevHelper.xcodeproj` in Xcode
+3. Build and run the project
 
-### Browser Support
+## Version
 
-- Chrome/Chromium 60+
-- Firefox 60+
-- Safari 12+
-- Edge 79+
+Current version: 1.12.1
 
-## Deployment
+## Screenshots
 
-The website can be hosted on any static hosting service:
+#### Timestamp Converter
+![DevHelper Timestamp Converter](./images/screenshots/timestamp.png)
 
-- **GitHub Pages** - Simple and free
-- **Netlify** - Great for continuous deployment
-- **Vercel** - Excellent performance and CDN
-- **AWS S3 + CloudFront** - Enterprise-grade hosting
+#### Unit Converter
+![DevHelper Unit Converter](./images/screenshots/unit.png)
 
-### Quick Deploy to GitHub Pages
+#### Json Formater
+![DevHelper Json Formater](./images/screenshots/json.png)
 
-1. Create a new repository on GitHub
-2. Upload all website files to the repository
-3. Enable GitHub Pages in repository settings
-4. Your website will be available at `https://yourusername.github.io/repository-name`
+#### Base64 Encode/Decode
+![DevHelper Base64 encode](./images/screenshots/base64.png)
 
-## Customization
+#### URL Tools
+![DevHelper Url Tools](./images/screenshots/url.png)
 
-### Colors
+#### Regex Test
+![DevHelper Regex Test](./images/screenshots/regex.png)
 
-The website uses CSS custom properties for easy theming. Main colors are defined in `:root`:
+#### UUID Generator
+![DevHelper UUID Generator](./images/screenshots/uuid.png)
 
-- `--primary-blue: #4A90E2` - Main brand color
-- `--primary-blue-dark: #357ABD` - Darker variant for hovers
-- `--primary-blue-light: #6BA3E8` - Lighter variant for accents
+#### Http Request
+![DevHelper Http Request](./images/screenshots/http.png)
 
-### Content
+Http Request History
+![DevHelper Http Request History](./images/screenshots/http_history.png)
 
-- Edit `index.html` to modify content, features, and links
-- Update images in `/images/` folder
-- Modify styles in `/css/style.css`
-- Add functionality in `/js/main.js`
+#### IP Query
+![DevHelper IP Query](./images/screenshots/ip.png)
 
-## Performance Notes
+#### QR Code
+![DevHelper QR Code](./images/screenshots/qrcode.png)
 
-- All images are optimized and use lazy loading
-- CSS and JavaScript are minified and use modern features
-- The website scores 95+ on Google Lighthouse performance tests
-- Total page size is under 2MB including all images
+#### Parquet Viewer
+![DevHelper Paruqet metadata](./images/screenshots/parquet_schema.png)
 
-## Analytics
+Parquet data view
+![DevHelper Paruqet data view](./images/screenshots/parquet_data.png)
 
-To add analytics, insert your tracking code before the closing `</body>` tag in `index.html`.
-
-Example for Google Analytics:
-```html
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'GA_MEASUREMENT_ID');
-</script>
-```
-
-## License
-
-This website is part of the DevHelper project and follows the same MIT License.
+#### JWT Encoder/Decoder
+![DevHelper JWT encoder](./images/screenshots/jwt.png)
