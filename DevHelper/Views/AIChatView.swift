@@ -728,6 +728,7 @@ struct ChatMessageView: View {
     let message: ChatMessage
     @State private var isHovered = false
     @State private var showCopiedFeedback = false
+    @State private var showImagePreview = false
     
     private var isUser: Bool {
         message.role == .user
@@ -857,23 +858,41 @@ struct ChatMessageView: View {
                                         .padding(.horizontal, 16)
                                         .padding(.vertical, 12)
                                     } else if let imageURL = message.imageURL {
-                                        AsyncImage(url: URL(string: imageURL)) { image in
-                                            image
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                        } placeholder: {
-                                            ProgressView()
-                                                .frame(width: 200, height: 200)
-                                        }
-                                        .frame(maxWidth: 300, maxHeight: 300)
-                                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                                        .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
-                                        
-                                        if !message.content.isEmpty {
-                                            Text(message.content)
-                                                .font(.system(size: 13))
-                                                .foregroundColor(.secondary)
-                                                .padding(.horizontal, 4)
+                                        VStack(alignment: .leading, spacing: 8) {
+                                            AsyncImage(url: URL(string: imageURL)) { image in
+                                                image
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                            } placeholder: {
+                                                ProgressView()
+                                                    .frame(width: 200, height: 200)
+                                            }
+                                            .frame(maxWidth: 300, maxHeight: 300)
+                                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                                            .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
+                                            .onTapGesture {
+                                                print("🖼️ Image tapped - imageURL: \(message.imageURL ?? "nil")")
+                                                showImagePreview = true
+                                            }
+                                            .help("Click to view full size")
+                                            .overlay(alignment: .topTrailing) {
+                                                Image(systemName: "arrow.up.left.and.arrow.down.right")
+                                                    .font(.system(size: 12, weight: .medium))
+                                                    .foregroundColor(.white)
+                                                    .padding(8)
+                                                    .background(Color.black.opacity(0.6))
+                                                    .clipShape(Circle())
+                                                    .opacity(isHovered ? 1.0 : 0.0)
+                                                    .animation(.easeInOut(duration: 0.2), value: isHovered)
+                                                    .padding(8)
+                                            }
+                                            
+                                            if !message.content.isEmpty {
+                                                Text(message.content)
+                                                    .font(.system(size: 13))
+                                                    .foregroundColor(.secondary)
+                                                    .padding(.horizontal, 4)
+                                            }
                                         }
                                     }
                                 }
@@ -883,12 +902,15 @@ struct ChatMessageView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 18))
                             } else {
                                 // Text message with MarkdownUI library
-                                Markdown(message.content)
-                                    .textSelection(.enabled)
-                                    .padding(.horizontal, 16)
-                                    .padding(.vertical, 12)
-                                    .background(Color(NSColor.controlBackgroundColor))
-                                    .clipShape(RoundedRectangle(cornerRadius: 18))
+                                VStack {
+                                    Markdown(message.content)
+                                        .textSelection(.enabled)
+                                }
+                                .lineSpacing(4)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 12)
+                                .background(Color(NSColor.controlBackgroundColor))
+                                .clipShape(RoundedRectangle(cornerRadius: 18))
                             }
                             
                             Spacer(minLength: 60)
@@ -896,84 +918,86 @@ struct ChatMessageView: View {
                     }
                 }
                 
-                // Always visible timestamp and actions
-                HStack {
-                    if !isUser {
-                        // Assistant message actions (left aligned)
-                        HStack(spacing: 8) {
-                            Text(timeStamp)
-                                .font(.system(size: 11))
-                                .foregroundColor(.secondary)
-                            
-                            Button(action: copyMessageContent) {
-                                if showCopiedFeedback {
-                                    HStack(spacing: 4) {
-                                        Image(systemName: "checkmark")
-                                            .font(.system(size: 10))
-                                        Text("Copied")
-                                            .font(.system(size: 10))
+                // Timestamp and actions (only show when not streaming)
+                if !message.isStreaming {
+                    HStack {
+                        if !isUser {
+                            // Assistant message actions (left aligned)
+                            HStack(spacing: 8) {
+                                Text(timeStamp)
+                                    .font(.system(size: 11))
+                                    .foregroundColor(.secondary)
+                                
+                                Button(action: copyMessageContent) {
+                                    if showCopiedFeedback {
+                                        HStack(spacing: 4) {
+                                            Image(systemName: "checkmark")
+                                                .font(.system(size: 10))
+                                            Text("Copied")
+                                                .font(.system(size: 10))
+                                        }
+                                        .foregroundColor(.green)
+                                        .transition(.opacity)
+                                    } else {
+                                        Image(systemName: message.contentType == .image ? "photo.on.rectangle" : "doc.on.doc")
+                                            .font(.system(size: 11))
+                                            .foregroundColor(.secondary)
                                     }
-                                    .foregroundColor(.green)
-                                    .transition(.opacity)
-                                } else {
-                                    Image(systemName: message.contentType == .image ? "photo.on.rectangle" : "doc.on.doc")
-                                        .font(.system(size: 11))
-                                        .foregroundColor(.secondary)
-                                }
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .help(message.contentType == .image ? "Copy image" : "Copy message")
-                            .opacity(isHovered || showCopiedFeedback ? 1.0 : 0.6)
-                            
-                            // Save button for images
-                            if message.contentType == .image {
-                                Button(action: saveImage) {
-                                    Image(systemName: "square.and.arrow.down")
-                                        .font(.system(size: 11))
-                                        .foregroundColor(.secondary)
                                 }
                                 .buttonStyle(PlainButtonStyle())
-                                .help("Save image")
-                                .opacity(isHovered ? 1.0 : 0.6)
-                            }
-                        }
-                        .padding(.leading, 8)
-                        
-                        Spacer()
-                    } else {
-                        // User message actions (right aligned)
-                        Spacer()
-                        
-                        HStack(spacing: 8) {
-                            Button(action: copyMessageContent) {
-                                if showCopiedFeedback {
-                                    HStack(spacing: 4) {
-                                        Image(systemName: "checkmark")
-                                            .font(.system(size: 10))
-                                        Text("Copied")
-                                            .font(.system(size: 10))
+                                .help(message.contentType == .image ? "Copy image" : "Copy message")
+                                .opacity(isHovered || showCopiedFeedback ? 1.0 : 0.6)
+                                
+                                // Save button for images
+                                if message.contentType == .image {
+                                    Button(action: saveImage) {
+                                        Image(systemName: "square.and.arrow.down")
+                                            .font(.system(size: 11))
+                                            .foregroundColor(.secondary)
                                     }
-                                    .foregroundColor(.green)
-                                    .transition(.opacity)
-                                } else {
-                                    Image(systemName: "doc.on.doc")
-                                        .font(.system(size: 11))
-                                        .foregroundColor(.secondary)
+                                    .buttonStyle(PlainButtonStyle())
+                                    .help("Save image")
+                                    .opacity(isHovered ? 1.0 : 0.6)
                                 }
                             }
-                            .buttonStyle(PlainButtonStyle())
-                            .help("Copy message")
-                            .opacity(isHovered || showCopiedFeedback ? 1.0 : 0.6)
+                            .padding(.leading, 8)
                             
-                            Text(timeStamp)
-                                .font(.system(size: 11))
-                                .foregroundColor(.secondary)
+                            Spacer()
+                        } else {
+                            // User message actions (right aligned)
+                            Spacer()
+                            
+                            HStack(spacing: 8) {
+                                Button(action: copyMessageContent) {
+                                    if showCopiedFeedback {
+                                        HStack(spacing: 4) {
+                                            Image(systemName: "checkmark")
+                                                .font(.system(size: 10))
+                                            Text("Copied")
+                                                .font(.system(size: 10))
+                                        }
+                                        .foregroundColor(.green)
+                                        .transition(.opacity)
+                                    } else {
+                                        Image(systemName: "doc.on.doc")
+                                            .font(.system(size: 11))
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                .help("Copy message")
+                                .opacity(isHovered || showCopiedFeedback ? 1.0 : 0.6)
+                                
+                                Text(timeStamp)
+                                    .font(.system(size: 11))
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 8)
                         }
-                        .padding(.trailing, 8)
                     }
+                    .animation(.easeInOut(duration: 0.15), value: isHovered)
+                    .animation(.easeInOut(duration: 0.2), value: showCopiedFeedback)
                 }
-                .animation(.easeInOut(duration: 0.15), value: isHovered)
-                .animation(.easeInOut(duration: 0.2), value: showCopiedFeedback)
                 
                 if message.isStreaming && message.content.isEmpty {
                     HStack {
@@ -1000,6 +1024,15 @@ struct ChatMessageView: View {
         .onHover { hovering in
             withAnimation(.easeInOut(duration: 0.2)) {
                 isHovered = hovering
+            }
+        }
+        .sheet(isPresented: $showImagePreview) {
+            if let imageURL = message.imageURL {
+                ImagePreviewView(imageURL: imageURL, prompt: message.imagePrompt ?? "Generated Image")
+            } else {
+                Text("No image URL available")
+                    .foregroundColor(.red)
+                    .padding()
             }
         }
     }
@@ -1041,6 +1074,7 @@ struct ChatInputView: View {
                     .frame(height: calculatedHeight)
                     .disabled(isLoading)
                     .onKeyPress { key in
+                        // print("🔑 onKeyPress key: \(key)")
                         if key.key == .return {
                             if key.modifiers.contains(.shift) {
                                 // Shift+Enter: Insert new line
@@ -1048,7 +1082,9 @@ struct ChatInputView: View {
                                 return .ignored
                             } else {
                                 // Enter: Send message
-                                if !currentMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !isLoading {
+                                let message = currentMessage.trimmingCharacters(in: .whitespacesAndNewlines)
+                                // print("🔑 onKeyPress message: \(message), isLoading: \(isLoading)")
+                                if !message.isEmpty && !isLoading {
                                     onSend()
                                 }
                                 return .handled
@@ -1091,7 +1127,6 @@ struct ChatInputView: View {
                 .padding(.bottom, 8)
                 .padding(.trailing, 8)
             }
-            .shadow(color: Color.black.opacity(0.2), radius: 1, x: 0, y: 1)
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 16)
@@ -1105,6 +1140,125 @@ struct ScrollOffsetPreferenceKey: PreferenceKey {
     static var defaultValue: CGFloat = 0
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = nextValue()
+    }
+}
+
+struct ImagePreviewView: View {
+    let imageURL: String
+    let prompt: String
+    @Environment(\.dismiss) private var dismiss
+    @State private var imageLoadError: String?
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            // Header with title and buttons
+            HStack {
+                Text("Generated Image")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                
+                Spacer()
+                
+                Button("Save") {
+                    saveImageToFile()
+                }
+                .buttonStyle(.borderedProminent)
+                
+                Button("Close") {
+                    dismiss()
+                }
+                .buttonStyle(.bordered)
+                .keyboardShortcut(.cancelAction)
+            }
+            .padding()
+            .background(Color(NSColor.windowBackgroundColor))
+            
+            // Main image content
+            AsyncImage(url: URL(string: imageURL)) { phase in
+                switch phase {
+                case .empty:
+                    VStack {
+                        ProgressView()
+                            .scaleEffect(1.5)
+                        Text("Loading image...")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.top)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                case .success(let image):
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding(0)
+                case .failure(let error):
+                    VStack(spacing: 12) {
+                        Image(systemName: "photo")
+                            .font(.system(size: 50))
+                            .foregroundColor(.secondary)
+                        Text("Failed to load image")
+                            .font(.headline)
+                            .foregroundColor(.secondary)
+                        Text(error.localizedDescription)
+                            .font(.caption)
+                            .foregroundColor(.red)
+                            .multilineTextAlignment(.center)
+                        Button("Copy URL") {
+                            NSPasteboard.general.clearContents()
+                            NSPasteboard.general.setString(imageURL, forType: .string)
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                @unknown default:
+                    VStack {
+                        ProgressView()
+                        Text("Unknown state")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            }
+            .background(Color(NSColor.controlBackgroundColor))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(0)
+        }
+        .frame(width: 800, height: 860)
+        .padding(0)
+        .onAppear {
+            print("🖼️ ImagePreviewView opened with URL: \(imageURL)")
+        }
+    }
+    
+    private func saveImageToFile() {
+        guard let url = URL(string: imageURL) else { return }
+        
+        Task {
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                
+                DispatchQueue.main.async {
+                    let savePanel = NSSavePanel()
+                    savePanel.title = "Save Generated Image"
+                    savePanel.nameFieldStringValue = "generated_image.png"
+                    savePanel.allowedContentTypes = [.png, .jpeg]
+                    savePanel.canCreateDirectories = true
+                    
+                    if savePanel.runModal() == .OK, let saveURL = savePanel.url {
+                        do {
+                            try data.write(to: saveURL)
+                            print("✅ Image saved to: \(saveURL.path)")
+                        } catch {
+                            print("❌ Failed to save image: \(error)")
+                        }
+                    }
+                }
+            } catch {
+                print("❌ Failed to download image: \(error)")
+            }
+        }
     }
 }
 

@@ -200,8 +200,40 @@ extension AIModel {
         type: .image
     )
     
+    static let gemini25Pro = AIModel(
+        id: "gemini-2.5-pro",
+        name: "gemini-2.5-pro",
+        displayName: "Gemini 2.5 Pro",
+        maxTokens: 8192,
+        contextWindow: 1000000
+    )
+    
+    static let gemini25Flash = AIModel(
+        id: "gemini-2.5-flash",
+        name: "gemini-2.5-flash",
+        displayName: "Gemini 2.5 Flash",
+        maxTokens: 8192,
+        contextWindow: 1000000
+    )
+    
+    static let gemini25FlashLite = AIModel(
+        id: "gemini-2.5-flash-lite",
+        name: "gemini-2.5-flash-lite",
+        displayName: "Gemini 2.5 Flash Lite",
+        maxTokens: 8192,
+        contextWindow: 1000000
+    )
+    
+    static let gemini25FlashImagePreview = AIModel(
+        id: "gemini-2.5-flash-image-preview",
+        name: "gemini-2.5-flash-image-preview",
+        displayName: "Gemini 2.5 Flash Image Preview",
+        maxTokens: 8192,
+        contextWindow: 1000000
+    )
+    
     // Chat models only (for regular conversation)
-    static let chatModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .gpt41Mini, .gpt41Nano, .o3DeepResearch, .o4MiniDeepResearch]
+    static let chatModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .gpt41Mini, .gpt41Nano, .o3DeepResearch, .o4MiniDeepResearch, .gemini25Pro, .gemini25Flash, .gemini25FlashLite, .gemini25FlashImagePreview]
     
     // Image models (for image generation)
     static let imageModels: [AIModel] = [.dalle3]

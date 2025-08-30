@@ -134,11 +134,11 @@ class ChatManager {
             // Always use streaming for better UX
             print("📱 ChatManager: Sending \(currentMessages.count) messages to OpenAI API (streaming: enabled)")
             
-            // Create placeholder streaming message
+            // Create placeholder streaming message (in memory only, not saved)
             let streamingMessage = ChatMessage(role: .assistant, content: "", isStreaming: true)
             await MainActor.run {
-                chatSessions[sessionIndex].addMessage(streamingMessage)
-                storage.saveChatSession(chatSessions[sessionIndex])
+                chatSessions[sessionIndex].messages.append(streamingMessage)
+                // Note: Don't save to storage yet - only save when complete
             }
             
             let streamingMessageIndex = await MainActor.run { 
@@ -154,20 +154,22 @@ class ChatManager {
                 onToken: { [weak self] token in
                     guard let self = self else { return }
                     
-                    // Update streaming message content
+                    // Update streaming message content (in memory only)
                     if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
                        streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
                         self.chatSessions[sessionIdx].messages[streamingMessageIndex].content += token
-                        self.storage.saveChatSession(self.chatSessions[sessionIdx])
+                        // Note: Don't save to storage during streaming - only save when complete
                     }
                 },
                 onComplete: { [weak self] in
                     guard let self = self else { return }
                     
-                    // Mark streaming as complete
+                    // Mark streaming as complete and save to storage
                     if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
                        streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
                         self.chatSessions[sessionIdx].messages[streamingMessageIndex].isStreaming = false
+                        self.chatSessions[sessionIdx].updatedAt = Date()
+                        // Now save to storage - only successful messages are persisted
                         self.storage.saveChatSession(self.chatSessions[sessionIdx])
                     }
                     
@@ -176,6 +178,16 @@ class ChatManager {
                 },
                 onError: { error in
                     print("❌ ChatManager: Streaming error: \(error)")
+                    
+                    // Just remove from memory - nothing to clean up from storage
+                    Task { @MainActor in
+                        if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
+                           streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
+                            self.chatSessions[sessionIdx].messages.remove(at: streamingMessageIndex)
+                            // No need to save since it was never persisted
+                        }
+                    }
+                    
                     errorMessage.wrappedValue = "Failed to send message: \(error.localizedDescription)"
                     isLoading.wrappedValue = false
                 }
@@ -184,6 +196,16 @@ class ChatManager {
         } catch {
             print("❌ ChatManager: Error sending message: \(error)")
             await MainActor.run {
+                // Remove any streaming message that was created but failed (from memory only)
+                if let sessionIdx = chatSessions.firstIndex(where: { $0.id == sessionId }) {
+                    // Remove the last message if it's still streaming (failed)
+                    if let lastMessage = chatSessions[sessionIdx].messages.last,
+                       lastMessage.isStreaming {
+                        chatSessions[sessionIdx].messages.removeLast()
+                        // No need to save since it was never persisted
+                    }
+                }
+                
                 errorMessage.wrappedValue = "Failed to send message: \(error.localizedDescription)"
                 isLoading.wrappedValue = false
             }
@@ -447,14 +469,14 @@ extension ChatManager {
             )
             
             await MainActor.run {
-                chatSessions[sessionIndex].addMessage(imageMessage)
-                storage.saveChatSession(chatSessions[sessionIndex])
+                chatSessions[sessionIndex].messages.append(imageMessage)
+                // Note: Don't save to storage yet - only save when complete
             }
             
             // Call DALL-E 3 API
             let imageURL = try await generateImageWithDallE3(prompt: prompt, apiKey: apiKey, baseURL: settings.apiGatewayURL)
             
-            // Update the message with the generated image
+            // Update the message with the generated image and save to storage
             await MainActor.run {
                 if let lastIndex = chatSessions[sessionIndex].messages.lastIndex(where: { $0.contentType == .image && $0.isStreaming }) {
                     chatSessions[sessionIndex].messages[lastIndex].content = "Generated image for: \"\(prompt)\""
@@ -462,6 +484,7 @@ extension ChatManager {
                     chatSessions[sessionIndex].messages[lastIndex].isStreaming = false
                     chatSessions[sessionIndex].updatedAt = Date()
                     
+                    // Now save to storage - only successful messages are persisted
                     storage.saveChatSession(chatSessions[sessionIndex])
                     print("✅ Image generated successfully: \(imageURL)")
                 }
@@ -475,9 +498,10 @@ extension ChatManager {
                 errorMessage.wrappedValue = "Failed to generate image: \(error.localizedDescription)"
                 isLoading.wrappedValue = false
                 
-                // Remove the failed message
+                // Remove the failed message (from memory only)
                 if let lastIndex = chatSessions[sessionIndex].messages.lastIndex(where: { $0.contentType == .image && $0.isStreaming }) {
                     chatSessions[sessionIndex].messages.remove(at: lastIndex)
+                    // No need to save since it was never persisted
                 }
             }
         }
