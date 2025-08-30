@@ -1,6 +1,6 @@
 # DevHelper
 
-A native macOS application for developers, containing 15 essential tools commonly used in software development.
+A native macOS application for developers, containing 16 essential tools commonly used in software development.
 
 > This tool was 100% developed by `Claude Code`.
 
@@ -20,7 +20,8 @@ A native macOS application for developers, containing 15 essential tools commonl
 - **IP Query** - Discover your IP address and query geolocation data for any IP
 - **QR Code** - Generate QR codes with multiple sizes and error correction levels, scan QR codes from images
 - **Parquet Viewer** - Read and explore Parquet / arrow files with schema inspection and data export
-- **Crypto Tools** - Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA family), symmetric encryption (AES), and asymmetric encryption (RSA)
+- **Crypto Tools** - Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA-1/256/384/512), symmetric encryption (AES-GCM-256), and asymmetric encryption (RSA-2048/4096)
+- **AI Chat** - Intelligent AI assistant for development questions, code review, and technical guidance with context-aware responses
 
 ## Key Features
 
@@ -42,7 +43,7 @@ A native macOS application for developers, containing 15 essential tools commonl
 
 ## Version
 
-Current version: 1.12.1
+Current version: 1.13.0
 
 ## Screenshots
 
@@ -87,3 +88,9 @@ Parquet data view
 
 #### JWT Encoder/Decoder
 ![DevHelper JWT encoder](./images/screenshots/jwt.png)
+
+#### Crypto Tools
+![Crypto Tools](./images/screenshots/crypto.png)
+
+#### AI Chat
+![AI Chat](./images/screenshots/aichat.png)
