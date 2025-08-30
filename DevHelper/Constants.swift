@@ -12,29 +12,24 @@ struct AppConstants {
     static let adaptiveSecondaryText = Color(NSColor.secondaryLabelColor)
     static let adaptiveBorder = Color(NSColor.separatorColor)
     
-    // Custom adaptive colors
+    // Custom adaptive colors using NSColor
     static let customBackground = Color(
-        light: Color(red: 0.98, green: 0.98, blue: 0.98), // Light gray for light mode
-        dark: Color(red: 0.15, green: 0.15, blue: 0.15)   // Dark gray for dark mode
+        nsColor: NSColor(name: nil) { appearance in
+            if appearance.bestMatch(from: [.aqua, .darkAqua]) == .darkAqua {
+                return NSColor(red: 0.15, green: 0.15, blue: 0.15, alpha: 1.0) // Dark gray
+            } else {
+                return NSColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.0) // Light gray
+            }
+        }
     )
     
     static let customAccent = Color(
-        light: Color.blue,
-        dark: Color.cyan
-    )
-}
-
-// Extension to create adaptive colors
-extension Color {
-    init(light: Color, dark: Color) {
-        self.init(
-            nsColor: NSColor(name: nil) { appearance in
-                if appearance.bestMatch(from: [.aqua, .darkAqua]) == .darkAqua {
-                    return NSColor(dark)
-                } else {
-                    return NSColor(light)
-                }
+        nsColor: NSColor(name: nil) { appearance in
+            if appearance.bestMatch(from: [.aqua, .darkAqua]) == .darkAqua {
+                return NSColor.cyan
+            } else {
+                return NSColor.blue
             }
-        )
-    }
+        }
+    )
 }

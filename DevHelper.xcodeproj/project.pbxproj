@@ -11,6 +11,7 @@
 		9332C0392E589984009E68BE /* CodeMirror-SwiftUI in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 9332C0372E589984009E68BE /* CodeMirror-SwiftUI */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		934569062E5FFCD600491835 /* UpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934569042E5FFCD600491835 /* UpdateChecker.swift */; };
 		934569072E5FFCD600491835 /* VersionComparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934569052E5FFCD600491835 /* VersionComparator.swift */; };
+		9394F25B2E6290750069D7B9 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9394F25A2E6290750069D7B9 /* MarkdownUI */; };
 		93A6A9212E588B98006A2798 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A6A9202E588B98006A2798 /* Constants.swift */; };
 		93B500A02E5D81D500F38E50 /* ParquetViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B5009E2E5D81D500F38E50 /* ParquetViewer.swift */; };
 		93B500A12E5D81D500F38E50 /* libparquet_viewer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 93B5009C2E5D81D500F38E50 /* libparquet_viewer.dylib */; };
@@ -114,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9394F25B2E6290750069D7B9 /* MarkdownUI in Frameworks */,
 				9332C0382E589984009E68BE /* CodeMirror-SwiftUI in Frameworks */,
 				93B500A12E5D81D500F38E50 /* libparquet_viewer.dylib in Frameworks */,
 			);
@@ -280,6 +282,7 @@
 			mainGroup = D5F4E7E72C5A1B2E00123456;
 			packageReferences = (
 				9332C0332E5897DC009E68BE /* XCRemoteSwiftPackageReference "CodeMirror-SwiftUI" */,
+				9394F2592E6290750069D7B9 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			productRefGroup = D5F4E7F12C5A1B2E00123456 /* Products */;
 			projectDirPath = "";
@@ -586,6 +589,14 @@
 				kind = branch;
 			};
 		};
+		9394F2592E6290750069D7B9 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -593,6 +604,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9332C0332E5897DC009E68BE /* XCRemoteSwiftPackageReference "CodeMirror-SwiftUI" */;
 			productName = "CodeMirror-SwiftUI";
+		};
+		9394F25A2E6290750069D7B9 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9394F2592E6290750069D7B9 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
