@@ -464,7 +464,9 @@ struct ChatContentView: View {
                     currentMessage: $currentMessage,
                     isLoading: isLoading,
                     selectedModel: session.selectedModel ?? aiSettings.defaultModel,
-                    onSend: { sendMessage() }
+                    onSendWithText: { messageText in
+                        sendMessageDirectly(messageText)
+                    }
                 )
             } else {
                 // Empty State
@@ -493,19 +495,13 @@ struct ChatContentView: View {
         }
     }
     
-    private func sendMessage() {
-        guard let session = selectedSession,
-              !currentMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
-              !isLoading else { 
-            print("❌ UI: sendMessage guard failed - session: \(selectedSession?.id.uuidString ?? "nil"), message empty: \(currentMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty), loading: \(isLoading)")
+    private func sendMessageDirectly(_ messageText: String) {
+        guard let session = selectedSession, !isLoading else { 
+            print("❌ UI: sendMessageDirectly guard failed - session: \(selectedSession?.id.uuidString ?? "nil"), loading: \(isLoading)")
             return 
         }
         
-        print("📱 UI: Sending message: '\(currentMessage.prefix(50))...'")
-        
-        
-        let messageText = currentMessage.trimmingCharacters(in: .whitespacesAndNewlines)
-        currentMessage = ""
+        print("📱 UI: Sending message directly: '\(messageText.prefix(50))...'")
         
         Task {
             await chatManager.sendMessage(
@@ -629,7 +625,7 @@ struct ChatMessagesView: View {
     @State private var showScrollToBottom = false
     @State private var scrollViewHeight: CGFloat = 0
     @State private var contentHeight: CGFloat = 0
-    @State private var isAtBottom = true
+    @State private var isAtBottom = false
     
     private var currentSession: ChatSession? {
         return chatManager.chatSessions.first(where: { $0.id == sessionId })
@@ -643,18 +639,19 @@ struct ChatMessagesView: View {
                         ForEach(currentSession?.messages ?? []) { message in
                             ChatMessageView(message: message)
                                 .id(message.id)
+                                .onAppear {
+                                    // If this is the last message, user is at bottom
+                                    if message.id == currentSession?.messages.last?.id {
+                                        isAtBottom = true
+                                    }
+                                }
+                                .onDisappear {
+                                    // If this is the last message, user is not at bottom
+                                    if message.id == currentSession?.messages.last?.id {
+                                        isAtBottom = false
+                                    }
+                                }
                         }
-                        
-                        // Invisible marker at the bottom
-                        Color.clear
-                            .frame(height: 1)
-                            .id("bottom")
-                            .onAppear {
-                                isAtBottom = true
-                            }
-                            .onDisappear {
-                                isAtBottom = false
-                            }
                     }
                     .padding(16)
                 }
@@ -666,31 +663,26 @@ struct ChatMessagesView: View {
                         }
                     }
                 }
-                .onChange(of: currentSession?.messages.count) { _, newCount in
-                    // Auto-scroll to new messages
-                    withAnimation(.easeOut(duration: 0.3)) {
-                        proxy.scrollTo("bottom", anchor: .bottom)
-                    }
-                    
-                    // Show/hide scroll button based on message count
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            showScrollToBottom = (newCount ?? 0) > 3
+                .onChange(of: sessionId) { _, _ in
+                    // When session changes, scroll to the last message instead of "bottom" anchor
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        if let lastMessage = currentSession?.messages.last {
+                            withAnimation(.easeOut(duration: 0.3)) {
+                                proxy.scrollTo(lastMessage.id, anchor: .bottom)
+                            }
                         }
+                        showScrollToBottom = (currentSession?.messages.count ?? 0) > 3
                     }
                 }
-                .onChange(of: isLoading) { _, newValue in
-                    if newValue {
-                        withAnimation(.easeOut(duration: 0.3)) {
-                            proxy.scrollTo("bottom", anchor: .bottom)
-                        }
-                    }
+                .onChange(of: currentSession?.messages.count) { _, newCount in
+                    // Show/hide scroll button based on message count
+                    showScrollToBottom = (newCount ?? 0) > 3
                 }
                 .onChange(of: currentSession?.messages.last?.content) { _, _ in
-                    // Auto-scroll during streaming updates
+                    // Auto-scroll during streaming updates to follow the conversation
                     if let lastMessage = currentSession?.messages.last, lastMessage.isStreaming {
                         withAnimation(.easeOut(duration: 0.1)) {
-                            proxy.scrollTo("bottom", anchor: .bottom)
+                            proxy.scrollTo(lastMessage.id, anchor: .bottom)
                         }
                     }
                 }
@@ -698,8 +690,10 @@ struct ChatMessagesView: View {
                 // Scroll to bottom button (only show when not at bottom and has messages)
                 if showScrollToBottom && !isAtBottom {
                     Button(action: {
-                        withAnimation(.easeOut(duration: 0.3)) {
-                            proxy.scrollTo("bottom", anchor: .bottom)
+                        if let lastMessage = currentSession?.messages.last {
+                            withAnimation(.easeOut(duration: 0.3)) {
+                                proxy.scrollTo(lastMessage.id, anchor: .bottom)
+                            }
                         }
                     }) {
                         Circle()
@@ -905,6 +899,19 @@ struct ChatMessageView: View {
                                 VStack {
                                     Markdown(message.content)
                                         .textSelection(.enabled)
+                                        .markdownBlockStyle(\.codeBlock) { configuration in
+                                            configuration.label
+                                                .padding(12)
+                                                .background(Color(NSColor.textBackgroundColor))
+                                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                                .markdownTextStyle {
+                                                    FontFamilyVariant(.monospaced)
+                                                    FontSize(13)
+                                                }
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .fixedSize(horizontal: false, vertical: true)
+                                        }
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .lineSpacing(4)
                                 .padding(.horizontal, 16)
@@ -1042,7 +1049,7 @@ struct ChatInputView: View {
     @Binding var currentMessage: String
     let isLoading: Bool
     let selectedModel: AIModel
-    let onSend: () -> Void
+    let onSendWithText: (String) -> Void
     
     // Calculate dynamic height based on content
     private var calculatedHeight: CGFloat {
@@ -1074,21 +1081,16 @@ struct ChatInputView: View {
                     .frame(height: calculatedHeight)
                     .disabled(isLoading)
                     .onKeyPress { key in
-                        // print("🔑 onKeyPress key: \(key)")
-                        if key.key == .return {
-                            if key.modifiers.contains(.shift) {
-                                // Shift+Enter: Insert new line
-                                currentMessage += "\n"
-                                return .ignored
-                            } else {
-                                // Enter: Send message
-                                let message = currentMessage.trimmingCharacters(in: .whitespacesAndNewlines)
-                                // print("🔑 onKeyPress message: \(message), isLoading: \(isLoading)")
-                                if !message.isEmpty && !isLoading {
-                                    onSend()
-                                }
-                                return .handled
+                        print("🔑 onKeyPress key: \(key)")
+                        if key.key == .return && !key.modifiers.contains(.shift) {
+                            // Enter: Send message
+                            let messageToSend = currentMessage.trimmingCharacters(in: .whitespacesAndNewlines)
+                            print("🔑 onKeyPress messageToSend: '\(messageToSend)', isLoading: \(isLoading)")
+                            if !messageToSend.isEmpty && !isLoading {
+                                currentMessage = ""  // Clear input immediately
+                                onSendWithText(messageToSend)  // Send with captured text
                             }
+                            return .handled
                         }
                         return .ignored
                     }
@@ -1106,7 +1108,13 @@ struct ChatInputView: View {
                 
 
                 // Send Button (overlaid on bottom right)
-                Button(action: onSend) {
+                Button(action: {
+                    let messageToSend = currentMessage.trimmingCharacters(in: .whitespacesAndNewlines)
+                    if !messageToSend.isEmpty && !isLoading {
+                        currentMessage = ""
+                        onSendWithText(messageToSend)
+                    }
+                }) {
                     Circle()
                         .fill(
                             currentMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !isLoading 
