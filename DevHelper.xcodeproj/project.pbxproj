@@ -27,6 +27,7 @@
 		93CECFE82E612F2B00F5A131 /* AISettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CECFE72E612F2B00F5A131 /* AISettingsView.swift */; };
 		93CECFE92E612F2B00F5A131 /* AIChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CECFE62E612F2B00F5A131 /* AIChatView.swift */; };
 		93CECFEB2E612F3400F5A131 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CECFEA2E612F3400F5A131 /* ChatManager.swift */; };
+		93DB98A32E635E5200E70747 /* ImageStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DB98A22E635E5200E70747 /* ImageStorageService.swift */; };
 		B41BCA88D09D488EA2A4ABAC /* CryptoToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41BCA88D09D488EA2A4ABAB /* CryptoToolsView.swift */; };
 		D5F4E7F42C5A1B2E00123456 /* DevHelperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4E7F32C5A1B2E00123456 /* DevHelperApp.swift */; };
 		D5F4E7F62C5A1B2E00123456 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4E7F52C5A1B2E00123456 /* ContentView.swift */; };
@@ -83,6 +84,7 @@
 		93CECFE62E612F2B00F5A131 /* AIChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatView.swift; sourceTree = "<group>"; };
 		93CECFE72E612F2B00F5A131 /* AISettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISettingsView.swift; sourceTree = "<group>"; };
 		93CECFEA2E612F3400F5A131 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
+		93DB98A22E635E5200E70747 /* ImageStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStorageService.swift; sourceTree = "<group>"; };
 		B41BCA88D09D488EA2A4ABAB /* CryptoToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoToolsView.swift; sourceTree = "<group>"; };
 		B822A4CAC32A426BA9E4E438123457 /* IPQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPQueryView.swift; sourceTree = "<group>"; };
 		D5F4E7F02C5A1B2E00123456 /* DevHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,6 +139,7 @@
 		93B55B4D2E5EF944001ECD91 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				93DB98A22E635E5200E70747 /* ImageStorageService.swift */,
 				93CECFEA2E612F3400F5A131 /* ChatManager.swift */,
 				934569042E5FFCD600491835 /* UpdateChecker.swift */,
 				934569052E5FFCD600491835 /* VersionComparator.swift */,
@@ -343,6 +346,7 @@
 				93B55B522E5EF944001ECD91 /* EventNetworkService.swift in Sources */,
 				TCI4F7812C5A1B3000987654 /* TimestampConversionIntent.swift in Sources */,
 				D5F4E7F62C5A1B2E00123456 /* ContentView.swift in Sources */,
+				93DB98A32E635E5200E70747 /* ImageStorageService.swift in Sources */,
 				D5F4E7F42C5A1B2E00123456 /* DevHelperApp.swift in Sources */,
 				93B500A02E5D81D500F38E50 /* ParquetViewer.swift in Sources */,
 			);
@@ -507,7 +511,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 1.13.0;
+				MARKETING_VERSION = 1.13.1;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhelper.DevHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -548,7 +552,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 1.13.0;
+				MARKETING_VERSION = 1.13.1;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhelper.DevHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";

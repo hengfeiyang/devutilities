@@ -66,9 +66,10 @@ struct ChatMessage: Identifiable, Codable, Hashable {
     var isStreaming: Bool
     var contentType: MessageContentType = .text
     var imageURL: String? = nil
+    var localImagePath: String? = nil
     var imagePrompt: String? = nil
     
-    init(role: MessageRole, content: String, isStreaming: Bool = false, contentType: MessageContentType = .text, imageURL: String? = nil, imagePrompt: String? = nil) {
+    init(role: MessageRole, content: String, isStreaming: Bool = false, contentType: MessageContentType = .text, imageURL: String? = nil, localImagePath: String? = nil, imagePrompt: String? = nil) {
         self.id = UUID()
         self.role = role
         self.content = content
@@ -76,7 +77,16 @@ struct ChatMessage: Identifiable, Codable, Hashable {
         self.isStreaming = isStreaming
         self.contentType = contentType
         self.imageURL = imageURL
+        self.localImagePath = localImagePath
         self.imagePrompt = imagePrompt
+    }
+    
+    var effectiveImageURL: String? {
+        if let localPath = localImagePath,
+           FileManager.default.fileExists(atPath: localPath) {
+            return "file://\(localPath)"
+        }
+        return imageURL
     }
 }
 

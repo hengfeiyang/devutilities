@@ -737,7 +737,7 @@ struct ChatMessageView: View {
     private func copyMessageContent() {
         if message.contentType == .image {
             // Copy image to clipboard
-            if let imageURL = message.imageURL, let url = URL(string: imageURL) {
+            if let imageURL = message.effectiveImageURL, let url = URL(string: imageURL) {
                 Task {
                     do {
                         let (data, _) = try await URLSession.shared.data(from: url)
@@ -785,7 +785,7 @@ struct ChatMessageView: View {
     
     private func saveImage() {
         guard message.contentType == .image,
-              let imageURL = message.imageURL,
+              let imageURL = message.effectiveImageURL,
               let url = URL(string: imageURL) else { return }
         
         Task {
@@ -851,7 +851,7 @@ struct ChatMessageView: View {
                                         }
                                         .padding(.horizontal, 16)
                                         .padding(.vertical, 12)
-                                    } else if let imageURL = message.imageURL {
+                                    } else if let imageURL = message.effectiveImageURL {
                                         VStack(alignment: .leading, spacing: 8) {
                                             AsyncImage(url: URL(string: imageURL)) { image in
                                                 image
@@ -1034,7 +1034,7 @@ struct ChatMessageView: View {
             }
         }
         .sheet(isPresented: $showImagePreview) {
-            if let imageURL = message.imageURL {
+            if let imageURL = message.effectiveImageURL {
                 ImagePreviewView(imageURL: imageURL, prompt: message.imagePrompt ?? "Generated Image")
             } else {
                 Text("No image URL available")

@@ -36,6 +36,13 @@ class ChatManager {
     }
     
     func deleteChat(_ session: ChatSession) {
+        // Delete associated images
+        for message in session.messages where message.contentType == .image {
+            if let localPath = message.localImagePath {
+                ImageStorageService.shared.deleteImage(at: localPath)
+            }
+        }
+        
         chatSessions.removeAll { $0.id == session.id }
         storage.deleteChatSession(session.id)
     }
@@ -52,7 +59,10 @@ class ChatManager {
             let copiedMessage = ChatMessage(
                 role: message.role,
                 content: message.content,
-                isStreaming: false
+                contentType: message.contentType,
+                imageURL: message.imageURL,
+                localImagePath: message.localImagePath,
+                imagePrompt: message.imagePrompt
             )
             duplicated.addMessage(copiedMessage)
         }
@@ -132,7 +142,7 @@ class ChatManager {
             }
             
             // Always use streaming for better UX
-            print("📱 ChatManager: Sending \(currentMessages.count) messages to OpenAI API (streaming: enabled)")
+            print("📱 ChatManager: Sending \(currentMessages.count) messages to OpenAI API")
             
             // Create placeholder streaming message (in memory only, not saved)
             let streamingMessage = ChatMessage(role: .assistant, content: "", isStreaming: true)
@@ -476,11 +486,36 @@ extension ChatManager {
             // Call DALL-E 3 API
             let imageURL = try await generateImageWithDallE3(prompt: prompt, apiKey: apiKey, baseURL: settings.apiGatewayURL)
             
+            // Get the message ID for local storage before updating
+            guard let messageId = await MainActor.run(body: {
+                if let lastIndex = chatSessions[sessionIndex].messages.lastIndex(where: { $0.contentType == .image && $0.isStreaming }) {
+                    return chatSessions[sessionIndex].messages[lastIndex].id
+                }
+                return nil
+            }) else {
+                await MainActor.run {
+                    errorMessage.wrappedValue = "Failed to find image message"
+                    isLoading.wrappedValue = false
+                }
+                return
+            }
+            
+            // Download image to local storage
+            let localImagePath: String?
+            do {
+                localImagePath = try await ImageStorageService.shared.downloadAndSaveImage(from: imageURL, messageId: messageId)
+                print("✅ Image downloaded to local storage: \(localImagePath ?? "unknown")")
+            } catch {
+                print("⚠️ Failed to download image locally, will use remote URL: \(error)")
+                localImagePath = nil
+            }
+            
             // Update the message with the generated image and save to storage
             await MainActor.run {
                 if let lastIndex = chatSessions[sessionIndex].messages.lastIndex(where: { $0.contentType == .image && $0.isStreaming }) {
                     chatSessions[sessionIndex].messages[lastIndex].content = "Generated image for: \"\(prompt)\""
                     chatSessions[sessionIndex].messages[lastIndex].imageURL = imageURL
+                    chatSessions[sessionIndex].messages[lastIndex].localImagePath = localImagePath
                     chatSessions[sessionIndex].messages[lastIndex].isStreaming = false
                     chatSessions[sessionIndex].updatedAt = Date()
                     
