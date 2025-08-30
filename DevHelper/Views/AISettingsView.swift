@@ -22,6 +22,7 @@ struct AISettingsView: View {
     @State private var openAIKey = ""
     @State private var selectedDefaultModel: AIModel = .defaultModel
     @State private var maxHistoryChats = 100
+    @State private var apiGatewayURL = ""
     @State private var showingKeySecurely = false
     
     var body: some View {
@@ -58,6 +59,23 @@ struct AISettingsView: View {
                         }
                         
                         Text("Get your API key from [platform.openai.com](https://platform.openai.com/api-keys)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.vertical, 4)
+
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Text("API Gateway URL")
+                                .fontWeight(.medium)
+                            Spacer()
+                        }
+                        
+                        TextField("https://", text: $apiGatewayURL)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        
+                        Text("Custom API endpoint for proxy servers or alternative OpenAI-compatible APIs")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -109,7 +127,7 @@ struct AISettingsView: View {
                 .keyboardShortcut(.return, modifiers: .command)
             }
         }
-        .frame(width: 550, height: 350)
+        .frame(width: 550, height: 400)
         .onAppear {
             loadCurrentSettings()
         }
@@ -119,6 +137,7 @@ struct AISettingsView: View {
         openAIKey = settings.openAIAPIKey
         selectedDefaultModel = settings.defaultModel
         maxHistoryChats = settings.maxHistoryChats
+        apiGatewayURL = settings.apiGatewayURL
         showingKeySecurely = false
     }
     
@@ -126,6 +145,7 @@ struct AISettingsView: View {
         settings.openAIAPIKey = openAIKey.trimmingCharacters(in: .whitespacesAndNewlines)
         settings.defaultModel = selectedDefaultModel
         settings.maxHistoryChats = maxHistoryChats
+        settings.apiGatewayURL = apiGatewayURL.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
 

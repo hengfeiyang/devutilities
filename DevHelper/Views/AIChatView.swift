@@ -35,8 +35,8 @@ struct AIChatView: View {
                 showingSettings: $showingSettings
             )
             .frame(minWidth: 220, maxWidth: 300)
-            .padding(.top, 44)
-            .ignoresSafeArea(edges: .top)
+            // .padding(.top, 44)
+            // .ignoresSafeArea(edges: .top)
             
             // Main Chat Area
             ChatContentView(
@@ -48,8 +48,8 @@ struct AIChatView: View {
                 errorMessage: $errorMessage
             )
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.top, 44)
-            .ignoresSafeArea(edges: .top)
+            // .padding(.top, 44)
+            // .ignoresSafeArea(edges: .top)
         }
         .onAppear {
             chatManager.loadChatSessions()

@@ -127,7 +127,7 @@ class ChatManager {
             // Handle image generation when DALL-E 3 is selected
             if model.type == .image {
                 print("🎨 ChatManager: Using DALL-E 3 for image generation")
-                await generateImage(content, sessionIndex: sessionIndex, apiKey: apiKey, isLoading: isLoading, errorMessage: errorMessage)
+                await generateImage(content, sessionIndex: sessionIndex, apiKey: apiKey, settings: settings, isLoading: isLoading, errorMessage: errorMessage)
                 return
             }
             
@@ -150,6 +150,7 @@ class ChatManager {
                 currentMessages,
                 model: model,
                 apiKey: apiKey,
+                baseURL: settings.apiGatewayURL,
                 onToken: { [weak self] token in
                     guard let self = self else { return }
                     
@@ -263,10 +264,11 @@ class OpenAIClient {
     func sendMessage(
         _ messages: [ChatMessage],
         model: AIModel,
-        apiKey: String
+        apiKey: String,
+        baseURL: String = OpenAIConfig.baseURL
     ) async throws -> String {
         
-        let url = URL(string: "\(OpenAIConfig.baseURL)/chat/completions")!
+        let url = URL(string: "\(baseURL)/chat/completions")!
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -321,13 +323,14 @@ class OpenAIClient {
         _ messages: [ChatMessage],
         model: AIModel,
         apiKey: String,
+        baseURL: String = OpenAIConfig.baseURL,
         onToken: @escaping (String) -> Void,
         onComplete: @escaping () -> Void,
         onError: @escaping (Error) -> Void
     ) {
         Task {
             do {
-                let url = URL(string: "\(OpenAIConfig.baseURL)/chat/completions")!
+                let url = URL(string: "\(baseURL)/chat/completions")!
                 
                 var request = URLRequest(url: url)
                 request.httpMethod = "POST"
@@ -427,6 +430,7 @@ extension ChatManager {
         _ prompt: String, 
         sessionIndex: Int, 
         apiKey: String, 
+        settings: AISettings,
         isLoading: Binding<Bool>, 
         errorMessage: Binding<String?>
     ) async {
@@ -448,7 +452,7 @@ extension ChatManager {
             }
             
             // Call DALL-E 3 API
-            let imageURL = try await generateImageWithDallE3(prompt: prompt, apiKey: apiKey)
+            let imageURL = try await generateImageWithDallE3(prompt: prompt, apiKey: apiKey, baseURL: settings.apiGatewayURL)
             
             // Update the message with the generated image
             await MainActor.run {
@@ -479,8 +483,8 @@ extension ChatManager {
         }
     }
     
-    private func generateImageWithDallE3(prompt: String, apiKey: String) async throws -> String {
-        let url = URL(string: "\(OpenAIConfig.baseURL)/images/generations")!
+    private func generateImageWithDallE3(prompt: String, apiKey: String, baseURL: String = OpenAIConfig.baseURL) async throws -> String {
+        let url = URL(string: "\(baseURL)/images/generations")!
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"

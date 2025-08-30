@@ -210,7 +210,7 @@ extension AIModel {
     static let allModels: [AIModel] = chatModels + imageModels
     
     // Default model (must be a chat model)
-    static let defaultModel: AIModel = .gpt5Mini
+    static let defaultModel: AIModel = .gpt41
 }
 
 // MARK: - AI Settings
@@ -252,6 +252,14 @@ class AISettings {
     var maxHistoryChats: Int {
         get { userDefaults.object(forKey: "ai_max_history_chats") as? Int ?? 100 }
         set { userDefaults.set(newValue, forKey: "ai_max_history_chats") }
+    }
+    
+    var apiGatewayURL: String {
+        get { 
+            let storedURL = userDefaults.string(forKey: "ai_api_gateway_url") ?? ""
+            return storedURL.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? OpenAIConfig.baseURL : storedURL
+        }
+        set { userDefaults.set(newValue, forKey: "ai_api_gateway_url") }
     }
     
     // Helper Methods
