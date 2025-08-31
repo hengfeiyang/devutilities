@@ -53,11 +53,20 @@ Current version: 1.13.0
 #### Unit Converter
 ![DevHelper Unit Converter](./images/screenshots/unit.png)
 
-#### Json Formater
-![DevHelper Json Formater](./images/screenshots/json.png)
+#### Json Formatter
+![DevHelper Json Formatter](./images/screenshots/json.png)
+
+#### SQL Formatter
+![DevHelper SQL Formatter](./images/screenshots/sql.png)
+
+#### HTML Formatter
+![DevHelper HTML Formatter](./images/screenshots/html.png)
 
 #### Base64 Encode/Decode
 ![DevHelper Base64 encode](./images/screenshots/base64.png)
+
+#### JWT Encoder/Decoder
+![DevHelper JWT encoder](./images/screenshots/jwt.png)
 
 #### URL Tools
 ![DevHelper Url Tools](./images/screenshots/url.png)
@@ -71,9 +80,6 @@ Current version: 1.13.0
 #### Http Request
 ![DevHelper Http Request](./images/screenshots/http.png)
 
-Http Request History
-![DevHelper Http Request History](./images/screenshots/http_history.png)
-
 #### IP Query
 ![DevHelper IP Query](./images/screenshots/ip.png)
 
@@ -81,13 +87,8 @@ Http Request History
 ![DevHelper QR Code](./images/screenshots/qrcode.png)
 
 #### Parquet Viewer
-![DevHelper Paruqet metadata](./images/screenshots/parquet_schema.png)
+![DevHelper Paruqet data view](./images/screenshots/parquet.png)
 
-Parquet data view
-![DevHelper Paruqet data view](./images/screenshots/parquet_data.png)
-
-#### JWT Encoder/Decoder
-![DevHelper JWT encoder](./images/screenshots/jwt.png)
 
 #### Crypto Tools
 ![Crypto Tools](./images/screenshots/crypto.png)
