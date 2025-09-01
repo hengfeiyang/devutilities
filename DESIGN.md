@@ -481,32 +481,41 @@ Each tool follows a consistent pattern:
 **File**: `AIChatView.swift`
 
 **Features**:
+- **Multi-Model Support**: GPT-5, GPT-4.1, GPT-5 variants, O3/O4 Deep Research, Gemini 2.5 models
 - **Intelligent Assistant**: AI-powered chat interface for development questions and guidance
+- **Image Generation**: Automatic GPT-5/GPT-4.1 image generation with OpenAI Responses API
+- **Multi-Turn Image Generation**: Context-aware image refinement using previous_response_id
+- **Tool Selection Interface**: Floating toolbar with Chat, Web Search, and Image Generation modes
+- **Session Management**: Multiple chat sessions with independent tool selection persistence
+- **Vision Support**: Image upload and analysis capabilities
+- **Real-time Chat**: Streaming responses with proper message history
 - **Code Review**: Context-aware code analysis and suggestions
 - **Technical Guidance**: Expert-level responses for programming challenges and best practices
-- **Real-time Chat**: Interactive conversation interface with message history
-- **Developer Context**: Specialized knowledge for software development workflows
-- **Multi-language Support**: Assistance across various programming languages and frameworks
-- **Problem Solving**: Step-by-step guidance for debugging and implementation
-- **Best Practices**: Recommendations following industry standards and conventions
 
 **UI Components**:
-- Chat message interface with user and assistant messages
-- Text input field with send functionality
-- Message history with scrollable conversation view
-- Code syntax highlighting in responses
-- Copy functionality for code snippets and responses
-- Clear conversation button for fresh starts
-- Typing indicators and response status
+- **Session Sidebar**: Chat history with session selection and search
+- **Message Interface**: Scrollable conversation view with user and assistant messages
+- **Floating Toolbar**: Overlay tool selection (➕ Upload, 🌐 Web Search, 📷 Image Generation)
+- **Text Input**: Auto-expanding input area with toolbar and send button overlays
+- **Image Preview**: Drag-and-drop image upload with preview thumbnails
+- **Tool Indicators**: Visual feedback for active tool selection (blue highlighting)
+
+**Tool Selection System**:
+- **Chat Mode (default)**: Regular conversation interface
+- **Web Search Mode**: Enable web search capabilities (placeholder for future implementation)
+- **Image Generation Mode**: Force image generation regardless of keywords
+- **Session Persistence**: Each chat session remembers its last selected tool
+- **Visual Feedback**: Immediate UI updates with blue highlighting for active tools
 
 **Implementation Details**:
-- Integration with AI service APIs for intelligent responses
-- Message persistence and history management
-- Markdown rendering for formatted responses
-- Code syntax highlighting using SwiftUI components
-- Real-time message streaming for better user experience
-- Error handling for network issues and API limitations
-- Context management for coherent conversations
+- **Model Architecture**: AIModel enum with chat/image model types and capabilities
+- **Session Management**: ChatSession model with selectedTool persistence via JSON storage
+- **Responses API Integration**: GPT-5/GPT-4.1 image generation with previous_response_id support
+- **Multi-Turn Logic**: Automatic detection and chaining of image refinement requests
+- **Image Storage**: Local caching of generated images with base64 processing
+- **SwiftUI Reactivity**: Observable ChatManager with computed property tool access
+- **Tool State Management**: Session-specific tool selection with immediate visual updates
+- **API Configuration**: 60-second timeout for complex image generation requests
 
 ## UI Design Principles
 

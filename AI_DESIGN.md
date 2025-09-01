@@ -4,11 +4,14 @@
 AI Chat has been successfully integrated as the 16th tool in DevHelper, providing OpenAI GPT integration directly within the developer workspace. The feature was simplified to focus exclusively on OpenAI models for simplicity and reliability, removing the originally planned multi-provider support based on user feedback.
 
 ## Core Features
-- **OpenAI Integration**: Full support for GPT-4, GPT-4 Turbo, GPT-4o, and GPT-4o Mini
-- **Model Selection**: Global default model setting with easy switching between models
-- **Settings Panel**: Dedicated OpenAI API key management with secure Keychain storage
+- **Multi-Model Support**: Full support for GPT-5, GPT-5 Mini, GPT-5 Nano, GPT-4.1, GPT-4.1 Mini, GPT-4.1 Nano, O3 Deep Research, O4 Mini Deep Research, Gemini 2.5 Pro/Flash/Flash Lite, and image generation models (DALL-E 3, GPT-Image-1)
+- **Tool Selection Interface**: Toolbar-based tool selection with Chat, Web Search, and Image Generation modes
+- **Session-Specific Tool Persistence**: Each chat session remembers its selected tool mode across app sessions
+- **Multi-Turn Image Generation**: Support for continuing image generation conversations using OpenAI's responses API
+- **Model Selection**: Global default model setting with easy switching between models and per-session overrides
+- **Settings Panel**: Dedicated OpenAI API key management with secure Keychain storage and custom API gateway support
 - **Chat Management**: Create, rename, duplicate, and delete chat conversations
-- **Local Storage**: All chat history stored locally in Documents/DevHelper/AIChats/
+- **Local Storage**: All chat history stored locally in Documents/DevHelper/AIChats/ with image caching
 - **Real-time UI**: Responsive interface with loading states and error handling
 
 ## Architecture Design
@@ -16,7 +19,7 @@ AI Chat has been successfully integrated as the 16th tool in DevHelper, providin
 ### 1. Data Models (Simplified)
 
 ```swift
-// Core Chat Models
+// Core Chat Models with Tool Selection Support
 struct ChatSession: Identifiable, Codable, Hashable {
     let id: UUID
     var title: String
@@ -24,6 +27,7 @@ struct ChatSession: Identifiable, Codable, Hashable {
     var updatedAt: Date
     var messages: [ChatMessage]
     var selectedModel: AIModel? // Override global default
+    var selectedTool: ChatToolMode = .chat // Session-specific tool selection
 }
 
 struct ChatMessage: Identifiable, Codable, Hashable {
@@ -32,6 +36,25 @@ struct ChatMessage: Identifiable, Codable, Hashable {
     var content: String
     let timestamp: Date
     var isStreaming: Bool = false
+    var contentType: MessageContentType = .text
+    var images: [ChatMessageImage] = [] // Multi-image support
+    var responseId: String? = nil // For multi-turn image generation
+}
+
+struct ChatMessageImage: Identifiable, Codable, Hashable {
+    let id: UUID
+    var imageURL: String? = nil
+    var localImagePath: String? = nil
+    var caption: String? = nil
+}
+
+enum ChatToolMode: String, Codable, CaseIterable {
+    case chat = "chat"
+    case webSearch = "web_search"
+    case imageGeneration = "image_generation"
+    
+    var displayName: String { /* ... */ }
+    var iconName: String { /* ... */ }
 }
 
 struct AIModel: Identifiable, Codable, Hashable {
@@ -40,6 +63,7 @@ struct AIModel: Identifiable, Codable, Hashable {
     let displayName: String
     let maxTokens: Int
     let contextWindow: Int
+    let type: ModelType // .chat or .image
 }
 
 enum MessageRole: String, Codable, CaseIterable {
@@ -52,73 +76,111 @@ enum MessageRole: String, Codable, CaseIterable {
 ### 2. Settings & Configuration (OpenAI-Only)
 
 ```swift
-// Simplified Settings Model
+// Enhanced Settings Model with API Gateway Support
 @Observable
 class AISettings {
     var openAIAPIKey: String // Stored in Keychain
-    var defaultModel: AIModel = .gpt4oMini
-    var streamingEnabled: Bool = true
+    var defaultModel: AIModel = .gpt41 // Updated default to GPT-4.1
     var maxHistoryChats: Int = 100
+    var apiGatewayURL: String // Custom API gateway support
     
     // Keychain integration for secure API key storage
     func saveOpenAIAPIKey(_ key: String)
     func getOpenAIAPIKey() -> String?
     func clearOpenAIAPIKey()
     func hasOpenAIAPIKey() -> Bool
+    func availableModels() -> [AIModel]
 }
 
-// Available OpenAI Models
+// Comprehensive Model Support
 extension AIModel {
-    static let gpt4 = AIModel(id: "gpt-4", name: "gpt-4", displayName: "GPT-4", maxTokens: 8192, contextWindow: 8192)
-    static let gpt4Turbo = AIModel(id: "gpt-4-turbo", name: "gpt-4-turbo", displayName: "GPT-4 Turbo", maxTokens: 4096, contextWindow: 128000)
-    static let gpt4o = AIModel(id: "gpt-4o", name: "gpt-4o", displayName: "GPT-4o", maxTokens: 4096, contextWindow: 128000)
-    static let gpt4oMini = AIModel(id: "gpt-4o-mini", name: "gpt-4o-mini", displayName: "GPT-4o Mini", maxTokens: 16384, contextWindow: 128000)
+    // Latest OpenAI Models
+    static let gpt5 = AIModel(id: "gpt-5", name: "gpt-5", displayName: "GPT-5", maxTokens: 8192, contextWindow: 200000)
+    static let gpt5Mini = AIModel(id: "gpt-5-mini", name: "gpt-5-mini", displayName: "GPT-5 Mini", maxTokens: 16384, contextWindow: 128000)
+    static let gpt5Nano = AIModel(id: "gpt-5-nano", name: "gpt-5-nano", displayName: "GPT-5 Nano", maxTokens: 8192, contextWindow: 64000)
+    static let gpt41 = AIModel(id: "gpt-4.1", name: "gpt-4.1", displayName: "GPT-4.1", maxTokens: 4096, contextWindow: 128000)
+    static let gpt41Mini = AIModel(id: "gpt-4.1-mini", name: "gpt-4.1-mini", displayName: "GPT-4.1 Mini", maxTokens: 16384, contextWindow: 128000)
+    static let gpt41Nano = AIModel(id: "gpt-4.1-nano", name: "gpt-4.1-nano", displayName: "GPT-4.1 Nano", maxTokens: 8192, contextWindow: 64000)
     
-    static let allModels: [AIModel] = [.gpt4o, .gpt4oMini, .gpt4Turbo, .gpt4]
-    static let defaultModel: AIModel = .gpt4oMini
+    // Research Models
+    static let o3DeepResearch = AIModel(id: "o3-deep-research", name: "o3-deep-research", displayName: "O3 Deep Research", maxTokens: 32768, contextWindow: 500000)
+    static let o4MiniDeepResearch = AIModel(id: "o4-mini-deep-research", name: "o4-mini-deep-research", displayName: "O4 Mini Deep Research", maxTokens: 16384, contextWindow: 300000)
+    
+    // Google Models
+    static let gemini25Pro = AIModel(id: "gemini-2.5-pro", name: "gemini-2.5-pro", displayName: "Gemini 2.5 Pro", maxTokens: 8192, contextWindow: 1000000)
+    static let gemini25Flash = AIModel(id: "gemini-2.5-flash", name: "gemini-2.5-flash", displayName: "Gemini 2.5 Flash", maxTokens: 8192, contextWindow: 1000000)
+    
+    // Image Generation Models
+    static let dalle3 = AIModel(id: "dall-e-3", name: "dall-e-3", displayName: "DALL-E 3", maxTokens: 4096, contextWindow: 8192, type: .image)
+    static let gptImage1 = AIModel(id: "gpt-image-1", name: "gpt-image-1", displayName: "GPT-Image-1", maxTokens: 4096, contextWindow: 32768, type: .image)
+    
+    static let chatModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .gpt41Mini, .gpt41Nano, .o3DeepResearch, .o4MiniDeepResearch, .gemini25Pro, .gemini25Flash]
+    static let imageModels: [AIModel] = [.dalle3, .gptImage1]
+    static let allModels: [AIModel] = chatModels + imageModels
+    static let defaultModel: AIModel = .gpt41
 }
 ```
 
 ### 3. API Client (OpenAI-Only)
 
 ```swift
-// Simple OpenAI Client
-class OpenAIClient {
-    private let session = URLSession.shared
+// Enhanced API Client with Multi-Turn Image Generation
+class ChatManager {
+    private let session: URLSession
     
+    init() {
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 60.0 // Extended timeout for image generation
+        self.session = URLSession(configuration: config)
+    }
+    
+    // Regular chat completions
     func sendMessage(
         _ messages: [ChatMessage],
         model: AIModel,
-        apiKey: String
+        apiKey: String,
+        gatewayURL: String
     ) async throws -> String {
-        let url = URL(string: "\(OpenAIConfig.baseURL)/chat/completions")!
+        // Standard chat completions API implementation
+    }
+    
+    // Multi-turn image generation using OpenAI Responses API
+    func generateImageWithResponsesAPI(
+        prompt: String,
+        previousResponseId: String?,
+        model: AIModel,
+        apiKey: String,
+        gatewayURL: String
+    ) async throws -> (imageURL: String?, responseId: String?) {
+        let url = URL(string: "\(gatewayURL)/responses")!
+        
+        var requestBody: [String: Any] = [
+            "model": model.name,
+            "prompt": prompt
+        ]
+        
+        // Add previous_response_id for multi-turn generation
+        if let previousId = previousResponseId {
+            requestBody["previous_response_id"] = previousId
+        }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let openAIMessages = messages.map { message in
-            return [
-                "role": message.role.rawValue,
-                "content": message.content
-            ]
-        }
-        
-        let requestBody: [String: Any] = [
-            "model": model.name,
-            "messages": openAIMessages,
-            "max_tokens": min(model.maxTokens, 4096),
-            "temperature": 0.7,
-            "stream": false
-        ]
-        
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
         
         let (data, response) = try await session.data(for: request)
         
-        // Parse response and return content
-        // ... error handling and JSON parsing
+        // Parse response to extract image URL and response ID
+        if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+           let output = json["output"] as? [String: Any] {
+            let imageURL = output["image_url"] as? String
+            let responseId = json["id"] as? String
+            return (imageURL: imageURL, responseId: responseId)
+        }
+        
+        return (imageURL: nil, responseId: nil)
     }
 }
 ```
@@ -130,7 +192,6 @@ class OpenAIClient {
 class ChatManager {
     var chatSessions: [ChatSession] = []
     private let storage = ChatStorage() // JSON file storage
-    private let openAIClient = OpenAIClient()
     
     // Chat Operations
     func createNewChat() -> ChatSession
@@ -138,9 +199,43 @@ class ChatManager {
     func duplicateChat(_ session: ChatSession) -> ChatSession
     func renameChat(_ session: ChatSession, to title: String)
     
-    // Message Operations (using session ID to avoid binding issues)
+    // Tool Selection Management (Session-Specific Persistence)
+    func updateSessionTool(_ sessionId: UUID, tool: ChatToolMode) {
+        if let index = chatSessions.firstIndex(where: { $0.id == sessionId }) {
+            chatSessions[index].selectedTool = tool
+            saveChatSession(chatSessions[index])
+        }
+    }
+    
+    // Enhanced Message Operations with Tool-Specific Logic
     func sendMessage(_ content: String, in sessionId: UUID, with settings: AISettings, 
                     isLoading: Binding<Bool>, errorMessage: Binding<String?>) async
+    
+    func sendMessageWithTool(_ content: String, tool: ChatToolMode, in sessionId: UUID, 
+                           with settings: AISettings, isLoading: Binding<Bool>, 
+                           errorMessage: Binding<String?>) async {
+        switch tool {
+        case .chat:
+            await sendMessage(content, in: sessionId, with: settings, isLoading: isLoading, errorMessage: errorMessage)
+        case .webSearch:
+            // Web search implementation
+        case .imageGeneration:
+            await generateImageWithResponsesAPI(prompt: content, sessionId: sessionId, settings: settings, isLoading: isLoading, errorMessage: errorMessage)
+        }
+    }
+    
+    // Multi-Turn Image Generation with Session Context
+    private func generateImageWithResponsesAPI(prompt: String, sessionId: UUID, 
+                                             settings: AISettings, isLoading: Binding<Bool>, 
+                                             errorMessage: Binding<String?>) async {
+        guard let session = chatSessions.first(where: { $0.id == sessionId }) else { return }
+        
+        // Find previous response ID from last assistant message
+        let previousResponseId = session.messages.last(where: { $0.role == .assistant })?.responseId
+        
+        // Generate image using responses API with continuation support
+        // Store response ID in message for future multi-turn requests
+    }
     
     // Persistence (JSON files in Documents/DevHelper/AIChats/)
     func loadChatSessions()
@@ -150,7 +245,7 @@ class ChatManager {
 
 ## UI Component Structure
 
-### 1. Main AI Chat View (Simplified)
+### 1. Main AI Chat View with Tool Selection
 ```
 AIChatView
 ├── Sidebar: ChatSidebarView
@@ -159,46 +254,93 @@ AIChatView
 │   └── Chat List with Context Menus (rename, duplicate, delete)
 └── Main Content: ChatContentView
     ├── Header: ChatHeaderView (title + message count + connection status)
-    ├── Messages: ChatMessagesView (with real-time updates)
-    └── Input: ChatInputView (text field + send button)
+    ├── Messages: ChatMessagesView (with image support and real-time updates)
+    └── Input: ChatInputView with Floating Toolbar
+        ├── Text Field (with multiline support)
+        ├── Floating Tool Selection Buttons
+        │   ├── Chat Tool (message icon)
+        │   ├── Web Search Tool (globe icon)  
+        │   └── Image Generation Tool (photo icon)
+        └── Send Button (with tool-aware styling)
 ```
 
-### 2. Settings Panel (OpenAI-Only)
+### 2. Enhanced Settings Panel
 ```
 AISettingsView (Modal):
 ├── OpenAI API Key Section
 │   ├── Key input field (secure/visible toggle)
 │   ├── Connection status indicator
 │   └── Link to OpenAI platform
+├── API Gateway Configuration
+│   ├── Custom Gateway URL input
+│   └── Reset to default OpenAI endpoint
 ├── Default Settings
-│   ├── Default Model Picker (GPT-4, GPT-4 Turbo, etc.)
-│   ├── Streaming toggle (for future use)
+│   ├── Default Model Picker (GPT-5, GPT-4.1, Gemini 2.5, etc.)
+│   ├── Model category filtering (Chat/Image models)
 │   └── Max history limit
 └── About Section
-    └── Feature list and information
+    ├── Feature list and capabilities
+    ├── Multi-turn image generation support
+    └── Tool selection modes information
+```
+
+### 3. Tool Selection UI Implementation
+```swift
+// Floating Toolbar Component in ChatInputView
+struct ChatToolSelector: View {
+    @Binding var selectedTool: ChatToolMode
+    let onToolChange: (ChatToolMode) -> Void
+    
+    var body: some View {
+        HStack(spacing: 8) {
+            ForEach(ChatToolMode.allCases, id: \.self) { tool in
+                Button(action: { 
+                    selectedTool = tool
+                    onToolChange(tool)
+                }) {
+                    Image(systemName: tool.iconName)
+                        .foregroundColor(selectedTool == tool ? .blue : .secondary)
+                        .font(.system(size: 16))
+                }
+                .buttonStyle(PlainButtonStyle())
+                .frame(width: 24, height: 24)
+            }
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(Color(NSColor.controlBackgroundColor))
+        .cornerRadius(12)
+    }
+}
 ```
 
 ## Implementation Status: ✅ COMPLETE
 
 ### Current Implementation
-**Status**: ✅ **Production Ready**
+**Status**: ✅ **Production Ready with Advanced Features**
 - ✅ **Core Functionality**: Full chat interface with OpenAI integration
-- ✅ **Model Support**: GPT-4, GPT-4 Turbo, GPT-4o, GPT-4o Mini
-- ✅ **UI/UX**: Complete chat interface with sidebar, messages, and input
-- ✅ **Settings**: Secure API key management with Keychain storage
-- ✅ **Chat Management**: Create, rename, duplicate, delete conversations
-- ✅ **Persistence**: Local JSON storage in Documents folder
-- ✅ **Error Handling**: Comprehensive error handling with user feedback
+- ✅ **Multi-Model Support**: GPT-5, GPT-5 Mini/Nano, GPT-4.1 family, O3/O4 Deep Research, Gemini 2.5 models, DALL-E 3, GPT-Image-1
+- ✅ **Tool Selection Interface**: Floating toolbar with Chat, Web Search, and Image Generation modes
+- ✅ **Session-Specific Tool Persistence**: Each chat session remembers its selected tool across app restarts
+- ✅ **Multi-Turn Image Generation**: OpenAI Responses API integration with previous_response_id support for conversation continuity
+- ✅ **Enhanced UI/UX**: Modern floating toolbar design with visual feedback and tool-aware styling
+- ✅ **Settings**: Secure API key management with Keychain storage and custom API gateway support
+- ✅ **Chat Management**: Create, rename, duplicate, delete conversations with tool state preservation
+- ✅ **Image Storage**: Local caching of generated images with Base64 processing
+- ✅ **Persistence**: Enhanced JSON storage with tool selection and image metadata
+- ✅ **Error Handling**: Comprehensive error handling with extended timeouts for image generation
 - ✅ **Navigation**: Integrated as 16th tool with sparkles icon
-- ✅ **Debug Logging**: Comprehensive logging for troubleshooting
-- ✅ **UI Reactivity**: Fixed binding issues for real-time message updates
+- ✅ **SwiftUI Reactivity**: Computed properties and Observable pattern for real-time UI updates
 
 ### Key Fixes Applied
 - **Session Binding Issue**: Fixed UI not updating by using session IDs instead of value copies
-- **API Client**: Simplified single OpenAI client with proper error handling  
-- **Provider Abstraction**: Removed unnecessary multi-provider complexity based on user feedback
-- **Settings**: Streamlined to OpenAI-only with secure key storage
-- **Architecture Simplification**: Eliminated AIProvider enum and multi-provider abstractions per user request
+- **SwiftUI Reactivity Issue**: Fixed tool selection buttons not showing blue state by implementing computed properties that directly observe ChatManager's @Observable state
+- **Multi-Turn Image Generation**: Implemented OpenAI Responses API with previous_response_id parameter for image conversation continuity
+- **Tool Selection Persistence**: Added selectedTool to ChatSession model with automatic save/restore functionality
+- **Extended API Timeouts**: Increased timeout to 60 seconds for image generation operations
+- **Floating Toolbar Design**: Implemented modern UI with overlay buttons inside input area for better user experience
+- **Image Storage**: Added Base64 image processing and local caching through ImageStorageService
+- **API Gateway Support**: Added custom gateway URL configuration for flexible API endpoint management
 
 ## Technical Implementation Details
 
@@ -262,9 +404,24 @@ DevHelper/
 4. **Manage Chats**: Right-click chat in sidebar for rename/duplicate/delete options
 5. **Switch Models**: Use model picker in settings for different GPT variants
 
-## Phase 2 Enhancements: ✅ COMPLETE
+## Advanced Features: ✅ COMPLETE
 
-### Recently Implemented Features
+### Multi-Turn Image Generation Implementation
+- ✅ **OpenAI Responses API Integration**: Full implementation of responses endpoint with previous_response_id support
+- ✅ **Conversation Continuity**: Image generation conversations can continue from previous responses for iterative refinement
+- ✅ **Response ID Tracking**: ChatMessage model includes responseId field for linking multi-turn image sessions
+- ✅ **Model Support**: GPT-5 and GPT-4.1 models support image generation through responses API
+- ✅ **Base64 Processing**: Automatic conversion and local storage of generated images
+- ✅ **Extended Timeouts**: 60-second timeout configuration for image generation operations
+
+### Tool Selection System Architecture  
+- ✅ **ChatToolMode Enum**: Comprehensive tool definition with chat, webSearch, and imageGeneration modes
+- ✅ **Session-Specific Persistence**: Tool selection automatically saved and restored per chat session
+- ✅ **Floating Toolbar UI**: Modern overlay design with visual feedback and tool-aware styling
+- ✅ **Reactive State Management**: SwiftUI computed properties ensure real-time UI updates
+- ✅ **Tool-Aware Message Processing**: sendMessageWithTool function routes messages based on selected tool
+
+### Previously Implemented Features
 - ✅ **Streaming Responses**: Real-time token-by-token rendering with auto-scroll during updates
 - ✅ **Markdown Rendering**: Rich text display with headers, code blocks, lists, bold/italic, and inline code formatting  
 - ✅ **Rename Chat Functionality**: Context menu rename option with alert dialog validation
@@ -273,11 +430,12 @@ DevHelper/
 - ✅ **Search Functionality**: Real-time search bar filtering chats by title and message content with results count
 
 ### Technical Improvements
-- **Enhanced UX**: Streaming responses provide immediate feedback during AI generation
+- **Multi-Turn Conversations**: Image generation supports iterative refinement through conversation context
+- **Enhanced UX**: Floating toolbar provides modern tool selection interface similar to Claude/ChatGPT
 - **Better Readability**: Markdown rendering makes code examples and formatting clear
-- **Improved Organization**: Search and rename help users manage growing chat collections  
-- **Flexible Model Usage**: Per-chat model selection allows mixing GPT-4, GPT-4o, etc. as needed
-- **Data Portability**: Export feature enables sharing and backing up conversations
+- **Improved Organization**: Search and rename help users manage growing chat collections with tool-specific conversations
+- **Flexible Model Usage**: Per-chat model selection allows mixing text and image models as needed
+- **Data Portability**: Export feature includes image references and tool selection metadata
 
 ## Future Enhancements (Optional)
 - **Advanced Search**: Search within specific date ranges or by model used
