@@ -464,8 +464,19 @@ struct ChatContentView: View {
                     currentMessage: $currentMessage,
                     isLoading: isLoading,
                     selectedModel: session.selectedModel ?? aiSettings.defaultModel,
+                    chatManager: chatManager,
+                    sessionId: session.id,
                     onSendWithText: { messageText in
                         sendMessageDirectly(messageText)
+                    },
+                    onSendWithImages: { messageText, images in
+                        sendMessageWithImages(messageText, images: images)
+                    },
+                    onSendWithTool: { messageText, tool in
+                        sendMessageWithTool(messageText, tool: tool)
+                    },
+                    onToolChanged: { newTool in
+                        updateSessionTool(newTool)
                     }
                 )
             } else {
@@ -503,6 +514,9 @@ struct ChatContentView: View {
         
         print("📱 UI: Sending message directly: '\(messageText.prefix(50))...'")
         
+        // Track AI Chat message event
+        EventManager.shared.reportAIChatMessage(messageLength: messageText.count)
+        
         Task {
             await chatManager.sendMessage(
                 messageText,
@@ -512,6 +526,62 @@ struct ChatContentView: View {
                 errorMessage: $errorMessage
             )
         }
+    }
+    
+    private func sendMessageWithImages(_ messageText: String, images: [ChatMessageImage]) {
+        guard let session = selectedSession, !isLoading else { 
+            print("❌ UI: sendMessageWithImages guard failed - session: \(selectedSession?.id.uuidString ?? "nil"), loading: \(isLoading)")
+            return 
+        }
+        
+        print("📱 UI: Sending message with \(images.count) images: '\(messageText.prefix(50))...'")
+        
+        // Track AI Chat message event (including images)
+        EventManager.shared.reportAIChatMessage(messageLength: messageText.count)
+        
+        Task {
+            await chatManager.sendMessageWithImages(
+                messageText,
+                images: images,
+                in: session.id,
+                with: aiSettings,
+                isLoading: $isLoading,
+                errorMessage: $errorMessage
+            )
+        }
+    }
+    
+    private func sendMessageWithTool(_ messageText: String, tool: ChatToolMode) {
+        guard let session = selectedSession, !isLoading else { 
+            print("❌ UI: sendMessageWithTool guard failed - session: \(selectedSession?.id.uuidString ?? "nil"), loading: \(isLoading)")
+            return 
+        }
+        
+        print("📱 UI: Sending message with tool \(tool.displayName): '\(messageText.prefix(50))...'")
+        
+        // Track AI Chat message event
+        EventManager.shared.reportAIChatMessage(messageLength: messageText.count)
+        
+        Task {
+            await chatManager.sendMessageWithTool(
+                messageText,
+                tool: tool,
+                in: session.id,
+                with: aiSettings,
+                isLoading: $isLoading,
+                errorMessage: $errorMessage
+            )
+        }
+    }
+    
+    private func updateSessionTool(_ newTool: ChatToolMode) {
+        guard let sessionIndex = chatManager.chatSessions.firstIndex(where: { $0.id == selectedSession?.id }) else {
+            print("❌ UI: Could not find session to update tool")
+            return
+        }
+        
+        print("📱 UI: Updating session tool to: \(newTool.displayName)")
+        chatManager.updateSessionTool(at: sessionIndex, tool: newTool)
     }
 }
 
@@ -851,7 +921,86 @@ struct ChatMessageView: View {
                                         }
                                         .padding(.horizontal, 16)
                                         .padding(.vertical, 12)
+                                    } else if message.hasImages {
+                                        // Display multiple images
+                                        VStack(alignment: .leading, spacing: 8) {
+                                            // Display all images in a grid or horizontal scroll
+                                            if message.images.count > 1 {
+                                                // Multiple images in a grid
+                                                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 4), count: min(2, message.images.count)), spacing: 4) {
+                                                    ForEach(message.images) { imageItem in
+                                                        AsyncImage(url: URL(string: imageItem.effectiveImageURL ?? "")) { image in
+                                                            image
+                                                                .resizable()
+                                                                .aspectRatio(contentMode: .fill)
+                                                        } placeholder: {
+                                                            Rectangle()
+                                                                .fill(Color.secondary.opacity(0.3))
+                                                                .overlay {
+                                                                    ProgressView()
+                                                                }
+                                                        }
+                                                        .frame(width: 150, height: 150)
+                                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                                        .onTapGesture {
+                                                            // TODO: Show full image preview
+                                                        }
+                                                    }
+                                                }
+                                            } else if let firstImage = message.images.first {
+                                                // Single image - larger display
+                                                AsyncImage(url: URL(string: firstImage.effectiveImageURL ?? "")) { image in
+                                                    image
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                } placeholder: {
+                                                    ProgressView()
+                                                        .frame(width: 200, height: 200)
+                                                }
+                                                .frame(maxWidth: 300, maxHeight: 300)
+                                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                                .onTapGesture {
+                                                    // TODO: Show full image preview
+                                                }
+                                            } else if let imageURL = message.effectiveImageURL {
+                                                // Legacy single image support (inside hasImages block)
+                                                AsyncImage(url: URL(string: imageURL)) { image in
+                                                    image
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                } placeholder: {
+                                                    ProgressView()
+                                                        .frame(width: 200, height: 200)
+                                                }
+                                                .frame(maxWidth: 300, maxHeight: 300)
+                                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                                .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
+                                                .onTapGesture {
+                                                    print("🖼️ Image tapped - imageURL: \(message.imageURL ?? "nil")")
+                                                    showImagePreview = true
+                                                }
+                                                .help("Click to view full size")
+                                                .overlay(alignment: .topTrailing) {
+                                                    Image(systemName: "arrow.up.left.and.arrow.down.right")
+                                                        .font(.system(size: 12, weight: .medium))
+                                                        .foregroundColor(.white)
+                                                        .padding(8)
+                                                        .background(Color.black.opacity(0.6))
+                                                        .clipShape(Circle())
+                                                        .padding(8)
+                                                }
+                                            }
+                                            
+                                            // Display text content if present
+                                            if !message.content.isEmpty {
+                                                Text(message.content)
+                                                    .textSelection(.enabled)
+                                                    .font(.body)
+                                                    .foregroundColor(.primary)
+                                            }
+                                        }
                                     } else if let imageURL = message.effectiveImageURL {
+                                        // Legacy single image support
                                         VStack(alignment: .leading, spacing: 8) {
                                             AsyncImage(url: URL(string: imageURL)) { image in
                                                 image
@@ -1049,13 +1198,28 @@ struct ChatInputView: View {
     @Binding var currentMessage: String
     let isLoading: Bool
     let selectedModel: AIModel
+    let chatManager: ChatManager
+    let sessionId: UUID
     let onSendWithText: (String) -> Void
+    let onSendWithImages: (String, [ChatMessageImage]) -> Void
+    let onSendWithTool: (String, ChatToolMode) -> Void
+    let onToolChanged: (ChatToolMode) -> Void
+    
+    @State private var selectedImages: [ChatMessageImage] = []
+    
+    private var selectedTool: ChatToolMode {
+        if let session = chatManager.chatSessions.first(where: { $0.id == sessionId }) {
+            return session.selectedTool
+        }
+        return .chat
+    }
     
     // Calculate dynamic height based on content
     private var calculatedHeight: CGFloat {
         let lineHeight: CGFloat = 20
         let padding: CGFloat = 60
-        let minHeight: CGFloat = lineHeight + padding
+        let toolbarHeight: CGFloat = 40
+        let minHeight: CGFloat = lineHeight + padding + toolbarHeight
         let maxHeight: CGFloat = 200
         
         if currentMessage.isEmpty {
@@ -1064,81 +1228,223 @@ struct ChatInputView: View {
         
         // Estimate height based on content
         let lineCount = max(1, currentMessage.components(separatedBy: .newlines).count)
-        let estimatedHeight = CGFloat(lineCount) * lineHeight
+        let estimatedHeight = CGFloat(lineCount) * lineHeight + toolbarHeight
         
         return min(maxHeight, max(minHeight, estimatedHeight))
     }
 
     var body: some View {
-        // Clean input area without section background - just the input box
-        HStack(alignment: .bottom, spacing: 0) {
-            // Text Input with overlaid send button
-            ZStack(alignment: .bottomTrailing) {
-                // Auto-expanding TextEditor
-                TextEditor(text: $currentMessage)
-                    .font(.body)
-                    .scrollContentBackground(.hidden)
-                    .frame(height: calculatedHeight)
-                    .disabled(isLoading)
-                    .onKeyPress { key in
-                        print("🔑 onKeyPress key: \(key)")
-                        if key.key == .return && !key.modifiers.contains(.shift) {
-                            // Enter: Send message
-                            let messageToSend = currentMessage.trimmingCharacters(in: .whitespacesAndNewlines)
-                            print("🔑 onKeyPress messageToSend: '\(messageToSend)', isLoading: \(isLoading)")
-                            if !messageToSend.isEmpty && !isLoading {
-                                currentMessage = ""  // Clear input immediately
-                                onSendWithText(messageToSend)  // Send with captured text
-                            }
-                            return .handled
-                        }
-                        return .ignored
+        VStack(spacing: 8) {
+            // Image preview area (if images are selected)
+            if !selectedImages.isEmpty {
+                ImagePreviewBar(
+                    images: selectedImages,
+                    onRemove: { image in
+                        selectedImages.removeAll { $0.id == image.id }
                     }
-                    .overlay(alignment: .topLeading) {
-                        if currentMessage.isEmpty {
-                            Text(selectedModel.type == .image ? "Describe the image you want to generate..." : "Ask anything...")
-                                .font(.body)
-                                .foregroundColor(.secondary)
-                                .background(Color.clear)
-                                .allowsHitTesting(false)
-                                .padding(.top, 4)
-                                .padding(.leading, 4)
-                        }
-                    }
-                
-
-                // Send Button (overlaid on bottom right)
-                Button(action: {
-                    let messageToSend = currentMessage.trimmingCharacters(in: .whitespacesAndNewlines)
-                    if !messageToSend.isEmpty && !isLoading {
-                        currentMessage = ""
-                        onSendWithText(messageToSend)
-                    }
-                }) {
-                    Circle()
-                        .fill(
-                            currentMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !isLoading 
-                            ? Color.secondary.opacity(0.3)
-                            : Color.accentColor
-                        )
-                        .frame(width: 28, height: 28)
-                        .overlay {
-                            Image(systemName: isLoading ? "stop.fill" : "arrow.up")
-                                .font(.system(size: 14, weight: .medium))
-                                .foregroundColor(.white)
-                        }
-                        .scaleEffect(isLoading ? 0.9 : 1.0)
-                        .animation(.easeInOut(duration: 0.1), value: isLoading)
-                }
-                .buttonStyle(PlainButtonStyle())
-                .disabled(currentMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !isLoading)
-                .padding(.bottom, 8)
-                .padding(.trailing, 8)
+                )
+                .padding(.horizontal, 20)
             }
+            
+            // Input area
+            HStack(alignment: .bottom, spacing: 0) {
+                // Text Input with overlaid toolbar and send button
+                ZStack(alignment: .bottomTrailing) {
+                    // Auto-expanding TextEditor (full width)
+                    TextEditor(text: $currentMessage)
+                        .font(.body)
+                        .scrollContentBackground(.hidden)
+                        .frame(height: calculatedHeight)
+                        .disabled(isLoading)
+                        .onKeyPress { key in
+                            print("🔑 onKeyPress key: \(key)")
+                            if key.key == .return && !key.modifiers.contains(.shift) {
+                                // Enter: Send message
+                                sendMessage()
+                                return .handled
+                            }
+                            return .ignored
+                        }
+                        .overlay(alignment: .topLeading) {
+                            if currentMessage.isEmpty {
+                                Text(getPlaceholderText())
+                                    .font(.body)
+                                    .foregroundColor(.secondary)
+                                    .background(Color.clear)
+                                    .allowsHitTesting(false)
+                                    .padding(.top, 4)
+                                    .padding(.leading, 4)
+                            }
+                        }
+                    
+                }
+                .overlay(alignment: .bottomLeading) {
+                    // Tool selection toolbar (floating overlay at bottom-left)
+                    HStack(spacing: 4) {
+                        // File upload button (plus icon)
+                        Button(action: {
+                            print("🔄 Plus button clicked")
+                            openImagePicker()
+                        }) {
+                            Image(systemName: "plus")
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundColor(.secondary)
+                                .frame(width: 28, height: 28)
+                                .background(Color.secondary.opacity(0.1))
+                                .clipShape(Circle())
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .help("Upload images")
+                        .disabled(isLoading)
+                        
+                        // Tool selection buttons
+                        ForEach([ChatToolMode.webSearch, ChatToolMode.imageGeneration], id: \.self) { tool in
+                            Button(action: {
+                                print("🔄 Tool button clicked: \(tool.displayName)")
+                                print("🔍 Current selectedTool in UI: \(selectedTool.displayName)")
+                                print("🔍 Is tool selected: \(selectedTool == tool)")
+                                let newTool = selectedTool == tool ? .chat : tool
+                                print("🔍 New tool will be: \(newTool.displayName)")
+                                onToolChanged(newTool)
+                            }) {
+                                HStack(spacing: 4) {
+                                    Image(systemName: tool.iconName)
+                                        .font(.system(size: 14, weight: .medium))
+                                    if selectedTool == tool {
+                                        Text(tool.displayName)
+                                            .font(.system(size: 12, weight: .medium))
+                                    }
+                                }
+                                .foregroundColor(selectedTool == tool ? .white : .secondary)
+                                .padding(.horizontal, selectedTool == tool ? 8 : 6)
+                                .padding(.vertical, 4)
+                                .background(selectedTool == tool ? Color.accentColor : Color.secondary.opacity(0.1))
+                                .clipShape(RoundedRectangle(cornerRadius: 14))
+                                .onAppear {
+                                    print("🎨 Button \(tool.displayName) appearance - selectedTool: \(selectedTool.displayName), isSelected: \(selectedTool == tool)")
+                                }
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .help(tool.displayName)
+                            .disabled(isLoading)
+                        }
+                    }
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .padding(.bottom, 8)
+                    .padding(.leading, 8)
+                    .allowsHitTesting(true)
+                }
+                .overlay(alignment: .bottomTrailing) {
+                    // Send Button (floating overlay at bottom-right)
+                    Button(action: sendMessage) {
+                        Circle()
+                            .fill(
+                                canSendMessage()
+                                ? Color.accentColor
+                                : Color.secondary.opacity(0.3)
+                            )
+                            .frame(width: 28, height: 28)
+                            .overlay {
+                                Image(systemName: isLoading ? "stop.fill" : "arrow.up")
+                                    .font(.system(size: 14, weight: .medium))
+                                    .foregroundColor(.white)
+                            }
+                            .scaleEffect(isLoading ? 0.9 : 1.0)
+                            .animation(.easeInOut(duration: 0.1), value: isLoading)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .disabled(!canSendMessage() && !isLoading)
+                    .padding(.bottom, 8)
+                    .padding(.trailing, 8)
+                }
+            }
+            .padding(.horizontal, 20)
         }
-        .padding(.horizontal, 20)
         .padding(.vertical, 16)
         .animation(.easeInOut(duration: 0.2), value: calculatedHeight)
+    }
+    
+    private func getPlaceholderText() -> String {
+        if !selectedImages.isEmpty {
+            return "Ask about these images..."
+        } else {
+            switch selectedTool {
+            case .chat:
+                return "Ask anything..."
+            case .webSearch:
+                return "Search the web..."
+            case .imageGeneration:
+                return "Describe the image you want to generate..."
+            }
+        }
+    }
+    
+    private func canSendMessage() -> Bool {
+        let hasText = !currentMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        let hasImages = !selectedImages.isEmpty
+        return (hasText || hasImages) && !isLoading
+    }
+    
+    private func sendMessage() {
+        let messageToSend = currentMessage.trimmingCharacters(in: .whitespacesAndNewlines)
+        let imagesToSend = selectedImages
+        let toolToUse = selectedTool
+        
+        if canSendMessage() {
+            currentMessage = ""
+            selectedImages = []
+            // Reset tool selection after sending (optional - you can keep it selected if preferred)
+            // selectedTool = .chat
+            
+            if !imagesToSend.isEmpty {
+                onSendWithImages(messageToSend, imagesToSend)
+            } else if toolToUse != .chat {
+                onSendWithTool(messageToSend, toolToUse)
+            } else {
+                onSendWithText(messageToSend)
+            }
+        }
+    }
+    
+    private func handleImageSelection(_ urls: [URL]) {
+        Task {
+            do {
+                var newImages: [ChatMessageImage] = []
+                
+                for url in urls {
+                    let imageId = UUID()
+                    let localPath = try await ImageStorageService.shared.saveUploadedImage(from: url, imageId: imageId)
+                    
+                    let image = ChatMessageImage(
+                        localImagePath: localPath,
+                        caption: url.lastPathComponent
+                    )
+                    newImages.append(image)
+                }
+                
+                await MainActor.run {
+                    selectedImages.append(contentsOf: newImages)
+                }
+                
+                print("✅ Added \(newImages.count) images for upload")
+                
+            } catch {
+                print("❌ Failed to process uploaded images: \(error)")
+            }
+        }
+    }
+    
+    private func openImagePicker() {
+        let picker = NSOpenPanel()
+        picker.title = "Select Images"
+        picker.allowsMultipleSelection = true
+        picker.canChooseDirectories = false
+        picker.canChooseFiles = true
+        picker.allowedContentTypes = [.image]
+        
+        if picker.runModal() == .OK {
+            handleImageSelection(picker.urls)
+        }
     }
 }
 
@@ -1269,6 +1575,82 @@ struct ImagePreviewView: View {
         }
     }
 }
+
+// MARK: - Image Upload Components
+
+struct ImagePreviewBar: View {
+    let images: [ChatMessageImage]
+    let onRemove: (ChatMessageImage) -> Void
+    
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                ForEach(images) { image in
+                    ImagePreviewThumbnail(image: image, onRemove: onRemove)
+                }
+            }
+            .padding(.horizontal, 4)
+        }
+        .frame(height: 80)
+    }
+}
+
+struct ImagePreviewThumbnail: View {
+    let image: ChatMessageImage
+    let onRemove: (ChatMessageImage) -> Void
+    @State private var isHovered = false
+    
+    var body: some View {
+        ZStack(alignment: .topTrailing) {
+            // Image thumbnail
+            AsyncImage(url: URL(string: image.effectiveImageURL ?? "")) { phase in
+                switch phase {
+                case .success(let image):
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case .failure(_), .empty:
+                    Rectangle()
+                        .fill(Color.secondary.opacity(0.3))
+                        .overlay {
+                            Image(systemName: "photo")
+                                .foregroundColor(.secondary)
+                        }
+                @unknown default:
+                    EmptyView()
+                }
+            }
+            .frame(width: 60, height: 60)
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            
+            // Remove button
+            if isHovered {
+                Button(action: {
+                    onRemove(image)
+                }) {
+                    Circle()
+                        .fill(Color.red)
+                        .frame(width: 20, height: 20)
+                        .overlay {
+                            Image(systemName: "xmark")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(.white)
+                        }
+                }
+                .buttonStyle(PlainButtonStyle())
+                .offset(x: 5, y: -5)
+                .transition(.opacity)
+            }
+        }
+        .padding(10) // Add padding to accommodate the delete button
+        .onHover { hovering in
+            withAnimation(.easeInOut(duration: 0.2)) {
+                isHovered = hovering
+            }
+        }
+    }
+}
+
 
 #Preview {
     AIChatView()

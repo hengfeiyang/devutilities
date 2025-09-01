@@ -36,23 +36,51 @@ class ImageStorageService {
     }
     
     func downloadAndSaveImage(from urlString: String, messageId: UUID) async throws -> String {
-        guard let url = URL(string: urlString) else {
-            throw ImageStorageError.invalidURL
+        print("📱 ImageStorageService: Processing image from: \(urlString.prefix(50))...")
+        
+        let data: Data
+        let fileExtension: String
+        
+        // Check if it's a data URL (base64 encoded)
+        if urlString.hasPrefix("data:image/") {
+            print("📱 ImageStorageService: Processing data URL (base64)")
+            // Parse data URL format: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...
+            let components = urlString.components(separatedBy: ",")
+            guard components.count == 2,
+                  let base64String = components.last,
+                  let imageData = Data(base64Encoded: base64String) else {
+                print("❌ ImageStorageService: Failed to parse base64 data URL")
+                throw ImageStorageError.invalidURL
+            }
+            
+            data = imageData
+            
+            // Extract file type from data URL
+            let mimeType = urlString.components(separatedBy: ";").first?.components(separatedBy: ":").last ?? "image/png"
+            fileExtension = getFileExtension(for: mimeType)
+            
+            print("📱 ImageStorageService: Processed base64 data URL, MIME type: \(mimeType), size: \(data.count) bytes, extension: \(fileExtension)")
+        } else {
+            // Regular URL - download from remote
+            guard let url = URL(string: urlString) else {
+                throw ImageStorageError.invalidURL
+            }
+            
+            print("📱 ImageStorageService: Downloading from remote URL: \(urlString)")
+            
+            let (downloadedData, response) = try await URLSession.shared.data(from: url)
+            
+            guard let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode == 200 else {
+                throw ImageStorageError.downloadFailed
+            }
+            
+            data = downloadedData
+            
+            // Determine file extension from response or default to png
+            let contentType = httpResponse.value(forHTTPHeaderField: "Content-Type") ?? "image/png"
+            fileExtension = getFileExtension(for: contentType)
         }
-        
-        print("📱 ImageStorageService: Downloading image from: \(urlString)")
-        
-        // Download image data
-        let (data, response) = try await URLSession.shared.data(from: url)
-        
-        guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
-            throw ImageStorageError.downloadFailed
-        }
-        
-        // Determine file extension from response or default to png
-        let contentType = httpResponse.value(forHTTPHeaderField: "Content-Type") ?? "image/png"
-        let fileExtension = getFileExtension(for: contentType)
         
         // Generate local file path
         let fileName = "\(messageId.uuidString).\(fileExtension)"
@@ -65,6 +93,57 @@ class ImageStorageService {
         print("✅ ImageStorageService: Image saved to: \(localPath)")
         
         return localPath
+    }
+    
+    func saveBase64Image(_ base64DataURL: String, messageId: UUID) async throws -> String {
+        print("📱 ImageStorageService: Saving base64 image for message: \(messageId)")
+        
+        // Reuse the existing downloadAndSaveImage method which already handles base64 data URLs
+        return try await downloadAndSaveImage(from: base64DataURL, messageId: messageId)
+    }
+    
+    func saveUploadedImage(from sourceURL: URL, imageId: UUID) async throws -> String {
+        print("📱 ImageStorageService: Saving uploaded image from: \(sourceURL.path)")
+        
+        // Read the image data
+        let data = try Data(contentsOf: sourceURL)
+        
+        // Determine file extension from source URL
+        let sourceExtension = sourceURL.pathExtension.lowercased()
+        let fileExtension = ["jpg", "jpeg", "png", "gif", "webp"].contains(sourceExtension) ? sourceExtension : "png"
+        
+        // Generate local file path with image ID
+        let fileName = "\(imageId.uuidString).\(fileExtension)"
+        let localURL = imageDirectory.appendingPathComponent(fileName)
+        
+        // Save to local storage
+        try data.write(to: localURL)
+        
+        let localPath = localURL.path
+        print("✅ ImageStorageService: Uploaded image saved to: \(localPath)")
+        
+        return localPath
+    }
+    
+    func saveMultipleUploadedImages(from sourceURLs: [URL], imageIds: [UUID]) async throws -> [String] {
+        guard sourceURLs.count == imageIds.count else {
+            throw ImageStorageError.invalidInput
+        }
+        
+        var savedPaths: [String] = []
+        
+        for (sourceURL, imageId) in zip(sourceURLs, imageIds) {
+            do {
+                let savedPath = try await saveUploadedImage(from: sourceURL, imageId: imageId)
+                savedPaths.append(savedPath)
+            } catch {
+                print("❌ ImageStorageService: Failed to save image \(sourceURL.path): \(error)")
+                throw error
+            }
+        }
+        
+        print("✅ ImageStorageService: Saved \(savedPaths.count) uploaded images")
+        return savedPaths
     }
     
     func deleteImage(at path: String) {
@@ -117,6 +196,7 @@ enum ImageStorageError: LocalizedError {
     case invalidURL
     case downloadFailed
     case saveFailed
+    case invalidInput
     
     var errorDescription: String? {
         switch self {
@@ -126,6 +206,8 @@ enum ImageStorageError: LocalizedError {
             return "Failed to download image"
         case .saveFailed:
             return "Failed to save image to local storage"
+        case .invalidInput:
+            return "Invalid input parameters"
         }
     }
 }

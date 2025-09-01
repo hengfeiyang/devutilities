@@ -458,6 +458,9 @@ struct ParquetViewerView: View {
             fileType = .parquet
         }
         
+        // Track file open event
+        EventManager.shared.reportFileOpen(fileType: ext, fileName: fileName)
+        
         // Get file size
         do {
             let attributes = try FileManager.default.attributesOfItem(atPath: url.path)

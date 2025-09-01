@@ -155,6 +155,56 @@ class EventManager: ObservableObject {
         enqueueEvent(event)
     }
     
+    func reportAIChatMessage(messageLength: Int) {
+        guard isEnabled else { 
+            print("🚫 Event tracking disabled - AI Chat message event skipped")
+            return 
+        }
+        
+        let event = AppEvent.aiChatMessage(
+            messageLength: messageLength,
+            version: appVersion,
+            userId: userId,
+            sessionId: sessionId
+        )
+        
+        print("💬 [EVENT] AI Chat Message")
+        print("   Module: \(event.module)")
+        print("   Submodule: \(event.submodule)")
+        print("   Message Length: \(messageLength)")
+        print("   User ID: \(userId.uuidString.prefix(8))...")
+        print("   Session ID: \(sessionId.uuidString.prefix(8))...")
+        print("   Timestamp: \(event.timestamp)")
+        
+        enqueueEvent(event)
+    }
+    
+    func reportFileOpen(fileType: String, fileName: String) {
+        guard isEnabled else { 
+            print("🚫 Event tracking disabled - File open event skipped")
+            return 
+        }
+        
+        let event = AppEvent.fileOpen(
+            fileType: fileType,
+            fileName: fileName,
+            version: appVersion,
+            userId: userId,
+            sessionId: sessionId
+        )
+        
+        print("📂 [EVENT] File Opened")
+        print("   Module: \(event.module)")
+        print("   Submodule: \(event.submodule)")
+        print("   File Type: \(fileType)")
+        print("   File Name: \(fileName)")
+        print("   User ID: \(userId.uuidString.prefix(8))...")
+        print("   Session ID: \(sessionId.uuidString.prefix(8))...")
+        print("   Timestamp: \(event.timestamp)")
+        
+        enqueueEvent(event)
+    }
+    
     // MARK: - Settings Management
     
     func setEnabled(_ enabled: Bool) {

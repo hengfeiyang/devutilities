@@ -24,6 +24,7 @@ struct ChatSession: Identifiable, Codable, Hashable {
     var updatedAt: Date
     var messages: [ChatMessage]
     var selectedModel: AIModel?
+    var selectedTool: ChatToolMode = .chat
     
     init(title: String = "New Chat", selectedModel: AIModel? = nil) {
         self.id = UUID()
@@ -58,6 +59,28 @@ enum MessageContentType: String, Codable, CaseIterable {
     case image = "image"
 }
 
+struct ChatMessageImage: Identifiable, Codable, Hashable {
+    let id: UUID
+    var imageURL: String? = nil
+    var localImagePath: String? = nil
+    var caption: String? = nil // Optional caption for the image
+    
+    init(imageURL: String? = nil, localImagePath: String? = nil, caption: String? = nil) {
+        self.id = UUID()
+        self.imageURL = imageURL
+        self.localImagePath = localImagePath
+        self.caption = caption
+    }
+    
+    var effectiveImageURL: String? {
+        if let localPath = localImagePath,
+           FileManager.default.fileExists(atPath: localPath) {
+            return "file://\(localPath)"
+        }
+        return imageURL
+    }
+}
+
 struct ChatMessage: Identifiable, Codable, Hashable {
     let id: UUID
     let role: MessageRole
@@ -65,11 +88,16 @@ struct ChatMessage: Identifiable, Codable, Hashable {
     let timestamp: Date
     var isStreaming: Bool
     var contentType: MessageContentType = .text
+    // Legacy single image support (for backward compatibility)
     var imageURL: String? = nil
     var localImagePath: String? = nil
     var imagePrompt: String? = nil
+    // New multiple images support
+    var images: [ChatMessageImage] = []
+    // Response ID for multi-turn image generation
+    var responseId: String? = nil
     
-    init(role: MessageRole, content: String, isStreaming: Bool = false, contentType: MessageContentType = .text, imageURL: String? = nil, localImagePath: String? = nil, imagePrompt: String? = nil) {
+    init(role: MessageRole, content: String, isStreaming: Bool = false, contentType: MessageContentType = .text, imageURL: String? = nil, localImagePath: String? = nil, imagePrompt: String? = nil, images: [ChatMessageImage] = [], responseId: String? = nil) {
         self.id = UUID()
         self.role = role
         self.content = content
@@ -79,14 +107,43 @@ struct ChatMessage: Identifiable, Codable, Hashable {
         self.imageURL = imageURL
         self.localImagePath = localImagePath
         self.imagePrompt = imagePrompt
+        self.images = images
+        self.responseId = responseId
     }
     
+    // Legacy compatibility - returns first image if available
     var effectiveImageURL: String? {
+        // Check new images array first
+        if let firstImage = images.first {
+            return firstImage.effectiveImageURL
+        }
+        // Fall back to legacy single image
         if let localPath = localImagePath,
            FileManager.default.fileExists(atPath: localPath) {
             return "file://\(localPath)"
         }
         return imageURL
+    }
+    
+    // Helper to get all effective image URLs
+    var allImageURLs: [String] {
+        var urls: [String] = []
+        // Add new images
+        for image in images {
+            if let url = image.effectiveImageURL {
+                urls.append(url)
+            }
+        }
+        // Add legacy image if not already covered
+        if images.isEmpty, let legacyURL = effectiveImageURL {
+            urls.append(legacyURL)
+        }
+        return urls
+    }
+    
+    // Check if message has any images
+    var hasImages: Bool {
+        return !images.isEmpty || effectiveImageURL != nil
     }
 }
 
@@ -107,6 +164,28 @@ enum MessageRole: String, Codable, CaseIterable {
 enum ModelType: String, Codable, CaseIterable {
     case chat = "chat"
     case image = "image"
+}
+
+enum ChatToolMode: String, Codable, CaseIterable {
+    case chat = "chat"
+    case webSearch = "web_search"
+    case imageGeneration = "image_generation"
+    
+    var displayName: String {
+        switch self {
+        case .chat: return "Chat"
+        case .webSearch: return "Search"
+        case .imageGeneration: return "Image"
+        }
+    }
+    
+    var iconName: String {
+        switch self {
+        case .chat: return "message"
+        case .webSearch: return "globe"
+        case .imageGeneration: return "photo"
+        }
+    }
 }
 
 struct AIModel: Identifiable, Codable, Hashable {
@@ -210,6 +289,15 @@ extension AIModel {
         type: .image
     )
     
+    static let gptImage1 = AIModel(
+        id: "gpt-image-1",
+        name: "gpt-image-1",
+        displayName: "GPT-Image-1",
+        maxTokens: 4096,
+        contextWindow: 32768,
+        type: .image
+    )
+    
     static let gemini25Pro = AIModel(
         id: "gemini-2.5-pro",
         name: "gemini-2.5-pro",
@@ -246,7 +334,7 @@ extension AIModel {
     static let chatModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .gpt41Mini, .gpt41Nano, .o3DeepResearch, .o4MiniDeepResearch, .gemini25Pro, .gemini25Flash, .gemini25FlashLite, .gemini25FlashImagePreview]
     
     // Image models (for image generation)
-    static let imageModels: [AIModel] = [.dalle3]
+    static let imageModels: [AIModel] = [.dalle3, .gptImage1]
     
     // All available models
     static let allModels: [AIModel] = chatModels + imageModels

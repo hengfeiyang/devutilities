@@ -5,6 +5,8 @@ enum EventType {
     case appStart(version: String)
     case moduleSwitch(from: String?, to: String)
     case submoduleSwitch(module: String, from: String?, to: String)
+    case aiChatMessage(messageLength: Int)
+    case fileOpen(fileType: String, fileName: String)
 }
 
 // MARK: - App Event Data Structure
@@ -70,6 +72,28 @@ struct AppEvent: Codable {
             version: version,
             module: module,
             submodule: to,
+            userId: userId,
+            sessionId: sessionId
+        )
+    }
+    
+    static func aiChatMessage(messageLength: Int, version: String, userId: UUID, sessionId: UUID) -> AppEvent {
+        return AppEvent(
+            timestamp: Date(),
+            version: version,
+            module: "ai_chat",
+            submodule: "message_sent",
+            userId: userId,
+            sessionId: sessionId
+        )
+    }
+    
+    static func fileOpen(fileType: String, fileName: String, version: String, userId: UUID, sessionId: UUID) -> AppEvent {
+        return AppEvent(
+            timestamp: Date(),
+            version: version,
+            module: "parquet_viewer",
+            submodule: "file_opened",
             userId: userId,
             sessionId: sessionId
         )
