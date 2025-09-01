@@ -427,11 +427,22 @@ class ChatManager {
         }
         
         do {
+            // Check if this is a multi-turn refinement request
+            let currentMessages = await MainActor.run {
+                chatSessions[sessionIndex].messages
+            }
+            let previousResponseId = findLastImageGenerationResponse(in: currentMessages)
+            
+            if let prevId = previousResponseId {
+                print("🔄 Using previous_response_id for multi-turn generation: \(prevId)")
+            }
+            
             let (imageURL, responseId) = try await responsesAPI.generateImage(
                 prompt: prompt,
                 model: model,
                 apiKey: apiKey,
-                baseURL: settings.apiGatewayURL
+                baseURL: settings.apiGatewayURL,
+                previousResponseId: previousResponseId
             )
             
             guard let messageId = await MainActor.run(body: {
@@ -530,12 +541,23 @@ class ChatManager {
         }
         
         do {
+            // Check if this is a multi-turn refinement request
+            let currentMessages = await MainActor.run {
+                chatSessions[sessionIndex].messages
+            }
+            let previousResponseId = findLastImageGenerationResponse(in: currentMessages)
+            
+            if let prevId = previousResponseId {
+                print("🔄 Using previous_response_id for multi-turn generation with reference images: \(prevId)")
+            }
+            
             let (imageURL, responseId) = try await responsesAPI.generateImageWithReferenceImages(
                 prompt: prompt,
                 referenceImages: referenceImages,
                 model: model,
                 apiKey: apiKey,
-                baseURL: settings.apiGatewayURL
+                baseURL: settings.apiGatewayURL,
+                previousResponseId: previousResponseId
             )
             
             guard let messageId = await MainActor.run(body: {
@@ -584,6 +606,20 @@ class ChatManager {
                 }
             }
         }
+    }
+    
+    // MARK: - Multi-turn Image Generation Helper
+    
+    private func findLastImageGenerationResponse(in messages: [ChatMessage]) -> String? {
+        // Find the most recent assistant message with image generation and a response ID
+        for message in messages.reversed() {
+            if message.role == .assistant && 
+               message.contentType == .image && 
+               message.responseId != nil {
+                return message.responseId
+            }
+        }
+        return nil
     }
 }
 
