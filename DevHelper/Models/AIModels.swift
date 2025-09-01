@@ -59,11 +59,22 @@ enum MessageContentType: String, Codable, CaseIterable {
     case image = "image"
 }
 
+enum AttachmentType: String, Codable, CaseIterable {
+    case image
+    
+    var displayName: String {
+        switch self {
+        case .image: return "Image"
+        }
+    }
+}
+
 struct ChatMessageImage: Identifiable, Codable, Hashable {
     let id: UUID
     var imageURL: String? = nil
     var localImagePath: String? = nil
     var caption: String? = nil // Optional caption for the image
+    var attachmentType: AttachmentType = .image // Always image type
     
     init(imageURL: String? = nil, localImagePath: String? = nil, caption: String? = nil) {
         self.id = UUID()
@@ -88,6 +99,7 @@ struct ChatMessageImage: Identifiable, Codable, Hashable {
             do {
                 let imageData = try Data(contentsOf: URL(fileURLWithPath: localPath))
                 let base64String = imageData.base64EncodedString()
+                
                 // Determine MIME type based on file extension
                 let mimeType: String
                 if localPath.lowercased().hasSuffix(".png") {
@@ -99,6 +111,7 @@ struct ChatMessageImage: Identifiable, Codable, Hashable {
                 } else {
                     mimeType = "image/png" // Default to PNG
                 }
+                
                 return "data:\(mimeType);base64,\(base64String)"
             } catch {
                 print("❌ Failed to convert local image to base64: \(error)")
@@ -243,7 +256,7 @@ enum ChatToolMode: String, Codable, CaseIterable {
         switch self {
         case .chat: return "message"
         case .webSearch: return "globe"
-        case .imageGeneration: return "photo"
+        case .imageGeneration: return "photo.on.rectangle.angled"
         }
     }
 }

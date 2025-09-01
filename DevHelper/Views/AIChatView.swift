@@ -14,6 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import SwiftUI
+import UniformTypeIdentifiers
 import Foundation
 import AppKit
 import MarkdownUI
@@ -1251,7 +1252,8 @@ struct ChatInputView: View {
     }
 
     var body: some View {
-        VStack(spacing: 8) {
+        ZStack {
+            VStack(spacing: 8) {
             // Image preview area (if images are selected)
             if !selectedImages.isEmpty {
                 ImagePreviewBar(
@@ -1274,7 +1276,6 @@ struct ChatInputView: View {
                         .frame(height: calculatedHeight)
                         .disabled(isLoading)
                         .onKeyPress { key in
-                            print("🔑 onKeyPress key: \(key)")
                             if key.key == .return && !key.modifiers.contains(.shift) {
                                 // Enter: Send message
                                 sendMessage()
@@ -1298,12 +1299,12 @@ struct ChatInputView: View {
                 .overlay(alignment: .bottomLeading) {
                     // Tool selection toolbar (floating overlay at bottom-left)
                     HStack(spacing: 4) {
-                        // File upload button (plus icon)
+                        // Upload image button
                         Button(action: {
-                            print("🔄 Plus button clicked")
+                            print("📸 Upload image button clicked")
                             openImagePicker()
                         }) {
-                            Image(systemName: "plus")
+                            Image(systemName: "photo.badge.plus")
                                 .font(.system(size: 16, weight: .medium))
                                 .foregroundColor(.secondary)
                                 .frame(width: 28, height: 28)
@@ -1376,18 +1377,22 @@ struct ChatInputView: View {
                 }
             }
             .padding(.horizontal, 20)
+            }
+            .padding(.vertical, 16)
+            .animation(.easeInOut(duration: 0.2), value: calculatedHeight)
         }
-        .padding(.vertical, 16)
-        .animation(.easeInOut(duration: 0.2), value: calculatedHeight)
     }
+    
     
     private func getPlaceholderText() -> String {
         if !selectedImages.isEmpty {
+            let attachmentDescription = "images"
+            
             switch selectedTool {
             case .chat:
-                return "Ask about these images..."
+                return "Ask about these \(attachmentDescription)..."
             case .webSearch:
-                return "Search with these reference images..."
+                return "Search with these reference \(attachmentDescription)..."
             case .imageGeneration:
                 return "Generate an image using these as references..."
             }
@@ -1436,30 +1441,35 @@ struct ChatInputView: View {
         }
     }
     
-    private func handleImageSelection(_ urls: [URL]) {
+    private func handleFileSelection(_ urls: [URL], attachmentType: AttachmentType) {
         Task {
             do {
-                var newImages: [ChatMessageImage] = []
+                var newAttachments: [ChatMessageImage] = []
                 
                 for url in urls {
-                    let imageId = UUID()
-                    let localPath = try await ImageStorageService.shared.saveUploadedImage(from: url, imageId: imageId)
+                    let fileName = url.lastPathComponent
                     
-                    let image = ChatMessageImage(
-                        localImagePath: localPath,
-                        caption: url.lastPathComponent
-                    )
-                    newImages.append(image)
+                    if attachmentType == .image {
+                        // Use existing image storage service for images
+                        let imageId = UUID()
+                        let localPath = try await ImageStorageService.shared.saveUploadedImage(from: url, imageId: imageId)
+                        
+                        let image = ChatMessageImage(
+                            localImagePath: localPath,
+                            caption: fileName
+                        )
+                        newAttachments.append(image)
+                    }
                 }
                 
                 await MainActor.run {
-                    selectedImages.append(contentsOf: newImages)
+                    selectedImages.append(contentsOf: newAttachments)
                 }
                 
-                print("✅ Added \(newImages.count) images for upload")
+                print("✅ Added \(newAttachments.count) \(attachmentType.displayName.lowercased())s for upload")
                 
             } catch {
-                print("❌ Failed to process uploaded images: \(error)")
+                print("❌ Failed to process uploaded \(attachmentType.displayName.lowercased())s: \(error)")
             }
         }
     }
@@ -1473,9 +1483,10 @@ struct ChatInputView: View {
         picker.allowedContentTypes = [.image]
         
         if picker.runModal() == .OK {
-            handleImageSelection(picker.urls)
+            handleFileSelection(picker.urls, attachmentType: .image)
         }
     }
+    
 }
 
 // MARK: - ScrollOffset Preference Key for scroll position detection
@@ -1616,7 +1627,7 @@ struct ImagePreviewBar: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
                 ForEach(images) { image in
-                    ImagePreviewThumbnail(image: image, onRemove: onRemove)
+                    AttachmentPreviewThumbnail(attachment: image, onRemove: onRemove)
                 }
             }
             .padding(.horizontal, 4)
@@ -1625,38 +1636,39 @@ struct ImagePreviewBar: View {
     }
 }
 
-struct ImagePreviewThumbnail: View {
-    let image: ChatMessageImage
+struct AttachmentPreviewThumbnail: View {
+    let attachment: ChatMessageImage
     let onRemove: (ChatMessageImage) -> Void
     @State private var isHovered = false
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            // Image thumbnail
-            AsyncImage(url: URL(string: image.effectiveImageURL ?? "")) { phase in
-                switch phase {
-                case .success(let image):
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                case .failure(_), .empty:
-                    Rectangle()
-                        .fill(Color.secondary.opacity(0.3))
-                        .overlay {
-                            Image(systemName: "photo")
-                                .foregroundColor(.secondary)
-                        }
-                @unknown default:
-                    EmptyView()
+            // Content based on attachment type
+            if attachment.attachmentType == .image {
+                // Image thumbnail
+                AsyncImage(url: URL(string: attachment.effectiveImageURL ?? "")) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    case .failure(_), .empty:
+                        Rectangle()
+                            .fill(Color.secondary.opacity(0.3))
+                            .overlay {
+                                Image(systemName: "photo")
+                                    .foregroundColor(.secondary)
+                            }
+                    @unknown default:
+                        EmptyView()
+                    }
                 }
             }
-            .frame(width: 60, height: 60)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
             
             // Remove button
             if isHovered {
                 Button(action: {
-                    onRemove(image)
+                    onRemove(attachment)
                 }) {
                     Circle()
                         .fill(Color.red)

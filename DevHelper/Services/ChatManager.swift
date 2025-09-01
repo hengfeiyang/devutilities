@@ -207,12 +207,6 @@ class ChatManager {
             print("🎨 ChatManager: Using responses API for image generation with reference images using model: \(model.displayName)")
             await generateImageWithResponsesAPIAndReferenceImages(content, referenceImages: referenceImages, model: model, sessionIndex: sessionIndex, apiKey: apiKey, settings: settings, isLoading: isLoading, errorMessage: errorMessage)
             
-        } catch {
-            print("❌ ChatManager: Error in force image generation with reference images: \(error)")
-            await MainActor.run {
-                errorMessage.wrappedValue = "Failed to generate image: \(error.localizedDescription)"
-                isLoading.wrappedValue = false
-            }
         }
     }
     
@@ -265,12 +259,6 @@ class ChatManager {
             print("🎨 ChatManager: Using responses API for image generation with model: \(model.displayName)")
             await generateImageWithResponsesAPI(content, model: model, sessionIndex: sessionIndex, apiKey: apiKey, settings: settings, isLoading: isLoading, errorMessage: errorMessage)
             
-        } catch {
-            print("❌ ChatManager: Error in force image generation: \(error)")
-            await MainActor.run {
-                errorMessage.wrappedValue = "Failed to generate image: \(error.localizedDescription)"
-                isLoading.wrappedValue = false
-            }
         }
     }
     
@@ -332,12 +320,6 @@ class ChatManager {
             print("💬 ChatManager: Using vision-capable chat model")
             await sendVisionMessage(currentMessages, sessionIndex: sessionIndex, apiKey: apiKey, settings: settings, isLoading: isLoading, errorMessage: errorMessage)
             
-        } catch {
-            print("❌ ChatManager: Error sending message with images: \(error)")
-            await MainActor.run {
-                errorMessage.wrappedValue = "Failed to send message: \(error.localizedDescription)"
-                isLoading.wrappedValue = false
-            }
         }
     }
     
@@ -458,22 +440,6 @@ class ChatManager {
                 }
             )
             
-        } catch {
-            print("❌ ChatManager: Error sending message: \(error)")
-            await MainActor.run {
-                // Remove any streaming message that was created but failed (from memory only)
-                if let sessionIdx = chatSessions.firstIndex(where: { $0.id == sessionId }) {
-                    // Remove the last message if it's still streaming (failed)
-                    if let lastMessage = chatSessions[sessionIdx].messages.last,
-                       lastMessage.isStreaming {
-                        chatSessions[sessionIdx].messages.removeLast()
-                        // No need to save since it was never persisted
-                    }
-                }
-                
-                errorMessage.wrappedValue = "Failed to send message: \(error.localizedDescription)"
-                isLoading.wrappedValue = false
-            }
         }
     }
     
@@ -539,12 +505,6 @@ class ChatManager {
                 }
             )
             
-        } catch {
-            print("❌ ChatManager: Error in sendVisionMessage: \(error)")
-            await MainActor.run {
-                errorMessage.wrappedValue = "Failed to send vision message: \(error.localizedDescription)"
-                isLoading.wrappedValue = false
-            }
         }
     }
     
@@ -740,7 +700,7 @@ class ChatManager {
             let previousResponseId = findLastImageGenerationResponse(in: currentMessages)
             
             // Call responses API with image_generation tool and reference images
-            let (imageURL, responseId) = try await generateImageWithResponsesAPICallWithReferenceImages(
+            let (imageURL, responseId) = try await generateImageWithResponsesAPICallWithReferenceFiles(
                 prompt: content,
                 referenceImages: referenceImages,
                 model: model,
@@ -806,7 +766,7 @@ class ChatManager {
         }
     }
     
-    private func generateImageWithResponsesAPICallWithReferenceImages(
+    private func generateImageWithResponsesAPICallWithReferenceFiles(
         prompt: String, 
         referenceImages: [ChatMessageImage],
         model: AIModel, 
@@ -830,13 +790,16 @@ class ChatManager {
             "text": prompt
         ])
         
-        // Add reference images as input_image
-        for image in referenceImages {
-            if let base64URL = image.base64ImageURL {
+        // Add reference images
+        var hasImage = false
+        for attachment in referenceImages {
+            print("🎨 \(model.displayName) Reference Image: \(attachment.attachmentType.displayName)")
+            if let base64URL = attachment.base64ImageURL {
                 inputContent.append([
                     "type": "input_image",
                     "image_url": base64URL
                 ])
+                hasImage = true
             }
         }
         
@@ -848,9 +811,9 @@ class ChatManager {
                     "content": inputContent
                 ]
             ],
-            "tools": [[
+            "tools": [hasImage ? [
                 "type": "image_generation"
-            ]]
+            ] : []]
         ]
         
         // Add previous_response_id for multi-turn image generation if available
