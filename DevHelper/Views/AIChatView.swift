@@ -1047,19 +1047,8 @@ struct ChatMessageView: View {
                                 // Text message with MarkdownUI library
                                 VStack {
                                     Markdown(message.content)
+                                        .markdownTheme(.gitHub)
                                         .textSelection(.enabled)
-                                        .markdownBlockStyle(\.codeBlock) { configuration in
-                                            configuration.label
-                                                .padding(12)
-                                                .background(Color(NSColor.textBackgroundColor))
-                                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                                                .markdownTextStyle {
-                                                    FontFamilyVariant(.monospaced)
-                                                    FontSize(13)
-                                                }
-                                                .frame(maxWidth: .infinity, alignment: .leading)
-                                                .fixedSize(horizontal: false, vertical: true)
-                                        }
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .lineSpacing(4)
