@@ -115,8 +115,7 @@ extension AIModel {
     static let gptImage1 = AIModel(id: "gpt-image-1", name: "gpt-image-1", displayName: "GPT-Image-1", maxTokens: 4096, contextWindow: 32768, type: .image)
     
     static let chatModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .gpt41Mini, .gpt41Nano, .o3DeepResearch, .o4MiniDeepResearch, .gemini25Pro, .gemini25Flash]
-    static let imageModels: [AIModel] = [.dalle3, .gptImage1]
-    static let allModels: [AIModel] = chatModels + imageModels
+    static let allModels: [AIModel] = chatModels
     static let defaultModel: AIModel = .gpt41
 }
 ```

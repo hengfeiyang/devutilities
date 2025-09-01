@@ -475,6 +475,9 @@ struct ChatContentView: View {
                     onSendWithTool: { messageText, tool in
                         sendMessageWithTool(messageText, tool: tool)
                     },
+                    onSendWithImagesAndTool: { messageText, images, tool in
+                        sendMessageWithImagesAndTool(messageText, images: images, tool: tool)
+                    },
                     onToolChanged: { newTool in
                         updateSessionTool(newTool)
                     }
@@ -543,6 +546,30 @@ struct ChatContentView: View {
             await chatManager.sendMessageWithImages(
                 messageText,
                 images: images,
+                in: session.id,
+                with: aiSettings,
+                isLoading: $isLoading,
+                errorMessage: $errorMessage
+            )
+        }
+    }
+    
+    private func sendMessageWithImagesAndTool(_ messageText: String, images: [ChatMessageImage], tool: ChatToolMode) {
+        guard let session = selectedSession, !isLoading else { 
+            print("❌ UI: sendMessageWithImagesAndTool guard failed - session: \(selectedSession?.id.uuidString ?? "nil"), loading: \(isLoading)")
+            return 
+        }
+        
+        print("📱 UI: Sending message with \(images.count) images and tool \(tool.displayName): '\(messageText.prefix(50))...'")
+        
+        // Track AI Chat message event (including images and tool)
+        EventManager.shared.reportAIChatMessage(messageLength: messageText.count)
+        
+        Task {
+            await chatManager.sendMessageWithImagesAndTool(
+                messageText,
+                images: images,
+                tool: tool,
                 in: session.id,
                 with: aiSettings,
                 isLoading: $isLoading,
@@ -1192,6 +1219,7 @@ struct ChatInputView: View {
     let onSendWithText: (String) -> Void
     let onSendWithImages: (String, [ChatMessageImage]) -> Void
     let onSendWithTool: (String, ChatToolMode) -> Void
+    let onSendWithImagesAndTool: (String, [ChatMessageImage], ChatToolMode) -> Void
     let onToolChanged: (ChatToolMode) -> Void
     
     @State private var selectedImages: [ChatMessageImage] = []
@@ -1355,7 +1383,14 @@ struct ChatInputView: View {
     
     private func getPlaceholderText() -> String {
         if !selectedImages.isEmpty {
-            return "Ask about these images..."
+            switch selectedTool {
+            case .chat:
+                return "Ask about these images..."
+            case .webSearch:
+                return "Search with these reference images..."
+            case .imageGeneration:
+                return "Generate an image using these as references..."
+            }
         } else {
             switch selectedTool {
             case .chat:
@@ -1385,11 +1420,17 @@ struct ChatInputView: View {
             // Reset tool selection after sending (optional - you can keep it selected if preferred)
             // selectedTool = .chat
             
-            if !imagesToSend.isEmpty {
+            if !imagesToSend.isEmpty && toolToUse != .chat {
+                // Images with tool (e.g., image generation with reference images)
+                onSendWithImagesAndTool(messageToSend, imagesToSend, toolToUse)
+            } else if !imagesToSend.isEmpty {
+                // Images without tool (regular vision chat)
                 onSendWithImages(messageToSend, imagesToSend)
             } else if toolToUse != .chat {
+                // Tool without images
                 onSendWithTool(messageToSend, toolToUse)
             } else {
+                // Regular text message
                 onSendWithText(messageToSend)
             }
         }

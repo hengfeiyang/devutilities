@@ -79,6 +79,34 @@ struct ChatMessageImage: Identifiable, Codable, Hashable {
         }
         return imageURL
     }
+    
+    // Get base64 encoded image URL for API compatibility
+    var base64ImageURL: String? {
+        if let localPath = localImagePath,
+           FileManager.default.fileExists(atPath: localPath) {
+            // Convert local image to base64 data URL
+            do {
+                let imageData = try Data(contentsOf: URL(fileURLWithPath: localPath))
+                let base64String = imageData.base64EncodedString()
+                // Determine MIME type based on file extension
+                let mimeType: String
+                if localPath.lowercased().hasSuffix(".png") {
+                    mimeType = "image/png"
+                } else if localPath.lowercased().hasSuffix(".jpg") || localPath.lowercased().hasSuffix(".jpeg") {
+                    mimeType = "image/jpeg"
+                } else if localPath.lowercased().hasSuffix(".webp") {
+                    mimeType = "image/webp"
+                } else {
+                    mimeType = "image/png" // Default to PNG
+                }
+                return "data:\(mimeType);base64,\(base64String)"
+            } catch {
+                print("❌ Failed to convert local image to base64: \(error)")
+                return nil
+            }
+        }
+        return imageURL
+    }
 }
 
 struct ChatMessage: Identifiable, Codable, Hashable {
@@ -121,6 +149,38 @@ struct ChatMessage: Identifiable, Codable, Hashable {
         if let localPath = localImagePath,
            FileManager.default.fileExists(atPath: localPath) {
             return "file://\(localPath)"
+        }
+        return imageURL
+    }
+    
+    // Get base64 encoded image URL for API compatibility (legacy support)
+    var base64ImageURL: String? {
+        // Check new images array first
+        if let firstImage = images.first {
+            return firstImage.base64ImageURL
+        }
+        // Fall back to legacy single image
+        if let localPath = localImagePath,
+           FileManager.default.fileExists(atPath: localPath) {
+            do {
+                let imageData = try Data(contentsOf: URL(fileURLWithPath: localPath))
+                let base64String = imageData.base64EncodedString()
+                // Determine MIME type based on file extension
+                let mimeType: String
+                if localPath.lowercased().hasSuffix(".png") {
+                    mimeType = "image/png"
+                } else if localPath.lowercased().hasSuffix(".jpg") || localPath.lowercased().hasSuffix(".jpeg") {
+                    mimeType = "image/jpeg"
+                } else if localPath.lowercased().hasSuffix(".webp") {
+                    mimeType = "image/webp"
+                } else {
+                    mimeType = "image/png" // Default to PNG
+                }
+                return "data:\(mimeType);base64,\(base64String)"
+            } catch {
+                print("❌ Failed to convert legacy local image to base64: \(error)")
+                return nil
+            }
         }
         return imageURL
     }
@@ -280,23 +340,6 @@ extension AIModel {
         contextWindow: 300000
     )
     
-    static let dalle3 = AIModel(
-        id: "dall-e-3",
-        name: "dall-e-3",
-        displayName: "DALL-E 3",
-        maxTokens: 4096,
-        contextWindow: 8192,
-        type: .image
-    )
-    
-    static let gptImage1 = AIModel(
-        id: "gpt-image-1",
-        name: "gpt-image-1",
-        displayName: "GPT-Image-1",
-        maxTokens: 4096,
-        contextWindow: 32768,
-        type: .image
-    )
     
     static let gemini25Pro = AIModel(
         id: "gemini-2.5-pro",
@@ -333,11 +376,8 @@ extension AIModel {
     // Chat models only (for regular conversation)
     static let chatModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .gpt41Mini, .gpt41Nano, .o3DeepResearch, .o4MiniDeepResearch, .gemini25Pro, .gemini25Flash, .gemini25FlashLite, .gemini25FlashImagePreview]
     
-    // Image models (for image generation)
-    static let imageModels: [AIModel] = [.dalle3, .gptImage1]
-    
     // All available models
-    static let allModels: [AIModel] = chatModels + imageModels
+    static let allModels: [AIModel] = chatModels
     
     // Default model (must be a chat model)
     static let defaultModel: AIModel = .gpt41

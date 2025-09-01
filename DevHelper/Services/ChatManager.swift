@@ -128,6 +128,94 @@ class ChatManager {
         }
     }
     
+    func sendMessageWithImagesAndTool(
+        _ content: String,
+        images: [ChatMessageImage],
+        tool: ChatToolMode,
+        in sessionId: UUID,
+        with settings: AISettings,
+        isLoading: Binding<Bool>,
+        errorMessage: Binding<String?>
+    ) async {
+        print("📱 ChatManager: Starting sendMessageWithImagesAndTool (\(tool.displayName)) for session: \(sessionId)")
+        
+        switch tool {
+        case .chat:
+            // Regular vision message
+            await sendMessageWithImages(content, images: images, in: sessionId, with: settings, isLoading: isLoading, errorMessage: errorMessage)
+            
+        case .webSearch:
+            // TODO: Implement web search functionality
+            await MainActor.run {
+                errorMessage.wrappedValue = "Web search functionality not yet implemented"
+                isLoading.wrappedValue = false
+            }
+            
+        case .imageGeneration:
+            // Image generation with reference images
+            await forceImageGenerationWithReferenceImages(content, referenceImages: images, in: sessionId, with: settings, isLoading: isLoading, errorMessage: errorMessage)
+        }
+    }
+    
+    private func forceImageGenerationWithReferenceImages(
+        _ content: String,
+        referenceImages: [ChatMessageImage],
+        in sessionId: UUID,
+        with settings: AISettings,
+        isLoading: Binding<Bool>,
+        errorMessage: Binding<String?>
+    ) async {
+        await MainActor.run {
+            isLoading.wrappedValue = true
+            errorMessage.wrappedValue = nil
+        }
+        
+        // Find the session and add user message with images
+        let userMessage = ChatMessage(role: .user, content: content, images: referenceImages)
+        guard let sessionIndex = await MainActor.run(body: {
+            chatSessions.firstIndex(where: { $0.id == sessionId })
+        }) else {
+            await MainActor.run {
+                errorMessage.wrappedValue = "Chat session not found."
+                isLoading.wrappedValue = false
+            }
+            return
+        }
+        
+        await MainActor.run {
+            chatSessions[sessionIndex].addMessage(userMessage)
+            storage.saveChatSession(chatSessions[sessionIndex])
+        }
+        
+        do {
+            let model = await MainActor.run {
+                chatSessions[sessionIndex].selectedModel ?? settings.defaultModel
+            }
+            
+            // Validate API key
+            print("📱 ChatManager: Force generating image with reference images using model: \(model.displayName)")
+            guard let apiKey = settings.getOpenAIAPIKey(), !apiKey.isEmpty else {
+                print("❌ ChatManager: No OpenAI API key found")
+                await MainActor.run {
+                    errorMessage.wrappedValue = "No OpenAI API key configured. Please add your API key in settings."
+                    isLoading.wrappedValue = false
+                }
+                return
+            }
+            
+            // Use responses API for image generation with reference images
+            print("🎨 ChatManager: Using responses API for image generation with reference images using model: \(model.displayName)")
+            await generateImageWithResponsesAPIAndReferenceImages(content, referenceImages: referenceImages, model: model, sessionIndex: sessionIndex, apiKey: apiKey, settings: settings, isLoading: isLoading, errorMessage: errorMessage)
+            
+        } catch {
+            print("❌ ChatManager: Error in force image generation with reference images: \(error)")
+            await MainActor.run {
+                errorMessage.wrappedValue = "Failed to generate image: \(error.localizedDescription)"
+                isLoading.wrappedValue = false
+            }
+        }
+    }
+    
     private func forceImageGeneration(
         _ content: String,
         in sessionId: UUID,
@@ -173,16 +261,9 @@ class ChatManager {
                 return
             }
             
-            // For GPT-5 and GPT-4.1, use responses API
-            if model.id == "gpt-5" || model.id == "gpt-4.1" {
-                print("🎨 ChatManager: Using responses API for forced image generation")
-                await generateImageWithResponsesAPI(content, model: model, sessionIndex: sessionIndex, apiKey: apiKey, settings: settings, isLoading: isLoading, errorMessage: errorMessage)
-            }
-            // For other models, fall back to DALL-E 3
-            else {
-                print("🎨 ChatManager: Falling back to DALL-E 3 for forced image generation")
-                await generateImage(content, sessionIndex: sessionIndex, apiKey: apiKey, settings: settings, isLoading: isLoading, errorMessage: errorMessage)
-            }
+            // Use responses API for image generation
+            print("🎨 ChatManager: Using responses API for image generation with model: \(model.displayName)")
+            await generateImageWithResponsesAPI(content, model: model, sessionIndex: sessionIndex, apiKey: apiKey, settings: settings, isLoading: isLoading, errorMessage: errorMessage)
             
         } catch {
             print("❌ ChatManager: Error in force image generation: \(error)")
@@ -247,24 +328,9 @@ class ChatManager {
                 chatSessions[sessionIndex].messages
             }
             
-            // Handle different models based on their capabilities
-            if model.type == .image {
-                if model.id == "dall-e-3" {
-                    print("🎨 ChatManager: Using DALL-E 3 for image generation")
-                    await generateImage(content, sessionIndex: sessionIndex, apiKey: apiKey, settings: settings, isLoading: isLoading, errorMessage: errorMessage)
-                    return
-                } else if model.id == "gpt-image-1" {
-                    print("🎨 ChatManager: Using GPT-Image 1 for image generation")
-                    await generateImageWithGPTImage1(content, sessionIndex: sessionIndex, apiKey: apiKey, settings: settings, isLoading: isLoading, errorMessage: errorMessage)
-                    return
-                }
-            } 
-            // Note: Keyword-based image generation removed - now using explicit tool selection
-            else {
-                // Regular chat model with vision support
-                print("💬 ChatManager: Using vision-capable chat model")
-                await sendVisionMessage(currentMessages, sessionIndex: sessionIndex, apiKey: apiKey, settings: settings, isLoading: isLoading, errorMessage: errorMessage)
-            }
+            // Use vision-capable chat model for images
+            print("💬 ChatManager: Using vision-capable chat model")
+            await sendVisionMessage(currentMessages, sessionIndex: sessionIndex, apiKey: apiKey, settings: settings, isLoading: isLoading, errorMessage: errorMessage)
             
         } catch {
             print("❌ ChatManager: Error sending message with images: \(error)")
@@ -328,20 +394,7 @@ class ChatManager {
                 chatSessions[sessionIndex].messages
             }
             
-            // Handle image generation models
-            if model.type == .image {
-                if model.id == "dall-e-3" {
-                    print("🎨 ChatManager: Using DALL-E 3 for image generation")
-                    await generateImage(content, sessionIndex: sessionIndex, apiKey: apiKey, settings: settings, isLoading: isLoading, errorMessage: errorMessage)
-                    return
-                } else if model.id == "gpt-image-1" {
-                    print("🎨 ChatManager: Using GPT-Image 1 for image generation")
-                    await generateImageWithGPTImage1(content, sessionIndex: sessionIndex, apiKey: apiKey, settings: settings, isLoading: isLoading, errorMessage: errorMessage)
-                    return
-                }
-            }
-            
-            // Note: Keyword-based image generation removed - now using explicit tool selection
+            // Use streaming chat for text messages
             
             // Always use streaming for better UX
             print("📱 ChatManager: Sending \(currentMessages.count) messages to OpenAI API")
@@ -495,282 +548,7 @@ class ChatManager {
         }
     }
     
-    private func generateImageWithGPTImage1API(prompt: String, apiKey: String, baseURL: String = OpenAIConfig.baseURL) async throws -> String {
-        // Validate prompt length for gpt-image-1 (max 1000 characters)
-        guard prompt.count <= 1000 else {
-            throw NSError(domain: "OpenAIError", code: 400, userInfo: [NSLocalizedDescriptionKey: "Prompt too long. GPT-Image 1 supports maximum 1000 characters."])
-        }
-        
-        let url = URL(string: "\(baseURL)/images/generations")!
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let requestBody: [String: Any] = [
-            "model": "gpt-image-1",
-            "prompt": prompt,
-            "n": 1,
-            "size": "1024x1024",
-            "stream": false, // For now, use non-streaming for simplicity
-            "background": "auto", // Let the model automatically determine background
-            "moderation": "auto" // Use default content moderation
-        ]
-        
-        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
-        
-        let (data, response) = try await URLSession.shared.data(for: request)
-        
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw URLError(.badServerResponse)
-        }
-        
-        print("🎨 GPT-Image 1 API Response Status: \(httpResponse.statusCode)")
-        
-        if httpResponse.statusCode != 200 {
-            if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-               let error = errorData["error"] as? [String: Any],
-               let message = error["message"] as? String {
-                throw NSError(domain: "OpenAIError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "HTTP Error \(httpResponse.statusCode): \(message)"])
-            } else {
-                let errorMessage = String(data: data, encoding: .utf8) ?? "Unknown error"
-                throw NSError(domain: "OpenAIError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "HTTP Error \(httpResponse.statusCode): \(errorMessage)"])
-            }
-        }
-        
-        guard let jsonResponse = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-              let dataArray = jsonResponse["data"] as? [[String: Any]],
-              let firstImage = dataArray.first,
-              let imageURL = firstImage["url"] as? String else {
-            throw NSError(domain: "OpenAIError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid response format"])
-        }
-        
-        return imageURL
-    }
     
-    private func generateImageWithGPTImage1Streaming(
-        prompt: String, 
-        sessionIndex: Int,
-        apiKey: String, 
-        baseURL: String = OpenAIConfig.baseURL,
-        onProgress: @escaping (Double) -> Void
-    ) async throws -> String {
-        // Validate prompt length for gpt-image-1 (max 1000 characters)
-        guard prompt.count <= 1000 else {
-            throw NSError(domain: "OpenAIError", code: 400, userInfo: [NSLocalizedDescriptionKey: "Prompt too long. GPT-Image 1 supports maximum 1000 characters."])
-        }
-        
-        let url = URL(string: "\(baseURL)/images/generations")!
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let requestBody: [String: Any] = [
-            "model": "gpt-image-1",
-            "prompt": prompt,
-            "n": 1,
-            "size": "1024x1024",
-            "stream": true, // Enable streaming for better UX
-            "background": "auto",
-            "moderation": "auto"
-        ]
-        
-        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
-        
-        let (data, response) = try await URLSession.shared.bytes(for: request)
-        
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw URLError(.badServerResponse)
-        }
-        
-        guard 200...299 ~= httpResponse.statusCode else {
-            let errorData = try await data.reduce(into: Data()) { $0.append($1) }
-            let errorMessage = String(data: errorData, encoding: .utf8) ?? "Unknown error"
-            throw NSError(domain: "OpenAIError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "HTTP Error \(httpResponse.statusCode): \(errorMessage)"])
-        }
-        
-        var finalImageURL: String?
-        
-        // Process streaming response
-        for try await line in data.lines {
-            // Skip empty lines and metadata
-            guard !line.isEmpty, line.hasPrefix("data: ") else { continue }
-            
-            let jsonString = String(line.dropFirst(6)) // Remove "data: " prefix
-            
-            // Check for completion signal
-            if jsonString == "[DONE]" {
-                break
-            }
-            
-            // Parse JSON chunk
-            guard let jsonData = jsonString.data(using: .utf8),
-                  let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
-                continue
-            }
-            
-            // Only print first 100 characters of the response to avoid flooding logs
-            let shortJsonString = jsonString.count > 100 ? String(jsonString.prefix(100)) + "..." : jsonString
-            print("🔍 GPT-Image 1 streaming event received: \(shortJsonString)")
-            
-            // Log only key fields for debugging, not the full structure
-            if let eventType = json["type"] as? String {
-                if let b64Data = json["b64_json"] as? String {
-                    print("📋 Event: \(eventType), Base64 data length: \(b64Data.count) characters")
-                } else {
-                    print("📋 Event: \(eventType), No base64 data found")
-                }
-            } else {
-                print("📋 No event type found in response")
-            }
-            
-            // Handle different event types based on the actual API response format
-            // The actual format uses "type" field, not "event" field
-            if let eventType = json["type"] as? String {
-                print("📡 Event type: \(eventType)")
-                
-                if eventType == "image_generation.partial_image" {
-                    print("🎨 Received partial image event")
-                    // Check for base64 data directly in the response
-                    if let b64Json = json["b64_json"] as? String {
-                        print("🎨 Received partial image data, length: \(b64Json.count)")
-                        await MainActor.run {
-                            onProgress(0.7) // Partial progress
-                        }
-                    } else {
-                        // Assume some progress for partial events
-                        await MainActor.run {
-                            onProgress(0.5)
-                        }
-                    }
-                } else if eventType == "image_generation.completed" {
-                    print("🎯 Image generation completed event")
-                    // Check for base64 data directly in the response
-                    if let base64Data = json["b64_json"] as? String {
-                        print("✅ Found base64 image data, length: \(base64Data.count) characters")
-                        finalImageURL = "data:image/png;base64,\(base64Data)"
-                        await MainActor.run {
-                            onProgress(1.0)
-                        }
-                    }
-                    // Also check for URL (in case API returns URL instead)
-                    else if let imageURL = json["url"] as? String {
-                        print("✅ Found image URL: \(imageURL)")
-                        finalImageURL = imageURL
-                        await MainActor.run {
-                            onProgress(1.0)
-                        }
-                    }
-                    else {
-                        print("⚠️ Completed event but no URL or base64 data found")
-                    }
-                }
-            }
-            // Also check for legacy "event" field format (fallback)
-            else if let event = json["event"] as? String {
-                print("📡 Legacy event type: \(event)")
-                
-                if event == "image_generation.partial_image" {
-                    // Partial image with base64 data
-                    if let data = json["data"] as? [String: Any] {
-                        // Check for base64 encoded partial image
-                        if let b64Json = data["b64_json"] as? String {
-                            print("🎨 Received partial image data, length: \(b64Json.count)")
-                            await MainActor.run {
-                                onProgress(0.7) // Partial progress
-                            }
-                        }
-                        // Also check for progress info
-                        else if let progressInfo = data["progress"] as? Double {
-                            await MainActor.run {
-                                onProgress(progressInfo)
-                            }
-                        } else {
-                            // Assume some progress for partial events
-                            await MainActor.run {
-                                onProgress(0.5)
-                            }
-                        }
-                    }
-                } else if event == "image_generation.completed" {
-                    print("🎯 Image generation completed event")
-                    // Final image URL or base64 data
-                    if let data = json["data"] as? [String: Any] {
-                        // Check for URL first (preferred)
-                        if let imageURL = data["url"] as? String {
-                            print("✅ Found image URL: \(imageURL)")
-                            finalImageURL = imageURL
-                            await MainActor.run {
-                                onProgress(1.0)
-                            }
-                        } 
-                        // Check for base64 data
-                        else if let base64Data = data["b64_json"] as? String {
-                            print("✅ Found base64 image data, length: \(base64Data.count) characters")
-                            finalImageURL = "data:image/png;base64,\(base64Data)"
-                            await MainActor.run {
-                                onProgress(1.0)
-                            }
-                        }
-                        else {
-                            print("⚠️ Completed event but no URL or base64 data found")
-                        }
-                    }
-                }
-            }
-            // Check for non-event based streaming response format
-            else {
-                print("📡 Non-event response format")
-                
-                // Standard OpenAI response format with data array
-                if let dataArray = json["data"] as? [[String: Any]], 
-                   let firstImage = dataArray.first {
-                    print("🔍 Found data array format")
-                    if let imageURL = firstImage["url"] as? String {
-                        print("✅ Found image URL in data array: \(imageURL)")
-                        finalImageURL = imageURL
-                        await MainActor.run {
-                            onProgress(1.0)
-                        }
-                    } else if let base64Data = firstImage["b64_json"] as? String {
-                        print("✅ Found base64 data in data array, length: \(base64Data.count) characters")
-                        finalImageURL = "data:image/png;base64,\(base64Data)"
-                        await MainActor.run {
-                            onProgress(1.0)
-                        }
-                    }
-                }
-                // Direct data object format
-                else if let dataDict = json["data"] as? [String: Any] {
-                    print("🔍 Found direct data object format")
-                    if let base64Data = dataDict["b64_json"] as? String {
-                        print("✅ Found base64 data in direct format, length: \(base64Data.count) characters")
-                        finalImageURL = "data:image/png;base64,\(base64Data)"
-                        await MainActor.run {
-                            onProgress(1.0)
-                        }
-                    }
-                }
-                // Check for any other base64 data formats
-                else if let base64Data = json["b64_json"] as? String {
-                    print("✅ Found root-level base64 data, length: \(base64Data.count) characters")
-                    finalImageURL = "data:image/png;base64,\(base64Data)"
-                    await MainActor.run {
-                        onProgress(1.0)
-                    }
-                }
-            }
-        }
-        
-        guard let imageURL = finalImageURL else {
-            throw NSError(domain: "OpenAIError", code: 0, userInfo: [NSLocalizedDescriptionKey: "No image URL received from streaming response"])
-        }
-        
-        return imageURL
-    }
     
     private func shouldTriggerImageGeneration(_ text: String, in messages: [ChatMessage]) -> Bool {
         let lowercaseText = text.lowercased()
@@ -929,6 +707,204 @@ class ChatManager {
         }
     }
     
+    private func generateImageWithResponsesAPIAndReferenceImages(
+        _ content: String,
+        referenceImages: [ChatMessageImage],
+        model: AIModel,
+        sessionIndex: Int,
+        apiKey: String,
+        settings: AISettings,
+        isLoading: Binding<Bool>,
+        errorMessage: Binding<String?>
+    ) async {
+        do {
+            print("🎨 Generating image with \(model.displayName) using responses API with \(referenceImages.count) reference images...")
+            
+            // Create placeholder image message
+            let imageMessage = ChatMessage(
+                role: .assistant, 
+                content: "Generating image with reference images...", 
+                isStreaming: true,
+                contentType: .image,
+                imagePrompt: content
+            )
+            
+            await MainActor.run {
+                chatSessions[sessionIndex].messages.append(imageMessage)
+            }
+            
+            // Check if this is a multi-turn refinement request
+            let currentMessages = await MainActor.run {
+                chatSessions[sessionIndex].messages
+            }
+            let previousResponseId = findLastImageGenerationResponse(in: currentMessages)
+            
+            // Call responses API with image_generation tool and reference images
+            let (imageURL, responseId) = try await generateImageWithResponsesAPICallWithReferenceImages(
+                prompt: content,
+                referenceImages: referenceImages,
+                model: model,
+                apiKey: apiKey,
+                baseURL: settings.apiGatewayURL,
+                previousResponseId: previousResponseId
+            )
+            
+            // Get the message ID for local storage before updating
+            guard let messageId = await MainActor.run(body: {
+                if let lastIndex = chatSessions[sessionIndex].messages.lastIndex(where: { $0.contentType == .image && $0.isStreaming }) {
+                    return chatSessions[sessionIndex].messages[lastIndex].id
+                }
+                return nil
+            }) else {
+                await MainActor.run {
+                    errorMessage.wrappedValue = "Failed to find image message"
+                    isLoading.wrappedValue = false
+                }
+                return
+            }
+            
+            // Save image locally
+            let localImagePath: String?
+            do {
+                localImagePath = try await ImageStorageService.shared.saveBase64Image(imageURL, messageId: messageId)
+                print("✅ \(model.displayName) image with reference images saved to local storage: \(localImagePath ?? "unknown")")
+            } catch {
+                print("⚠️ Failed to save \(model.displayName) image locally: \(error)")
+                localImagePath = nil
+            }
+            
+            // Update the message with the generated image and save to storage
+            await MainActor.run {
+                if let lastIndex = chatSessions[sessionIndex].messages.lastIndex(where: { $0.contentType == .image && $0.isStreaming }) {
+                    let referenceCount = referenceImages.count
+                    chatSessions[sessionIndex].messages[lastIndex].content = "Generated image for: \"\(content)\" using \(referenceCount) reference image\(referenceCount == 1 ? "" : "s")"
+                    chatSessions[sessionIndex].messages[lastIndex].imageURL = imageURL
+                    chatSessions[sessionIndex].messages[lastIndex].localImagePath = localImagePath
+                    chatSessions[sessionIndex].messages[lastIndex].responseId = responseId
+                    chatSessions[sessionIndex].messages[lastIndex].isStreaming = false
+                    chatSessions[sessionIndex].updatedAt = Date()
+                    
+                    // Save to storage
+                    storage.saveChatSession(chatSessions[sessionIndex])
+                    print("✅ \(model.displayName) image generated successfully with reference images and responseId: \(responseId)")
+                }
+                
+                isLoading.wrappedValue = false
+            }
+            
+        } catch {
+            print("❌ Failed to generate image with \(model.displayName) and reference images: \(error)")
+            await MainActor.run {
+                errorMessage.wrappedValue = "Failed to generate image: \(error.localizedDescription)"
+                isLoading.wrappedValue = false
+                
+                // Remove the failed message
+                if let lastIndex = chatSessions[sessionIndex].messages.lastIndex(where: { $0.contentType == .image && $0.isStreaming }) {
+                    chatSessions[sessionIndex].messages.remove(at: lastIndex)
+                }
+            }
+        }
+    }
+    
+    private func generateImageWithResponsesAPICallWithReferenceImages(
+        prompt: String, 
+        referenceImages: [ChatMessageImage],
+        model: AIModel, 
+        apiKey: String, 
+        baseURL: String = OpenAIConfig.baseURL, 
+        previousResponseId: String? = nil
+    ) async throws -> (imageURL: String, responseId: String) {
+        let url = URL(string: "\(baseURL)/responses")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        // Build the input content with text and reference images
+        var inputContent: [[String: Any]] = []
+        
+        // Add text input
+        inputContent.append([
+            "type": "input_text",
+            "text": prompt
+        ])
+        
+        // Add reference images as input_image
+        for image in referenceImages {
+            if let base64URL = image.base64ImageURL {
+                inputContent.append([
+                    "type": "input_image",
+                    "image_url": base64URL
+                ])
+            }
+        }
+        
+        var requestBody: [String: Any] = [
+            "model": model.name,
+            "input": [
+                [
+                    "role": "user",
+                    "content": inputContent
+                ]
+            ],
+            "tools": [[
+                "type": "image_generation"
+            ]]
+        ]
+        
+        // Add previous_response_id for multi-turn image generation if available
+        if let previousId = previousResponseId {
+            requestBody["previous_response_id"] = previousId
+            print("🔄 Using previous_response_id for multi-turn generation with reference images: \(previousId)")
+        }
+        
+        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
+        
+        // Create a custom session with 60-second timeout for image generation
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 600.0
+        config.timeoutIntervalForResource = 600.0
+        let customSession = URLSession(configuration: config)
+        
+        let (data, response) = try await customSession.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw URLError(.badServerResponse)
+        }
+        
+        print("🎨 \(model.displayName) Responses API with Reference Images Response Status: \(httpResponse.statusCode)")
+        
+        if httpResponse.statusCode != 200 {
+            if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let error = errorData["error"] as? [String: Any],
+               let message = error["message"] as? String {
+                throw NSError(domain: "OpenAIError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "HTTP Error \(httpResponse.statusCode): \(message)"])
+            } else {
+                let errorMessage = String(data: data, encoding: .utf8) ?? "Unknown error"
+                throw NSError(domain: "OpenAIError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "HTTP Error \(httpResponse.statusCode): \(errorMessage)"])
+            }
+        }
+        
+        guard let jsonResponse = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let output = jsonResponse["output"] as? [[String: Any]],
+              let responseId = jsonResponse["id"] as? String else {
+            throw NSError(domain: "OpenAIError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid response format"])
+        }
+        
+        // Find the image_generation_call in the output
+        for outputItem in output {
+            if let type = outputItem["type"] as? String,
+               type == "image_generation_call",
+               let result = outputItem["result"] as? String {
+                let imageURL = "data:image/png;base64,\(result)"
+                return (imageURL: imageURL, responseId: responseId)
+            }
+        }
+        
+        throw NSError(domain: "OpenAIError", code: 0, userInfo: [NSLocalizedDescriptionKey: "No image generation result found in response"])
+    }
+    
     private func generateImageWithResponsesAPICall(prompt: String, model: AIModel, apiKey: String, baseURL: String = OpenAIConfig.baseURL, previousResponseId: String? = nil) async throws -> (imageURL: String, responseId: String) {
         let url = URL(string: "\(baseURL)/responses")!
         
@@ -996,6 +972,8 @@ class ChatManager {
         
         throw NSError(domain: "OpenAIError", code: 0, userInfo: [NSLocalizedDescriptionKey: "No image generation result found in response"])
     }
+    
+    
 }
 
 // MARK: - Chat Storage
@@ -1241,7 +1219,7 @@ class OpenAIClient {
                         
                         // Add images
                         for image in message.images {
-                            if let imageURL = image.effectiveImageURL {
+                            if let imageURL = image.base64ImageURL {
                                 content.append([
                                     "type": "image_url",
                                     "image_url": [
@@ -1252,7 +1230,7 @@ class OpenAIClient {
                         }
                         
                         // Handle legacy single image
-                        if message.images.isEmpty, let legacyImageURL = message.effectiveImageURL {
+                        if message.images.isEmpty, let legacyImageURL = message.base64ImageURL {
                             content.append([
                                 "type": "image_url",
                                 "image_url": [
@@ -1353,241 +1331,3 @@ enum APIError: LocalizedError {
     }
 }
 
-// MARK: - Image Generation Extension
-
-extension ChatManager {
-    private func generateImage(
-        _ prompt: String, 
-        sessionIndex: Int, 
-        apiKey: String, 
-        settings: AISettings,
-        isLoading: Binding<Bool>, 
-        errorMessage: Binding<String?>
-    ) async {
-        do {
-            print("🎨 Generating image with DALL-E 3...")
-            
-            // Create placeholder image message
-            let imageMessage = ChatMessage(
-                role: .assistant, 
-                content: "Generating image...", 
-                isStreaming: true,
-                contentType: .image,
-                imagePrompt: prompt
-            )
-            
-            await MainActor.run {
-                chatSessions[sessionIndex].messages.append(imageMessage)
-                // Note: Don't save to storage yet - only save when complete
-            }
-            
-            // Call DALL-E 3 API
-            let imageURL = try await generateImageWithDallE3(prompt: prompt, apiKey: apiKey, baseURL: settings.apiGatewayURL)
-            
-            // Get the message ID for local storage before updating
-            guard let messageId = await MainActor.run(body: {
-                if let lastIndex = chatSessions[sessionIndex].messages.lastIndex(where: { $0.contentType == .image && $0.isStreaming }) {
-                    return chatSessions[sessionIndex].messages[lastIndex].id
-                }
-                return nil
-            }) else {
-                await MainActor.run {
-                    errorMessage.wrappedValue = "Failed to find image message"
-                    isLoading.wrappedValue = false
-                }
-                return
-            }
-            
-            // Download image to local storage
-            let localImagePath: String?
-            do {
-                localImagePath = try await ImageStorageService.shared.downloadAndSaveImage(from: imageURL, messageId: messageId)
-                print("✅ Image downloaded to local storage: \(localImagePath ?? "unknown")")
-            } catch {
-                print("⚠️ Failed to download image locally, will use remote URL: \(error)")
-                localImagePath = nil
-            }
-            
-            // Update the message with the generated image and save to storage
-            await MainActor.run {
-                if let lastIndex = chatSessions[sessionIndex].messages.lastIndex(where: { $0.contentType == .image && $0.isStreaming }) {
-                    chatSessions[sessionIndex].messages[lastIndex].content = "Generated image for: \"\(prompt)\""
-                    chatSessions[sessionIndex].messages[lastIndex].imageURL = imageURL
-                    chatSessions[sessionIndex].messages[lastIndex].localImagePath = localImagePath
-                    chatSessions[sessionIndex].messages[lastIndex].isStreaming = false
-                    chatSessions[sessionIndex].updatedAt = Date()
-                    
-                    // Now save to storage - only successful messages are persisted
-                    storage.saveChatSession(chatSessions[sessionIndex])
-                    print("✅ Image generated successfully: \(imageURL)")
-                }
-                
-                isLoading.wrappedValue = false
-            }
-            
-        } catch {
-            print("❌ Failed to generate image: \(error)")
-            await MainActor.run {
-                errorMessage.wrappedValue = "Failed to generate image: \(error.localizedDescription)"
-                isLoading.wrappedValue = false
-                
-                // Remove the failed message (from memory only)
-                if let lastIndex = chatSessions[sessionIndex].messages.lastIndex(where: { $0.contentType == .image && $0.isStreaming }) {
-                    chatSessions[sessionIndex].messages.remove(at: lastIndex)
-                    // No need to save since it was never persisted
-                }
-            }
-        }
-    }
-    
-    private func generateImageWithDallE3(prompt: String, apiKey: String, baseURL: String = OpenAIConfig.baseURL) async throws -> String {
-        let url = URL(string: "\(baseURL)/images/generations")!
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let requestBody: [String: Any] = [
-            "model": "dall-e-3",
-            "prompt": prompt,
-            "n": 1,
-            "size": "1024x1024",
-            "quality": "standard"
-        ]
-        
-        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
-        
-        let (data, response) = try await URLSession.shared.data(for: request)
-        
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw URLError(.badServerResponse)
-        }
-        
-        print("🎨 DALL-E 3 API Response Status: \(httpResponse.statusCode)")
-        
-        if httpResponse.statusCode != 200 {
-            if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-               let error = errorData["error"] as? [String: Any],
-               let message = error["message"] as? String {
-                throw NSError(domain: "OpenAIError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "HTTP Error \(httpResponse.statusCode): \(message)"])
-            } else {
-                throw NSError(domain: "OpenAIError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "HTTP Error \(httpResponse.statusCode)"])
-            }
-        }
-        
-        guard let jsonResponse = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-              let dataArray = jsonResponse["data"] as? [[String: Any]],
-              let firstImage = dataArray.first,
-              let imageURL = firstImage["url"] as? String else {
-            throw NSError(domain: "OpenAIError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid response format"])
-        }
-        
-        return imageURL
-    }
-    
-    private func generateImageWithGPTImage1(
-        _ content: String,
-        sessionIndex: Int,
-        apiKey: String,
-        settings: AISettings,
-        isLoading: Binding<Bool>,
-        errorMessage: Binding<String?>
-    ) async {
-        do {
-            print("🎨 Generating image with GPT-Image 1...")
-            
-            // Create placeholder image message
-            let imageMessage = ChatMessage(
-                role: .assistant, 
-                content: "Generating image...", 
-                isStreaming: true,
-                contentType: .image,
-                imagePrompt: content
-            )
-            
-            await MainActor.run {
-                chatSessions[sessionIndex].messages.append(imageMessage)
-                // Note: Don't save to storage yet - only save when complete
-            }
-            
-            // Call GPT-Image 1 API using images/generations endpoint with streaming support
-            let imageURL = try await generateImageWithGPTImage1Streaming(
-                prompt: content, 
-                sessionIndex: sessionIndex,
-                apiKey: apiKey, 
-                baseURL: settings.apiGatewayURL,
-                onProgress: { progress in
-                    // Update UI with generation progress if available
-                    Task { @MainActor in
-                        if let lastIndex = self.chatSessions[sessionIndex].messages.lastIndex(where: { $0.contentType == .image && $0.isStreaming }) {
-                            self.chatSessions[sessionIndex].messages[lastIndex].content = "Generating image... \(Int(progress * 100))%"
-                        }
-                    }
-                }
-            )
-            
-            // Get the message ID for local storage before updating
-            guard let messageId = await MainActor.run(body: {
-                if let lastIndex = chatSessions[sessionIndex].messages.lastIndex(where: { $0.contentType == .image && $0.isStreaming }) {
-                    return chatSessions[sessionIndex].messages[lastIndex].id
-                }
-                return nil
-            }) else {
-                await MainActor.run {
-                    errorMessage.wrappedValue = "Failed to find image message"
-                    isLoading.wrappedValue = false
-                }
-                return
-            }
-            
-            // Download image to local storage
-            let localImagePath: String?
-            do {
-                localImagePath = try await ImageStorageService.shared.downloadAndSaveImage(from: imageURL, messageId: messageId)
-                print("✅ GPT-Image 1 image downloaded to local storage: \(localImagePath ?? "unknown")")
-                
-                // Verify the file actually exists
-                if let localPath = localImagePath, FileManager.default.fileExists(atPath: localPath) {
-                    print("✅ Verified local file exists at: \(localPath)")
-                } else {
-                    print("❌ Local file does not exist at path: \(localImagePath ?? "nil")")
-                }
-            } catch {
-                print("⚠️ Failed to download GPT-Image 1 image locally, will use remote URL: \(error)")
-                localImagePath = nil
-            }
-            
-            // Update the message with the generated image and save to storage
-            await MainActor.run {
-                if let lastIndex = chatSessions[sessionIndex].messages.lastIndex(where: { $0.contentType == .image && $0.isStreaming }) {
-                    chatSessions[sessionIndex].messages[lastIndex].content = "Generated image for: \"\(content)\""
-                    chatSessions[sessionIndex].messages[lastIndex].imageURL = imageURL
-                    chatSessions[sessionIndex].messages[lastIndex].localImagePath = localImagePath
-                    chatSessions[sessionIndex].messages[lastIndex].isStreaming = false
-                    chatSessions[sessionIndex].updatedAt = Date()
-                    
-                    // Now save to storage - only successful messages are persisted
-                    storage.saveChatSession(chatSessions[sessionIndex])
-                    print("✅ GPT-Image 1 image generated successfully: \(imageURL)")
-                }
-                
-                isLoading.wrappedValue = false
-            }
-            
-        } catch {
-            print("❌ Failed to generate image with GPT-Image 1: \(error)")
-            await MainActor.run {
-                errorMessage.wrappedValue = "Failed to generate image: \(error.localizedDescription)"
-                isLoading.wrappedValue = false
-                
-                // Remove the failed streaming message
-                if let sessionIndex = chatSessions.firstIndex(where: { $0.id == chatSessions[sessionIndex].id }),
-                   let lastMessage = chatSessions[sessionIndex].messages.last,
-                   lastMessage.isStreaming {
-                    chatSessions[sessionIndex].messages.removeLast()
-                }
-            }
-        }
-    }
-}
