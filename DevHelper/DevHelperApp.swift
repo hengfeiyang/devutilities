@@ -19,6 +19,7 @@ import AppIntents
 @main
 struct DevHelperApp: App {
     @StateObject private var updateChecker = UpdateChecker()
+    @StateObject private var appState = AppState()
     
     init() {}
     
@@ -26,6 +27,7 @@ struct DevHelperApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(updateChecker)
+                .environmentObject(appState)
                 .onAppear {
                     Task.detached {
                         await EventManager.shared.reportAppStart()
@@ -47,6 +49,16 @@ struct DevHelperApp: App {
                     updateChecker.checkForUpdate(manualCheck: true)
                 }
                 .keyboardShortcut("u", modifiers: [.command])
+            }
+            
+            CommandGroup(replacing: .newItem) {
+                Button("New Chat") {
+                    if appState.currentTool == .aiChat {
+                        appState.shouldCreateNewChat = true
+                    }
+                }
+                .keyboardShortcut("n", modifiers: [.command])
+                .disabled(appState.currentTool != .aiChat)
             }
         }
     }

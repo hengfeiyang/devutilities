@@ -27,6 +27,7 @@ struct AIChatView: View {
     @State private var currentMessage = ""
     @State private var isLoading = false
     @State private var errorMessage: String?
+    @EnvironmentObject var appState: AppState
     
     var body: some View {
         HSplitView {
@@ -74,6 +75,13 @@ struct AIChatView: View {
         } message: {
             if let error = errorMessage {
                 Text(error)
+            }
+        }
+        .onChange(of: appState.shouldCreateNewChat) { oldValue, newValue in
+            if newValue {
+                let newSession = chatManager.createNewChat()
+                selectedSession = newSession
+                appState.shouldCreateNewChat = false
             }
         }
     }

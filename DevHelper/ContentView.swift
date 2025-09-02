@@ -20,6 +20,7 @@ struct ContentView: View {
     @State private var searchText: String = ""
     @State private var previousTool: ToolType?
     @EnvironmentObject var updateChecker: UpdateChecker
+    @EnvironmentObject var appState: AppState
     
     private var appVersion: String {
         if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
@@ -117,6 +118,7 @@ struct ContentView: View {
                     CryptoToolsView()
                 case .aiChat:
                     AIChatView()
+                        .environmentObject(appState)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -156,6 +158,7 @@ struct ContentView: View {
             Text("You're already using the latest version of DevHelper.")
         }
         .onChange(of: selectedTool) { oldValue, newValue in
+            appState.currentTool = newValue
             Task.detached {
                 await EventManager.shared.reportModuleSwitch(
                     from: oldValue.eventModuleName,
@@ -164,6 +167,7 @@ struct ContentView: View {
             }
         }
         .onAppear {
+            appState.currentTool = selectedTool
             // Report initial module selection
             Task.detached {
                 await EventManager.shared.reportModuleSwitch(
@@ -178,4 +182,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(UpdateChecker())
+        .environmentObject(AppState())
 }
