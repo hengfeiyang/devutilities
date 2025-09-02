@@ -337,21 +337,6 @@ extension AIModel {
         contextWindow: 64000
     )
     
-    static let o3DeepResearch = AIModel(
-        id: "o3-deep-research",
-        name: "o3-deep-research",
-        displayName: "O3 Deep Research",
-        maxTokens: 32768,
-        contextWindow: 500000
-    )
-    
-    static let o4MiniDeepResearch = AIModel(
-        id: "o4-mini-deep-research",
-        name: "o4-mini-deep-research",
-        displayName: "O4 Mini Deep Research",
-        maxTokens: 16384,
-        contextWindow: 300000
-    )
     
     
     static let gemini25Pro = AIModel(
@@ -387,7 +372,7 @@ extension AIModel {
     )
     
     // Chat models only (for regular conversation)
-    static let chatModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .gpt41Mini, .gpt41Nano, .o3DeepResearch, .o4MiniDeepResearch, .gemini25Pro, .gemini25Flash, .gemini25FlashLite, .gemini25FlashImagePreview]
+    static let chatModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .gpt41Mini, .gpt41Nano, .gemini25Pro, .gemini25Flash, .gemini25FlashLite, .gemini25FlashImagePreview]
     
     // All available models
     static let allModels: [AIModel] = chatModels

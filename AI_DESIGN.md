@@ -129,7 +129,7 @@ class ChatManager {
     
     init() {
         let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = 60.0 // Extended timeout for image generation
+        config.timeoutIntervalForRequest = 600.0 // Extended timeout for image generation
         self.session = URLSession(configuration: config)
     }
     

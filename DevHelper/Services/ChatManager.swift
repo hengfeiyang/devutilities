@@ -829,7 +829,7 @@ class ChatCompletionsAPI {
 
 class ResponsesAPI {
     private let session = URLSession.shared
-    
+
     func generateImage(
         prompt: String,
         model: AIModel,
