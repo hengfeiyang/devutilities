@@ -21,7 +21,12 @@ struct DevHelperApp: App {
     @StateObject private var updateChecker = UpdateChecker()
     @StateObject private var appState = AppState()
     
-    init() {}
+    init() {
+        // Register app shortcuts
+        Task {
+            await DevHelperShortcutsProvider.updateAppShortcutParameters()
+        }
+    }
     
     var body: some Scene {
         WindowGroup {

@@ -19,4 +19,24 @@ import SwiftUI
 class AppState: ObservableObject {
     @Published var currentTool: ToolType = .timestampConverter
     @Published var shouldCreateNewChat = false
+    
+    init() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(openToolFromIntent(_:)),
+            name: .openTool,
+            object: nil
+        )
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc private func openToolFromIntent(_ notification: Notification) {
+        guard let tool = notification.userInfo?["tool"] as? ToolType else { return }
+        DispatchQueue.main.async {
+            self.currentTool = tool
+        }
+    }
 }

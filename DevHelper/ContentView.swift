@@ -176,6 +176,11 @@ struct ContentView: View {
                 )
             }
         }
+        .onChange(of: appState.currentTool) { oldValue, newValue in
+            if selectedTool != newValue {
+                selectedTool = newValue
+            }
+        }
     }
 }
 
