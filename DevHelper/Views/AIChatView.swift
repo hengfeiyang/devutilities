@@ -919,19 +919,80 @@ struct ChatMessageView: View {
             VStack(alignment: isUser ? .trailing : .leading, spacing: 6) {
                 Group {
                     if isUser {
-                        // User messages: modern bubble
+                        // User messages: modern bubble with images
                         HStack {
                             Spacer(minLength: 60)
                             
-                            Text(message.content)
-                                .font(.body)
-                                //.foregroundColor(.white)
-                                .textSelection(.enabled)
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 12)
-                                .background(Color.secondary.opacity(0.1))
-                                .clipShape(RoundedRectangle(cornerRadius: 18))
-                                .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 1)
+                            VStack(alignment: .trailing, spacing: 8) {
+                                // Display images if present
+                                if message.hasImages {
+                                    if message.images.count > 1 {
+                                        // Multiple images in a grid
+                                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 4), count: min(2, message.images.count)), spacing: 4) {
+                                            ForEach(message.images) { imageItem in
+                                                AsyncImage(url: URL(string: imageItem.effectiveImageURL ?? "")) { image in
+                                                    image
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fill)
+                                                } placeholder: {
+                                                    Rectangle()
+                                                        .fill(Color.secondary.opacity(0.3))
+                                                        .overlay {
+                                                            ProgressView()
+                                                        }
+                                                }
+                                                .frame(width: 120, height: 120)
+                                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                                .onTapGesture {
+                                                    // TODO: Show full image preview
+                                                }
+                                            }
+                                        }
+                                    } else if let firstImage = message.images.first {
+                                        // Single image - larger display
+                                        AsyncImage(url: URL(string: firstImage.effectiveImageURL ?? "")) { image in
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                        } placeholder: {
+                                            ProgressView()
+                                                .frame(width: 200, height: 200)
+                                        }
+                                        .frame(maxWidth: 200, maxHeight: 200)
+                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                        .onTapGesture {
+                                            // TODO: Show full image preview
+                                        }
+                                    } else if let imageURL = message.effectiveImageURL {
+                                        // Legacy single image support
+                                        AsyncImage(url: URL(string: imageURL)) { image in
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                        } placeholder: {
+                                            ProgressView()
+                                                .frame(width: 200, height: 200)
+                                        }
+                                        .frame(maxWidth: 200, maxHeight: 200)
+                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                        .onTapGesture {
+                                            // TODO: Show full image preview
+                                        }
+                                    }
+                                }
+                                
+                                // Display text content if present
+                                if !message.content.isEmpty {
+                                    Text(message.content)
+                                        .font(.body)
+                                        .textSelection(.enabled)
+                                        .padding(.horizontal, 16)
+                                        .padding(.vertical, 12)
+                                        .background(Color.secondary.opacity(0.1))
+                                        .clipShape(RoundedRectangle(cornerRadius: 18))
+                                        .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 1)
+                                }
+                            }
                         }
                     } else {
                         // Assistant messages: modern bubble with markdown or image
