@@ -530,7 +530,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 1.13.1;
+				MARKETING_VERSION = 1.13.2;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhelper.DevHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -572,7 +572,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 1.13.1;
+				MARKETING_VERSION = 1.13.2;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhelper.DevHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevHelper is a native macOS application built with SwiftUI that provides 16 essential developer utilities. Version 1.13.0 with comprehensive cryptographic tools and AI chat assistant.
+DevHelper is a native macOS application built with SwiftUI that provides 16 essential developer utilities. Version 1.13.2 with comprehensive cryptographic tools and enhanced AI chat assistant.
 
 ## Key Tools & Status
 
@@ -23,7 +23,7 @@ All 16 tools are ✅ **Complete**:
 13. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
 14. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
 15. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
-16. **AI Chat** - **Intelligent AI assistant** for development questions, code review, and technical guidance
+16. **AI Chat** - **Enhanced AI assistant** with DeepSeek reasoning models, transparent thinking process, and improved stop functionality
 
 ## Architecture & Technical Stack
 - **Platform**: macOS 14.0+ SwiftUI
@@ -43,7 +43,15 @@ xcodebuild -project DevHelper.xcodeproj -scheme DevHelper build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
-## Recent Updates (v1.13.0)
+## Recent Updates (v1.13.2)
+- **DeepSeek Integration**: Added deepseek-chat and deepseek-reasoner models with OpenAI API compatibility
+- **Reasoning Process**: DeepSeek reasoner shows transparent "deepthink" Chain of Thought reasoning
+- **Collapsible Thinking**: Expandable/collapsible thinking process section with brain icon and smooth animations
+- **Stop Functionality**: Improved stop button that immediately cancels streaming responses for all models
+- **Task Cancellation**: Proper URLSessionDataTask and Swift Task cancellation architecture
+- **Real-time Reasoning**: See AI's internal thinking process as it streams during response generation
+
+## Previous Updates (v1.13.0)
 - **AI Chat**: New intelligent AI assistant for development questions and code review
 - **Chat Interface**: Interactive conversation with context-aware responses
 - **Developer Context**: Specialized knowledge for software development workflows

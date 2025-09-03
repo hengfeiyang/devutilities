@@ -4,7 +4,7 @@
 AI Chat has been successfully integrated as the 16th tool in DevHelper, providing OpenAI GPT integration directly within the developer workspace. The feature was simplified to focus exclusively on OpenAI models for simplicity and reliability, removing the originally planned multi-provider support based on user feedback.
 
 ## Core Features
-- **Multi-Model Support**: Full support for GPT-5, GPT-5 Mini, GPT-5 Nano, GPT-4.1, GPT-4.1 Mini, GPT-4.1 Nano, O3 Deep Research, O4 Mini Deep Research, Gemini 2.5 Pro/Flash/Flash Lite, and image generation models (DALL-E 3, GPT-Image-1)
+- **Multi-Model Support**: Full support for GPT-5, GPT-5 Mini, GPT-5 Nano, GPT-4.1, GPT-4.1 Mini, GPT-4.1 Nano, DeepSeek Chat, DeepSeek Reasoner with "deepthink" mode, Gemini 2.5 Pro/Flash/Flash Lite, and image generation models (DALL-E 3, GPT-Image-1)
 - **Tool Selection Interface**: Toolbar-based tool selection with Chat, Web Search, and Image Generation modes
 - **Session-Specific Tool Persistence**: Each chat session remembers its selected tool mode across app sessions
 - **Multi-Turn Image Generation**: Support for continuing image generation conversations using OpenAI's responses API
@@ -39,6 +39,7 @@ struct ChatMessage: Identifiable, Codable, Hashable {
     var contentType: MessageContentType = .text
     var images: [ChatMessageImage] = [] // Multi-image support
     var responseId: String? = nil // For multi-turn image generation
+    var reasoningContent: String? = nil // DeepSeek reasoning content
 }
 
 struct ChatMessageImage: Identifiable, Codable, Hashable {
@@ -110,11 +111,15 @@ extension AIModel {
     static let gemini25Pro = AIModel(id: "gemini-2.5-pro", name: "gemini-2.5-pro", displayName: "Gemini 2.5 Pro", maxTokens: 8192, contextWindow: 1000000)
     static let gemini25Flash = AIModel(id: "gemini-2.5-flash", name: "gemini-2.5-flash", displayName: "Gemini 2.5 Flash", maxTokens: 8192, contextWindow: 1000000)
     
+    // DeepSeek Models
+    static let deepseekChat = AIModel(id: "deepseek-chat", name: "deepseek-chat", displayName: "DeepSeek Chat", maxTokens: 8192, contextWindow: 64000)
+    static let deepseekReasoner = AIModel(id: "deepseek-reasoner", name: "deepseek-reasoner", displayName: "DeepSeek Reasoner", maxTokens: 8192, contextWindow: 64000)
+    
     // Image Generation Models
     static let dalle3 = AIModel(id: "dall-e-3", name: "dall-e-3", displayName: "DALL-E 3", maxTokens: 4096, contextWindow: 8192, type: .image)
     static let gptImage1 = AIModel(id: "gpt-image-1", name: "gpt-image-1", displayName: "GPT-Image-1", maxTokens: 4096, contextWindow: 32768, type: .image)
     
-    static let chatModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .gpt41Mini, .gpt41Nano, .o3DeepResearch, .o4MiniDeepResearch, .gemini25Pro, .gemini25Flash]
+    static let chatModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .gpt41Mini, .gpt41Nano, .o3DeepResearch, .o4MiniDeepResearch, .gemini25Pro, .gemini25Flash, .deepseekChat, .deepseekReasoner]
     static let allModels: [AIModel] = chatModels
     static let defaultModel: AIModel = .gpt41
 }
@@ -313,12 +318,168 @@ struct ChatToolSelector: View {
 }
 ```
 
+## DeepSeek Integration: ✅ COMPLETE
+
+### DeepSeek Models & Features
+- ✅ **DeepSeek Chat**: Regular chat model using OpenAI API compatibility
+- ✅ **DeepSeek Reasoner**: Advanced reasoning model with "deepthink" Chain of Thought
+- ✅ **Reasoning Content**: Captures and displays `reasoning_content` field from API responses
+- ✅ **Collapsible UI**: Expandable/collapsible thinking process section with brain icon
+- ✅ **Real-time Streaming**: See reasoning process as it streams during response generation
+- ✅ **Message Filtering**: Automatically removes `reasoning_content` from input messages (DeepSeek requirement)
+- ✅ **API Compatibility**: Full OpenAI-compatible API integration with DeepSeek endpoints
+
+### Technical Implementation
+```swift
+// Enhanced ChatMessage with reasoning support
+struct ChatMessage: Identifiable, Codable, Hashable {
+    // ... existing fields ...
+    var reasoningContent: String? = nil // DeepSeek reasoning content
+}
+
+// API streaming with reasoning support
+func sendMessage(
+    messages: [ChatMessage],
+    model: AIModel,
+    apiKey: String,
+    baseURL: String = OpenAIConfig.baseURL,
+    onToken: @escaping (String) -> Void,
+    onComplete: @escaping () -> Void,
+    onError: @escaping (Error) -> Void,
+    onReasoning: @escaping (String) -> Void = { _ in }
+) async {
+    // Handle reasoning_content in streaming response
+    if let reasoningContent = delta["reasoning_content"] as? String {
+        await MainActor.run { onReasoning(reasoningContent) }
+    }
+    
+    // Handle regular content
+    if let content = delta["content"] as? String {
+        await MainActor.run { onToken(content) }
+    }
+}
+```
+
+### UI Components
+```swift
+// Collapsible reasoning section in ChatMessageView
+@State private var isReasoningExpanded = true // Default expanded
+
+VStack(alignment: .leading, spacing: 12) {
+    // Show reasoning content if available (DeepSeek reasoner)
+    if let reasoning = message.reasoningContent, !reasoning.isEmpty {
+        VStack(alignment: .leading, spacing: 8) {
+            // Collapsible header with brain icon
+            Button(action: {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    isReasoningExpanded.toggle()
+                }
+            }) {
+                HStack {
+                    Image(systemName: "brain.head.profile")
+                        .foregroundColor(.secondary)
+                    Text("Thinking Process")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .fontWeight(.medium)
+                    Spacer()
+                    Image(systemName: isReasoningExpanded ? "chevron.up" : "chevron.down")
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                }
+            }
+            
+            // Collapsible content
+            if isReasoningExpanded {
+                Markdown(reasoning)
+                    .markdownTheme(.gitHub)
+                    .textSelection(.enabled)
+                    .transition(.opacity.combined(with: .slide))
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
+        .background(Color.secondary.opacity(0.08))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+    
+    // Show final response
+    Markdown(message.content)
+        .markdownTheme(.gitHub)
+        .textSelection(.enabled)
+}
+```
+
+## Enhanced Stop Functionality: ✅ COMPLETE
+
+### Stop Button Implementation
+- ✅ **Real Cancellation**: Stop button immediately cancels streaming requests for all models
+- ✅ **Task Management**: Proper Swift Task and URLSessionDataTask cancellation
+- ✅ **UI State**: Button switches from send (arrow up) to stop (stop.fill) when loading
+- ✅ **Immediate Response**: Clicking stop immediately halts AI response generation
+
+### Technical Implementation
+```swift
+// ChatManager with proper task cancellation
+@Observable
+class ChatManager {
+    private var currentTask: Task<Void, Never>? = nil
+    private let chatAPI = ChatCompletionsAPI()
+    
+    func cancelCurrentTask() {
+        currentTask?.cancel()
+        currentTask = nil
+        chatAPI.cancelCurrentRequest()
+    }
+    
+    func sendMessage(...) async {
+        // Cancel any existing task
+        cancelCurrentTask()
+        
+        currentTask = Task {
+            // ... message handling ...
+        }
+        
+        await currentTask?.value
+    }
+}
+
+// ChatCompletionsAPI with URLSessionDataTask cancellation
+class ChatCompletionsAPI {
+    private var currentDataTask: URLSessionDataTask? = nil
+    
+    func cancelCurrentRequest() {
+        currentDataTask?.cancel()
+        currentDataTask = nil
+    }
+}
+```
+
+### UI Integration
+```swift
+// Stop/Send button in ChatInputView
+Button(action: isLoading ? stopMessage : sendMessage) {
+    Circle()
+        .fill((canSendMessage() || isLoading) ? Color.accentColor : Color.secondary.opacity(0.3))
+        .frame(width: 28, height: 28)
+        .overlay {
+            Image(systemName: isLoading ? "stop.fill" : "arrow.up")
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(.white)
+        }
+}
+
+private func stopMessage() {
+    chatManager.cancelCurrentTask()
+}
+```
+
 ## Implementation Status: ✅ COMPLETE
 
 ### Current Implementation
 **Status**: ✅ **Production Ready with Advanced Features**
 - ✅ **Core Functionality**: Full chat interface with OpenAI integration
-- ✅ **Multi-Model Support**: GPT-5, GPT-5 Mini/Nano, GPT-4.1 family, O3/O4 Deep Research, Gemini 2.5 models, DALL-E 3, GPT-Image-1
+- ✅ **Multi-Model Support**: GPT-5, GPT-5 Mini/Nano, GPT-4.1 family, DeepSeek Chat/Reasoner with deepthink, Gemini 2.5 models, DALL-E 3, GPT-Image-1
 - ✅ **Tool Selection Interface**: Floating toolbar with Chat, Web Search, and Image Generation modes
 - ✅ **Session-Specific Tool Persistence**: Each chat session remembers its selected tool across app restarts
 - ✅ **Multi-Turn Image Generation**: OpenAI Responses API integration with previous_response_id support for conversation continuity
@@ -330,6 +491,9 @@ struct ChatToolSelector: View {
 - ✅ **Error Handling**: Comprehensive error handling with extended timeouts for image generation
 - ✅ **Navigation**: Integrated as 16th tool with sparkles icon
 - ✅ **SwiftUI Reactivity**: Computed properties and Observable pattern for real-time UI updates
+- ✅ **DeepSeek Integration**: DeepSeek Chat and Reasoner models with transparent thinking process
+- ✅ **Stop Functionality**: Immediate cancellation of streaming responses for all models
+- ✅ **Collapsible Reasoning**: Expandable/collapsible thinking process section with smooth animations
 
 ### Key Fixes Applied
 - **Session Binding Issue**: Fixed UI not updating by using session IDs instead of value copies
@@ -340,6 +504,9 @@ struct ChatToolSelector: View {
 - **Floating Toolbar Design**: Implemented modern UI with overlay buttons inside input area for better user experience
 - **Image Storage**: Added Base64 image processing and local caching through ImageStorageService
 - **API Gateway Support**: Added custom gateway URL configuration for flexible API endpoint management
+- **DeepSeek Reasoning Support**: Added reasoning_content field handling and collapsible UI display
+- **Enhanced Stop Button**: Implemented proper task cancellation for immediate response stopping
+- **Real-time Thinking Process**: Stream reasoning content as it arrives from DeepSeek reasoner model
 
 ## Technical Implementation Details
 
