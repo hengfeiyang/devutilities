@@ -137,8 +137,10 @@ struct ChatMessage: Identifiable, Codable, Hashable {
     var images: [ChatMessageImage] = []
     // Response ID for multi-turn image generation
     var responseId: String? = nil
+    // DeepSeek reasoning content (deepthink)
+    var reasoningContent: String? = nil
     
-    init(role: MessageRole, content: String, isStreaming: Bool = false, contentType: MessageContentType = .text, imageURL: String? = nil, localImagePath: String? = nil, imagePrompt: String? = nil, images: [ChatMessageImage] = [], responseId: String? = nil) {
+    init(role: MessageRole, content: String, isStreaming: Bool = false, contentType: MessageContentType = .text, imageURL: String? = nil, localImagePath: String? = nil, imagePrompt: String? = nil, images: [ChatMessageImage] = [], responseId: String? = nil, reasoningContent: String? = nil) {
         self.id = UUID()
         self.role = role
         self.content = content
@@ -150,6 +152,7 @@ struct ChatMessage: Identifiable, Codable, Hashable {
         self.imagePrompt = imagePrompt
         self.images = images
         self.responseId = responseId
+        self.reasoningContent = reasoningContent
     }
     
     // Legacy compatibility - returns first image if available
@@ -371,8 +374,25 @@ extension AIModel {
         contextWindow: 1000000
     )
     
+    // DeepSeek Models
+    static let deepseekChat = AIModel(
+        id: "deepseek-chat",
+        name: "deepseek-chat",
+        displayName: "DeepSeek Chat",
+        maxTokens: 8192,
+        contextWindow: 64000
+    )
+    
+    static let deepseekReasoner = AIModel(
+        id: "deepseek-reasoner",
+        name: "deepseek-reasoner",
+        displayName: "DeepSeek Reasoner",
+        maxTokens: 8192,
+        contextWindow: 64000
+    )
+    
     // Chat models only (for regular conversation)
-    static let chatModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .gpt41Mini, .gpt41Nano, .gemini25Pro, .gemini25Flash, .gemini25FlashLite, .gemini25FlashImagePreview]
+    static let chatModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .gpt41Mini, .gpt41Nano, .gemini25Pro, .gemini25Flash, .gemini25FlashLite, .gemini25FlashImagePreview, .deepseekChat, .deepseekReasoner]
     
     // All available models
     static let allModels: [AIModel] = chatModels

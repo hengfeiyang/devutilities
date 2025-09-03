@@ -829,6 +829,7 @@ struct ChatMessageView: View {
     @State private var isHovered = false
     @State private var showCopiedFeedback = false
     @State private var showImagePreview = false
+    @State private var isReasoningExpanded = true
     
     private var isUser: Bool {
         message.role == .user
@@ -1142,7 +1143,65 @@ struct ChatMessageView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 18))
                             } else {
                                 // Text message with MarkdownUI library
-                                VStack {
+                                VStack(alignment: .leading, spacing: 12) {
+                                    // Show reasoning content if available (DeepSeek reasoner)
+                                    if let reasoning = message.reasoningContent, !reasoning.isEmpty {
+                                        VStack(alignment: .leading, spacing: 8) {
+                                            // Collapsible header
+                                            Button(action: {
+                                                withAnimation(.easeInOut(duration: 0.2)) {
+                                                    isReasoningExpanded.toggle()
+                                                }
+                                            }) {
+                                                HStack {
+                                                    Image(systemName: "brain.head.profile")
+                                                        .foregroundColor(.secondary)
+                                                        .font(.caption)
+                                                    Text("Thinking Process")
+                                                        .font(.caption)
+                                                        .foregroundColor(.secondary)
+                                                        .fontWeight(.medium)
+                                                    
+                                                    Spacer()
+                                                    
+                                                    Image(systemName: isReasoningExpanded ? "chevron.up" : "chevron.down")
+                                                        .font(.caption2)
+                                                        .foregroundColor(.secondary)
+                                                        .rotationEffect(.degrees(0))
+                                                        .animation(.easeInOut(duration: 0.2), value: isReasoningExpanded)
+                                                }
+                                                .contentShape(Rectangle())
+                                            }
+                                            .buttonStyle(PlainButtonStyle())
+                                            .help(isReasoningExpanded ? "Hide thinking process" : "Show thinking process")
+                                            
+                                            // Collapsible content
+                                            if isReasoningExpanded {
+                                                Markdown(reasoning)
+                                                    //.markdownTheme(.gitHub)
+                                                    .textSelection(.enabled)
+                                                    .markdownBlockStyle(\.codeBlock) { configuration in
+                                                        configuration.label
+                                                            .padding(12)
+                                                            .background(Color.secondary.opacity(0.08))
+                                                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                                                            .markdownTextStyle {
+                                                                FontSize(12)
+                                                            }
+                                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                                            .fixedSize(horizontal: false, vertical: true)
+                                                    }
+                                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                                    .transition(.opacity.combined(with: .slide))
+                                            }
+                                        }
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 12)
+                                        .background(Color.secondary.opacity(0.08))
+                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                    }
+                                    
+                                    // Show final response
                                     Markdown(message.content)
                                         .markdownTheme(.gitHub)
                                         .textSelection(.enabled)
@@ -1422,11 +1481,11 @@ struct ChatInputView: View {
                     .allowsHitTesting(true)
                 }
                 .overlay(alignment: .bottomTrailing) {
-                    // Send Button (floating overlay at bottom-right)
-                    Button(action: sendMessage) {
+                    // Send/Stop Button (floating overlay at bottom-right)
+                    Button(action: isLoading ? stopMessage : sendMessage) {
                         Circle()
                             .fill(
-                                canSendMessage()
+                                (canSendMessage() || isLoading)
                                 ? Color.accentColor
                                 : Color.secondary.opacity(0.3)
                             )
@@ -1508,6 +1567,10 @@ struct ChatInputView: View {
                 onSendWithText(messageToSend)
             }
         }
+    }
+    
+    private func stopMessage() {
+        chatManager.cancelCurrentTask()
     }
     
     private func handleFileSelection(_ urls: [URL], attachmentType: AttachmentType) {

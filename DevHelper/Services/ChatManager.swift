@@ -22,6 +22,15 @@ class ChatManager {
     private let storage = ChatStorage()
     private let chatAPI = ChatCompletionsAPI()
     private let responsesAPI = ResponsesAPI()
+    private var currentTask: Task<Void, Never>? = nil
+    
+    // MARK: - Task Management
+    
+    func cancelCurrentTask() {
+        currentTask?.cancel()
+        currentTask = nil
+        chatAPI.cancelCurrentRequest()
+    }
     
     // MARK: - Session Management
     
@@ -98,6 +107,10 @@ class ChatManager {
         isLoading: Binding<Bool>,
         errorMessage: Binding<String?>
     ) async {
+        // Cancel any existing task
+        cancelCurrentTask()
+        
+        currentTask = Task {
         guard let sessionIndex = await MainActor.run(body: {
             chatSessions.firstIndex(where: { $0.id == sessionId })
         }) else {
@@ -172,8 +185,19 @@ class ChatManager {
                 
                 errorMessage.wrappedValue = "Failed to send message: \(error.localizedDescription)"
                 isLoading.wrappedValue = false
+            },
+            onReasoning: { [weak self] reasoning in
+                guard let self = self else { return }
+                
+                if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
+                   streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
+                    self.chatSessions[sessionIdx].messages[streamingMessageIndex].reasoningContent = (self.chatSessions[sessionIdx].messages[streamingMessageIndex].reasoningContent ?? "") + reasoning
+                }
             }
         )
+        }
+        
+        await currentTask?.value
     }
     
     func sendMessageWithImages(
@@ -255,6 +279,13 @@ class ChatManager {
                 
                 errorMessage.wrappedValue = "Failed to send vision message: \(error.localizedDescription)"
                 isLoading.wrappedValue = false
+            },
+            onReasoning: { [weak self] reasoning in
+                guard let self = self else { return }
+                
+                if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
+                    self.chatSessions[sessionIndex].messages[streamingMessageIndex].reasoningContent = (self.chatSessions[sessionIndex].messages[streamingMessageIndex].reasoningContent ?? "") + reasoning
+                }
             }
         )
     }
@@ -713,6 +744,12 @@ enum APIError: LocalizedError {
 
 class ChatCompletionsAPI {
     private let session = URLSession.shared
+    private var currentDataTask: URLSessionDataTask? = nil
+    
+    func cancelCurrentRequest() {
+        currentDataTask?.cancel()
+        currentDataTask = nil
+    }
     
     func sendMessage(
         messages: [ChatMessage],
@@ -721,7 +758,8 @@ class ChatCompletionsAPI {
         baseURL: String = OpenAIConfig.baseURL,
         onToken: @escaping (String) -> Void,
         onComplete: @escaping () -> Void,
-        onError: @escaping (Error) -> Void
+        onError: @escaping (Error) -> Void,
+        onReasoning: @escaping (String) -> Void = { _ in }
     ) async {
         do {
             let url = URL(string: "\(baseURL)/chat/completions")!
@@ -731,6 +769,7 @@ class ChatCompletionsAPI {
             request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             
+            // Filter out reasoning content from input messages (DeepSeek requirement)
             let openAIMessages = messages.map { message -> [String: Any] in
                 if message.hasImages {
                     var content: [[String: Any]] = []
@@ -811,12 +850,19 @@ class ChatCompletionsAPI {
                       let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any],
                       let choices = json["choices"] as? [[String: Any]],
                       let firstChoice = choices.first,
-                      let delta = firstChoice["delta"] as? [String: Any],
-                      let content = delta["content"] as? String else {
+                      let delta = firstChoice["delta"] as? [String: Any] else {
                     continue
                 }
                 
-                await MainActor.run { onToken(content) }
+                // Handle reasoning content (DeepSeek reasoner model)
+                if let reasoningContent = delta["reasoning_content"] as? String {
+                    await MainActor.run { onReasoning(reasoningContent) }
+                }
+                
+                // Handle regular content
+                if let content = delta["content"] as? String {
+                    await MainActor.run { onToken(content) }
+                }
             }
             
         } catch {
