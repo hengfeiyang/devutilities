@@ -817,7 +817,7 @@ class ChatCompletionsAPI {
                 "model": model.name,
                 "messages": openAIMessages,
                 "stream": true,
-                "max_tokens": model.maxTokens
+                // "max_tokens": model.maxTokens
             ]
             
             request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
@@ -1060,8 +1060,8 @@ class ResponsesAPI {
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
         
         let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = 60.0
-        config.timeoutIntervalForResource = 60.0
+        config.timeoutIntervalForRequest = 600.0
+        config.timeoutIntervalForResource = 600.0
         let customSession = URLSession(configuration: config)
         
         let (data, response) = try await customSession.data(for: request)

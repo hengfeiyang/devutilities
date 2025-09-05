@@ -578,7 +578,7 @@ DevHelper/
 - ✅ **Response ID Tracking**: ChatMessage model includes responseId field for linking multi-turn image sessions
 - ✅ **Model Support**: GPT-5 and GPT-4.1 models support image generation through responses API
 - ✅ **Base64 Processing**: Automatic conversion and local storage of generated images
-- ✅ **Extended Timeouts**: 60-second timeout configuration for image generation operations
+- ✅ **Extended Timeouts**: 600-second timeout configuration for image generation operations
 
 ### Tool Selection System Architecture  
 - ✅ **ChatToolMode Enum**: Comprehensive tool definition with chat, webSearch, and imageGeneration modes
