@@ -465,7 +465,7 @@ struct ParquetViewerView: View {
         do {
             let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
             if let size = attributes[.size] as? Int64 {
-                fileSize = formatFileSize(size)
+                fileSize = String(size)
             }
         } catch {
             print("Failed to get file attributes: \(error)")

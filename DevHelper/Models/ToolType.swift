@@ -23,14 +23,14 @@ enum ToolType: String, CaseIterable, Identifiable {
     case htmlFormatter = "html"
     case base64 = "base64"
     case jwt = "jwt"
-    case urlTools = "url"
     case regexTest = "regex"
     case uuidGenerator = "uuid"
+    case cryptoTools = "crypto"
+    case urlTools = "url"
     case httpRequest = "http"
     case ipQuery = "ip"
     case qrCode = "qrcode"
     case parquetViewer = "parquet"
-    case cryptoTools = "crypto"
     case aiChat = "ai-chat"
     
     var id: String { rawValue }
@@ -51,12 +51,14 @@ enum ToolType: String, CaseIterable, Identifiable {
             return "Base64 Encode/Decode"
         case .jwt:
             return "JWT Encoder/Decoder"
-        case .urlTools:
-            return "URL Tools"
         case .regexTest:
             return "Regex Test"
         case .uuidGenerator:
             return "UUID Generator"
+        case .cryptoTools:
+            return "Crypto Tools"
+        case .urlTools:
+            return "URL Tools"
         case .httpRequest:
             return "HTTP Request"
         case .ipQuery:
@@ -65,8 +67,6 @@ enum ToolType: String, CaseIterable, Identifiable {
             return "QR Code"
         case .parquetViewer:
             return "Parquet Viewer"
-        case .cryptoTools:
-            return "Crypto Tools"
         case .aiChat:
             return "AI Chat"
         }
@@ -88,12 +88,14 @@ enum ToolType: String, CaseIterable, Identifiable {
             return "6.circle"
         case .jwt:
             return "key.horizontal"
-        case .urlTools:
-            return "link"
         case .regexTest:
             return "magnifyingglass"
         case .uuidGenerator:
             return "dice"
+        case .cryptoTools:
+            return "lock.shield"
+        case .urlTools:
+            return "link"
         case .httpRequest:
             return "network"
         case .ipQuery:
@@ -102,8 +104,6 @@ enum ToolType: String, CaseIterable, Identifiable {
             return "qrcode"
         case .parquetViewer:
             return "doc.text.magnifyingglass"
-        case .cryptoTools:
-            return "lock.shield"
         case .aiChat:
             return "sparkles"
         }

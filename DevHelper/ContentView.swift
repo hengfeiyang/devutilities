@@ -104,18 +104,18 @@ struct ContentView: View {
                     RegexTestView()
                 case .uuidGenerator:
                     UUIDGeneratorView()
+                case .cryptoTools:
+                    CryptoToolsView()
                 case .urlTools:
                     URLToolsView()
-                case .ipQuery:
-                    IPQueryView()
                 case .httpRequest:
                     HTTPRequestView()
+                case .ipQuery:
+                    IPQueryView()
                 case .qrCode:
                     QRCodeView()
                 case .parquetViewer:
                     ParquetViewerView()
-                case .cryptoTools:
-                    CryptoToolsView()
                 case .aiChat:
                     AIChatView()
                         .environmentObject(appState)
