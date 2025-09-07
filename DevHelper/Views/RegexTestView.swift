@@ -31,10 +31,6 @@ struct RegexTestView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text(screenName)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
             // Mode Selection
             Picker("Mode", selection: $selectedMode) {
                 ForEach(RegexMode.allCases, id: \.self) { mode in
@@ -199,6 +195,7 @@ struct RegexTestView: View {
             Spacer()
         }
         .padding()
+        .navigationTitle("\(screenName)")
         .onChange(of: selectedMode) { oldValue, newValue in
             Task.detached {
                 await EventManager.shared.reportSubmoduleSwitch(

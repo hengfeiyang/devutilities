@@ -106,10 +106,6 @@ struct QRCodeView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text(screenName)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
             Picker("Mode", selection: $selectedTab) {
                 ForEach(QRCodeTab.allCases, id: \.self) { tab in
                     Text(tab.title)
@@ -127,6 +123,7 @@ struct QRCodeView: View {
             Spacer()
         }
         .padding()
+        .navigationTitle("\(screenName)")
         .onChange(of: inputText) { _, _ in
             generateQRCode()
         }

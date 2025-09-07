@@ -29,10 +29,6 @@ struct Base64View: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text(screenName)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
             // Tab Selection
             Picker("Mode", selection: $selectedTab) {
                 ForEach(Base64Tab.allCases, id: \.self) { tab in
@@ -221,6 +217,7 @@ struct Base64View: View {
             Spacer()
         }
         .padding()
+        .navigationTitle("\(screenName)")
         .onChange(of: selectedTab) { _, _ in
             if selectedTab == .encode {
                 encodeText()

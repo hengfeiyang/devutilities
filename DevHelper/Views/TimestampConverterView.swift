@@ -27,10 +27,6 @@ struct TimestampConverterView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text(screenName)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
             HStack(spacing: 20) {
                 // Timestamp to Date
                 VStack(alignment: .leading, spacing: 10) {
@@ -123,6 +119,7 @@ struct TimestampConverterView: View {
             Spacer()
         }
         .padding()
+        .navigationTitle("\(screenName)")
         .onAppear {
             loadState()
         }

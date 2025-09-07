@@ -76,10 +76,6 @@ struct ParquetViewerView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text(screenName)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
             HStack(spacing: 20) {
                 Button(action: selectFile) {
                     Label("Select File", systemImage: "doc.badge.plus")
@@ -173,6 +169,7 @@ struct ParquetViewerView: View {
             }
         }
         .padding()
+        .navigationTitle("\(screenName)")
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {}
     }

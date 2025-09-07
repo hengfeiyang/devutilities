@@ -28,10 +28,6 @@ struct JSONFormatterView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text(screenName)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
             // Mode Selection
             Picker("Mode", selection: $selectedMode) {
                 ForEach(JSONMode.allCases, id: \.self) { mode in
@@ -228,6 +224,7 @@ struct JSONFormatterView: View {
             Spacer()
         }
         .padding()
+        .navigationTitle("\(screenName)")
         .onAppear {
             loadState()
         }

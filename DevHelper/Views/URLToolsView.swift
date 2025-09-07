@@ -31,10 +31,6 @@ struct URLToolsView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text(screenName)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
             // Tab Selection
             Picker("Tool", selection: $selectedTab) {
                 ForEach(URLTab.allCases, id: \.self) { tab in
@@ -56,6 +52,7 @@ struct URLToolsView: View {
             Spacer()
         }
         .padding()
+        .navigationTitle("\(screenName)")
         .onAppear {
             loadState()
         }

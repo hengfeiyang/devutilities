@@ -122,7 +122,6 @@ struct ContentView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            // .ignoresSafeArea(edges: .top)
         }
         .frame(minWidth: 1024, minHeight: 650)
         .alert("Update Available", isPresented: $updateChecker.showUpdateAlert) {

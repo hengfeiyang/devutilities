@@ -27,10 +27,6 @@ struct UUIDGeneratorView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text(screenName)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
             HStack(alignment: .top, spacing: 40) {
                 // Generator Section
                 VStack(alignment: .leading, spacing: 15) {
@@ -159,6 +155,7 @@ struct UUIDGeneratorView: View {
             Spacer()
          }
         .padding()
+        .navigationTitle("\(screenName)")
         .onAppear {
             loadState()
         }

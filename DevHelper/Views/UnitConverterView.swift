@@ -26,10 +26,6 @@ struct UnitConverterView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text(screenName)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
             // Category Selection
             Picker("Category", selection: $selectedCategory) {
                 ForEach(UnitCategory.allCases, id: \.self) { category in
@@ -107,6 +103,7 @@ struct UnitConverterView: View {
             Spacer()
         }
         .padding()
+        .navigationTitle("\(screenName)")
         .onAppear {
             loadState()
         }

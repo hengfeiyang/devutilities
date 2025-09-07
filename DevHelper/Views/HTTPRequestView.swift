@@ -51,10 +51,6 @@ struct HTTPRequestView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text(screenName)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
             // Request URL and Controls
             HStack(spacing: 10) {
                 Picker("", selection: $httpMethod) {
@@ -234,6 +230,7 @@ struct HTTPRequestView: View {
             }
         }
         .padding()
+        .navigationTitle("\(screenName)")
         .onAppear {
             setupURLSession()
             loadState()

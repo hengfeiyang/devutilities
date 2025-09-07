@@ -24,7 +24,7 @@ struct DevHelperApp: App {
     init() {
         // Register app shortcuts
         Task {
-            await DevHelperShortcutsProvider.updateAppShortcutParameters()
+            DevHelperShortcutsProvider.updateAppShortcutParameters()
         }
     }
     
@@ -45,7 +45,6 @@ struct DevHelperApp: App {
                     }
                 }
         }
-        .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
         .defaultSize(width: 1024, height: 800)
         .commands {

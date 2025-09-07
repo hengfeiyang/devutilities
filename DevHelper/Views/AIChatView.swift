@@ -38,8 +38,6 @@ struct AIChatView: View {
                 showingSettings: $showingSettings
             )
             .frame(minWidth: 220, maxWidth: 300)
-            // .padding(.top, 44)
-            // .ignoresSafeArea(edges: .top)
             
             // Main Chat Area
             ChatContentView(
@@ -51,9 +49,8 @@ struct AIChatView: View {
                 errorMessage: $errorMessage
             )
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            // .padding(.top, 44)
-            // .ignoresSafeArea(edges: .top)
         }
+        .navigationTitle("AI Chat")
         .onAppear {
             chatManager.loadChatSessions()
             
@@ -126,11 +123,6 @@ struct ChatSidebarView: View {
         VStack(spacing: 0) {
             // Header
             HStack(spacing: 12) {
-                Text("AI Chat")
-                    .font(.title2)
-                    .fontWeight(.medium)
-                    .padding(.leading, 8)
-                
                 Spacer()
                 
                 HStack(spacing: 8) {

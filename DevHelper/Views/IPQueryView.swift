@@ -33,10 +33,6 @@ struct IPQueryView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text(screenName)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
             HStack(alignment: .top, spacing: 40) {
                 // My IP Section
                 VStack(alignment: .leading, spacing: 15) {
@@ -223,6 +219,7 @@ struct IPQueryView: View {
             }.padding(.horizontal, 0)
         }
         .padding()
+        .navigationTitle("\(screenName)")
         .onAppear {
             loadState()
         }

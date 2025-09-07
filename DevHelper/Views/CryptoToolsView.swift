@@ -73,10 +73,6 @@ struct CryptoToolsView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text(screenName)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
             Picker("Mode", selection: $selectedTab) {
                 ForEach(CryptoTab.allCases, id: \.self) { tab in
                     Text(tab.title)
@@ -95,6 +91,7 @@ struct CryptoToolsView: View {
             }
         }
         .padding()
+        .navigationTitle("\(screenName)")
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onChange(of: selectedTab) { oldValue, newValue in
             Task.detached {
