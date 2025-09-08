@@ -64,6 +64,15 @@ struct DevHelperApp: App {
                 .keyboardShortcut("n", modifiers: [.command])
                 .disabled(appState.currentTool != .aiChat)
             }
+
+            CommandGroup(replacing: .help) {
+                Button(action: {
+                    let documents = "https://hengfeiyang.github.io/devhelper/"
+                    NSWorkspace.shared.open(URL(string: documents)!)
+                }) {
+                    Text("DevHelper documentation")
+                }
+            }
         }
     }
 }

@@ -37,7 +37,7 @@ struct AIChatView: View {
                 selectedSession: $selectedSession,
                 showingSettings: $showingSettings
             )
-            .frame(minWidth: 220, maxWidth: 300)
+            .frame(width: 220)
             
             // Main Chat Area
             ChatContentView(
@@ -51,6 +51,85 @@ struct AIChatView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .navigationTitle("AI Chat")
+        .toolbar(content: {
+            ToolbarItem {
+                HStack(spacing: 2) {
+                    Button {
+                        showingSettings = true
+                    } label: {
+                        Image(systemName: "gearshape")
+                    }
+                    .help("Settings")
+                    
+                    Button {
+                        let newSession = chatManager.createNewChat()
+                        selectedSession = newSession
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    .help("New Chat")
+                }
+                .frame(width: 62)
+                .padding(.horizontal, 6)
+            }
+            
+            ToolbarItem (placement: .principal) {
+                if let session = selectedSession {
+                    HStack(spacing: 12) {
+                        Text(session.title)
+                            .font(.body)
+                            .lineLimit(1)
+                        
+                        
+                        Spacer()
+                        
+                        HStack(spacing: 12) {
+                            // Model selector dropdown
+                            Menu {
+                                if session.selectedModel != nil {
+                                    Button("Reset to Default (\(aiSettings.defaultModel.displayName))") {
+                                        resetToDefaultModel(for: session)
+                                    }
+                                    Divider()
+                                }
+                                
+                                ForEach(AIModel.allModels, id: \.id) { model in
+                                    Button(action: {
+                                        updateChatModel(model, for: session)
+                                    }) {
+                                        HStack {
+                                            Text(model.displayName)
+                                            if model.id == (session.selectedModel ?? aiSettings.defaultModel).id {
+                                                Image(systemName: "checkmark")
+                                            }
+                                        }
+                                    }
+                                }
+                            } label: {
+                                HStack(spacing: 4) {
+                                    Text((session.selectedModel ?? aiSettings.defaultModel).displayName)
+                                        .font(.caption)
+                                        .foregroundColor(.primary)
+                                    Image(systemName: "chevron.down")
+                                        .font(.caption2)
+                                        .foregroundColor(.secondary)
+                                }
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(Color.secondary.opacity(0.1))
+                                .clipShape(RoundedRectangle(cornerRadius: 6))
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .help("Change model for this chat")
+                        }
+                    }
+                    .frame(minWidth: 500, maxWidth: .infinity)
+                    .padding(.horizontal, 6)
+                } else {
+                    Spacer()
+                }
+            }
+        })
         .onAppear {
             chatManager.loadChatSessions()
             
@@ -82,6 +161,26 @@ struct AIChatView: View {
             }
         }
     }
+    
+    private func updateChatModel(_ model: AIModel, for session: ChatSession) {
+        if let sessionIndex = chatManager.chatSessions.firstIndex(where: { $0.id == session.id }) {
+            chatManager.chatSessions[sessionIndex].selectedModel = model
+            // Save the updated session
+            let storage = ChatStorage()
+            storage.saveChatSession(chatManager.chatSessions[sessionIndex])
+            print("✅ Updated chat model to: \(model.displayName)")
+        }
+    }
+    
+    private func resetToDefaultModel(for session: ChatSession) {
+        if let sessionIndex = chatManager.chatSessions.firstIndex(where: { $0.id == session.id }) {
+            chatManager.chatSessions[sessionIndex].selectedModel = nil
+            // Save the updated session
+            let storage = ChatStorage()
+            storage.saveChatSession(chatManager.chatSessions[sessionIndex])
+            print("✅ Reset chat to default model: \(aiSettings.defaultModel.displayName)")
+        }
+    }
 }
 
 // MARK: - Chat Sidebar
@@ -95,8 +194,6 @@ struct ChatSidebarView: View {
     @State private var sessionToRename: ChatSession?
     @State private var newChatTitle = ""
     @State private var searchText = ""
-    @State private var settingsButtonHovered = false
-    @State private var newChatButtonHovered = false
     
     // Detect current color scheme
     @Environment(\.colorScheme) var colorScheme
@@ -121,54 +218,6 @@ struct ChatSidebarView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Header
-            HStack(spacing: 12) {
-                Spacer()
-                
-                HStack(spacing: 8) {
-                    Button(action: { showingSettings = true }) {
-                        Image(systemName: "gearshape")
-                            .font(.system(size: 16))
-                            .foregroundColor(.secondary)
-                            .frame(width: 28, height: 28)
-                            .background(
-                                settingsButtonHovered 
-                                ? Color.secondary.opacity(0.1)
-                                : Color.clear
-                            )
-                            .clipShape(Circle())
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                    .help("Settings")
-                    .onHover { hovering in
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            settingsButtonHovered = hovering
-                        }
-                    }
-                    
-                    Button(action: createNewChat) {
-                        Image(systemName: "plus")
-                            .font(.system(size: 16))
-                            .foregroundColor(.secondary)
-                            .frame(width: 28, height: 28)
-                            .background(
-                                newChatButtonHovered 
-                                ? Color.secondary.opacity(0.1)
-                                : Color.clear
-                            )
-                            .clipShape(Circle())
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                    .help("New Chat")
-                    .onHover { hovering in
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            newChatButtonHovered = hovering
-                        }
-                    }
-                }
-            }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
             
             // Search Bar
             HStack {
@@ -196,6 +245,7 @@ struct ChatSidebarView: View {
             .cornerRadius(10)
             .padding(.horizontal, 16)
             .padding(.bottom, 2)
+            .padding(.top, 10)
             
             // Search Results Count
             if !searchText.isEmpty {
@@ -206,7 +256,7 @@ struct ChatSidebarView: View {
                     Spacer()
                 }
                 .padding(.horizontal, 16)
-                .padding(.bottom, 4)
+                .padding(.bottom, 2)
             }
             
             // Chat List
@@ -293,11 +343,6 @@ struct ChatSidebarView: View {
         } message: {
             Text("Enter a new title for this chat")
         }
-    }
-    
-    private func createNewChat() {
-        let newSession = chatManager.createNewChat()
-        selectedSession = newSession
     }
     
     private func duplicateChat(_ session: ChatSession) {
@@ -444,15 +489,6 @@ struct ChatContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             if let session = selectedSession {
-                // Chat Header
-                ChatHeaderView(
-                    chatManager: chatManager,
-                    sessionId: session.id,
-                    aiSettings: aiSettings
-                )
-                
-                Divider()
-                
                 // Messages
                 ChatMessagesView(
                     chatManager: chatManager,
@@ -613,108 +649,6 @@ struct ChatContentView: View {
     }
 }
 
-struct ChatHeaderView: View {
-    let chatManager: ChatManager
-    let sessionId: UUID
-    let aiSettings: AISettings
-    
-    private var currentSession: ChatSession? {
-        return chatManager.chatSessions.first(where: { $0.id == sessionId })
-    }
-    
-    private var selectedModel: AIModel {
-        return currentSession?.selectedModel ?? aiSettings.defaultModel
-    }
-    
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(currentSession?.title ?? "New Chat")
-                    .font(.body)
-                    .lineLimit(1)
-                
-                HStack(spacing: 4) {
-                    Circle()
-                        .fill(aiSettings.hasOpenAIAPIKey() ? Color.green : Color.red)
-                        .frame(width: 8, height: 8)
-                    
-                    Text(currentSession?.selectedModel != nil ? "\(selectedModel.displayName) (Custom)" : "\(selectedModel.displayName) (Default)")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-            }
-            
-            Spacer()
-            
-            HStack(spacing: 12) {
-                // Model selector dropdown
-                Menu {
-                    if currentSession?.selectedModel != nil {
-                        Button("Reset to Default (\(aiSettings.defaultModel.displayName))") {
-                            resetToDefaultModel()
-                        }
-                        Divider()
-                    }
-                    
-                    ForEach(AIModel.allModels, id: \.id) { model in
-                        Button(action: {
-                            updateChatModel(model)
-                        }) {
-                            HStack {
-                                Text(model.displayName)
-                                if model.id == selectedModel.id {
-                                    Image(systemName: "checkmark")
-                                }
-                            }
-                        }
-                    }
-                } label: {
-                    HStack(spacing: 4) {
-                        Text(selectedModel.displayName)
-                            .font(.caption)
-                            .foregroundColor(.primary)
-                        Image(systemName: "chevron.down")
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-                    }
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(Color.secondary.opacity(0.1))
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
-                }
-                .buttonStyle(PlainButtonStyle())
-                .help("Change model for this chat")
-                
-                Text("\(currentSession?.messages.count ?? 0) messages")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
-        .background(AppConstants.sectionBackground)
-    }
-    
-    private func updateChatModel(_ model: AIModel) {
-        if let sessionIndex = chatManager.chatSessions.firstIndex(where: { $0.id == sessionId }) {
-            chatManager.chatSessions[sessionIndex].selectedModel = model
-            // Save the updated session
-            let storage = ChatStorage()
-            storage.saveChatSession(chatManager.chatSessions[sessionIndex])
-            print("✅ Updated chat model to: \(model.displayName)")
-        }
-    }
-    
-    private func resetToDefaultModel() {
-        if let sessionIndex = chatManager.chatSessions.firstIndex(where: { $0.id == sessionId }) {
-            chatManager.chatSessions[sessionIndex].selectedModel = nil
-            // Save the updated session
-            let storage = ChatStorage()
-            storage.saveChatSession(chatManager.chatSessions[sessionIndex])
-            print("✅ Reset chat to default model: \(aiSettings.defaultModel.displayName)")
-        }
-    }
-}
 
 struct ChatMessagesView: View {
     let chatManager: ChatManager
