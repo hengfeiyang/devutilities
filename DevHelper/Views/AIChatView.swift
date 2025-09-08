@@ -1324,7 +1324,7 @@ struct ChatInputView: View {
                 // Text Input with overlaid toolbar and send button
                 ZStack(alignment: .bottomTrailing) {
                     // Auto-expanding TextEditor (full width)
-                    TextEditor(text: $currentMessage)
+                    TextEditor(text: $currentMessage, bottom: 40)
                         .font(.body)
                         .scrollContentBackground(.hidden)
                         .frame(height: calculatedHeight)

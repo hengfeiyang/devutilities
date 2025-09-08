@@ -18,6 +18,12 @@ import AppKit
 
 struct TextEditor: NSViewRepresentable {
     @Binding var text: String
+    let bottom: CGFloat
+    
+    init(text: Binding<String>, bottom: CGFloat = 0) {
+        self._text = text
+        self.bottom = bottom
+    }
     
     func makeNSView(context: Context) -> NSScrollView {
         let scrollView = NSTextView.scrollableTextView()
@@ -50,6 +56,12 @@ struct TextEditor: NSViewRepresentable {
         scrollView.layer?.masksToBounds = true
         scrollView.layer?.borderWidth = 1
         scrollView.layer?.borderColor = NSColor.separatorColor.cgColor
+        
+        // Add bottom padding by setting content insets (if specified)
+        if bottom > 0 {
+            scrollView.automaticallyAdjustsContentInsets = false
+            scrollView.contentInsets = NSEdgeInsets(top: 0, left: 0, bottom: bottom, right: 0)
+        }
         
         return scrollView
     }
