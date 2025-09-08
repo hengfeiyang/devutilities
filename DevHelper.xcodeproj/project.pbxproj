@@ -16,6 +16,7 @@
 		934569072E5FFCD600491835 /* VersionComparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934569052E5FFCD600491835 /* VersionComparator.swift */; };
 		9394F25B2E6290750069D7B9 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9394F25A2E6290750069D7B9 /* MarkdownUI */; };
 		93A6A9212E588B98006A2798 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A6A9202E588B98006A2798 /* Constants.swift */; };
+		93B179242E6EF63C00A6B491 /* MarkdownTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B179232E6EF62A00A6B491 /* MarkdownTheme.swift */; };
 		93B500A02E5D81D500F38E50 /* ParquetViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B5009E2E5D81D500F38E50 /* ParquetViewer.swift */; };
 		93B500A12E5D81D500F38E50 /* libparquet_viewer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 93B5009C2E5D81D500F38E50 /* libparquet_viewer.dylib */; };
 		93B500A22E5D81EB00F38E50 /* libparquet_viewer.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 93B5009C2E5D81D500F38E50 /* libparquet_viewer.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -79,6 +80,7 @@
 		934569042E5FFCD600491835 /* UpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateChecker.swift; sourceTree = "<group>"; };
 		934569052E5FFCD600491835 /* VersionComparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionComparator.swift; sourceTree = "<group>"; };
 		93A6A9202E588B98006A2798 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		93B179232E6EF62A00A6B491 /* MarkdownTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTheme.swift; sourceTree = "<group>"; };
 		93B5009C2E5D81D500F38E50 /* libparquet_viewer.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libparquet_viewer.dylib; sourceTree = "<group>"; };
 		93B5009D2E5D81D500F38E50 /* parquet_viewer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parquet_viewer.h; sourceTree = "<group>"; };
 		93B5009E2E5D81D500F38E50 /* ParquetViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParquetViewer.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 		D5F4E8152C5A1B3000123456 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				93B179232E6EF62A00A6B491 /* MarkdownTheme.swift */,
 				D5F4E8172C5A1B3000123456 /* TextEditor.swift */,
 				93C47C922E3312A00069B278 /* CodeEditor.swift */,
 			);
@@ -352,6 +355,7 @@
 				B41BCA88D09D488EA2A4ABAC /* CryptoToolsView.swift in Sources */,
 				TSE4F7812C5A1B3000876543 /* TimestampEntity.swift in Sources */,
 				93B55B4E2E5EF944001ECD91 /* EventBatchProcessor.swift in Sources */,
+				93B179242E6EF63C00A6B491 /* MarkdownTheme.swift in Sources */,
 				93CECFEB2E612F3400F5A131 /* ChatManager.swift in Sources */,
 				93CECFE52E612F2000F5A131 /* AIModels.swift in Sources */,
 				1B24B3CB177E4581917D26C9 /* AppState.swift in Sources */,
@@ -507,7 +511,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 14;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevHelper/Preview Content\"";
 				DEVELOPMENT_TEAM = 8MAZXWFLC6;
@@ -530,7 +534,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 1.13.3;
+				MARKETING_VERSION = 1.14.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhelper.DevHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -549,7 +553,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 14;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevHelper/Preview Content\"";
 				DEVELOPMENT_TEAM = 8MAZXWFLC6;
@@ -572,7 +576,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 1.13.3;
+				MARKETING_VERSION = 1.14.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhelper.DevHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";

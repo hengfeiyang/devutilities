@@ -110,9 +110,6 @@ struct AIChatView: View {
                                     Text((session.selectedModel ?? aiSettings.defaultModel).displayName)
                                         .font(.caption)
                                         .foregroundColor(.primary)
-                                    Image(systemName: "chevron.down")
-                                        .font(.caption2)
-                                        .foregroundColor(.secondary)
                                 }
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 4)
@@ -123,7 +120,7 @@ struct AIChatView: View {
                             .help("Change model for this chat")
                         }
                     }
-                    .frame(minWidth: 500, maxWidth: .infinity)
+                    .frame(minWidth: 450, maxWidth: .infinity)
                     .padding(.horizontal, 6)
                 } else {
                     Spacer()
@@ -168,6 +165,8 @@ struct AIChatView: View {
             // Save the updated session
             let storage = ChatStorage()
             storage.saveChatSession(chatManager.chatSessions[sessionIndex])
+            // Update the selectedSession to trigger UI refresh
+            selectedSession = chatManager.chatSessions[sessionIndex]
             print("✅ Updated chat model to: \(model.displayName)")
         }
     }
@@ -178,6 +177,8 @@ struct AIChatView: View {
             // Save the updated session
             let storage = ChatStorage()
             storage.saveChatSession(chatManager.chatSessions[sessionIndex])
+            // Update the selectedSession to trigger UI refresh
+            selectedSession = chatManager.chatSessions[sessionIndex]
             print("✅ Reset chat to default model: \(aiSettings.defaultModel.displayName)")
         }
     }
@@ -1129,14 +1130,13 @@ struct ChatMessageView: View {
                                     
                                     // Show final response
                                     Markdown(message.content)
-                                        .markdownTheme(.gitHub)
+                                        .markdownTheme(.devHelper)
                                         .textSelection(.enabled)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .lineSpacing(4)
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 12)
-                                .background(Color(NSColor.controlBackgroundColor))
                                 .clipShape(RoundedRectangle(cornerRadius: 18))
                             }
                             

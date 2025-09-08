@@ -481,7 +481,10 @@ Each tool follows a consistent pattern:
 **File**: `AIChatView.swift`
 
 **Features**:
-- **Multi-Model Support**: GPT-5, GPT-4.1, GPT-5 variants, O3/O4 Deep Research, Gemini 2.5 models
+- **Enhanced UI/UX**: Refined user interface with improved model selection and navigation
+- **Multi-Model Support**: GPT-5, GPT-4.1, GPT-5 variants, O3/O4 Deep Research, Gemini 2.5 models, DeepSeek integration
+- **Model Selection Fix**: Fixed model selector display to properly update when selecting different models
+- **Duplicate Icon Fix**: Removed duplicate chevron icons in dropdown menus for cleaner interface
 - **Intelligent Assistant**: AI-powered chat interface for development questions and guidance
 - **Image Generation**: Automatic GPT-5/GPT-4.1 image generation with OpenAI Responses API
 - **Multi-Turn Image Generation**: Context-aware image refinement using previous_response_id
@@ -581,7 +584,7 @@ enum ToolType: String, CaseIterable, Identifiable {
 ### Target Settings
 - **Minimum macOS**: 14.0
 - **Bundle Identifier**: com.devhelper.DevHelper
-- **Version**: 1.13.2 (Build 1)
+- **Version**: 1.14.0 (Build 1)
 - **Swift Version**: 5.0
 - **App Sandbox**: Enabled
 - **Hardened Runtime**: Enabled

@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevHelper is a native macOS application built with SwiftUI that provides 16 essential developer utilities. Version 1.13.2 with comprehensive cryptographic tools and enhanced AI chat assistant.
+DevHelper is a native macOS application built with SwiftUI that provides 16 essential developer utilities. Version 1.14.0 with UI refactoring improvements and enhanced user experience.
 
 ## Key Tools & Status
 
@@ -43,7 +43,14 @@ xcodebuild -project DevHelper.xcodeproj -scheme DevHelper build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
-## Recent Updates (v1.13.2)
+## Recent Updates (v1.14.0)
+- **UI Refactoring**: Major UI improvements and code refactoring for better user experience
+- **Model Selection Fix**: Fixed model selector display not updating when selecting different models
+- **Duplicate Icon Fix**: Removed duplicate chevron icons in dropdown menus for cleaner interface
+- **Enhanced Navigation**: Improved navigation layout and component organization
+- **Code Cleanup**: Streamlined SwiftUI components and improved code maintainability
+
+## Previous Updates (v1.13.2)
 - **DeepSeek Integration**: Added deepseek-chat and deepseek-reasoner models with OpenAI API compatibility
 - **Reasoning Process**: DeepSeek reasoner shows transparent "deepthink" Chain of Thought reasoning
 - **Collapsible Thinking**: Expandable/collapsible thinking process section with brain icon and smooth animations
