@@ -121,7 +121,7 @@ struct AIChatView: View {
                         }
                     }
                     .frame(minWidth: 450, maxWidth: .infinity)
-                    .padding(.horizontal, 6)
+                    .padding(.horizontal, 10)
                 } else {
                     Spacer()
                 }
