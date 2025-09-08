@@ -193,7 +193,7 @@ extension Color {
     light: Color(rgba: 0x6b6e_7bff), dark: Color(rgba: 0x6d70_7dff)
   )
   fileprivate static let background = Color(
-    light: .white, dark: Color(rgba: 0x1819_1dff)
+    light: .white, dark: Color(NSColor.controlBackgroundColor)
   )
   fileprivate static let secondaryBackground = Color(
     light: Color(rgba: 0xf7f7_f9ff), dark: Color(rgba: 0x2526_2aff)
