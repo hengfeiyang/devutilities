@@ -79,7 +79,7 @@ struct AIChatView: View {
                         Text(session.title)
                             .font(.body)
                             .lineLimit(1)
-                        
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         
                         Spacer()
                         
@@ -113,12 +113,14 @@ struct AIChatView: View {
                                 }
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 4)
+                                .frame(alignment: .trailing)
                                 .background(Color.secondary.opacity(0.1))
                                 .clipShape(RoundedRectangle(cornerRadius: 6))
                             }
                             .buttonStyle(PlainButtonStyle())
                             .help("Change model for this chat")
                         }
+                        .frame(maxWidth: 100, alignment: .trailing)
                     }
                     .frame(minWidth: 450, maxWidth: .infinity)
                     .padding(.horizontal, 10)
