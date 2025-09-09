@@ -27,33 +27,42 @@ struct AIChatView: View {
     @State private var currentMessage = ""
     @State private var isLoading = false
     @State private var errorMessage: String?
+    @State private var windowWidth: CGFloat = 800
     @EnvironmentObject var appState: AppState
     
     var body: some View {
-        HSplitView {
-            // Sidebar - Chat History
-            ChatSidebarView(
-                chatManager: chatManager,
-                selectedSession: $selectedSession,
-                showingSettings: $showingSettings
-            )
-            .frame(width: 220)
-            
-            // Main Chat Area
-            ChatContentView(
-                chatManager: chatManager,
-                aiSettings: aiSettings,
-                selectedSession: $selectedSession,
-                currentMessage: $currentMessage,
-                isLoading: $isLoading,
-                errorMessage: $errorMessage
-            )
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        GeometryReader { geometry in
+            HSplitView {
+                // Sidebar - Chat History
+                ChatSidebarView(
+                    chatManager: chatManager,
+                    selectedSession: $selectedSession,
+                    showingSettings: $showingSettings
+                )
+                .frame(width: 220)
+                
+                // Main Chat Area
+                ChatContentView(
+                    chatManager: chatManager,
+                    aiSettings: aiSettings,
+                    selectedSession: $selectedSession,
+                    currentMessage: $currentMessage,
+                    isLoading: $isLoading,
+                    errorMessage: $errorMessage
+                )
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .onAppear {
+                windowWidth = geometry.size.width
+            }
+            .onChange(of: geometry.size.width) { _, newWidth in
+                windowWidth = newWidth
+            }
         }
         .navigationTitle("AI Chat")
         .toolbar(content: {
             ToolbarItem {
-                HStack(spacing: 2) {
+                HStack(spacing: 0) {
                     Button {
                         showingSettings = true
                     } label: {
@@ -69,7 +78,7 @@ struct AIChatView: View {
                     }
                     .help("New Chat")
                 }
-                .frame(width: 62)
+                .frame(width: 60)
                 .padding(.horizontal, 6)
             }
             
@@ -122,7 +131,7 @@ struct AIChatView: View {
                         }
                         .frame(maxWidth: 100, alignment: .trailing)
                     }
-                    .frame(minWidth: 450, maxWidth: .infinity)
+                    .frame(width: max(500, windowWidth - 500))
                     .padding(.horizontal, 10)
                 } else {
                     Spacer()
