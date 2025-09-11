@@ -215,85 +215,28 @@ struct SQLFormatterView: View {
     }
     
     private func formatSQLString(_ sql: String) -> String {
-        var result = sql.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !sql.isEmpty else { return "" }
         
-        // Remove extra whitespace
-        result = result.replacingOccurrences(of: #"\s+"#, with: " ", options: .regularExpression)
-        
-        // Keywords that should be on new lines
-        let newLineKeywords = [
-            "SELECT", "FROM", "WHERE", "GROUP BY", "HAVING", "ORDER BY", "LIMIT",
-            "INSERT", "UPDATE", "DELETE", "CREATE", "ALTER", "DROP",
-            "INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL JOIN", "JOIN",
-            "UNION", "UNION ALL", "INTERSECT", "EXCEPT",
-            "WITH", "AS", "CASE", "WHEN", "THEN", "ELSE", "END"
-        ]
-        
-        // Add line breaks before major keywords
-        for keyword in newLineKeywords.sorted(by: { $0.count > $1.count }) {
-            let pattern = #"\b"# + NSRegularExpression.escapedPattern(for: keyword) + #"\b"#
-            result = result.replacingOccurrences(
-                of: pattern,
-                with: "\n" + keyword,
-                options: [.regularExpression, .caseInsensitive]
-            )
+        do {
+            // Use the ParquetViewer library's SQL formatter with beautify style
+            return try ParquetViewer.formatSql(sql, style: .beautify)
+        } catch {
+            // If formatting fails, return the original SQL with basic cleanup
+            return sql.trimmingCharacters(in: .whitespacesAndNewlines)
         }
-        
-        // Handle commas in SELECT statements
-        result = result.replacingOccurrences(of: ",", with: ",\n    ")
-        
-        // Handle parentheses
-        result = result.replacingOccurrences(of: "(", with: "(\n    ")
-        result = result.replacingOccurrences(of: ")", with: "\n)")
-        
-        // Clean up multiple newlines and add proper indentation
-        var lines = result.components(separatedBy: "\n").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-        lines = lines.filter { !$0.isEmpty }
-        
-        var indentLevel = 0
-        var formattedLines: [String] = []
-        
-        for line in lines {
-            let trimmedLine = line.trimmingCharacters(in: .whitespacesAndNewlines)
-            if trimmedLine.isEmpty { continue }
-            
-            // Adjust indent for closing parentheses
-            if trimmedLine.hasPrefix(")") && indentLevel > 0 {
-                indentLevel -= 1
-            }
-            
-            // Add indented line
-            let indent = String(repeating: "    ", count: indentLevel)
-            formattedLines.append(indent + trimmedLine)
-            
-            // Adjust indent for opening parentheses and subqueries
-            if trimmedLine.hasSuffix("(") {
-                indentLevel += 1
-            }
-        }
-        
-        return formattedLines.joined(separator: "\n")
     }
     
     private func minifySQLString(_ sql: String) -> String {
-        var result = sql
+        guard !sql.isEmpty else { return "" }
         
-        // Remove comments
-        result = result.replacingOccurrences(of: #"--.*$"#, with: "", options: .regularExpression)
-        result = result.replacingOccurrences(of: #"/\*[\s\S]*?\*/"#, with: "", options: .regularExpression)
-        
-        // Remove extra whitespace
-        result = result.replacingOccurrences(of: #"\s+"#, with: " ", options: .regularExpression)
-        
-        // Remove spaces around operators and punctuation
-        let operators = ["=", "<", ">", "<=", ">=", "<>", "!=", "+", "-", "*", "/", "(", ")", ",", ";"]
-        for op in operators {
-            result = result.replacingOccurrences(of: " \(op) ", with: op)
-            result = result.replacingOccurrences(of: " \(op)", with: op)
-            result = result.replacingOccurrences(of: "\(op) ", with: op)
+        do {
+            // Use the ParquetViewer library's SQL formatter with minimal style
+            return try ParquetViewer.formatSql(sql, style: .minimal)
+        } catch {
+            // If formatting fails, return basic minification
+            return sql.replacingOccurrences(of: #"\s+"#, with: " ", options: .regularExpression)
+                     .trimmingCharacters(in: .whitespacesAndNewlines)
         }
-        
-        return result.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
     private func validateSQLString(_ sql: String) -> [String] {

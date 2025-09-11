@@ -128,6 +128,23 @@ void parquet_viewer_free_metadata(CFileMetadata* metadata);
 void parquet_viewer_free_data(CRecordBatchArray* data);
 
 /**
+ * Format SQL with specified style
+ * 
+ * @param sql SQL query string to format (null-terminated string)
+ * @param style Formatting style (0 = Minimal, 1 = Beautify)
+ * @return Pointer to formatted SQL string on success, NULL on error.
+ *         Caller must free with parquet_viewer_free_string()
+ */
+char* parquet_viewer_sql_format(const char* sql, int32_t style);
+
+/**
+ * Free a string returned by parquet_viewer_sql_format
+ * 
+ * @param string Pointer to the string to free
+ */
+void parquet_viewer_free_string(char* string);
+
+/**
  * Get the last error message
  * 
  * @return Pointer to error message string, or NULL if no error.

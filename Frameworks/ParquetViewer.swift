@@ -69,6 +69,12 @@ private func parquet_viewer_free_metadata(_ metadata: UnsafeMutablePointer<CFile
 @_silgen_name("parquet_viewer_free_data")
 private func parquet_viewer_free_data(_ data: UnsafeMutablePointer<CRecordBatchArray>?)
 
+@_silgen_name("parquet_viewer_sql_format")
+private func parquet_viewer_sql_format(_ sql: UnsafePointer<CChar>?, _ style: Int32) -> UnsafeMutablePointer<CChar>?
+
+@_silgen_name("parquet_viewer_free_string")
+private func parquet_viewer_free_string(_ string: UnsafeMutablePointer<CChar>?)
+
 @_silgen_name("parquet_viewer_get_last_error")
 private func parquet_viewer_get_last_error() -> UnsafePointer<CChar>?
 
@@ -188,6 +194,12 @@ public struct RecordBatch {
         self.numRows = numRows
         self.numColumns = numColumns
     }
+}
+
+/// SQL formatting style
+public enum SqlFormatStyle: Int32 {
+    case minimal = 0
+    case beautify = 1
 }
 
 // MARK: - Main ParquetViewer Class
@@ -315,6 +327,32 @@ public class ParquetViewer {
         }
     }
     
+    /// Format SQL query with specified style
+    /// - Parameters:
+    ///   - sql: SQL query string to format
+    ///   - style: Formatting style (minimal or beautify)
+    /// - Returns: Formatted SQL string
+    /// - Throws: ParquetViewerError if the operation fails
+    public static func formatSql(_ sql: String, style: SqlFormatStyle = .beautify) throws -> String {
+        guard let cSql = sql.cString(using: .utf8) else {
+            throw ParquetViewerError.invalidData
+        }
+        
+        let formattedPtr = cSql.withUnsafeBufferPointer { buffer in
+            parquet_viewer_sql_format(buffer.baseAddress, style.rawValue)
+        }
+        
+        guard let formattedPtr = formattedPtr else {
+            throw ParquetViewerError.operationFailed
+        }
+        
+        defer {
+            parquet_viewer_free_string(formattedPtr)
+        }
+        
+        return String(cString: formattedPtr)
+    }
+    
     /// Get the last error message from the library
     /// - Returns: Error message string
     public static func getLastError() -> String {
@@ -332,6 +370,7 @@ public enum ParquetViewerError: Error, LocalizedError {
     case operationFailed
     case fileNotFound
     case invalidData
+    case sqlParsingError
     
     public var errorDescription: String? {
         switch self {
@@ -343,6 +382,8 @@ public enum ParquetViewerError: Error, LocalizedError {
             return "File not found"
         case .invalidData:
             return "Invalid data format"
+        case .sqlParsingError:
+            return "SQL parsing error: \(ParquetViewer.getLastError())"
         }
     }
 }
