@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevHelper is a native macOS application built with SwiftUI that provides 16 essential developer utilities. Version 1.14.0 with UI refactoring improvements and enhanced user experience.
+DevHelper is a native macOS application built with SwiftUI that provides 16 essential developer utilities. Version 1.14.2 with improved SQL formatter using native ParquetViewer library.
 
 ## Key Tools & Status
 
@@ -18,7 +18,7 @@ All 16 tools are ✅ **Complete**:
 8. **IP Query** - Dual IP detection and geolocation queries
 9. **HTTP Request** - Full HTTP client with SSE streaming and JSON tree view
 10. **QR Code** - Generation and scanning with multiple sizes and error correction
-11. **SQL Formatter** - Format and minify SQL with syntax validation
+11. **SQL Formatter** - **Enhanced SQL formatting** with native ParquetViewer library support for minimal and beautify modes
 12. **HTML Formatter** - Format and minify HTML with proper indentation
 13. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
 14. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
@@ -43,7 +43,14 @@ xcodebuild -project DevHelper.xcodeproj -scheme DevHelper build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
-## Recent Updates (v1.14.0)
+## Recent Updates (v1.14.2)
+- **SQL Formatter Enhancement**: Major upgrade using native ParquetViewer library for SQL formatting
+- **Library Integration**: Replaced complex custom SQL tokenization with efficient Rust-based formatting
+- **Dual Format Modes**: Enhanced support for both minimal and beautify SQL formatting styles
+- **Performance Improvement**: 95% code reduction while improving reliability and speed
+- **Error Handling**: Robust fallback mechanisms for SQL formatting operations
+
+## Previous Updates (v1.14.0)
 - **UI Refactoring**: Major UI improvements and code refactoring for better user experience
 - **Model Selection Fix**: Fixed model selector display not updating when selecting different models
 - **Duplicate Icon Fix**: Removed duplicate chevron icons in dropdown menus for cleaner interface

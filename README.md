@@ -16,7 +16,7 @@ A native macOS application for developers, containing 16 essential tools commonl
 - **IP Query** - Dual IP detection (international vs China networks) and geolocation queries
 - **HTTP Request** - Full HTTP client with SSE streaming, JSON tree view, and request history
 - **QR Code** - Generation and scanning with multiple sizes, error correction, and file operations
-- **SQL Formatter** - Format and minify SQL with syntax validation and proper indentation
+- **SQL Formatter** - **Enhanced SQL formatting** using native ParquetViewer library with minimal and beautify modes and proper indentation
 - **HTML Formatter** - Format and minify HTML with proper tag indentation and structure validation
 - **JWT Encoder/Decoder** - Complete JWT support with HMAC and RSA algorithms using CryptoKit security
 - **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading with schema inspection
@@ -43,4 +43,4 @@ A native macOS application for developers, containing 16 essential tools commonl
 
 ## Version
 
-Current version: 1.14.0
+Current version: 1.14.2
