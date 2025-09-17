@@ -32,7 +32,7 @@ A native macOS application for developers, containing 16 essential tools commonl
 
 ## Version
 
-Current version: 1.14.2
+Current version: 1.14.3
 
 ## Screenshots
 
