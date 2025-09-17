@@ -1319,133 +1319,193 @@ struct ChatInputView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 8) {
-            // Image preview area (if images are selected)
-            if !selectedImages.isEmpty {
-                ImagePreviewBar(
-                    images: selectedImages,
-                    onRemove: { image in
-                        selectedImages.removeAll { $0.id == image.id }
-                    }
-                )
+                // Image preview area (if images are selected)
+                if !selectedImages.isEmpty {
+                    imagePreviewSection
+                }
+
+                // Input area
+                HStack(alignment: .bottom, spacing: 0) {
+                    // Text Input with overlaid toolbar and send button
+                    textInputSection
+                }
                 .padding(.horizontal, 20)
-            }
-            
-            // Input area
-            HStack(alignment: .bottom, spacing: 0) {
-                // Text Input with overlaid toolbar and send button
-                ZStack(alignment: .bottomTrailing) {
-                    // Auto-expanding TextEditor (full width)
-                    TextEditor(text: $currentMessage, bottom: 40)
-                        .font(.body)
-                        .scrollContentBackground(.hidden)
-                        .frame(height: calculatedHeight)
-                        .disabled(isLoading)
-                        .onKeyPress { key in
-                            if key.key == .return && !key.modifiers.contains(.shift) {
-                                // Enter: Send message
-                                sendMessage()
-                                return .handled
-                            }
-                            return .ignored
-                        }
-                        .overlay(alignment: .topLeading) {
-                            if currentMessage.isEmpty {
-                                Text(getPlaceholderText())
-                                    .font(.body)
-                                    .foregroundColor(.secondary)
-                                    .background(Color.clear)
-                                    .allowsHitTesting(false)
-                                    .padding(.top, 4)
-                                    .padding(.leading, 4)
-                            }
-                        }
-                    
-                }
-                .overlay(alignment: .bottomLeading) {
-                    // Tool selection toolbar (floating overlay at bottom-left)
-                    HStack(spacing: 4) {
-                        // Upload image button
-                        Button(action: {
-                            print("📸 Upload image button clicked")
-                            openImagePicker()
-                        }) {
-                            Image(systemName: "photo.badge.plus")
-                                .font(.system(size: 16, weight: .medium))
-                                .foregroundColor(.secondary)
-                                .frame(width: 28, height: 28)
-                                .background(Color.secondary.opacity(0.1))
-                                .clipShape(Circle())
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                        .help("Upload images")
-                        .disabled(isLoading)
-                        
-                        // Tool selection buttons
-                        ForEach([ChatToolMode.webSearch, ChatToolMode.imageGeneration], id: \.self) { tool in
-                            Button(action: {
-                                print("🔄 Tool button clicked: \(tool.displayName)")
-                                print("🔍 Current selectedTool in UI: \(selectedTool.displayName)")
-                                print("🔍 Is tool selected: \(selectedTool == tool)")
-                                let newTool = selectedTool == tool ? .chat : tool
-                                print("🔍 New tool will be: \(newTool.displayName)")
-                                onToolChanged(newTool)
-                            }) {
-                                HStack(spacing: 4) {
-                                    Image(systemName: tool.iconName)
-                                        .font(.system(size: 14, weight: .medium))
-                                    if selectedTool == tool {
-                                        Text(tool.displayName)
-                                            .font(.system(size: 12, weight: .medium))
-                                    }
-                                }
-                                .foregroundColor(selectedTool == tool ? .white : .secondary)
-                                .padding(.horizontal, selectedTool == tool ? 8 : 6)
-                                .padding(.vertical, 4)
-                                .background(selectedTool == tool ? Color.accentColor : Color.secondary.opacity(0.1))
-                                .clipShape(RoundedRectangle(cornerRadius: 14))
-                                .onAppear {
-                                    print("🎨 Button \(tool.displayName) appearance - selectedTool: \(selectedTool.displayName), isSelected: \(selectedTool == tool)")
-                                }
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .help(tool.displayName)
-                            .disabled(isLoading)
-                        }
-                    }
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                    .padding(.bottom, 8)
-                    .padding(.leading, 8)
-                    .allowsHitTesting(true)
-                }
-                .overlay(alignment: .bottomTrailing) {
-                    // Send/Stop Button (floating overlay at bottom-right)
-                    Button(action: isLoading ? stopMessage : sendMessage) {
-                        Circle()
-                            .fill(
-                                (canSendMessage() || isLoading)
-                                ? Color.accentColor
-                                : Color.secondary.opacity(0.3)
-                            )
-                            .frame(width: 28, height: 28)
-                            .overlay {
-                                Image(systemName: isLoading ? "stop.fill" : "arrow.up")
-                                    .font(.system(size: 14, weight: .medium))
-                                    .foregroundColor(.white)
-                            }
-                            .scaleEffect(isLoading ? 0.9 : 1.0)
-                            .animation(.easeInOut(duration: 0.1), value: isLoading)
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                    .disabled(!canSendMessage() && !isLoading)
-                    .padding(.bottom, 8)
-                    .padding(.trailing, 8)
-                }
-            }
-            .padding(.horizontal, 20)
             }
             .padding(.vertical, 16)
             .animation(.easeInOut(duration: 0.2), value: calculatedHeight)
         }
+    }
+
+    // MARK: - View Components
+
+    @ViewBuilder
+    private var imagePreviewSection: some View {
+        ImagePreviewBar(
+            images: selectedImages,
+            onRemove: removeImage
+        )
+        .padding(.horizontal, 20)
+    }
+
+    @ViewBuilder
+    private var textInputSection: some View {
+        ZStack(alignment: .bottomTrailing) {
+            textEditorView
+                .overlay(alignment: .topLeading) {
+                    placeholderOverlay
+                }
+                .overlay(alignment: .bottomLeading) {
+                    toolbarOverlay
+                }
+                .overlay(alignment: .bottomTrailing) {
+                    sendButtonOverlay
+                }
+        }
+    }
+
+    @ViewBuilder
+    private var textEditorView: some View {
+        TextEditor(text: $currentMessage)
+            .font(.body)
+            .scrollContentBackground(.hidden)
+            .frame(height: calculatedHeight)
+            .disabled(isLoading)
+            .onKeyPress { key in
+                handleKeyPress(key)
+            }
+    }
+
+    @ViewBuilder
+    private var placeholderOverlay: some View {
+        if currentMessage.isEmpty {
+            Text(getPlaceholderText())
+                .font(.body)
+                .foregroundColor(.secondary)
+                .background(Color.clear)
+                .allowsHitTesting(false)
+                .padding(.top, 4)
+                .padding(.leading, 4)
+        }
+    }
+
+    @ViewBuilder
+    private var toolbarOverlay: some View {
+        HStack(spacing: 4) {
+            uploadImageButton
+
+            ForEach([ChatToolMode.webSearch, ChatToolMode.imageGeneration], id: \.self) { tool in
+                toolSelectionButton(for: tool)
+            }
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .padding(.bottom, 8)
+        .padding(.leading, 8)
+        .allowsHitTesting(true)
+    }
+
+    @ViewBuilder
+    private var uploadImageButton: some View {
+        Button(action: handleUploadImageAction) {
+            Image(systemName: "photo.badge.plus")
+                .font(.system(size: 16, weight: .medium))
+                .foregroundColor(.secondary)
+                .frame(width: 28, height: 28)
+                .background(Color.secondary.opacity(0.1))
+                .clipShape(Circle())
+        }
+        .buttonStyle(PlainButtonStyle())
+        .help("Upload images")
+        .disabled(isLoading)
+    }
+
+    @ViewBuilder
+    private func toolSelectionButton(for tool: ChatToolMode) -> some View {
+        Button(action: { handleToolSelection(tool) }) {
+            HStack(spacing: 4) {
+                Image(systemName: tool.iconName)
+                    .font(.system(size: 14, weight: .medium))
+                if selectedTool == tool {
+                    Text(tool.displayName)
+                        .font(.system(size: 12, weight: .medium))
+                }
+            }
+            .foregroundColor(selectedTool == tool ? .white : .secondary)
+            .padding(.horizontal, selectedTool == tool ? 8 : 6)
+            .padding(.vertical, 4)
+            .background(selectedTool == tool ? Color.accentColor : Color.secondary.opacity(0.1))
+            .clipShape(RoundedRectangle(cornerRadius: 14))
+            .onAppear {
+                print("🎨 Button \(tool.displayName) appearance - selectedTool: \(selectedTool.displayName), isSelected: \(selectedTool == tool)")
+            }
+        }
+        .buttonStyle(PlainButtonStyle())
+        .help(tool.displayName)
+        .disabled(isLoading)
+    }
+
+    @ViewBuilder
+    private var sendButtonOverlay: some View {
+        Button(action: handleSendStopAction) {
+            sendButtonContent
+        }
+        .buttonStyle(PlainButtonStyle())
+        .disabled(!canSendMessage() && !isLoading)
+        .padding(.bottom, 8)
+        .padding(.trailing, 8)
+    }
+
+    @ViewBuilder
+    private var sendButtonContent: some View {
+        Circle()
+            .fill(sendButtonFillColor)
+            .frame(width: 28, height: 28)
+            .overlay {
+                Image(systemName: isLoading ? "stop.fill" : "arrow.up")
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(.white)
+            }
+            .scaleEffect(isLoading ? 0.9 : 1.0)
+            .animation(.easeInOut(duration: 0.1), value: isLoading)
+    }
+
+    private var sendButtonFillColor: Color {
+        (canSendMessage() || isLoading) ? Color.accentColor : Color.secondary.opacity(0.3)
+    }
+
+    private func handleSendStopAction() {
+        if isLoading {
+            stopMessage()
+        } else {
+            sendMessage()
+        }
+    }
+
+    // MARK: - Action Handlers
+
+    private func removeImage(_ image: ChatMessageImage) {
+        selectedImages.removeAll { $0.id == image.id }
+    }
+
+    private func handleKeyPress(_ key: KeyPress) -> KeyPress.Result {
+        if key.key == .return && !key.modifiers.contains(.shift) {
+            sendMessage()
+            return .handled
+        }
+        return .ignored
+    }
+
+    private func handleUploadImageAction() {
+        print("📸 Upload image button clicked")
+        openImagePicker()
+    }
+
+    private func handleToolSelection(_ tool: ChatToolMode) {
+        print("🔄 Tool button clicked: \(tool.displayName)")
+        print("🔍 Current selectedTool in UI: \(selectedTool.displayName)")
+        print("🔍 Is tool selected: \(selectedTool == tool)")
+        let newTool = selectedTool == tool ? .chat : tool
+        print("🔍 New tool will be: \(newTool.displayName)")
+        onToolChanged(newTool)
     }
     
     
@@ -1511,35 +1571,37 @@ struct ChatInputView: View {
     }
     
     private func handleFileSelection(_ urls: [URL], attachmentType: AttachmentType) {
-        Task {
-            do {
-                var newAttachments: [ChatMessageImage] = []
-                
-                for url in urls {
-                    let fileName = url.lastPathComponent
-                    
-                    if attachmentType == .image {
-                        // Use existing image storage service for images
-                        let imageId = UUID()
-                        let localPath = try await ImageStorageService.shared.saveUploadedImage(from: url, imageId: imageId)
-                        
-                        let image = ChatMessageImage(
-                            localImagePath: localPath,
-                            caption: fileName
-                        )
-                        newAttachments.append(image)
-                    }
+        Task { @MainActor in
+            await processFileSelection(urls, attachmentType: attachmentType)
+        }
+    }
+
+    @MainActor
+    private func processFileSelection(_ urls: [URL], attachmentType: AttachmentType) async {
+        do {
+            var newAttachments: [ChatMessageImage] = []
+
+            for url in urls {
+                let fileName = url.lastPathComponent
+
+                if attachmentType == .image {
+                    // Use existing image storage service for images
+                    let imageId = UUID()
+                    let localPath = try await ImageStorageService.shared.saveUploadedImage(from: url, imageId: imageId)
+
+                    let image = ChatMessageImage(
+                        localImagePath: localPath,
+                        caption: fileName
+                    )
+                    newAttachments.append(image)
                 }
-                
-                await MainActor.run {
-                    selectedImages.append(contentsOf: newAttachments)
-                }
-                
-                print("✅ Added \(newAttachments.count) \(attachmentType.displayName.lowercased())s for upload")
-                
-            } catch {
-                print("❌ Failed to process uploaded \(attachmentType.displayName.lowercased())s: \(error)")
             }
+
+            selectedImages.append(contentsOf: newAttachments)
+            print("✅ Added \(newAttachments.count) \(attachmentType.displayName.lowercased())s for upload")
+
+        } catch {
+            print("❌ Failed to process uploaded \(attachmentType.displayName.lowercased())s: \(error)")
         }
     }
     
@@ -1561,7 +1623,7 @@ struct ChatInputView: View {
 // MARK: - ScrollOffset Preference Key for scroll position detection
 
 struct ScrollOffsetPreferenceKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
+    nonisolated(unsafe) static var defaultValue: CGFloat = 0
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = nextValue()
     }
@@ -1762,8 +1824,6 @@ struct AttachmentPreviewThumbnail: View {
     }
 }
 
-
 #Preview {
     AIChatView()
 }
-
