@@ -32,6 +32,12 @@
 		93CECFE92E612F2B00F5A131 /* AIChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CECFE62E612F2B00F5A131 /* AIChatView.swift */; };
 		93CECFEB2E612F3400F5A131 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CECFEA2E612F3400F5A131 /* ChatManager.swift */; };
 		93DB98A32E635E5200E70747 /* ImageStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DB98A22E635E5200E70747 /* ImageStorageService.swift */; };
+		93DE0EA82E7AB9F200731598 /* AIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EA72E7AB9F200731598 /* AIProvider.swift */; };
+		93DE0EAA2E7ABA0300731598 /* ProviderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EA92E7ABA0300731598 /* ProviderManager.swift */; };
+		93DE0EAF2E7ABA1900731598 /* AIProviderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EAD2E7ABA1900731598 /* AIProviderDetailView.swift */; };
+		93DE0EB02E7ABA1900731598 /* AIProviderSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EAE2E7ABA1900731598 /* AIProviderSettingsView.swift */; };
+		93DE0EB12E7ABA1900731598 /* AddModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EAB2E7ABA1900731598 /* AddModelView.swift */; };
+		93DE0EB22E7ABA1900731598 /* AddProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EAC2E7ABA1900731598 /* AddProviderView.swift */; };
 		9DF690CF055F4760B9362F3C /* OpenToolIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CDC352846A4E27A5EF98B9 /* OpenToolIntent.swift */; };
 		B41BCA88D09D488EA2A4ABAC /* CryptoToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41BCA88D09D488EA2A4ABAB /* CryptoToolsView.swift */; };
 		D5F4E7F42C5A1B2E00123456 /* DevHelperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4E7F32C5A1B2E00123456 /* DevHelperApp.swift */; };
@@ -95,6 +101,12 @@
 		93CECFE72E612F2B00F5A131 /* AISettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISettingsView.swift; sourceTree = "<group>"; };
 		93CECFEA2E612F3400F5A131 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
 		93DB98A22E635E5200E70747 /* ImageStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStorageService.swift; sourceTree = "<group>"; };
+		93DE0EA72E7AB9F200731598 /* AIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProvider.swift; sourceTree = "<group>"; };
+		93DE0EA92E7ABA0300731598 /* ProviderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderManager.swift; sourceTree = "<group>"; };
+		93DE0EAB2E7ABA1900731598 /* AddModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddModelView.swift; sourceTree = "<group>"; };
+		93DE0EAC2E7ABA1900731598 /* AddProviderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProviderView.swift; sourceTree = "<group>"; };
+		93DE0EAD2E7ABA1900731598 /* AIProviderDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProviderDetailView.swift; sourceTree = "<group>"; };
+		93DE0EAE2E7ABA1900731598 /* AIProviderSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProviderSettingsView.swift; sourceTree = "<group>"; };
 		B41BCA88D09D488EA2A4ABAB /* CryptoToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoToolsView.swift; sourceTree = "<group>"; };
 		B822A4CAC32A426BA9E4E438123457 /* IPQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPQueryView.swift; sourceTree = "<group>"; };
 		D5F4E7F02C5A1B2E00123456 /* DevHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,6 +162,7 @@
 		93B55B4D2E5EF944001ECD91 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				93DE0EA92E7ABA0300731598 /* ProviderManager.swift */,
 				93DB98A22E635E5200E70747 /* ImageStorageService.swift */,
 				93CECFEA2E612F3400F5A131 /* ChatManager.swift */,
 				934569042E5FFCD600491835 /* UpdateChecker.swift */,
@@ -209,6 +222,10 @@
 		D5F4E8132C5A1B3000123456 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				93DE0EAB2E7ABA1900731598 /* AddModelView.swift */,
+				93DE0EAC2E7ABA1900731598 /* AddProviderView.swift */,
+				93DE0EAD2E7ABA1900731598 /* AIProviderDetailView.swift */,
+				93DE0EAE2E7ABA1900731598 /* AIProviderSettingsView.swift */,
 				93CECFE62E612F2B00F5A131 /* AIChatView.swift */,
 				93CECFE72E612F2B00F5A131 /* AISettingsView.swift */,
 				D5F4E8012C5A1B3000123456 /* TimestampConverterView.swift */,
@@ -233,6 +250,7 @@
 		D5F4E8142C5A1B3000123456 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				93DE0EA72E7AB9F200731598 /* AIProvider.swift */,
 				93CECFE42E612F2000F5A131 /* AIModels.swift */,
 				E0199D7662F54B0C83FA0058 /* AppState.swift */,
 				7340D40200B047DAA10319FB /* DevHelperShortcutsProvider.swift */,
@@ -339,7 +357,9 @@
 				934569062E5FFCD600491835 /* UpdateChecker.swift in Sources */,
 				934569072E5FFCD600491835 /* VersionComparator.swift in Sources */,
 				D5F4E80C2C5A1B3000123456 /* RegexTestView.swift in Sources */,
+				93DE0EAA2E7ABA0300731598 /* ProviderManager.swift in Sources */,
 				D5F4E80E2C5A1B3000123456 /* UUIDGeneratorView.swift in Sources */,
+				93DE0EA82E7AB9F200731598 /* AIProvider.swift in Sources */,
 				D5F4E8102C5A1B3000123456 /* URLToolsView.swift in Sources */,
 				HTTP4E7F2C5A1B3000654321 /* HTTPRequestView.swift in Sources */,
 				93C47C932E3312A00069B278 /* CodeEditor.swift in Sources */,
@@ -369,6 +389,10 @@
 				TCI4F7812C5A1B3000987654 /* TimestampConversionIntent.swift in Sources */,
 				D5F4E7F62C5A1B2E00123456 /* ContentView.swift in Sources */,
 				93DB98A32E635E5200E70747 /* ImageStorageService.swift in Sources */,
+				93DE0EAF2E7ABA1900731598 /* AIProviderDetailView.swift in Sources */,
+				93DE0EB02E7ABA1900731598 /* AIProviderSettingsView.swift in Sources */,
+				93DE0EB12E7ABA1900731598 /* AddModelView.swift in Sources */,
+				93DE0EB22E7ABA1900731598 /* AddProviderView.swift in Sources */,
 				D5F4E7F42C5A1B2E00123456 /* DevHelperApp.swift in Sources */,
 				93B500A02E5D81D500F38E50 /* ParquetViewer.swift in Sources */,
 			);

@@ -18,134 +18,13 @@ import SwiftUI
 struct AISettingsView: View {
     let settings: AISettings
     @Environment(\.dismiss) private var dismiss
-    
-    @State private var openAIKey = ""
-    @State private var selectedDefaultModel: AIModel = .defaultModel
-    @State private var maxHistoryChats = 100
-    @State private var apiGatewayURL = ""
-    @State private var showingKeySecurely = false
-    
-    var body: some View {
-        Form {
-                Section("API Key") {
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text("OpenAI")
-                                .fontWeight(.medium)
-                            
-                            Spacer()
-                            
-                            if !openAIKey.isEmpty {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(.green)
-                            }
-                        }
-                        
-                        HStack {
-                            if showingKeySecurely {
-                                TextField("sk-...", text: $openAIKey)
-                                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                            } else {
-                                SecureField("sk-...", text: $openAIKey)
-                                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                            }
-                            
-                            Button(action: { showingKeySecurely.toggle() }) {
-                                Image(systemName: showingKeySecurely ? "eye.slash" : "eye")
-                                    .foregroundColor(.secondary)
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .help(showingKeySecurely ? "Hide" : "Show")
-                        }
-                        
-                        Text("Get your API key from [platform.openai.com](https://platform.openai.com/api-keys)")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                    .padding(.vertical, 4)
 
-                    
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text("API Gateway URL")
-                                .fontWeight(.medium)
-                            Spacer()
-                        }
-                        
-                        TextField("https://", text: $apiGatewayURL)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                        
-                        Text("Custom API endpoint for proxy servers or alternative OpenAI-compatible APIs")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                    .padding(.vertical, 4)
-                }
-                
-                Section("Default Settings") {
-                    HStack {
-                        Text("Default Model")
-                        Spacer()
-                        Picker("", selection: $selectedDefaultModel) {
-                            ForEach(AIModel.chatModels, id: \.id) { model in
-                                Text(model.displayName)
-                                    .tag(model)
-                            }
-                        }
-                        .pickerStyle(MenuPickerStyle())
-                        .frame(minWidth: 200)
-                    }
-                    
-                    HStack {
-                        Text("Max Chat History")
-                        Spacer()
-                        TextField("100", value: $maxHistoryChats, format: .number)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .frame(width: 100)
-                        Text("chats")
-                            .foregroundColor(.secondary)
-                    }
-                    
-                }
-        }
-        .formStyle(GroupedFormStyle())
-        .navigationTitle("AI Settings")
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel") {
-                    dismiss()
-                }
-                .keyboardShortcut(.cancelAction)
+    var body: some View {
+        AIProviderSettingsView()
+            .onAppear {
+                // Migrate existing settings to new provider system
+                ProviderManager.shared.migrateFromLegacySettings(settings)
             }
-            
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Save") {
-                    saveSettings()
-                    dismiss()
-                }
-                .buttonStyle(.borderedProminent)
-                .keyboardShortcut(.return, modifiers: .command)
-            }
-        }
-        .frame(width: 550, height: 400)
-        .onAppear {
-            loadCurrentSettings()
-        }
-    }
-    
-    private func loadCurrentSettings() {
-        openAIKey = settings.openAIAPIKey
-        selectedDefaultModel = settings.defaultModel
-        maxHistoryChats = settings.maxHistoryChats
-        apiGatewayURL = settings.apiGatewayURL
-        showingKeySecurely = false
-    }
-    
-    private func saveSettings() {
-        settings.openAIAPIKey = openAIKey.trimmingCharacters(in: .whitespacesAndNewlines)
-        settings.defaultModel = selectedDefaultModel
-        settings.maxHistoryChats = maxHistoryChats
-        settings.apiGatewayURL = apiGatewayURL.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
 

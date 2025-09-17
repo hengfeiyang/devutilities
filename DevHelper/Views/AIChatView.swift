@@ -22,6 +22,7 @@ import MarkdownUI
 struct AIChatView: View {
     @State private var chatManager = ChatManager()
     @State private var aiSettings = AISettings()
+    @State private var providerManager = ProviderManager.shared
     @State private var selectedSession: ChatSession?
     @State private var showingSettings = false
     @State private var currentMessage = ""
@@ -93,30 +94,38 @@ struct AIChatView: View {
                         Spacer()
                         
                         HStack(spacing: 12) {
-                            // Model selector dropdown
+                            // New Provider/Model selector dropdown
+                            let availableModels = providerManager.getAllActiveModels()
+                            let currentSelection = getCurrentProviderModel(for: session, from: availableModels)
+
                             Menu {
-                                if session.selectedModel != nil {
-                                    Button("Reset to Default (\(aiSettings.defaultModel.displayName))") {
-                                        resetToDefaultModel(for: session)
+                                if session.selectedProviderModelId != nil || session.selectedModelId != nil {
+                                    Button("Reset to Default") {
+                                        resetToDefaultProviderModel(for: session)
                                     }
                                     Divider()
                                 }
-                                
-                                ForEach(AIModel.allModels, id: \.id) { model in
+
+                                ForEach(availableModels, id: \.id) { item in
                                     Button(action: {
-                                        updateChatModel(model, for: session)
+                                        updateChatProviderModel(item, for: session)
                                     }) {
                                         HStack {
-                                            Text(model.displayName)
-                                            if model.id == (session.selectedModel ?? aiSettings.defaultModel).id {
+                                            Text(item.displayName)
+                                            if item.model.id == currentSelection?.model.id {
                                                 Image(systemName: "checkmark")
                                             }
                                         }
                                     }
                                 }
+
+                                if availableModels.isEmpty {
+                                    Text("No models available")
+                                        .foregroundColor(.secondary)
+                                }
                             } label: {
                                 HStack(spacing: 4) {
-                                    Text((session.selectedModel ?? aiSettings.defaultModel).displayName)
+                                    Text(currentSelection?.displayName ?? "No Model")
                                         .font(.caption)
                                         .foregroundColor(.primary)
                                 }
@@ -129,7 +138,7 @@ struct AIChatView: View {
                             .buttonStyle(PlainButtonStyle())
                             .help("Change model for this chat")
                         }
-                        .frame(maxWidth: 100, alignment: .trailing)
+                        .frame(maxWidth: 130, alignment: .trailing)
                     }
                     .frame(width: max(500, windowWidth - 500))
                     .padding(.horizontal, 10)
@@ -170,6 +179,67 @@ struct AIChatView: View {
         }
     }
     
+    // New provider/model methods
+    private func getCurrentProviderModel(for session: ChatSession, from availableModels: [ProviderModelItem]) -> ProviderModelItem? {
+        // First try to get the new provider/model selection using IDs
+        if let providerModelId = session.selectedProviderModelId,
+           let modelId = session.selectedModelId,
+           let matchingModel = availableModels.first(where: { $0.provider.id == providerModelId && $0.model.id == modelId }) {
+            return matchingModel
+        }
+
+        // Fallback to legacy model selection and try to find matching provider/model
+        if let selectedModel = session.selectedModel,
+           let matchingModel = availableModels.first(where: { $0.model.modelId == selectedModel.id || $0.model.name.contains(selectedModel.displayName) }) {
+            return matchingModel
+        }
+
+        // Default to OpenAI GPT-4.1 if available, otherwise first available model
+        if let gpt41Model = availableModels.first(where: { $0.provider.name == "OpenAI" && $0.model.modelId == "gpt-4.1" }) {
+            return gpt41Model
+        }
+        return availableModels.first
+    }
+
+    private func updateChatProviderModel(_ providerModel: ProviderModelItem, for session: ChatSession) {
+        if let sessionIndex = chatManager.chatSessions.firstIndex(where: { $0.id == session.id }) {
+            chatManager.chatSessions[sessionIndex].selectedProviderModelId = providerModel.provider.id
+            chatManager.chatSessions[sessionIndex].selectedModelId = providerModel.model.id
+
+            // Also update legacy field for backward compatibility
+            let legacyModel = AIModel(
+                id: providerModel.model.modelId,
+                name: providerModel.model.modelId,
+                displayName: providerModel.displayName,
+                maxTokens: providerModel.model.capabilities.maxTokens,
+                contextWindow: providerModel.model.capabilities.contextWindow
+            )
+            chatManager.chatSessions[sessionIndex].selectedModel = legacyModel
+
+            // Save the updated session
+            let storage = ChatStorage()
+            storage.saveChatSession(chatManager.chatSessions[sessionIndex])
+            // Update the selectedSession to trigger UI refresh
+            selectedSession = chatManager.chatSessions[sessionIndex]
+            print("✅ Updated chat model to: \(providerModel.displayName)")
+        }
+    }
+
+    private func resetToDefaultProviderModel(for session: ChatSession) {
+        if let sessionIndex = chatManager.chatSessions.firstIndex(where: { $0.id == session.id }) {
+            chatManager.chatSessions[sessionIndex].selectedProviderModelId = nil
+            chatManager.chatSessions[sessionIndex].selectedModelId = nil
+            chatManager.chatSessions[sessionIndex].selectedModel = nil
+            // Save the updated session
+            let storage = ChatStorage()
+            storage.saveChatSession(chatManager.chatSessions[sessionIndex])
+            // Update the selectedSession to trigger UI refresh
+            selectedSession = chatManager.chatSessions[sessionIndex]
+            print("✅ Reset chat to default model")
+        }
+    }
+
+    // Legacy methods (keep for backward compatibility during transition)
     private func updateChatModel(_ model: AIModel, for session: ChatSession) {
         if let sessionIndex = chatManager.chatSessions.firstIndex(where: { $0.id == session.id }) {
             chatManager.chatSessions[sessionIndex].selectedModel = model
@@ -181,7 +251,7 @@ struct AIChatView: View {
             print("✅ Updated chat model to: \(model.displayName)")
         }
     }
-    
+
     private func resetToDefaultModel(for session: ChatSession) {
         if let sessionIndex = chatManager.chatSessions.firstIndex(where: { $0.id == session.id }) {
             chatManager.chatSessions[sessionIndex].selectedModel = nil

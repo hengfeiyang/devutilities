@@ -24,6 +24,8 @@ struct ChatSession: Identifiable, Codable, Hashable {
     var updatedAt: Date
     var messages: [ChatMessage]
     var selectedModel: AIModel?
+    var selectedProviderModelId: UUID?  // Reference to selected provider/model
+    var selectedModelId: UUID?  // Reference to selected model within provider
     var selectedTool: ChatToolMode = .chat
     
     init(title: String = "New Chat", selectedModel: AIModel? = nil) {
