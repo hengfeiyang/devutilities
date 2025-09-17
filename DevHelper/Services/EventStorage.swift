@@ -1,7 +1,7 @@
 import Foundation
 
 // MARK: - Event Storage Protocol
-protocol EventStorageProtocol {
+protocol EventStorageProtocol: Sendable {
     func saveEvent(_ event: AppEvent) async throws
     func loadPendingEvents() async throws -> [AppEvent]
     func removeEvent(_ event: AppEvent) async throws
@@ -11,7 +11,7 @@ protocol EventStorageProtocol {
 }
 
 // MARK: - UserDefaults-based Event Storage
-class EventStorage: EventStorageProtocol {
+final class EventStorage: EventStorageProtocol, @unchecked Sendable {
     private let userDefaults = UserDefaults.standard
     private let storageKey = "DevHelper_PendingEvents"
     private let maxEvents = 1000 // Prevent unlimited growth
@@ -140,7 +140,7 @@ enum EventStorageError: LocalizedError {
 }
 
 // MARK: - Mock Storage for Testing
-class MockEventStorage: EventStorageProtocol {
+final class MockEventStorage: EventStorageProtocol, @unchecked Sendable {
     var events: [AppEvent] = []
     var shouldThrowError = false
     

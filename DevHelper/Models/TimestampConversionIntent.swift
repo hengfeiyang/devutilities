@@ -18,9 +18,9 @@ import Foundation
 import SwiftUI
 
 struct TimestampConversionIntent: AppIntent {
-    static var title: LocalizedStringResource = "Convert Timestamp"
-    static var description = IntentDescription("Convert a timestamp to a human-readable date")
-    static var openAppWhenRun: Bool = false
+    nonisolated(unsafe) static var title: LocalizedStringResource = "Convert Timestamp"
+    nonisolated(unsafe) static var description = IntentDescription("Convert a timestamp to a human-readable date")
+    nonisolated(unsafe) static var openAppWhenRun: Bool = false
 
     @Parameter(title: "Timestamp", description: "The timestamp to convert")
     var timestamp: String

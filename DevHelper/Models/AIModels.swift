@@ -467,7 +467,7 @@ class AISettings {
 
 // MARK: - Keychain Service
 
-class KeychainService {
+final class KeychainService: @unchecked Sendable {
     static let shared = KeychainService()
     private init() {}
     

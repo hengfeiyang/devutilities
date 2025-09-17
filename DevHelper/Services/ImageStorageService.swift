@@ -15,7 +15,7 @@
 
 import Foundation
 
-class ImageStorageService {
+final class ImageStorageService: @unchecked Sendable {
     static let shared = ImageStorageService()
     
     private let fileManager = FileManager.default

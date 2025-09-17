@@ -513,42 +513,38 @@ struct QRCodeView: View {
             scanResult = ""
             return
         }
-        
-        let request = VNDetectBarcodesRequest { request, error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    self.errorMessage = "Scan error: \(error.localizedDescription)"
-                    self.scanResult = ""
-                    return
-                }
-                
-                guard let observations = request.results as? [VNBarcodeObservation],
-                      !observations.isEmpty else {
-                    self.errorMessage = "No QR code found in image"
-                    self.scanResult = ""
-                    return
-                }
-                
-                if let firstCode = observations.first,
-                   let payloadString = firstCode.payloadStringValue {
-                    self.scanResult = payloadString
-                    self.errorMessage = ""
-                } else {
-                    self.errorMessage = "Failed to decode QR code"
-                    self.scanResult = ""
-                }
-            }
-        }
-        
-        request.symbologies = [.qr]
-        
-        let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-        
-        DispatchQueue.global(qos: .userInitiated).async {
+
+        // Perform the entire Vision processing asynchronously
+        Task {
+            // Create request and handler in the async context
+            let request = VNDetectBarcodesRequest()
+            request.symbologies = [.qr]
+
+            let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+
             do {
                 try handler.perform([request])
+
+                // Process results on main actor
+                await MainActor.run {
+                    guard let observations = request.results,
+                          !observations.isEmpty else {
+                        self.errorMessage = "No QR code found in image"
+                        self.scanResult = ""
+                        return
+                    }
+
+                    if let firstCode = observations.first,
+                       let payloadString = firstCode.payloadStringValue {
+                        self.scanResult = payloadString
+                        self.errorMessage = ""
+                    } else {
+                        self.errorMessage = "Failed to decode QR code"
+                        self.scanResult = ""
+                    }
+                }
             } catch {
-                DispatchQueue.main.async {
+                await MainActor.run {
                     self.errorMessage = "Failed to scan image: \(error.localizedDescription)"
                     self.scanResult = ""
                 }

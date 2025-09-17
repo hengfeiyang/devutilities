@@ -248,16 +248,16 @@ struct IPQueryView: View {
                         .textSelection(.enabled)
                 }
             }
-            
-            if !details.city.isEmpty {
+
+            if let city = details.city, !city.isEmpty {
                 HStack {
                     Text("City:")
                         .fontWeight(.medium)
-                    Text(details.city)
+                    Text(city)
                         .textSelection(.enabled)
                 }
             }
-            
+
             if !details.district.isEmpty {
                 HStack {
                     Text("District:")
@@ -282,6 +282,34 @@ struct IPQueryView: View {
                         .fontWeight(.medium)
                     Text(details.isp)
                         .textSelection(.enabled)
+                }
+            }
+
+            if !details.scene.isEmpty {
+                HStack {
+                    Text("Scene:")
+                        .fontWeight(.medium)
+                    Text(details.scene)
+                        .textSelection(.enabled)
+                }
+            }
+
+            if !details.company.isEmpty && details.company != "未知" {
+                HStack {
+                    Text("Company:")
+                        .fontWeight(.medium)
+                    Text(details.company)
+                        .textSelection(.enabled)
+                }
+            }
+
+            if !details.risk_score.isEmpty && details.risk_score != "无" {
+                HStack {
+                    Text("Risk Score:")
+                        .fontWeight(.medium)
+                    Text(details.risk_score)
+                        .textSelection(.enabled)
+                        .foregroundColor(.orange)
                 }
             }
         }
@@ -417,13 +445,14 @@ struct IPQueryView: View {
         
         // Call China IP service (Baidu)
         group.enter()
-        guard let chinaURL = URL(string: "https://qifu-api.baidubce.com/ip/local/geo/v1/district") else {
+        guard let chinaURL = URL(string: "https://qifu.baidu.com/api/v1/ip-portrait/brief-info/local") else {
             group.leave()
             return
         }
         
         var chinaRequest = URLRequest(url: chinaURL)
         chinaRequest.setValue("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36", forHTTPHeaderField: "User-Agent")
+        chinaRequest.setValue("application/json, text/plain, */*", forHTTPHeaderField: "Accept")
         chinaRequest.timeoutInterval = 10.0
         
         URLSession.shared.dataTask(with: chinaRequest) { data, response, error in
@@ -442,8 +471,8 @@ struct IPQueryView: View {
             do {
                 let decoder = JSONDecoder()
                 let chinaInfo = try decoder.decode(BaiduIPInfo.self, from: data)
-                
-                if chinaInfo.code == "Success" {
+
+                if chinaInfo.code == "200" {
                     DispatchQueue.main.async {
                         self.chinaIPAddress = chinaInfo.ip
                         self.chinaIPDetails = chinaInfo
@@ -577,41 +606,98 @@ struct IPQueryView: View {
 }
 
 struct BaiduIPInfo: Codable {
-    let code: String
+    private let _code: BaiduCodeType
     let data: BaiduIPData
-    let ip: String
+    let message: String
+    let traceId: String
+    let error: String?
+
+    // Computed property for IP from data
+    var ip: String { data.query_ip }
+
+    // Flexible code handling for both string and int
+    var code: String {
+        switch _code {
+        case .int(let value): return String(value)
+        case .string(let value): return value
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case _code = "code"
+        case data, message, traceId, error
+    }
+}
+
+enum BaiduCodeType: Codable {
+    case int(Int)
+    case string(String)
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let intValue = try? container.decode(Int.self) {
+            self = .int(intValue)
+        } else if let stringValue = try? container.decode(String.self) {
+            self = .string(stringValue)
+        } else {
+            throw DecodingError.typeMismatch(BaiduCodeType.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Expected Int or String"))
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .int(let value):
+            try container.encode(value)
+        case .string(let value):
+            try container.encode(value)
+        }
+    }
+}
+
+struct BaiduSecurityRisks: Codable {
+    let 作弊风险: [String]
+    let 行为风险: [String]
+    let 关联设备风险: [String]
+    let 其他标签: [String]
+    let 恶意事件风险: [String]
 }
 
 struct BaiduIPData: Codable {
-    let continent: String
     let country: String
-    let zipcode: String?
-    let owner: String
+    let province: String
+    let city: String?
     let isp: String
-    let adcode: String?
-    let prov: String    // Province
-    let city: String
-    let district: String
-    
-    // Computed properties for compatibility
-    var countryCode: String { 
-        if country == "中国" { return "CN" }
-        return country
-    }
-    var region: String { prov }
-    var regionName: String { prov }
-    var zip: String { zipcode ?? "" }
-    var timezone: String { 
-        if country == "中国" {
-            return "Asia/Shanghai"
+    let scene: String
+    let company: String
+    let risk_score: String
+    let security_risks: BaiduSecurityRisks
+    let hit_risk_num: Int
+    let query_ip: String
+    let version: String
+
+    // Computed properties for compatibility with the UI
+    var countryCode: String {
+        switch country {
+        case "中国": return "CN"
+        case "美国": return "US"
+        case "日本": return "JP"
+        case "英国": return "GB"
+        case "德国": return "DE"
+        case "法国": return "FR"
+        default: return country
         }
-        return ""
     }
-    var org: String { isp }
-    var loc: String { "" } // No coordinates from Baidu API
-    var lat: Double { 0 }
-    var lon: Double { 0 }
-    var county: String { district }
+    var region: String { province }
+    var district: String { city ?? "" }
+    var timezone: String {
+        switch country {
+        case "中国": return "Asia/Shanghai"
+        case "美国": return "America/New_York"
+        case "日本": return "Asia/Tokyo"
+        default: return ""
+        }
+    }
 }
 
 struct IPLocationInfo: Codable {

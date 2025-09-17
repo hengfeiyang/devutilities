@@ -694,8 +694,10 @@ struct HTTPRequestView: View {
     
     private func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
-            if let startTime = requestStartTime {
-                elapsedTime = Date().timeIntervalSince(startTime)
+            Task { @MainActor in
+                if let startTime = requestStartTime {
+                    elapsedTime = Date().timeIntervalSince(startTime)
+                }
             }
         }
     }
@@ -1083,7 +1085,7 @@ struct HTTPRequestHistoryItem: Identifiable {
 
 // MARK: - TLS Bypass Delegate
 
-class TLSBypassDelegate: NSObject, URLSessionDelegate {
+final class TLSBypassDelegate: NSObject, URLSessionDelegate, @unchecked Sendable {
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
     }

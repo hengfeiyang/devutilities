@@ -1,14 +1,14 @@
 import Foundation
 
 // MARK: - Network Service Protocol
-protocol EventNetworkServiceProtocol {
+protocol EventNetworkServiceProtocol: Sendable {
     func sendEvent(_ event: AppEvent) async throws
     func sendEvents(_ events: [AppEvent]) async throws
     var isNetworkAvailable: Bool { get }
 }
 
 // MARK: - Event Network Service
-class EventNetworkService: EventNetworkServiceProtocol {
+final class EventNetworkService: EventNetworkServiceProtocol, @unchecked Sendable {
     private let baseURL = "https://api.devhelper.feiliwu.com"
     private let session: URLSession
     private let timeout: TimeInterval = 5.0 // 5 second timeout
@@ -161,7 +161,7 @@ struct NetworkHealthStatus {
 }
 
 // MARK: - Mock Network Service for Testing
-class MockEventNetworkService: EventNetworkServiceProtocol {
+final class MockEventNetworkService: EventNetworkServiceProtocol, @unchecked Sendable {
     var shouldSucceed = true
     var networkDelay: TimeInterval = 0.1
     var sentEvents: [AppEvent] = []

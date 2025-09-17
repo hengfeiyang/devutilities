@@ -18,9 +18,9 @@ import Foundation
 
 // MARK: - JSON Formatter Intent
 struct OpenJSONFormatterIntent: AppIntent {
-    static var title: LocalizedStringResource = "JSON Formatter"
-    static var description = IntentDescription("Open JSON Formatter in DevHelper")
-    static var openAppWhenRun: Bool = true
+    nonisolated(unsafe) static var title: LocalizedStringResource = "JSON Formatter"
+    nonisolated(unsafe) static var description = IntentDescription("Open JSON Formatter in DevHelper")
+    nonisolated(unsafe) static var openAppWhenRun: Bool = true
         
     static var parameterSummary: some ParameterSummary {
         Summary("Open JSON Formatter")
@@ -41,9 +41,9 @@ struct OpenJSONFormatterIntent: AppIntent {
 
 // MARK: - Base64 Intent
 struct OpenBase64Intent: AppIntent {
-    static var title: LocalizedStringResource = "Base64 Encoder/Decoder"
-    static var description = IntentDescription("Open Base64 Encoder/Decoder in DevHelper")
-    static var openAppWhenRun: Bool = true
+    nonisolated(unsafe) static var title: LocalizedStringResource = "Base64 Encoder/Decoder"
+    nonisolated(unsafe) static var description = IntentDescription("Open Base64 Encoder/Decoder in DevHelper")
+    nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
         await MainActor.run {
@@ -60,9 +60,9 @@ struct OpenBase64Intent: AppIntent {
 
 // MARK: - UUID Generator Intent
 struct OpenUUIDGeneratorIntent: AppIntent {
-    static var title: LocalizedStringResource = "UUID Generator"
-    static var description = IntentDescription("Open UUID Generator in DevHelper")
-    static var openAppWhenRun: Bool = true
+    nonisolated(unsafe) static var title: LocalizedStringResource = "UUID Generator"
+    nonisolated(unsafe) static var description = IntentDescription("Open UUID Generator in DevHelper")
+    nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
         await MainActor.run {
@@ -79,9 +79,9 @@ struct OpenUUIDGeneratorIntent: AppIntent {
 
 // MARK: - Timestamp Converter Intent
 struct OpenTimestampConverterIntent: AppIntent {
-    static var title: LocalizedStringResource = "Timestamp Converter"
-    static var description = IntentDescription("Open Timestamp Converter in DevHelper")
-    static var openAppWhenRun: Bool = true
+    nonisolated(unsafe) static var title: LocalizedStringResource = "Timestamp Converter"
+    nonisolated(unsafe) static var description = IntentDescription("Open Timestamp Converter in DevHelper")
+    nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
         await MainActor.run {
@@ -98,9 +98,9 @@ struct OpenTimestampConverterIntent: AppIntent {
 
 // MARK: - URL Tools Intent
 struct OpenURLToolsIntent: AppIntent {
-    static var title: LocalizedStringResource = "URL Tools"
-    static var description = IntentDescription("Open URL Tools in DevHelper")
-    static var openAppWhenRun: Bool = true
+    nonisolated(unsafe) static var title: LocalizedStringResource = "URL Tools"
+    nonisolated(unsafe) static var description = IntentDescription("Open URL Tools in DevHelper")
+    nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
         await MainActor.run {
@@ -117,9 +117,9 @@ struct OpenURLToolsIntent: AppIntent {
 
 // MARK: - Regex Test Intent
 struct OpenRegexTestIntent: AppIntent {
-    static var title: LocalizedStringResource = "Regex Test"
-    static var description = IntentDescription("Open Regex Test in DevHelper")
-    static var openAppWhenRun: Bool = true
+    nonisolated(unsafe) static var title: LocalizedStringResource = "Regex Test"
+    nonisolated(unsafe) static var description = IntentDescription("Open Regex Test in DevHelper")
+    nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
         await MainActor.run {
@@ -136,9 +136,9 @@ struct OpenRegexTestIntent: AppIntent {
 
 // MARK: - JWT Intent
 struct OpenJWTIntent: AppIntent {
-    static var title: LocalizedStringResource = "JWT Encoder/Decoder"
-    static var description = IntentDescription("Open JWT Encoder/Decoder in DevHelper")
-    static var openAppWhenRun: Bool = true
+    nonisolated(unsafe) static var title: LocalizedStringResource = "JWT Encoder/Decoder"
+    nonisolated(unsafe) static var description = IntentDescription("Open JWT Encoder/Decoder in DevHelper")
+    nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
         await MainActor.run {
@@ -155,9 +155,9 @@ struct OpenJWTIntent: AppIntent {
 
 // MARK: - HTTP Request Intent
 struct OpenHTTPRequestIntent: AppIntent {
-    static var title: LocalizedStringResource = "HTTP Request"
-    static var description = IntentDescription("Open HTTP Request in DevHelper")
-    static var openAppWhenRun: Bool = true
+    nonisolated(unsafe) static var title: LocalizedStringResource = "HTTP Request"
+    nonisolated(unsafe) static var description = IntentDescription("Open HTTP Request in DevHelper")
+    nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
         await MainActor.run {
@@ -174,9 +174,9 @@ struct OpenHTTPRequestIntent: AppIntent {
 
 // MARK: - QR Code Intent
 struct OpenQRCodeIntent: AppIntent {
-    static var title: LocalizedStringResource = "QR Code"
-    static var description = IntentDescription("Open QR Code generator in DevHelper")
-    static var openAppWhenRun: Bool = true
+    nonisolated(unsafe) static var title: LocalizedStringResource = "QR Code"
+    nonisolated(unsafe) static var description = IntentDescription("Open QR Code generator in DevHelper")
+    nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
         await MainActor.run {
@@ -193,9 +193,9 @@ struct OpenQRCodeIntent: AppIntent {
 
 // MARK: - Crypto Tools Intent
 struct OpenCryptoToolsIntent: AppIntent {
-    static var title: LocalizedStringResource = "Crypto Tools"
-    static var description = IntentDescription("Open Crypto Tools in DevHelper")
-    static var openAppWhenRun: Bool = true
+    nonisolated(unsafe) static var title: LocalizedStringResource = "Crypto Tools"
+    nonisolated(unsafe) static var description = IntentDescription("Open Crypto Tools in DevHelper")
+    nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
         await MainActor.run {
@@ -212,9 +212,9 @@ struct OpenCryptoToolsIntent: AppIntent {
 
 // MARK: - AI Chat Intent
 struct OpenAIChatIntent: AppIntent {
-    static var title: LocalizedStringResource = "AI Chat"
-    static var description = IntentDescription("Open AI Chat in DevHelper")
-    static var openAppWhenRun: Bool = true
+    nonisolated(unsafe) static var title: LocalizedStringResource = "AI Chat"
+    nonisolated(unsafe) static var description = IntentDescription("Open AI Chat in DevHelper")
+    nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
         await MainActor.run {

@@ -16,6 +16,7 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 @Observable
 class ChatManager {
     var chatSessions: [ChatSession] = []
@@ -110,45 +111,33 @@ class ChatManager {
         // Cancel any existing task
         cancelCurrentTask()
         
-        currentTask = Task {
-        guard let sessionIndex = await MainActor.run(body: {
-            chatSessions.firstIndex(where: { $0.id == sessionId })
-        }) else {
-            await MainActor.run {
-                errorMessage.wrappedValue = "Chat session not found."
-                isLoading.wrappedValue = false
-            }
+        currentTask = Task { @MainActor in
+        guard let sessionIndex = chatSessions.firstIndex(where: { $0.id == sessionId }) else {
+            errorMessage.wrappedValue = "Chat session not found."
+            isLoading.wrappedValue = false
             return
         }
         
         let userMessage = ChatMessage(role: .user, content: content)
-        await MainActor.run {
-            chatSessions[sessionIndex].addMessage(userMessage)
-            storage.saveChatSession(chatSessions[sessionIndex])
-            isLoading.wrappedValue = true
-            errorMessage.wrappedValue = nil
-        }
-        
-        let model = await MainActor.run { chatSessions[sessionIndex].selectedModel ?? settings.defaultModel }
-        
+        chatSessions[sessionIndex].addMessage(userMessage)
+        storage.saveChatSession(chatSessions[sessionIndex])
+        isLoading.wrappedValue = true
+        errorMessage.wrappedValue = nil
+
+        let model = chatSessions[sessionIndex].selectedModel ?? settings.defaultModel
+
         guard let apiKey = settings.getOpenAIAPIKey(), !apiKey.isEmpty else {
-            await MainActor.run {
-                errorMessage.wrappedValue = "No OpenAI API key configured. Please add your API key in settings."
-                isLoading.wrappedValue = false
-            }
+            errorMessage.wrappedValue = "No OpenAI API key configured. Please add your API key in settings."
+            isLoading.wrappedValue = false
             return
         }
-        
-        let currentMessages = await MainActor.run { chatSessions[sessionIndex].messages }
+
+        let currentMessages = chatSessions[sessionIndex].messages
         
         let streamingMessage = ChatMessage(role: .assistant, content: "", isStreaming: true)
-        await MainActor.run {
-            chatSessions[sessionIndex].messages.append(streamingMessage)
-        }
-        
-        let streamingMessageIndex = await MainActor.run { 
-            chatSessions[sessionIndex].messages.count - 1 
-        }
+        chatSessions[sessionIndex].messages.append(streamingMessage)
+
+        let streamingMessageIndex = chatSessions[sessionIndex].messages.count - 1
         
         await chatAPI.sendMessage(
             messages: currentMessages,
@@ -157,23 +146,27 @@ class ChatManager {
             baseURL: settings.apiGatewayURL,
             onToken: { [weak self] token in
                 guard let self = self else { return }
-                
-                if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
-                   streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
-                    self.chatSessions[sessionIdx].messages[streamingMessageIndex].content += token
+
+                Task { @MainActor in
+                    if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
+                       streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
+                        self.chatSessions[sessionIdx].messages[streamingMessageIndex].content += token
+                    }
                 }
             },
             onComplete: { [weak self] in
                 guard let self = self else { return }
-                
-                if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
-                   streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
-                    self.chatSessions[sessionIdx].messages[streamingMessageIndex].isStreaming = false
-                    self.chatSessions[sessionIdx].updatedAt = Date()
-                    self.storage.saveChatSession(self.chatSessions[sessionIdx])
+
+                Task { @MainActor in
+                    if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
+                       streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
+                        self.chatSessions[sessionIdx].messages[streamingMessageIndex].isStreaming = false
+                        self.chatSessions[sessionIdx].updatedAt = Date()
+                        self.storage.saveChatSession(self.chatSessions[sessionIdx])
+                    }
+
+                    isLoading.wrappedValue = false
                 }
-                
-                isLoading.wrappedValue = false
             },
             onError: { error in
                 Task { @MainActor in
@@ -188,10 +181,12 @@ class ChatManager {
             },
             onReasoning: { [weak self] reasoning in
                 guard let self = self else { return }
-                
-                if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
-                   streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
-                    self.chatSessions[sessionIdx].messages[streamingMessageIndex].reasoningContent = (self.chatSessions[sessionIdx].messages[streamingMessageIndex].reasoningContent ?? "") + reasoning
+
+                Task { @MainActor in
+                    if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
+                       streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
+                        self.chatSessions[sessionIdx].messages[streamingMessageIndex].reasoningContent = (self.chatSessions[sessionIdx].messages[streamingMessageIndex].reasoningContent ?? "") + reasoning
+                    }
                 }
             }
         )
@@ -208,44 +203,32 @@ class ChatManager {
         isLoading: Binding<Bool>,
         errorMessage: Binding<String?>
     ) async {
-        guard let sessionIndex = await MainActor.run(body: {
-            chatSessions.firstIndex(where: { $0.id == sessionId })
-        }) else {
-            await MainActor.run {
-                errorMessage.wrappedValue = "Chat session not found."
-                isLoading.wrappedValue = false
-            }
+        guard let sessionIndex = chatSessions.firstIndex(where: { $0.id == sessionId }) else {
+            errorMessage.wrappedValue = "Chat session not found."
+            isLoading.wrappedValue = false
             return
         }
         
         let userMessage = ChatMessage(role: .user, content: content, images: images)
-        await MainActor.run {
-            chatSessions[sessionIndex].addMessage(userMessage)
-            storage.saveChatSession(chatSessions[sessionIndex])
-            isLoading.wrappedValue = true
-            errorMessage.wrappedValue = nil
-        }
-        
-        let model = await MainActor.run { chatSessions[sessionIndex].selectedModel ?? settings.defaultModel }
-        
+        chatSessions[sessionIndex].addMessage(userMessage)
+        storage.saveChatSession(chatSessions[sessionIndex])
+        isLoading.wrappedValue = true
+        errorMessage.wrappedValue = nil
+
+        let model = chatSessions[sessionIndex].selectedModel ?? settings.defaultModel
+
         guard let apiKey = settings.getOpenAIAPIKey(), !apiKey.isEmpty else {
-            await MainActor.run {
-                errorMessage.wrappedValue = "No OpenAI API key configured. Please add your API key in settings."
-                isLoading.wrappedValue = false
-            }
+            errorMessage.wrappedValue = "No OpenAI API key configured. Please add your API key in settings."
+            isLoading.wrappedValue = false
             return
         }
-        
-        let currentMessages = await MainActor.run { chatSessions[sessionIndex].messages }
-        
+
+        let currentMessages = chatSessions[sessionIndex].messages
+
         let streamingMessage = ChatMessage(role: .assistant, content: "", isStreaming: true)
-        await MainActor.run {
-            chatSessions[sessionIndex].messages.append(streamingMessage)
-        }
-        
-        let streamingMessageIndex = await MainActor.run {
-            chatSessions[sessionIndex].messages.count - 1
-        }
+        chatSessions[sessionIndex].messages.append(streamingMessage)
+
+        let streamingMessageIndex = chatSessions[sessionIndex].messages.count - 1
         
         await chatAPI.sendMessage(
             messages: currentMessages,
@@ -254,21 +237,25 @@ class ChatManager {
             baseURL: settings.apiGatewayURL,
             onToken: { [weak self] token in
                 guard let self = self else { return }
-                
-                if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
-                    self.chatSessions[sessionIndex].messages[streamingMessageIndex].content += token
+
+                Task { @MainActor in
+                    if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
+                        self.chatSessions[sessionIndex].messages[streamingMessageIndex].content += token
+                    }
                 }
             },
             onComplete: { [weak self] in
                 guard let self = self else { return }
-                
-                if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
-                    self.chatSessions[sessionIndex].messages[streamingMessageIndex].isStreaming = false
-                    self.chatSessions[sessionIndex].updatedAt = Date()
-                    self.storage.saveChatSession(self.chatSessions[sessionIndex])
+
+                Task { @MainActor in
+                    if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
+                        self.chatSessions[sessionIndex].messages[streamingMessageIndex].isStreaming = false
+                        self.chatSessions[sessionIndex].updatedAt = Date()
+                        self.storage.saveChatSession(self.chatSessions[sessionIndex])
+                    }
+
+                    isLoading.wrappedValue = false
                 }
-                
-                isLoading.wrappedValue = false
             },
             onError: { error in
                 Task { @MainActor in
@@ -282,9 +269,11 @@ class ChatManager {
             },
             onReasoning: { [weak self] reasoning in
                 guard let self = self else { return }
-                
-                if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
-                    self.chatSessions[sessionIndex].messages[streamingMessageIndex].reasoningContent = (self.chatSessions[sessionIndex].messages[streamingMessageIndex].reasoningContent ?? "") + reasoning
+
+                Task { @MainActor in
+                    if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
+                        self.chatSessions[sessionIndex].messages[streamingMessageIndex].reasoningContent = (self.chatSessions[sessionIndex].messages[streamingMessageIndex].reasoningContent ?? "") + reasoning
+                    }
                 }
             }
         )
@@ -742,7 +731,7 @@ enum APIError: LocalizedError {
 
 // MARK: - Chat Completions API
 
-class ChatCompletionsAPI {
+final class ChatCompletionsAPI: @unchecked Sendable {
     private let session = URLSession.shared
     private var currentDataTask: URLSessionDataTask? = nil
     
@@ -756,10 +745,10 @@ class ChatCompletionsAPI {
         model: AIModel,
         apiKey: String,
         baseURL: String = OpenAIConfig.baseURL,
-        onToken: @escaping (String) -> Void,
-        onComplete: @escaping () -> Void,
-        onError: @escaping (Error) -> Void,
-        onReasoning: @escaping (String) -> Void = { _ in }
+        onToken: @escaping @Sendable (String) -> Void,
+        onComplete: @escaping @Sendable () -> Void,
+        onError: @escaping @Sendable (Error) -> Void,
+        onReasoning: @escaping @Sendable (String) -> Void = { _ in }
     ) async {
         do {
             let url = URL(string: "\(baseURL)/chat/completions")!
@@ -873,7 +862,7 @@ class ChatCompletionsAPI {
 
 // MARK: - Responses API
 
-class ResponsesAPI {
+final class ResponsesAPI: @unchecked Sendable {
     private let session = URLSession.shared
 
     func generateImage(

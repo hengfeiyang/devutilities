@@ -16,6 +16,7 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 class AppState: ObservableObject {
     @Published var currentTool: ToolType = .timestampConverter
     @Published var shouldCreateNewChat = false
@@ -35,8 +36,6 @@ class AppState: ObservableObject {
     
     @objc private func openToolFromIntent(_ notification: Notification) {
         guard let tool = notification.userInfo?["tool"] as? ToolType else { return }
-        DispatchQueue.main.async {
-            self.currentTool = tool
-        }
+        currentTool = tool
     }
 }

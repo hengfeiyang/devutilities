@@ -30,7 +30,7 @@ extension Theme {
   /// Bulleted list | ![](DevHelperNestedBulletedList)
   /// Numbered list | ![](DevHelperNumberedList)
   /// Table | ![](DevHelperTable)
-  public static let devHelper = Theme()
+  @MainActor public static let devHelper = Theme()
     .text {
       ForegroundColor(.text)
       BackgroundColor(.background)

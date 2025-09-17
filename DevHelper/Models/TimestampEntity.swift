@@ -21,7 +21,7 @@ struct TimestampEntity: AppEntity {
         TypeDisplayRepresentation(name: "Timestamp")
     }
 
-    static var defaultQuery = TimestampEntityQuery()
+    nonisolated(unsafe) static var defaultQuery = TimestampEntityQuery()
 
     var id: String
     var timestamp: String
