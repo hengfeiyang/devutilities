@@ -30,17 +30,6 @@ A native macOS application for developers, containing 16 essential tools commonl
 - **Modern UI** - Clean, intuitive interface designed for macOS
 - **Real-time Conversion** - Instant results as you type
 
-## Requirements
-
-- macOS 14.0 or later
-- Xcode 15.4 or later (for development)
-
-## Installation
-
-1. Clone this repository
-2. Open `DevHelper.xcodeproj` in Xcode
-3. Build and run the project
-
 ## Version
 
 Current version: 1.14.2
