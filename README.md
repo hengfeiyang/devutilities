@@ -21,7 +21,7 @@ A native macOS application for developers, containing 16 essential tools commonl
 - **QR Code** - Generate QR codes with multiple sizes and error correction levels, scan QR codes from images
 - **Parquet Viewer** - Read and explore Parquet / arrow files with schema inspection and data export
 - **Crypto Tools** - Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA-1/256/384/512), symmetric encryption (AES-GCM-256), and asymmetric encryption (RSA-2048/4096)
-- **AI Chat** - Intelligent AI assistant for development questions, code review, and technical guidance with context-aware responses
+- **AI Chat** - Intelligent AI assistant with custom model support, flexible API configuration, and enhanced user experience for development questions
 
 ## Key Features
 
@@ -32,7 +32,7 @@ A native macOS application for developers, containing 16 essential tools commonl
 
 ## Version
 
-Current version: 1.14.3
+Current version: 2.0.0
 
 ## Screenshots
 
