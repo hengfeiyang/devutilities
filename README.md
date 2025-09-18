@@ -21,7 +21,7 @@ A native macOS application for developers, containing 16 essential tools commonl
 - **JWT Encoder/Decoder** - Complete JWT support with HMAC and RSA algorithms using CryptoKit security
 - **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading with schema inspection
 - **Crypto Tools** - **NEW** Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA-1/256/384/512), symmetric encryption (AES-GCM-256), and asymmetric encryption (RSA-2048/4096)
-- **AI Chat** - **LATEST** Intelligent AI assistant with DeepSeek reasoning models, OpenAI GPT integration, stop functionality, and collapsible thinking process for transparent AI reasoning
+- **AI Chat** - **LATEST** Intelligent AI assistant with custom model support, DeepSeek reasoning models, flexible API configuration, and enhanced user experience
 
 ## Key Features
 
@@ -32,4 +32,4 @@ A native macOS application for developers, containing 16 essential tools commonl
 
 ## Version
 
-Current version: 1.14.3
+Current version: 2.0.0

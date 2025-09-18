@@ -452,6 +452,7 @@ struct IPQueryView: View {
         
         var chinaRequest = URLRequest(url: chinaURL)
         chinaRequest.setValue("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36", forHTTPHeaderField: "User-Agent")
+        chinaRequest.setValue("https://qifu.baidu.com/api/v1/ip-portrait/brief-info/local", forHTTPHeaderField: "Referer")
         chinaRequest.setValue("application/json, text/plain, */*", forHTTPHeaderField: "Accept")
         chinaRequest.timeoutInterval = 10.0
         

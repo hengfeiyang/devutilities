@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevHelper is a native macOS application built with SwiftUI that provides 16 essential developer utilities. Version 1.14.2 with improved SQL formatter using native ParquetViewer library.
+DevHelper is a native macOS application built with SwiftUI that provides 16 essential developer utilities. Version 2.0.0 with custom AI model support for enhanced flexibility.
 
 ## Key Tools & Status
 
@@ -23,7 +23,7 @@ All 16 tools are ✅ **Complete**:
 13. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
 14. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
 15. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
-16. **AI Chat** - **Enhanced AI assistant** with DeepSeek reasoning models, transparent thinking process, and improved stop functionality
+16. **AI Chat** - **Enhanced AI assistant** with custom model support, DeepSeek reasoning models, and flexible API configuration
 
 ## Architecture & Technical Stack
 - **Platform**: macOS 14.0+ SwiftUI
@@ -43,7 +43,14 @@ xcodebuild -project DevHelper.xcodeproj -scheme DevHelper build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
-## Recent Updates (v1.14.2)
+## Recent Updates (v2.0.0)
+- **Custom AI Models**: Added support for custom AI model configuration with flexible API settings
+- **Model Management**: Enhanced model selection interface with custom model addition and configuration
+- **API Flexibility**: Support for custom API endpoints, headers, and authentication methods
+- **User Experience**: Improved model selector UI with better organization of built-in and custom models
+- **Configuration Persistence**: Reliable storage and retrieval of custom model configurations
+
+## Previous Updates (v1.14.2)
 - **SQL Formatter Enhancement**: Major upgrade using native ParquetViewer library for SQL formatting
 - **Library Integration**: Replaced complex custom SQL tokenization with efficient Rust-based formatting
 - **Dual Format Modes**: Enhanced support for both minimal and beautify SQL formatting styles
