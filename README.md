@@ -36,6 +36,11 @@ Current version: 2.0.0
 
 ## Screenshots
 
+#### AI Chat
+![AI Chat](./images/screenshots/aichat.png)
+
+![AI Chat custom models](./images/screenshots/aichat-models.png)
+
 #### Timestamp Converter
 ![DevHelper Timestamp Converter](./images/screenshots/timestamp.png)
 
@@ -81,6 +86,3 @@ Current version: 2.0.0
 
 #### Crypto Tools
 ![Crypto Tools](./images/screenshots/crypto.png)
-
-#### AI Chat
-![AI Chat](./images/screenshots/aichat.png)
