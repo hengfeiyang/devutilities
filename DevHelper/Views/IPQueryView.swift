@@ -302,16 +302,6 @@ struct IPQueryView: View {
                         .textSelection(.enabled)
                 }
             }
-
-            if !details.risk_score.isEmpty && details.risk_score != "无" {
-                HStack {
-                    Text("Risk Score:")
-                        .fontWeight(.medium)
-                    Text(details.risk_score)
-                        .textSelection(.enabled)
-                        .foregroundColor(.orange)
-                }
-            }
         }
         .font(.system(.body, design: .default))
     }
@@ -656,13 +646,6 @@ enum BaiduCodeType: Codable {
     }
 }
 
-struct BaiduSecurityRisks: Codable {
-    let 作弊风险: [String]
-    let 行为风险: [String]
-    let 关联设备风险: [String]
-    let 其他标签: [String]
-    let 恶意事件风险: [String]
-}
 
 struct BaiduIPData: Codable {
     let country: String
@@ -671,9 +654,6 @@ struct BaiduIPData: Codable {
     let isp: String
     let scene: String
     let company: String
-    let risk_score: String
-    let security_risks: BaiduSecurityRisks
-    let hit_risk_num: Int
     let query_ip: String
     let version: String
 
