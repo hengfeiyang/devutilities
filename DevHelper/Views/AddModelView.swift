@@ -115,62 +115,60 @@ struct EditModelView: View {
     }
 
     var body: some View {
-        NavigationView {
-            Form {
-                Section("Model Details") {
-                    TextField("Model Name", text: $name)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+        Form {
+            Section("Model Details") {
+                TextField("Model Name", text: $name)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
 
-                    TextField("Model ID", text: $modelId)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                TextField("Model ID", text: $modelId)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
 
-                    Text("Model ID is the identifier used in API requests")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                Text("Model ID is the identifier used in API requests")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+
+            Section("Capabilities") {
+                Toggle("Supports Streaming", isOn: $capabilities.supportsStreaming)
+                Toggle("Supports Reasoning", isOn: $capabilities.supportsReasoning)
+                Toggle("Supports Function Calls", isOn: $capabilities.supportsFunctionCalls)
+                Toggle("Supports Images", isOn: $capabilities.supportsImages)
+                Toggle("Supports Web Browsing", isOn: $capabilities.supportsWeb)
+            }
+
+            Section("Limits") {
+                HStack {
+                    Text("Max Tokens")
+                    Spacer()
+                    TextField("4096", value: $capabilities.maxTokens, format: .number)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .frame(width: 100)
                 }
 
-                Section("Capabilities") {
-                    Toggle("Supports Streaming", isOn: $capabilities.supportsStreaming)
-                    Toggle("Supports Reasoning", isOn: $capabilities.supportsReasoning)
-                    Toggle("Supports Function Calls", isOn: $capabilities.supportsFunctionCalls)
-                    Toggle("Supports Images", isOn: $capabilities.supportsImages)
-                    Toggle("Supports Web Browsing", isOn: $capabilities.supportsWeb)
-                }
-
-                Section("Limits") {
-                    HStack {
-                        Text("Max Tokens")
-                        Spacer()
-                        TextField("4096", value: $capabilities.maxTokens, format: .number)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .frame(width: 100)
-                    }
-
-                    HStack {
-                        Text("Context Window")
-                        Spacer()
-                        TextField("4096", value: $capabilities.contextWindow, format: .number)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .frame(width: 100)
-                    }
+                HStack {
+                    Text("Context Window")
+                    Spacer()
+                    TextField("4096", value: $capabilities.contextWindow, format: .number)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .frame(width: 100)
                 }
             }
-            .formStyle(GroupedFormStyle())
-            .navigationTitle("Edit Model")
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
+        }
+        .formStyle(GroupedFormStyle())
+        .navigationTitle("Edit Model")
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") {
+                    dismiss()
                 }
+            }
 
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
-                        saveModel()
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(name.isEmpty || modelId.isEmpty)
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Save") {
+                    saveModel()
                 }
+                .buttonStyle(.borderedProminent)
+                .disabled(name.isEmpty || modelId.isEmpty)
             }
         }
         .frame(width: 500, height: 400)
