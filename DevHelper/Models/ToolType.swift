@@ -16,6 +16,7 @@
 import Foundation
 
 enum ToolType: String, CaseIterable, Identifiable {
+    case aiChat = "ai-chat"
     case timestampConverter = "timestamp"
     case unitConverter = "unit"
     case jsonFormatter = "json"
@@ -31,12 +32,13 @@ enum ToolType: String, CaseIterable, Identifiable {
     case ipQuery = "ip"
     case qrCode = "qrcode"
     case parquetViewer = "parquet"
-    case aiChat = "ai-chat"
     
     var id: String { rawValue }
     
     var title: String {
         switch self {
+        case .aiChat:
+            return "AI Chat"
         case .timestampConverter:
             return "Timestamp Converter"
         case .unitConverter:
@@ -67,13 +69,13 @@ enum ToolType: String, CaseIterable, Identifiable {
             return "QR Code"
         case .parquetViewer:
             return "Parquet Viewer"
-        case .aiChat:
-            return "AI Chat"
         }
     }
     
     var iconName: String {
         switch self {
+        case .aiChat:
+            return "sparkles"
         case .timestampConverter:
             return "clock"
         case .unitConverter:
@@ -104,8 +106,6 @@ enum ToolType: String, CaseIterable, Identifiable {
             return "qrcode"
         case .parquetViewer:
             return "doc.text.magnifyingglass"
-        case .aiChat:
-            return "sparkles"
         }
     }
 }
