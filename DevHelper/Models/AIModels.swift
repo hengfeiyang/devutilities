@@ -23,18 +23,16 @@ struct ChatSession: Identifiable, Codable, Hashable {
     let createdAt: Date
     var updatedAt: Date
     var messages: [ChatMessage]
-    var selectedModel: AIModel?
     var selectedProviderModelId: UUID?  // Reference to selected provider/model
     var selectedModelId: UUID?  // Reference to selected model within provider
     var selectedTool: ChatToolMode = .chat
-    
-    init(title: String = "New Chat", selectedModel: AIModel? = nil) {
+
+    init(title: String = "New Chat") {
         self.id = UUID()
         self.title = title
         self.createdAt = Date()
         self.updatedAt = Date()
         self.messages = []
-        self.selectedModel = selectedModel
     }
     
     mutating func addMessage(_ message: ChatMessage) {
@@ -53,6 +51,71 @@ struct ChatSession: Identifiable, Codable, Hashable {
     mutating func updateTitle(_ newTitle: String) {
         title = newTitle
         updatedAt = Date()
+    }
+
+    // Helper to get the current model ID for API calls
+    @MainActor func getCurrentModelId() -> String? {
+        // If we have a selected model, get its modelId from the provider system
+        if let providerId = selectedProviderModelId,
+           let modelId = selectedModelId,
+           let provider = ProviderManager.shared.getProviderById(providerId),
+           let model = provider.models.first(where: { $0.id == modelId }) {
+            return model.modelId
+        }
+
+        // Fall back to default model from UI settings
+        if let defaultModelKey = AIUISettings.shared.selectedDefaultModelKey {
+            let components = defaultModelKey.split(separator: "|")
+            if components.count == 2,
+               let providerIdStr = components.first,
+               let modelIdStr = components.last,
+               let providerId = UUID(uuidString: String(providerIdStr)),
+               let modelId = UUID(uuidString: String(modelIdStr)),
+               let provider = ProviderManager.shared.getProviderById(providerId),
+               let model = provider.models.first(where: { $0.id == modelId }) {
+                return model.modelId
+            }
+        }
+
+        // Ultimate fallback to first available active model
+        let activeModels = ProviderManager.shared.getAllActiveModels()
+        return activeModels.first?.model.modelId
+    }
+
+    // Helper to get current provider details for API calls
+    @MainActor func getCurrentProviderInfo() -> (baseURL: String, apiKey: String)? {
+        // If we have a selected model, get provider info
+        if let providerId = selectedProviderModelId,
+           let modelId = selectedModelId,
+           let provider = ProviderManager.shared.getProviderById(providerId),
+           provider.models.contains(where: { $0.id == modelId }),
+           let apiKey = ProviderManager.shared.getAPIKey(for: providerId), !apiKey.isEmpty {
+            return (baseURL: provider.baseURL, apiKey: apiKey)
+        }
+
+        // Fall back to default model from UI settings
+        if let defaultModelKey = AIUISettings.shared.selectedDefaultModelKey {
+            let components = defaultModelKey.split(separator: "|")
+            if components.count == 2,
+               let providerIdStr = components.first,
+               let modelIdStr = components.last,
+               let providerId = UUID(uuidString: String(providerIdStr)),
+               let modelId = UUID(uuidString: String(modelIdStr)),
+               let provider = ProviderManager.shared.getProviderById(providerId),
+               provider.models.contains(where: { $0.id == modelId }),
+               let apiKey = ProviderManager.shared.getAPIKey(for: providerId), !apiKey.isEmpty {
+                return (baseURL: provider.baseURL, apiKey: apiKey)
+            }
+        }
+
+        // Ultimate fallback to first available active model
+        let activeModels = ProviderManager.shared.getAllActiveModels()
+        if let firstModel = activeModels.first,
+           let apiKey = ProviderManager.shared.getAPIKey(for: firstModel.provider.id), !apiKey.isEmpty {
+            return (baseURL: firstModel.provider.baseURL, apiKey: apiKey)
+        }
+
+        return nil
     }
 }
 
@@ -266,23 +329,6 @@ enum ChatToolMode: String, Codable, CaseIterable {
     }
 }
 
-struct AIModel: Identifiable, Codable, Hashable {
-    let id: String
-    let name: String
-    let displayName: String
-    let maxTokens: Int
-    let contextWindow: Int
-    let type: ModelType
-    
-    init(id: String, name: String, displayName: String, maxTokens: Int, contextWindow: Int = 8192, type: ModelType = .chat) {
-        self.id = id
-        self.name = name
-        self.displayName = displayName
-        self.maxTokens = maxTokens
-        self.contextWindow = contextWindow
-        self.type = type
-    }
-}
 
 // OpenAI API configuration
 enum OpenAIConfig {
@@ -290,182 +336,7 @@ enum OpenAIConfig {
     static let providerName = "OpenAI"
 }
 
-// MARK: - Available Models
 
-extension AIModel {
-    // OpenAI Models
-    static let gpt5 = AIModel(
-        id: "gpt-5",
-        name: "gpt-5",
-        displayName: "GPT-5",
-        maxTokens: 8192,
-        contextWindow: 200000
-    )
-    
-    static let gpt5Mini = AIModel(
-        id: "gpt-5-mini",
-        name: "gpt-5-mini", 
-        displayName: "GPT-5 Mini",
-        maxTokens: 16384,
-        contextWindow: 128000
-    )
-    
-    static let gpt5Nano = AIModel(
-        id: "gpt-5-nano",
-        name: "gpt-5-nano",
-        displayName: "GPT-5 Nano", 
-        maxTokens: 8192,
-        contextWindow: 64000
-    )
-    
-    static let gpt41 = AIModel(
-        id: "gpt-4.1",
-        name: "gpt-4.1",
-        displayName: "GPT-4.1",
-        maxTokens: 4096,
-        contextWindow: 128000
-    )
-    
-    static let gpt41Mini = AIModel(
-        id: "gpt-4.1-mini",
-        name: "gpt-4.1-mini",
-        displayName: "GPT-4.1 Mini",
-        maxTokens: 16384,
-        contextWindow: 128000
-    )
-    
-    static let gpt41Nano = AIModel(
-        id: "gpt-4.1-nano",
-        name: "gpt-4.1-nano",
-        displayName: "GPT-4.1 Nano",
-        maxTokens: 8192,
-        contextWindow: 64000
-    )
-    
-    
-    
-    static let gemini25Pro = AIModel(
-        id: "gemini-2.5-pro",
-        name: "gemini-2.5-pro",
-        displayName: "Gemini 2.5 Pro",
-        maxTokens: 8192,
-        contextWindow: 1000000
-    )
-    
-    static let gemini25Flash = AIModel(
-        id: "gemini-2.5-flash",
-        name: "gemini-2.5-flash",
-        displayName: "Gemini 2.5 Flash",
-        maxTokens: 8192,
-        contextWindow: 1000000
-    )
-    
-    static let gemini25FlashLite = AIModel(
-        id: "gemini-2.5-flash-lite",
-        name: "gemini-2.5-flash-lite",
-        displayName: "Gemini 2.5 Flash Lite",
-        maxTokens: 8192,
-        contextWindow: 1000000
-    )
-    
-    static let gemini25FlashImagePreview = AIModel(
-        id: "gemini-2.5-flash-image-preview",
-        name: "gemini-2.5-flash-image-preview",
-        displayName: "Gemini 2.5 Flash Image Preview",
-        maxTokens: 8192,
-        contextWindow: 1000000
-    )
-    
-    // DeepSeek Models
-    static let deepseekChat = AIModel(
-        id: "deepseek-chat",
-        name: "deepseek-chat",
-        displayName: "DeepSeek Chat",
-        maxTokens: 8192,
-        contextWindow: 64000
-    )
-    
-    static let deepseekReasoner = AIModel(
-        id: "deepseek-reasoner",
-        name: "deepseek-reasoner",
-        displayName: "DeepSeek Reasoner",
-        maxTokens: 8192,
-        contextWindow: 64000
-    )
-    
-    // Chat models only (for regular conversation)
-    static let chatModels: [AIModel] = [.gpt5, .gpt5Mini, .gpt5Nano, .gpt41, .gpt41Mini, .gpt41Nano, .gemini25Pro, .gemini25Flash, .gemini25FlashLite, .gemini25FlashImagePreview, .deepseekChat, .deepseekReasoner]
-    
-    // All available models
-    static let allModels: [AIModel] = chatModels
-    
-    // Default model (must be a chat model)
-    static let defaultModel: AIModel = .gpt41
-}
-
-// MARK: - AI Settings
-
-@Observable
-class AISettings {
-    private let userDefaults = UserDefaults.standard
-    private let keychain = KeychainService.shared
-    
-    // OpenAI API Key (stored in Keychain)
-    var openAIAPIKey: String {
-        get { keychain.getOpenAIAPIKey() ?? "" }
-        set { 
-            if newValue.isEmpty {
-                keychain.clearOpenAIAPIKey()
-            } else {
-                keychain.saveOpenAIAPIKey(newValue)
-            }
-        }
-    }
-    
-    // Settings (stored in UserDefaults)
-    var defaultModel: AIModel {
-        get {
-            if let data = userDefaults.data(forKey: "ai_default_model"),
-               let model = try? JSONDecoder().decode(AIModel.self, from: data) {
-                return model
-            }
-            return .defaultModel
-        }
-        set {
-            if let data = try? JSONEncoder().encode(newValue) {
-                userDefaults.set(data, forKey: "ai_default_model")
-            }
-        }
-    }
-    
-    
-    var maxHistoryChats: Int {
-        get { userDefaults.object(forKey: "ai_max_history_chats") as? Int ?? 100 }
-        set { userDefaults.set(newValue, forKey: "ai_max_history_chats") }
-    }
-    
-    var apiGatewayURL: String {
-        get { 
-            let storedURL = userDefaults.string(forKey: "ai_api_gateway_url") ?? ""
-            return storedURL.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? OpenAIConfig.baseURL : storedURL
-        }
-        set { userDefaults.set(newValue, forKey: "ai_api_gateway_url") }
-    }
-    
-    // Helper Methods
-    func hasOpenAIAPIKey() -> Bool {
-        return !openAIAPIKey.isEmpty
-    }
-    
-    func getOpenAIAPIKey() -> String? {
-        let key = keychain.getOpenAIAPIKey()
-        return key?.isEmpty == false ? key : nil
-    }
-    
-    func availableModels() -> [AIModel] {
-        return hasOpenAIAPIKey() ? AIModel.allModels : []
-    }
-}
 
 // MARK: - Keychain Service
 
@@ -523,4 +394,80 @@ final class KeychainService: @unchecked Sendable {
         
         SecItemDelete(query as CFDictionary)
     }
+}
+
+// MARK: - AI UI Settings Manager
+
+@MainActor
+@Observable
+class AIUISettings {
+    static let shared = AIUISettings()
+
+    private let userDefaults = UserDefaults.standard
+
+    // General Settings
+    var selectedDefaultModelKey: String? {
+        get { userDefaults.string(forKey: "ai_ui_default_model_key") }
+        set {
+            if let key = newValue {
+                userDefaults.set(key, forKey: "ai_ui_default_model_key")
+            } else {
+                userDefaults.removeObject(forKey: "ai_ui_default_model_key")
+            }
+        }
+    }
+
+    var streamResponses: Bool {
+        get { userDefaults.object(forKey: "ai_ui_stream_responses") as? Bool ?? true }
+        set { userDefaults.set(newValue, forKey: "ai_ui_stream_responses") }
+    }
+
+    var showReasoning: Bool {
+        get { userDefaults.object(forKey: "ai_ui_show_reasoning") as? Bool ?? true }
+        set { userDefaults.set(newValue, forKey: "ai_ui_show_reasoning") }
+    }
+
+    var autoScroll: Bool {
+        get { userDefaults.object(forKey: "ai_ui_auto_scroll") as? Bool ?? true }
+        set { userDefaults.set(newValue, forKey: "ai_ui_auto_scroll") }
+    }
+
+    var saveHistory: Bool {
+        get { userDefaults.object(forKey: "ai_ui_save_history") as? Bool ?? true }
+        set { userDefaults.set(newValue, forKey: "ai_ui_save_history") }
+    }
+
+    // Appearance Settings
+    var theme: String {
+        get { userDefaults.string(forKey: "ai_ui_theme") ?? "Auto" }
+        set { userDefaults.set(newValue, forKey: "ai_ui_theme") }
+    }
+
+    var fontSize: Int {
+        get { userDefaults.object(forKey: "ai_ui_font_size") as? Int ?? 14 }
+        set { userDefaults.set(newValue, forKey: "ai_ui_font_size") }
+    }
+
+    var messageDensity: String {
+        get { userDefaults.string(forKey: "ai_ui_message_density") ?? "Comfortable" }
+        set { userDefaults.set(newValue, forKey: "ai_ui_message_density") }
+    }
+
+    // Advanced Settings
+    var maxHistoryChats: Int {
+        get { userDefaults.object(forKey: "ai_ui_max_history_chats") as? Int ?? 100 }
+        set { userDefaults.set(newValue, forKey: "ai_ui_max_history_chats") }
+    }
+
+    var requestTimeout: Int {
+        get { userDefaults.object(forKey: "ai_ui_request_timeout") as? Int ?? 30 }
+        set { userDefaults.set(newValue, forKey: "ai_ui_request_timeout") }
+    }
+
+    var maxRetries: Int {
+        get { userDefaults.object(forKey: "ai_ui_max_retries") as? Int ?? 3 }
+        set { userDefaults.set(newValue, forKey: "ai_ui_max_retries") }
+    }
+
+    private init() {}
 }

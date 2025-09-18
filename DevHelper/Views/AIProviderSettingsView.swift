@@ -14,6 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Foundation
 
 // MARK: - Settings Navigation Item
 
@@ -55,9 +56,12 @@ enum AISettingsItem: Identifiable, Hashable {
 
 struct AIProviderSettingsView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var providerManager = ProviderManager.shared
     @State private var selectedItem: AISettingsItem? = .general
     @State private var showingAddProvider = false
+
+    private var providerManager: ProviderManager {
+        ProviderManager.shared
+    }
 
     var body: some View {
         NavigationSplitView {
@@ -148,14 +152,14 @@ struct AISettingsSidebar: View {
                     }
                     .tag(AISettingsItem.provider(provider))
                     .contextMenu {
-                        if !provider.isBuiltIn {
-                            Button("Delete Provider", role: .destructive) {
-                                providerManager.deleteProvider(id: provider.id)
-                            }
-                        }
-
                         Button(provider.isActive ? "Disable" : "Enable") {
                             providerManager.toggleProviderStatus(id: provider.id)
+                        }
+
+                        if !provider.isBuiltIn {
+                            Button("Delete", role: .destructive) {
+                                providerManager.deleteProvider(id: provider.id)
+                            }
                         }
                     }
                 }
@@ -186,34 +190,32 @@ struct AISettingsSidebar: View {
 
 struct AIGeneralSettingsView: View {
     let providerManager: ProviderManager
-    @State private var selectedDefaultModel: ProviderModelItem?
-    @State private var streamResponses = true
-    @State private var showReasoning = true
-    @State private var autoScroll = true
-    @State private var saveHistory = true
+    @State private var uiSettings = AIUISettings.shared
+    @State private var selectedModelKey: String?
 
     var body: some View {
         Form {
             Section("Default Model") {
-                Picker("Model", selection: $selectedDefaultModel) {
+                Picker("Model", selection: $selectedModelKey) {
+                    Text("Select a model...")
+                        .tag(String?.none)
+
                     ForEach(providerManager.getAllActiveModels(), id: \.id) { item in
                         Text(item.displayName)
-                            .tag(item as ProviderModelItem?)
+                            .tag(modelKey(for: item) as String?)
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
+                .onChange(of: selectedModelKey) { _, newValue in
+                    uiSettings.selectedDefaultModelKey = newValue
+                }
             }
 
             Section("Chat Behavior") {
-                Toggle("Stream responses", isOn: $streamResponses)
-                Toggle("Show reasoning process", isOn: $showReasoning)
-                Toggle("Auto-scroll messages", isOn: $autoScroll)
-                Toggle("Save conversation history", isOn: $saveHistory)
-            }
-
-            Section("Privacy") {
-                Toggle("Clear history on quit", isOn: .constant(false))
-                Toggle("Encrypt local storage", isOn: .constant(true))
+                Toggle("Stream responses", isOn: $uiSettings.streamResponses)
+                Toggle("Show reasoning process", isOn: $uiSettings.showReasoning)
+                Toggle("Auto-scroll messages", isOn: $uiSettings.autoScroll)
+                Toggle("Save conversation history", isOn: $uiSettings.saveHistory)
             }
         }
         .formStyle(GroupedFormStyle())
@@ -223,15 +225,30 @@ struct AIGeneralSettingsView: View {
         }
     }
 
+    private func modelKey(for item: ProviderModelItem) -> String {
+        return "\(item.provider.id.uuidString)|\(item.model.id.uuidString)"
+    }
+
     private func loadSettings() {
         let activeModels = providerManager.getAllActiveModels()
-        if selectedDefaultModel == nil && !activeModels.isEmpty {
+
+        // Load selected model from settings
+        if let savedModelKey = uiSettings.selectedDefaultModelKey,
+           activeModels.contains(where: { modelKey(for: $0) == savedModelKey }) {
+            selectedModelKey = savedModelKey
+        } else if !activeModels.isEmpty {
             // Try to find OpenAI GPT-4.1 as the preferred default
             if let gpt41Model = activeModels.first(where: { $0.provider.name == "OpenAI" && $0.model.modelId == "gpt-4.1" }) {
-                selectedDefaultModel = gpt41Model
+                let key = modelKey(for: gpt41Model)
+                selectedModelKey = key
+                uiSettings.selectedDefaultModelKey = key
             } else {
                 // Fallback to first available model
-                selectedDefaultModel = activeModels.first
+                if let firstModel = activeModels.first {
+                    let key = modelKey(for: firstModel)
+                    selectedModelKey = key
+                    uiSettings.selectedDefaultModelKey = key
+                }
             }
         }
     }
@@ -240,27 +257,25 @@ struct AIGeneralSettingsView: View {
 // MARK: - Appearance Settings
 
 struct AIAppearanceSettingsView: View {
-    @State private var theme = "Auto"
-    @State private var fontSize = 14
-    @State private var messageDensity = "Comfortable"
+    @State private var uiSettings = AIUISettings.shared
 
     var body: some View {
         Form {
             Section("Interface") {
-                Picker("Theme", selection: $theme) {
+                Picker("Theme", selection: $uiSettings.theme) {
                     Text("Auto").tag("Auto")
                     Text("Light").tag("Light")
                     Text("Dark").tag("Dark")
                 }
 
-                Picker("Font size", selection: $fontSize) {
+                Picker("Font size", selection: $uiSettings.fontSize) {
                     Text("12px").tag(12)
                     Text("14px").tag(14)
                     Text("16px").tag(16)
                     Text("18px").tag(18)
                 }
 
-                Picker("Message density", selection: $messageDensity) {
+                Picker("Message density", selection: $uiSettings.messageDensity) {
                     Text("Compact").tag("Compact")
                     Text("Comfortable").tag("Comfortable")
                     Text("Spacious").tag("Spacious")
@@ -275,9 +290,7 @@ struct AIAppearanceSettingsView: View {
 // MARK: - Advanced Settings
 
 struct AIAdvancedSettingsView: View {
-    @State private var maxHistoryChats = 100
-    @State private var requestTimeout = 30
-    @State private var maxRetries = 3
+    @State private var uiSettings = AIUISettings.shared
 
     var body: some View {
         Form {
@@ -285,7 +298,7 @@ struct AIAdvancedSettingsView: View {
                 HStack {
                     Text("Max chat history")
                     Spacer()
-                    TextField("100", value: $maxHistoryChats, format: .number)
+                    TextField("100", value: $uiSettings.maxHistoryChats, format: .number)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .frame(width: 100)
                     Text("chats")
@@ -295,7 +308,7 @@ struct AIAdvancedSettingsView: View {
                 HStack {
                     Text("Request timeout")
                     Spacer()
-                    TextField("30", value: $requestTimeout, format: .number)
+                    TextField("30", value: $uiSettings.requestTimeout, format: .number)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .frame(width: 100)
                     Text("seconds")
@@ -305,7 +318,7 @@ struct AIAdvancedSettingsView: View {
                 HStack {
                     Text("Max retries")
                     Spacer()
-                    TextField("3", value: $maxRetries, format: .number)
+                    TextField("3", value: $uiSettings.maxRetries, format: .number)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .frame(width: 100)
                 }

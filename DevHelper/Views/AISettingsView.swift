@@ -16,18 +16,13 @@
 import SwiftUI
 
 struct AISettingsView: View {
-    let settings: AISettings
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         AIProviderSettingsView()
-            .onAppear {
-                // Migrate existing settings to new provider system
-                ProviderManager.shared.migrateFromLegacySettings(settings)
-            }
     }
 }
 
 #Preview {
-    AISettingsView(settings: AISettings())
+    AISettingsView()
 }

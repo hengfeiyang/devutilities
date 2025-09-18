@@ -66,6 +66,7 @@ struct AIModelV2: Identifiable, Codable, Hashable {
     var modelId: String
     var capabilities: ModelCapabilities
     var isActive: Bool
+    var isBuiltIn: Bool
     let providerId: UUID
 
     init(
@@ -73,6 +74,7 @@ struct AIModelV2: Identifiable, Codable, Hashable {
         modelId: String,
         capabilities: ModelCapabilities = ModelCapabilities(),
         isActive: Bool = true,
+        isBuiltIn: Bool = false,
         providerId: UUID
     ) {
         self.id = UUID()
@@ -80,6 +82,7 @@ struct AIModelV2: Identifiable, Codable, Hashable {
         self.modelId = modelId
         self.capabilities = capabilities
         self.isActive = isActive
+        self.isBuiltIn = isBuiltIn
         self.providerId = providerId
     }
 
@@ -90,7 +93,7 @@ struct AIModelV2: Identifiable, Codable, Hashable {
     var capabilityIcons: [String] {
         var icons: [String] = []
         if capabilities.supportsReasoning { icons.append("brain") }
-        if capabilities.supportsFunctionCalls { icons.append("gearshape") }
+        if capabilities.supportsFunctionCalls { icons.append("function") }
         if capabilities.supportsImages { icons.append("photo") }
         if capabilities.supportsWeb { icons.append("globe") }
         return icons
@@ -176,6 +179,7 @@ extension AIProvider {
                 maxTokens: 8192,
                 contextWindow: 200000
             ),
+            isBuiltIn: true,
             providerId: provider.id
         )
 
@@ -189,6 +193,7 @@ extension AIProvider {
                 maxTokens: 16384,
                 contextWindow: 128000
             ),
+            isBuiltIn: true,
             providerId: provider.id
         )
 
@@ -201,6 +206,7 @@ extension AIProvider {
                 maxTokens: 8192,
                 contextWindow: 64000
             ),
+            isBuiltIn: true,
             providerId: provider.id
         )
 
@@ -215,6 +221,7 @@ extension AIProvider {
                 maxTokens: 4096,
                 contextWindow: 128000
             ),
+            isBuiltIn: true,
             providerId: provider.id
         )
 
@@ -227,6 +234,7 @@ extension AIProvider {
                 maxTokens: 16384,
                 contextWindow: 128000
             ),
+            isBuiltIn: true,
             providerId: provider.id
         )
 
@@ -239,6 +247,7 @@ extension AIProvider {
                 maxTokens: 8192,
                 contextWindow: 64000
             ),
+            isBuiltIn: true,
             providerId: provider.id
         )
 
@@ -267,6 +276,7 @@ extension AIProvider {
                 maxTokens: 8192,
                 contextWindow: 64000
             ),
+            isBuiltIn: true,
             providerId: provider.id
         )
 
@@ -279,6 +289,7 @@ extension AIProvider {
                 maxTokens: 8192,
                 contextWindow: 64000
             ),
+            isBuiltIn: true,
             providerId: provider.id
         )
 

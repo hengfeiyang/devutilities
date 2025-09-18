@@ -16,7 +16,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedTool: ToolType = .timestampConverter
+    @State private var selectedTool: ToolType = .aiChat
     @State private var searchText: String = ""
     @State private var previousTool: ToolType?
     @EnvironmentObject var updateChecker: UpdateChecker
@@ -86,6 +86,9 @@ struct ContentView: View {
         } detail: {
             Group {
                 switch selectedTool {
+                case .aiChat:
+                    AIChatView()
+                        .environmentObject(appState)
                 case .timestampConverter:
                     TimestampConverterView()
                 case .unitConverter:
@@ -116,9 +119,6 @@ struct ContentView: View {
                     QRCodeView()
                 case .parquetViewer:
                     ParquetViewerView()
-                case .aiChat:
-                    AIChatView()
-                        .environmentObject(appState)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

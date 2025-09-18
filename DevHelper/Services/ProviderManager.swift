@@ -194,26 +194,6 @@ class ProviderManager {
         }
     }
 
-    // MARK: - Migration Support
-
-    func migrateFromLegacySettings(_ legacySettings: AISettings) {
-        // Migrate OpenAI API key if exists
-        let openAIKey = legacySettings.getOpenAIAPIKey()
-
-        // Check if we already have OpenAI provider
-        let hasOpenAI = providers.contains { $0.name == "OpenAI" }
-
-        if !hasOpenAI && openAIKey != nil && !openAIKey!.isEmpty {
-            let openAIProvider = AIProvider(
-                name: "OpenAI",
-                baseURL: legacySettings.apiGatewayURL,
-                apiKey: openAIKey!,
-                isBuiltIn: false,
-                isActive: true
-            )
-            addProvider(openAIProvider)
-        }
-    }
 }
 
 // MARK: - Provider Storage

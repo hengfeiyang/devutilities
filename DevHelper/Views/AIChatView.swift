@@ -21,7 +21,6 @@ import MarkdownUI
 
 struct AIChatView: View {
     @State private var chatManager = ChatManager()
-    @State private var aiSettings = AISettings()
     @State private var providerManager = ProviderManager.shared
     @State private var selectedSession: ChatSession?
     @State private var showingSettings = false
@@ -45,7 +44,6 @@ struct AIChatView: View {
                 // Main Chat Area
                 ChatContentView(
                     chatManager: chatManager,
-                    aiSettings: aiSettings,
                     selectedSession: $selectedSession,
                     currentMessage: $currentMessage,
                     isLoading: $isLoading,
@@ -159,7 +157,7 @@ struct AIChatView: View {
             }
         }
         .sheet(isPresented: $showingSettings) {
-            AISettingsView(settings: aiSettings)
+            AIProviderSettingsView()
         }
         .alert("Error", isPresented: .constant(errorMessage != nil)) {
             Button("OK") {
@@ -188,11 +186,7 @@ struct AIChatView: View {
             return matchingModel
         }
 
-        // Fallback to legacy model selection and try to find matching provider/model
-        if let selectedModel = session.selectedModel,
-           let matchingModel = availableModels.first(where: { $0.model.modelId == selectedModel.id || $0.model.name.contains(selectedModel.displayName) }) {
-            return matchingModel
-        }
+        // If no provider/model selection found, return nil to use default
 
         // Default to OpenAI GPT-4.1 if available, otherwise first available model
         if let gpt41Model = availableModels.first(where: { $0.provider.name == "OpenAI" && $0.model.modelId == "gpt-4.1" }) {
@@ -205,16 +199,6 @@ struct AIChatView: View {
         if let sessionIndex = chatManager.chatSessions.firstIndex(where: { $0.id == session.id }) {
             chatManager.chatSessions[sessionIndex].selectedProviderModelId = providerModel.provider.id
             chatManager.chatSessions[sessionIndex].selectedModelId = providerModel.model.id
-
-            // Also update legacy field for backward compatibility
-            let legacyModel = AIModel(
-                id: providerModel.model.modelId,
-                name: providerModel.model.modelId,
-                displayName: providerModel.displayName,
-                maxTokens: providerModel.model.capabilities.maxTokens,
-                contextWindow: providerModel.model.capabilities.contextWindow
-            )
-            chatManager.chatSessions[sessionIndex].selectedModel = legacyModel
 
             // Save the updated session
             let storage = ChatStorage()
@@ -229,7 +213,6 @@ struct AIChatView: View {
         if let sessionIndex = chatManager.chatSessions.firstIndex(where: { $0.id == session.id }) {
             chatManager.chatSessions[sessionIndex].selectedProviderModelId = nil
             chatManager.chatSessions[sessionIndex].selectedModelId = nil
-            chatManager.chatSessions[sessionIndex].selectedModel = nil
             // Save the updated session
             let storage = ChatStorage()
             storage.saveChatSession(chatManager.chatSessions[sessionIndex])
@@ -239,30 +222,7 @@ struct AIChatView: View {
         }
     }
 
-    // Legacy methods (keep for backward compatibility during transition)
-    private func updateChatModel(_ model: AIModel, for session: ChatSession) {
-        if let sessionIndex = chatManager.chatSessions.firstIndex(where: { $0.id == session.id }) {
-            chatManager.chatSessions[sessionIndex].selectedModel = model
-            // Save the updated session
-            let storage = ChatStorage()
-            storage.saveChatSession(chatManager.chatSessions[sessionIndex])
-            // Update the selectedSession to trigger UI refresh
-            selectedSession = chatManager.chatSessions[sessionIndex]
-            print("✅ Updated chat model to: \(model.displayName)")
-        }
-    }
 
-    private func resetToDefaultModel(for session: ChatSession) {
-        if let sessionIndex = chatManager.chatSessions.firstIndex(where: { $0.id == session.id }) {
-            chatManager.chatSessions[sessionIndex].selectedModel = nil
-            // Save the updated session
-            let storage = ChatStorage()
-            storage.saveChatSession(chatManager.chatSessions[sessionIndex])
-            // Update the selectedSession to trigger UI refresh
-            selectedSession = chatManager.chatSessions[sessionIndex]
-            print("✅ Reset chat to default model: \(aiSettings.defaultModel.displayName)")
-        }
-    }
 }
 
 // MARK: - Chat Sidebar
@@ -562,7 +522,6 @@ struct ChatSessionRow: View {
 
 struct ChatContentView: View {
     let chatManager: ChatManager
-    let aiSettings: AISettings
     @Binding var selectedSession: ChatSession?
     @Binding var currentMessage: String
     @Binding var isLoading: Bool
@@ -582,7 +541,6 @@ struct ChatContentView: View {
                 ChatInputView(
                     currentMessage: $currentMessage,
                     isLoading: isLoading,
-                    selectedModel: session.selectedModel ?? aiSettings.defaultModel,
                     chatManager: chatManager,
                     sessionId: session.id,
                     onSendWithText: { messageText in
@@ -643,7 +601,6 @@ struct ChatContentView: View {
             await chatManager.sendMessage(
                 messageText,
                 in: session.id,
-                with: aiSettings,
                 isLoading: $isLoading,
                 errorMessage: $errorMessage
             )
@@ -666,7 +623,6 @@ struct ChatContentView: View {
                 messageText,
                 images: images,
                 in: session.id,
-                with: aiSettings,
                 isLoading: $isLoading,
                 errorMessage: $errorMessage
             )
@@ -690,7 +646,6 @@ struct ChatContentView: View {
                 images: images,
                 tool: tool,
                 in: session.id,
-                with: aiSettings,
                 isLoading: $isLoading,
                 errorMessage: $errorMessage
             )
@@ -713,7 +668,6 @@ struct ChatContentView: View {
                 messageText,
                 tool: tool,
                 in: session.id,
-                with: aiSettings,
                 isLoading: $isLoading,
                 errorMessage: $errorMessage
             )
@@ -1349,7 +1303,6 @@ struct ChatMessageView: View {
 struct ChatInputView: View {
     @Binding var currentMessage: String
     let isLoading: Bool
-    let selectedModel: AIModel
     let chatManager: ChatManager
     let sessionId: UUID
     let onSendWithText: (String) -> Void

@@ -16,54 +16,86 @@
 import SwiftUI
 
 struct AIProviderDetailView: View {
-    let provider: AIProvider
-    let providerManager: ProviderManager
+    let providerId: UUID
+    @State private var providerManager = ProviderManager.shared
 
-    @State private var name: String
-    @State private var baseURL: String
-    @State private var apiKey: String
+    @State private var name: String = ""
+    @State private var baseURL: String = ""
+    @State private var apiKey: String = ""
     @State private var showingKeySecurely = false
     @State private var isTestingConnection = false
     @State private var testResult: Bool?
     @State private var showingAddModel = false
     @State private var editingModel: AIModelV2?
 
+    // Get the current provider state from the manager
+    private var currentProvider: AIProvider? {
+        providerManager.getProviderById(providerId)
+    }
+
     init(provider: AIProvider, providerManager: ProviderManager) {
-        self.provider = provider
-        self.providerManager = providerManager
-        self._name = State(initialValue: provider.name)
-        self._baseURL = State(initialValue: provider.baseURL)
-        self._apiKey = State(initialValue: "")
+        self.providerId = provider.id
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // Non-scrollable content
-            VStack(alignment: .leading, spacing: 16) {
-                // Provider Settings Section
-                GroupBox("Provider Settings") {
-                    VStack(alignment: .leading, spacing: 12) {
-                        HStack {
-                            Text("Provider Name")
-                            Spacer()
-                            TextField("Provider Name", text: $name)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .frame(minWidth: 200)
-                                .disabled(provider.isBuiltIn)
-                        }
+        Group {
+            if let provider = currentProvider {
+                providerDetailContent(for: provider)
+            } else {
+                Text("Provider not found")
+                    .foregroundColor(.secondary)
+            }
+        }
+        .onAppear {
+            loadProviderData()
+        }
+        .onChange(of: currentProvider) { _, newProvider in
+            if let provider = newProvider {
+                loadProviderData(from: provider)
+                testResult = nil
+            }
+        }
+    }
 
-                        HStack {
-                            Text("Base URL")
-                            Spacer()
-                            TextField("https://api.example.com/v1", text: $baseURL)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .frame(minWidth: 300)
-                                .disabled(provider.isBuiltIn)
-                        }
+    @ViewBuilder
+    private func providerDetailContent(for provider: AIProvider) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+                    // Non-scrollable content
+                    VStack(alignment: .leading, spacing: 16) {
+                        // Provider Settings Section
+                        GroupBox("Provider Settings") {
+                            VStack(alignment: .leading, spacing: 12) {
+                                HStack {
+                                    Text("Provider Name")
+                                    Spacer()
+                                    TextField("Provider Name", text: $name)
+                                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                                        .frame(minWidth: 200)
+                                        .disabled(provider.isBuiltIn)
+                                }
+
+                                HStack {
+                                    Text("Base URL")
+                                    Spacer()
+                                    TextField("https://api.example.com/v1", text: $baseURL)
+                                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                                        .frame(minWidth: 300)
+                                }
 
                         VStack(alignment: .leading, spacing: 8) {
                             HStack {
                                 Text("API Key")
+
+                                // Tip about OpenAI compatibility
+                                HStack(spacing: 4) {
+                                    Image(systemName: "info.circle")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                    Text("Only OpenAI compatible API providers are supported")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+
                                 Spacer()
                                 if !apiKey.isEmpty || providerManager.getAPIKey(for: provider.id) != nil {
                                     Image(systemName: "checkmark.circle.fill")
@@ -111,14 +143,14 @@ struct AIProviderDetailView: View {
                 GroupBox("Models (\(provider.models.count) available)") {
                     VStack(alignment: .leading, spacing: 0) {
                         ScrollView {
-                            LazyVStack(alignment: .leading, spacing: 8) {
+                            LazyVStack(alignment: .leading, spacing: 4) {
                                 ForEach(provider.models) { model in
                                     ModelRowView(
                                         model: model,
                                         onEdit: { editingModel = model },
                                         onDelete: { providerManager.deleteModel(id: model.id, from: provider.id) },
-                                        onToggle: { providerManager.toggleModelStatus(id: model.id, in: provider.id) },
-                                        isBuiltIn: provider.isBuiltIn
+                                        onToggle: nil,
+                                        isBuiltIn: model.isBuiltIn
                                     )
                                     .padding(.horizontal, 4)
 
@@ -128,50 +160,22 @@ struct AIProviderDetailView: View {
                                     }
                                 }
                             }
-                            .padding(.vertical, 8)
+                            .padding(.vertical, 4)
                         }
                         .frame(maxHeight: 300) // Limit height to prevent page jumping
                         .background(Color(NSColor.controlBackgroundColor))
                         .cornerRadius(6)
 
-                        if !provider.isBuiltIn {
-                            Button(action: { showingAddModel = true }) {
-                                Label("Add Custom Model", systemImage: "plus")
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .foregroundColor(.accentColor)
-                            .padding(.top, 8)
+                        Button(action: { showingAddModel = true }) {
+                            Label("Add Custom Model", systemImage: "plus")
                         }
+                        .buttonStyle(PlainButtonStyle())
+                        .foregroundColor(.accentColor)
+                        .padding(.top, 8)
                     }
                     .padding()
                 }
 
-                // Usage Statistics Section (if available)
-                if let lastTested = provider.lastTested {
-                    GroupBox("Usage Statistics") {
-                        VStack(alignment: .leading, spacing: 8) {
-                            HStack {
-                                Text("Last tested")
-                                Spacer()
-                                Text(lastTested, style: .relative)
-                                    .foregroundColor(.secondary)
-                            }
-
-                            HStack {
-                                Text("Status")
-                                Spacer()
-                                HStack {
-                                    Circle()
-                                        .fill(statusColor)
-                                        .frame(width: 8, height: 8)
-                                    Text(provider.statusText)
-                                        .foregroundColor(.secondary)
-                                }
-                            }
-                        }
-                        .padding()
-                    }
-                }
             }
             .padding()
         }
@@ -193,13 +197,13 @@ struct AIProviderDetailView: View {
         }
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
-                if !provider.isBuiltIn {
-                    Button("Save") {
-                        saveProvider()
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(name.isEmpty || baseURL.isEmpty)
+                Button("Save") {
+                    saveProvider()
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(name.isEmpty || baseURL.isEmpty)
 
+                if !provider.isBuiltIn {
                     Button("Delete", role: .destructive) {
                         providerManager.deleteProvider(id: provider.id)
                     }
@@ -209,6 +213,7 @@ struct AIProviderDetailView: View {
     }
 
     private var statusColor: Color {
+        guard let provider = currentProvider else { return .gray }
         switch provider.statusColor {
         case "green": return .green
         case "yellow": return .yellow
@@ -217,22 +222,37 @@ struct AIProviderDetailView: View {
         }
     }
 
+    private func loadProviderData() {
+        guard let provider = currentProvider else { return }
+        loadProviderData(from: provider)
+    }
+
+    private func loadProviderData(from provider: AIProvider) {
+        name = provider.name
+        baseURL = provider.baseURL
+        loadAPIKey()
+    }
+
     private func loadAPIKey() {
+        guard let provider = currentProvider else { return }
         if let existingKey = providerManager.getAPIKey(for: provider.id) {
             apiKey = existingKey
+        } else {
+            apiKey = ""
         }
     }
 
     private func saveProvider() {
-        var updatedProvider = provider
-        updatedProvider.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        updatedProvider.baseURL = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
-        updatedProvider.apiKey = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard var provider = currentProvider else { return }
+        provider.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        provider.baseURL = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        provider.apiKey = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        providerManager.updateProvider(updatedProvider)
+        providerManager.updateProvider(provider)
     }
 
     private func testConnection() {
+        guard let provider = currentProvider else { return }
         isTestingConnection = true
         testResult = nil
 
@@ -253,64 +273,55 @@ struct ModelRowView: View {
     let model: AIModelV2
     let onEdit: () -> Void
     let onDelete: () -> Void
-    let onToggle: () -> Void
+    let onToggle: (() -> Void)?
     let isBuiltIn: Bool
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text(model.name)
-                        .font(.body)
-                        .foregroundColor(model.isActive ? .primary : .secondary)
+        VStack(alignment: .leading, spacing: 2) {
+            // First line: Model name and function icons
+            HStack {
+                Text(model.name)
+                    .font(.body)
 
-                    Spacer()
+                Spacer()
 
-                    HStack(spacing: 4) {
-                        ForEach(model.capabilityIcons, id: \.self) { iconName in
-                            Image(systemName: iconName)
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
+                HStack(spacing: 4) {
+                    ForEach(model.capabilityIcons, id: \.self) { iconName in
+                        Image(systemName: iconName)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
                     }
                 }
+            }
 
+            // Second line: Model ID and operation icons
+            HStack {
                 Text(model.modelId)
                     .font(.caption)
                     .foregroundColor(.secondary)
 
-                if !model.isActive {
-                    Text("Disabled")
-                        .font(.caption)
-                        .foregroundColor(.orange)
-                }
-            }
+                Spacer()
 
-            Spacer()
+                HStack(spacing: 8) {
+                    if !isBuiltIn {
+                        Button(action: onEdit) {
+                            Image(systemName: "pencil")
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .foregroundColor(.accentColor)
+                        .help("Edit model")
 
-            HStack(spacing: 8) {
-                if !isBuiltIn {
-                    Button("Edit") {
-                        onEdit()
+                        Button(action: onDelete) {
+                            Image(systemName: "trash")
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .foregroundColor(.red)
+                        .help("Remove model")
                     }
-                    .buttonStyle(PlainButtonStyle())
-                    .foregroundColor(.accentColor)
-
-                    Button("Remove") {
-                        onDelete()
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                    .foregroundColor(.red)
                 }
-
-                Button(model.isActive ? "Disable" : "Enable") {
-                    onToggle()
-                }
-                .buttonStyle(PlainButtonStyle())
-                .foregroundColor(.accentColor)
             }
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, 2)
     }
 }
 

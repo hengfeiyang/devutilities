@@ -59,10 +59,9 @@ class ChatManager {
     
     func duplicateChat(_ session: ChatSession) -> ChatSession {
         var duplicated = session
-        duplicated = ChatSession(
-            title: "\(session.title) (Copy)",
-            selectedModel: session.selectedModel
-        )
+        duplicated = ChatSession(title: "\(session.title) (Copy)")
+        duplicated.selectedProviderModelId = session.selectedProviderModelId
+        duplicated.selectedModelId = session.selectedModelId
         let userAndAssistantMessages = session.messages.filter { $0.role != .system }
         for message in userAndAssistantMessages {
             let copiedMessage = ChatMessage(
@@ -104,7 +103,6 @@ class ChatManager {
     func sendMessage(
         _ content: String,
         in sessionId: UUID,
-        with settings: AISettings,
         isLoading: Binding<Bool>,
         errorMessage: Binding<String?>
     ) async {
@@ -124,26 +122,26 @@ class ChatManager {
         isLoading.wrappedValue = true
         errorMessage.wrappedValue = nil
 
-        let model = chatSessions[sessionIndex].selectedModel ?? settings.defaultModel
+        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-4.1"
 
-        guard let apiKey = settings.getOpenAIAPIKey(), !apiKey.isEmpty else {
-            errorMessage.wrappedValue = "No OpenAI API key configured. Please add your API key in settings."
+        guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
+            errorMessage.wrappedValue = "No API key configured for the selected provider. Please configure your provider in settings."
             isLoading.wrappedValue = false
             return
         }
 
         let currentMessages = chatSessions[sessionIndex].messages
-        
+
         let streamingMessage = ChatMessage(role: .assistant, content: "", isStreaming: true)
         chatSessions[sessionIndex].messages.append(streamingMessage)
 
         let streamingMessageIndex = chatSessions[sessionIndex].messages.count - 1
-        
+
         await chatAPI.sendMessage(
             messages: currentMessages,
-            model: model,
-            apiKey: apiKey,
-            baseURL: settings.apiGatewayURL,
+            modelId: modelId,
+            apiKey: providerInfo.apiKey,
+            baseURL: providerInfo.baseURL,
             onToken: { [weak self] token in
                 guard let self = self else { return }
 
@@ -199,7 +197,6 @@ class ChatManager {
         _ content: String,
         images: [ChatMessageImage],
         in sessionId: UUID,
-        with settings: AISettings,
         isLoading: Binding<Bool>,
         errorMessage: Binding<String?>
     ) async {
@@ -215,10 +212,10 @@ class ChatManager {
         isLoading.wrappedValue = true
         errorMessage.wrappedValue = nil
 
-        let model = chatSessions[sessionIndex].selectedModel ?? settings.defaultModel
+        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-4.1"
 
-        guard let apiKey = settings.getOpenAIAPIKey(), !apiKey.isEmpty else {
-            errorMessage.wrappedValue = "No OpenAI API key configured. Please add your API key in settings."
+        guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
+            errorMessage.wrappedValue = "No API key configured for the selected provider. Please configure your provider in settings."
             isLoading.wrappedValue = false
             return
         }
@@ -232,9 +229,9 @@ class ChatManager {
         
         await chatAPI.sendMessage(
             messages: currentMessages,
-            model: model,
-            apiKey: apiKey,
-            baseURL: settings.apiGatewayURL,
+            modelId: modelId,
+            apiKey: providerInfo.apiKey,
+            baseURL: providerInfo.baseURL,
             onToken: { [weak self] token in
                 guard let self = self else { return }
 
@@ -283,19 +280,18 @@ class ChatManager {
         _ content: String,
         tool: ChatToolMode,
         in sessionId: UUID,
-        with settings: AISettings,
         isLoading: Binding<Bool>,
         errorMessage: Binding<String?>
     ) async {
         switch tool {
         case .chat:
-            await sendMessage(content, in: sessionId, with: settings, isLoading: isLoading, errorMessage: errorMessage)
+            await sendMessage(content, in: sessionId, isLoading: isLoading, errorMessage: errorMessage)
             
         case .webSearch:
-            await performWebSearch(content, in: sessionId, with: settings, isLoading: isLoading, errorMessage: errorMessage)
+            await performWebSearch(content, in: sessionId, isLoading: isLoading, errorMessage: errorMessage)
             
         case .imageGeneration:
-            await generateImage(content, in: sessionId, with: settings, isLoading: isLoading, errorMessage: errorMessage)
+            await generateImage(content, in: sessionId, isLoading: isLoading, errorMessage: errorMessage)
         }
     }
     
@@ -304,19 +300,18 @@ class ChatManager {
         images: [ChatMessageImage],
         tool: ChatToolMode,
         in sessionId: UUID,
-        with settings: AISettings,
         isLoading: Binding<Bool>,
         errorMessage: Binding<String?>
     ) async {
         switch tool {
         case .chat:
-            await sendMessageWithImages(content, images: images, in: sessionId, with: settings, isLoading: isLoading, errorMessage: errorMessage)
+            await sendMessageWithImages(content, images: images, in: sessionId, isLoading: isLoading, errorMessage: errorMessage)
             
         case .webSearch:
-            await performWebSearch(content, in: sessionId, with: settings, isLoading: isLoading, errorMessage: errorMessage)
+            await performWebSearch(content, in: sessionId, isLoading: isLoading, errorMessage: errorMessage)
             
         case .imageGeneration:
-            await generateImageWithReferenceImages(content, referenceImages: images, in: sessionId, with: settings, isLoading: isLoading, errorMessage: errorMessage)
+            await generateImageWithReferenceImages(content, referenceImages: images, in: sessionId, isLoading: isLoading, errorMessage: errorMessage)
         }
     }
     
@@ -325,7 +320,6 @@ class ChatManager {
     private func performWebSearch(
         _ query: String,
         in sessionId: UUID,
-        with settings: AISettings,
         isLoading: Binding<Bool>,
         errorMessage: Binding<String?>
     ) async {
@@ -347,11 +341,11 @@ class ChatManager {
             errorMessage.wrappedValue = nil
         }
         
-        let model = await MainActor.run { chatSessions[sessionIndex].selectedModel ?? settings.defaultModel }
+        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-4.1"
         
-        guard let apiKey = settings.getOpenAIAPIKey(), !apiKey.isEmpty else {
+        guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
             await MainActor.run {
-                errorMessage.wrappedValue = "No OpenAI API key configured. Please add your API key in settings."
+                errorMessage.wrappedValue = "No API key configured for the selected provider. Please configure your provider in settings."
                 isLoading.wrappedValue = false
             }
             return
@@ -369,9 +363,9 @@ class ChatManager {
         do {
             let result = try await responsesAPI.performWebSearch(
                 query: query,
-                model: model,
-                apiKey: apiKey,
-                baseURL: settings.apiGatewayURL
+                modelId: modelId,
+                apiKey: providerInfo.apiKey,
+                baseURL: providerInfo.baseURL
             )
             
             await MainActor.run {
@@ -402,7 +396,6 @@ class ChatManager {
     private func generateImage(
         _ prompt: String,
         in sessionId: UUID,
-        with settings: AISettings,
         isLoading: Binding<Bool>,
         errorMessage: Binding<String?>
     ) async {
@@ -424,11 +417,11 @@ class ChatManager {
             errorMessage.wrappedValue = nil
         }
         
-        let model = await MainActor.run { chatSessions[sessionIndex].selectedModel ?? settings.defaultModel }
+        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-4.1"
         
-        guard let apiKey = settings.getOpenAIAPIKey(), !apiKey.isEmpty else {
+        guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
             await MainActor.run {
-                errorMessage.wrappedValue = "No OpenAI API key configured. Please add your API key in settings."
+                errorMessage.wrappedValue = "No API key configured for the selected provider. Please configure your provider in settings."
                 isLoading.wrappedValue = false
             }
             return
@@ -459,9 +452,9 @@ class ChatManager {
             
             let (imageURL, responseId) = try await responsesAPI.generateImage(
                 prompt: prompt,
-                model: model,
-                apiKey: apiKey,
-                baseURL: settings.apiGatewayURL,
+                modelId: modelId,
+                apiKey: providerInfo.apiKey,
+                baseURL: providerInfo.baseURL,
                 previousResponseId: previousResponseId
             )
             
@@ -516,7 +509,6 @@ class ChatManager {
         _ prompt: String,
         referenceImages: [ChatMessageImage],
         in sessionId: UUID,
-        with settings: AISettings,
         isLoading: Binding<Bool>,
         errorMessage: Binding<String?>
     ) async {
@@ -538,11 +530,11 @@ class ChatManager {
             errorMessage.wrappedValue = nil
         }
         
-        let model = await MainActor.run { chatSessions[sessionIndex].selectedModel ?? settings.defaultModel }
+        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-4.1"
         
-        guard let apiKey = settings.getOpenAIAPIKey(), !apiKey.isEmpty else {
+        guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
             await MainActor.run {
-                errorMessage.wrappedValue = "No OpenAI API key configured. Please add your API key in settings."
+                errorMessage.wrappedValue = "No API key configured for the selected provider. Please configure your provider in settings."
                 isLoading.wrappedValue = false
             }
             return
@@ -574,9 +566,9 @@ class ChatManager {
             let (imageURL, responseId) = try await responsesAPI.generateImageWithReferenceImages(
                 prompt: prompt,
                 referenceImages: referenceImages,
-                model: model,
-                apiKey: apiKey,
-                baseURL: settings.apiGatewayURL,
+                modelId: modelId,
+                apiKey: providerInfo.apiKey,
+                baseURL: providerInfo.baseURL,
                 previousResponseId: previousResponseId
             )
             
@@ -742,9 +734,9 @@ final class ChatCompletionsAPI: @unchecked Sendable {
     
     func sendMessage(
         messages: [ChatMessage],
-        model: AIModel,
+        modelId: String,
         apiKey: String,
-        baseURL: String = OpenAIConfig.baseURL,
+        baseURL: String,
         onToken: @escaping @Sendable (String) -> Void,
         onComplete: @escaping @Sendable () -> Void,
         onError: @escaping @Sendable (Error) -> Void,
@@ -803,10 +795,9 @@ final class ChatCompletionsAPI: @unchecked Sendable {
             }
             
             let requestBody: [String: Any] = [
-                "model": model.name,
+                "model": modelId,
                 "messages": openAIMessages,
-                "stream": true,
-                // "max_tokens": model.maxTokens
+                "stream": true
             ]
             
             request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
@@ -867,9 +858,9 @@ final class ResponsesAPI: @unchecked Sendable {
 
     func generateImage(
         prompt: String,
-        model: AIModel,
+        modelId: String,
         apiKey: String,
-        baseURL: String = OpenAIConfig.baseURL,
+        baseURL: String,
         previousResponseId: String? = nil
     ) async throws -> (imageURL: String, responseId: String) {
         let url = URL(string: "\(baseURL)/responses")!
@@ -880,7 +871,7 @@ final class ResponsesAPI: @unchecked Sendable {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         var requestBody: [String: Any] = [
-            "model": model.name,
+            "model": modelId,
             "input": prompt,
             "tools": [[
                 "type": "image_generation"
@@ -936,9 +927,9 @@ final class ResponsesAPI: @unchecked Sendable {
     func generateImageWithReferenceImages(
         prompt: String,
         referenceImages: [ChatMessageImage],
-        model: AIModel,
+        modelId: String,
         apiKey: String,
-        baseURL: String = OpenAIConfig.baseURL,
+        baseURL: String,
         previousResponseId: String? = nil
     ) async throws -> (imageURL: String, responseId: String) {
         let url = URL(string: "\(baseURL)/responses")!
@@ -967,7 +958,7 @@ final class ResponsesAPI: @unchecked Sendable {
         }
         
         var requestBody: [String: Any] = [
-            "model": model.name,
+            "model": modelId,
             "input": [
                 [
                     "role": "user",
@@ -1027,9 +1018,9 @@ final class ResponsesAPI: @unchecked Sendable {
     
     func performWebSearch(
         query: String,
-        model: AIModel,
+        modelId: String,
         apiKey: String,
-        baseURL: String = OpenAIConfig.baseURL
+        baseURL: String
     ) async throws -> String {
         let url = URL(string: "\(baseURL)/responses")!
         
@@ -1039,7 +1030,7 @@ final class ResponsesAPI: @unchecked Sendable {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let requestBody: [String: Any] = [
-            "model": model.name,
+            "model": modelId,
             "input": query,
             "tools": [[
                 "type": "web_search"
