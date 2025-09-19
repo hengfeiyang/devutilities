@@ -6,6 +6,7 @@ A native macOS application for developers, containing 16 essential tools commonl
 
 ## Features
 
+- **AI Chat** - Intelligent AI assistant with custom model support, flexible API configuration, and enhanced user experience for development questions
 - **Timestamp Converter** - Convert between timestamps and human-readable dates with multiple format support
 - **Unit Converter** - Convert between different units (Data, Time, Length, Weight, Temperature, Area, Volume)
 - **JSON Formatter** - Format, validate, and compare JSON data with visual CodeMirror diff editor
@@ -21,7 +22,6 @@ A native macOS application for developers, containing 16 essential tools commonl
 - **QR Code** - Generate QR codes with multiple sizes and error correction levels, scan QR codes from images
 - **Parquet Viewer** - Read and explore Parquet / arrow files with schema inspection and data export
 - **Crypto Tools** - Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA-1/256/384/512), symmetric encryption (AES-GCM-256), and asymmetric encryption (RSA-2048/4096)
-- **AI Chat** - Intelligent AI assistant with custom model support, flexible API configuration, and enhanced user experience for development questions
 
 ## Key Features
 
@@ -32,7 +32,7 @@ A native macOS application for developers, containing 16 essential tools commonl
 
 ## Version
 
-Current version: 2.0.0
+Current version: 2.1.0
 
 ## Screenshots
 
