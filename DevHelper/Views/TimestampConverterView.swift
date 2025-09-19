@@ -16,6 +16,90 @@
 import SwiftUI
 import AppKit
 
+struct TimestampHistoryEntry: Codable, Identifiable, Equatable {
+    let id: UUID
+    let timestamp: String
+    let convertedDate: String
+    let convertedTimestamp: String
+    let queryTime: Date
+    let isLocalTime: Bool
+
+    init(timestamp: String, convertedDate: String, convertedTimestamp: String, isLocalTime: Bool) {
+        self.id = UUID()
+        self.timestamp = timestamp
+        self.convertedDate = convertedDate
+        self.convertedTimestamp = convertedTimestamp
+        self.queryTime = Date()
+        self.isLocalTime = isLocalTime
+    }
+}
+
+class TimestampHistoryManager: ObservableObject {
+    @Published var entries: [TimestampHistoryEntry] = []
+    private let maxEntries = 50
+    private let userDefaultsKey = "TimestampConverter.History"
+
+    init() {
+        loadHistory()
+    }
+
+    func addEntry(_ entry: TimestampHistoryEntry) {
+        if !entries.contains(where: { $0.timestamp == entry.timestamp && $0.isLocalTime == entry.isLocalTime }) {
+            entries.insert(entry, at: 0)
+
+            if entries.count > maxEntries {
+                entries = Array(entries.prefix(maxEntries))
+            }
+
+            saveHistory()
+        }
+    }
+
+    func removeEntry(_ entry: TimestampHistoryEntry) {
+        entries.removeAll { $0.id == entry.id }
+        saveHistory()
+    }
+
+    func clearHistory() {
+        entries.removeAll()
+        saveHistory()
+    }
+
+    func timeDifference(between entry1: TimestampHistoryEntry, and entry2: TimestampHistoryEntry) -> String {
+        guard let timestamp1 = Int64(entry1.timestamp),
+              let timestamp2 = Int64(entry2.timestamp) else {
+            return "Invalid timestamps"
+        }
+
+        let diff = abs(timestamp1 - timestamp2)
+        let days = diff / 86400
+        let hours = (diff % 86400) / 3600
+        let minutes = (diff % 3600) / 60
+        let seconds = diff % 60
+
+        var components: [String] = []
+        if days > 0 { components.append("\(days)d") }
+        if hours > 0 { components.append("\(hours)h") }
+        if minutes > 0 { components.append("\(minutes)m") }
+        if seconds > 0 || components.isEmpty { components.append("\(seconds)s") }
+
+        return components.joined(separator: " ")
+    }
+
+    private func saveHistory() {
+        if let encoded = try? JSONEncoder().encode(entries) {
+            UserDefaults.standard.set(encoded, forKey: userDefaultsKey)
+        }
+    }
+
+    private func loadHistory() {
+        if let data = UserDefaults.standard.data(forKey: userDefaultsKey),
+           let decoded = try? JSONDecoder().decode([TimestampHistoryEntry].self, from: data) {
+            entries = decoded
+        }
+    }
+}
+
 struct TimestampConverterView: View {
     let screenName = "Timestamp Converter"
     @State private var timestampInput: String = ""
@@ -24,6 +108,9 @@ struct TimestampConverterView: View {
     @State private var convertedTimestamp: String = ""
     @State private var isLocalTime: Bool = true
     @State private var copiedButtonId: String? = nil
+    @StateObject private var historyManager = TimestampHistoryManager()
+    @State private var selectedEntries: Set<UUID> = []
+    @State private var showHistory: Bool = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -115,7 +202,76 @@ struct TimestampConverterView: View {
                         convertDateToTimestamp(dateInput)
                     }
                 }
-            
+
+            // Query History Section
+            VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    Text("Query History")
+                        .font(.headline)
+                    Spacer()
+                    Button(showHistory ? "Hide History" : "Show History") {
+                        withAnimation {
+                            showHistory.toggle()
+                        }
+                    }
+                    .buttonStyle(.bordered)
+
+                    if !historyManager.entries.isEmpty {
+                        Button("Clear History") {
+                            historyManager.clearHistory()
+                            selectedEntries.removeAll()
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                }
+
+                if showHistory {
+                    if historyManager.entries.isEmpty {
+                        Text("No query history yet")
+                            .foregroundColor(.secondary)
+                            .italic()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding()
+                            .background(AppConstants.lightGrayBackground)
+                            .cornerRadius(8)
+                    } else {
+                        VStack(spacing: 8) {
+                            if selectedEntries.count == 2 {
+                                let sortedEntries = selectedEntries.compactMap { id in
+                                    historyManager.entries.first { $0.id == id }
+                                }.sorted { $0.queryTime > $1.queryTime }
+
+                                if sortedEntries.count == 2 {
+                                    let diff = historyManager.timeDifference(between: sortedEntries[0], and: sortedEntries[1])
+                                    HStack {
+                                        Text("Time difference: \(diff)")
+                                            .font(.system(.body, design: .monospaced))
+                                            .foregroundColor(.blue)
+                                        Spacer()
+                                        Button("Clear Selection") {
+                                            selectedEntries.removeAll()
+                                        }
+                                        .buttonStyle(.bordered)
+                                    }
+                                    .padding(8)
+                                    .background(Color.blue.opacity(0.1))
+                                    .cornerRadius(8)
+                                }
+                            }
+
+                            ScrollView {
+                                LazyVStack(spacing: 6) {
+                                    ForEach(historyManager.entries) { entry in
+                                        historyEntryView(entry)
+                                    }
+                                }
+                            }
+                            .frame(maxHeight: 300)
+                        }
+                    }
+                }
+            }
+
             Spacer()
         }
         .padding()
@@ -175,6 +331,15 @@ struct TimestampConverterView: View {
 
         Local Time: \(localTime)
         """
+
+        // Add to history
+        let historyEntry = TimestampHistoryEntry(
+            timestamp: timestamp,
+            convertedDate: convertedDate,
+            convertedTimestamp: "",
+            isLocalTime: isLocalTime
+        )
+        historyManager.addEntry(historyEntry)
     }
     
     private func convertDateToTimestamp(_ dateString: String) {
@@ -195,6 +360,15 @@ struct TimestampConverterView: View {
         if let date = formatter.date(from: dateString) {
             let timestamp = Int64(date.timeIntervalSince1970)
             convertedTimestamp = generateTimestampResult(timestamp)
+
+            // Add to history
+            let historyEntry = TimestampHistoryEntry(
+                timestamp: String(timestamp),
+                convertedDate: "",
+                convertedTimestamp: convertedTimestamp,
+                isLocalTime: isLocalTime
+            )
+            historyManager.addEntry(historyEntry)
         } else {
             convertedTimestamp = "Invalid date format. Use: YYYY-MM-DD HH:MM:SS"
         }
@@ -359,6 +533,98 @@ struct TimestampConverterView: View {
         if !dateInput.isEmpty {
             convertDateToTimestamp(dateInput)
         }
+    }
+
+    @ViewBuilder
+    private func historyEntryView(_ entry: TimestampHistoryEntry) -> some View {
+        HStack {
+            Button(action: {
+                if selectedEntries.contains(entry.id) {
+                    selectedEntries.remove(entry.id)
+                } else if selectedEntries.count < 2 {
+                    selectedEntries.insert(entry.id)
+                }
+            }) {
+                Image(systemName: selectedEntries.contains(entry.id) ? "checkmark.circle.fill" : "circle")
+                    .foregroundColor(selectedEntries.contains(entry.id) ? .blue : .gray)
+            }
+            .buttonStyle(.borderless)
+
+            VStack(alignment: .leading, spacing: 2) {
+                HStack {
+                    Text("Timestamp: \(entry.timestamp)")
+                        .font(.system(.caption, design: .monospaced))
+                    Spacer()
+                    Text(formatQueryTime(entry.queryTime))
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                }
+
+                if !entry.convertedDate.isEmpty {
+                    Text(extractMainInfo(from: entry.convertedDate))
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
+                }
+
+                if !entry.convertedTimestamp.isEmpty {
+                    Text("From date conversion")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            }
+
+            Spacer()
+
+            HStack(spacing: 8) {
+                Button(action: {
+                    timestampInput = entry.timestamp
+                    convertTimestampToDate(entry.timestamp)
+                }) {
+                    Image(systemName: "arrow.clockwise")
+                }
+                .buttonStyle(.borderless)
+                .help("Load this timestamp")
+
+                Button(action: {
+                    copyToClipboard(entry.timestamp)
+                }) {
+                    Image(systemName: "doc.on.doc")
+                }
+                .buttonStyle(.borderless)
+                .help("Copy timestamp")
+
+                Button(action: {
+                    historyManager.removeEntry(entry)
+                    selectedEntries.remove(entry.id)
+                }) {
+                    Image(systemName: "trash")
+                        .foregroundColor(.red)
+                }
+                .buttonStyle(.borderless)
+                .help("Remove from history")
+            }
+        }
+        .padding(8)
+        .background(selectedEntries.contains(entry.id) ? Color.blue.opacity(0.1) : AppConstants.lightGrayBackground)
+        .cornerRadius(6)
+    }
+
+    private func formatQueryTime(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter.string(from: date)
+    }
+
+    private func extractMainInfo(from result: String) -> String {
+        let lines = result.components(separatedBy: "\n")
+        for line in lines {
+            if line.hasPrefix("Local Time:") {
+                return String(line.dropFirst(12))
+            }
+        }
+        return ""
     }
 }
 
