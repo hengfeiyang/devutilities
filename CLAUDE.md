@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevHelper is a native macOS application built with SwiftUI that provides 16 essential developer utilities. Version 2.0.0 with custom AI model support for enhanced flexibility.
+DevHelper is a native macOS application built with SwiftUI that provides 16 essential developer utilities. Version 2.1.0 with timestamp convert history.
 
 ## Key Tools & Status
 
@@ -43,7 +43,11 @@ xcodebuild -project DevHelper.xcodeproj -scheme DevHelper build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
-## Recent Updates (v2.0.0)
+## Recent Updates (v2.1.0)
+- **Timestamp history**: Added timestamp convert history
+- **IP Query**: Fixed ip query for China
+
+## Previous Updates (v2.0.0)
 - **Custom AI Models**: Added support for custom AI model configuration with flexible API settings
 - **Model Management**: Enhanced model selection interface with custom model addition and configuration
 - **API Flexibility**: Support for custom API endpoints, headers, and authentication methods

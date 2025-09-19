@@ -32,4 +32,4 @@ A native macOS application for developers, containing 16 essential tools commonl
 
 ## Version
 
-Current version: 2.0.0
+Current version: 2.1.0
