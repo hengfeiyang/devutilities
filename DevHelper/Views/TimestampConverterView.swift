@@ -142,13 +142,30 @@ struct TimestampConverterView: View {
                             VStack(alignment: .leading, spacing: 4) {
                                 dateRow("UTC Time", getUTCFromResult())
                                 dateRow("Local Time", getLocalFromResult())
+
+                                let detectedFormat = getDetectedFormat()
+                                if !detectedFormat.isEmpty {
+                                    Divider()
+                                        .padding(.vertical, 4)
+                                    dateRow("Detected Format", detectedFormat)
+
+                                    let timeDetails = getTimeDetails()
+                                    if !timeDetails.isEmpty {
+                                        ForEach(timeDetails, id: \.self) { detail in
+                                            let components = detail.split(separator: ":", maxSplits: 1)
+                                            if components.count == 2 {
+                                                dateRow(String(components[0]), String(components[1]).trimmingCharacters(in: .whitespaces))
+                                            }
+                                        }
+                                    }
+                                }
                             }
                             .padding()
                             .background(AppConstants.lightGrayBackground)
                             .cornerRadius(8)
                         }
                     }
-                    .frame(height: 120)
+                    .frame(height: 200)
                 }
                 
                 // Date to Timestamp
@@ -289,20 +306,34 @@ struct TimestampConverterView: View {
             convertedDate = ""
             return
         }
-        
+
         // Auto-detect timestamp format based on length
         var timeInterval: TimeInterval = 0
-        
+        var detectedPrecision: String = "seconds"
+        var milliseconds: Int = 0
+        var microseconds: Int = 0
+        var nanoseconds: Int = 0
+
         if let timestampInt = Int64(timestamp) {
             switch timestamp.count {
             case 10: // seconds
                 timeInterval = TimeInterval(timestampInt)
+                detectedPrecision = "seconds"
             case 13: // milliseconds
                 timeInterval = TimeInterval(timestampInt) / 1000
+                detectedPrecision = "milliseconds"
+                milliseconds = Int(timestampInt % 1000)
             case 16: // microseconds
                 timeInterval = TimeInterval(timestampInt) / 1_000_000
+                detectedPrecision = "microseconds"
+                milliseconds = Int((timestampInt / 1000) % 1000)
+                microseconds = Int(timestampInt % 1000)
             case 19: // nanoseconds
                 timeInterval = TimeInterval(timestampInt) / 1_000_000_000
+                detectedPrecision = "nanoseconds"
+                milliseconds = Int((timestampInt / 1_000_000) % 1000)
+                microseconds = Int((timestampInt / 1000) % 1000)
+                nanoseconds = Int(timestampInt % 1000)
             default:
                 convertedDate = "Invalid timestamp format"
                 return
@@ -311,26 +342,46 @@ struct TimestampConverterView: View {
             convertedDate = "Invalid timestamp"
             return
         }
-        
+
         let date = Date(timeIntervalSince1970: timeInterval)
-        
+
         // Format for local time
         let localFormatter = DateFormatter()
         localFormatter.timeZone = TimeZone.current
         localFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
         let localTime = localFormatter.string(from: date)
-        
+
         // Format for UTC
         let utcFormatter = DateFormatter()
         utcFormatter.timeZone = TimeZone(abbreviation: "UTC")
         utcFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss 'UTC'"
         let utcTime = utcFormatter.string(from: date)
-        
-        convertedDate = """
+
+        // Build the result with detailed breakdown
+        var result = """
         UTC Time: \(utcTime)
 
         Local Time: \(localTime)
         """
+
+        // Add precision detection and time breakdown
+        result += "\n\nDetected Format: \(detectedPrecision)"
+
+        // Add time detail breakdown if we have sub-second precision
+        if detectedPrecision != "seconds" {
+            result += "\n\nTime Details:"
+            if detectedPrecision == "milliseconds" || detectedPrecision == "microseconds" || detectedPrecision == "nanoseconds" {
+                result += "\nMilliseconds: \(milliseconds)"
+            }
+            if detectedPrecision == "microseconds" || detectedPrecision == "nanoseconds" {
+                result += "\nMicroseconds: \(microseconds)"
+            }
+            if detectedPrecision == "nanoseconds" {
+                result += "\nNanoseconds: \(nanoseconds)"
+            }
+        }
+
+        convertedDate = result
 
         // Add to history
         let historyEntry = TimestampHistoryEntry(
@@ -492,7 +543,7 @@ struct TimestampConverterView: View {
         }
         return ""
     }
-    
+
     private func getLocalFromResult() -> String {
         let lines = convertedDate.components(separatedBy: "\n")
         for line in lines {
@@ -501,6 +552,33 @@ struct TimestampConverterView: View {
             }
         }
         return ""
+    }
+
+    private func getDetectedFormat() -> String {
+        let lines = convertedDate.components(separatedBy: "\n")
+        for line in lines {
+            if line.hasPrefix("Detected Format:") {
+                return String(line.dropFirst(17))
+            }
+        }
+        return ""
+    }
+
+    private func getTimeDetails() -> [String] {
+        let lines = convertedDate.components(separatedBy: "\n")
+        var timeDetails: [String] = []
+        var inTimeDetailsSection = false
+
+        for line in lines {
+            if line == "Time Details:" {
+                inTimeDetailsSection = true
+                continue
+            }
+            if inTimeDetailsSection && !line.isEmpty {
+                timeDetails.append(line)
+            }
+        }
+        return timeDetails
     }
     
     private func copyToClipboard(_ text: String) {
