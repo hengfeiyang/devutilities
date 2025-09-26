@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevHelper - Release Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .version {
+            margin-bottom: 50px;
+            border-bottom: 1px solid #e1e5e9;
+            padding-bottom: 30px;
+        }
+
+        .version:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .version-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .version-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #007AFF;
+            margin-right: 15px;
+        }
+
+        .version-date {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .version-badge {
+            background: #007AFF;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .version-badge.major {
+            background: #FF3B30;
+        }
+
+        .version-badge.minor {
+            background: #34C759;
+        }
+
+        .changes {
+            list-style: none;
+        }
+
+        .changes li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .changes li:before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: #007AFF;
+            font-weight: bold;
+        }
+
+        .feature-new:before {
+            content: "✨";
+        }
+
+        .feature-improved:before {
+            content: "⚡";
+        }
+
+        .feature-fixed:before {
+            content: "🔧";
+        }
+
+        .feature-security:before {
+            content: "🔒";
+        }
+
+        .highlight {
+            background: #007AFF;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .download-section {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e1e5e9;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 2.5em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .version-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .version-badge {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>DevHelper</h1>
+            <p>Release Notes & Updates</p>
+        </div>
+
+        <div class="content">
+            <div class="version">
+                <div class="version-header">
+                    <span class="version-number">v2.1.0</span>
+                    <span class="version-date">September 2024</span>
+                    <span class="version-badge minor">Minor Update</span>
+                </div>
+                <ul class="changes">
+                    <li class="feature-new"><span class="highlight">Timestamp History</span> - Added timestamp conversion history for tracking recent conversions</li>
+                    <li class="feature-fixed"><span class="highlight">IP Query Fix</span> - Fixed IP query functionality for China region</li>
+                    <li class="feature-improved">Enhanced user experience with better history management</li>
+                </ul>
+            </div>
+
+            <div class="version">
+                <div class="version-header">
+                    <span class="version-number">v2.0.0</span>
+                    <span class="version-date">August 2024</span>
+                    <span class="version-badge major">Major Update</span>
+                </div>
+                <ul class="changes">
+                    <li class="feature-new"><span class="highlight">Custom AI Models</span> - Added support for custom AI model configuration with flexible API settings</li>
+                    <li class="feature-new"><span class="highlight">Model Management</span> - Enhanced model selection interface with custom model addition and configuration</li>
+                    <li class="feature-improved"><span class="highlight">API Flexibility</span> - Support for custom API endpoints, headers, and authentication methods</li>
+                    <li class="feature-improved"><span class="highlight">User Experience</span> - Improved model selector UI with better organization of built-in and custom models</li>
+                    <li class="feature-improved"><span class="highlight">Configuration Persistence</span> - Reliable storage and retrieval of custom model configurations</li>
+                </ul>
+            </div>
+
+            <div class="version">
+                <div class="version-header">
+                    <span class="version-number">v1.14.2</span>
+                    <span class="version-date">July 2024</span>
+                    <span class="version-badge minor">Enhancement</span>
+                </div>
+                <ul class="changes">
+                    <li class="feature-improved"><span class="highlight">SQL Formatter Enhancement</span> - Major upgrade using native ParquetViewer library for SQL formatting</li>
+                    <li class="feature-new"><span class="highlight">Library Integration</span> - Replaced complex custom SQL tokenization with efficient Rust-based formatting</li>
+                    <li class="feature-new"><span class="highlight">Dual Format Modes</span> - Enhanced support for both minimal and beautify SQL formatting styles</li>
+                    <li class="feature-improved"><span class="highlight">Performance</span> - 95% code reduction while improving reliability and speed</li>
+                    <li class="feature-improved"><span class="highlight">Error Handling</span> - Robust fallback mechanisms for SQL formatting operations</li>
+                </ul>
+            </div>
+
+            <div class="version">
+                <div class="version-header">
+                    <span class="version-number">v1.14.0</span>
+                    <span class="version-date">June 2024</span>
+                    <span class="version-badge minor">UI Update</span>
+                </div>
+                <ul class="changes">
+                    <li class="feature-improved"><span class="highlight">UI Refactoring</span> - Major UI improvements and code refactoring for better user experience</li>
+                    <li class="feature-fixed"><span class="highlight">Model Selection Fix</span> - Fixed model selector display not updating when selecting different models</li>
+                    <li class="feature-fixed"><span class="highlight">Duplicate Icon Fix</span> - Removed duplicate chevron icons in dropdown menus for cleaner interface</li>
+                    <li class="feature-improved"><span class="highlight">Enhanced Navigation</span> - Improved navigation layout and component organization</li>
+                    <li class="feature-improved"><span class="highlight">Code Cleanup</span> - Streamlined SwiftUI components and improved code maintainability</li>
+                </ul>
+            </div>
+
+            <div class="version">
+                <div class="version-header">
+                    <span class="version-number">v1.13.2</span>
+                    <span class="version-date">May 2024</span>
+                    <span class="version-badge minor">AI Update</span>
+                </div>
+                <ul class="changes">
+                    <li class="feature-new"><span class="highlight">DeepSeek Integration</span> - Added deepseek-chat and deepseek-reasoner models with OpenAI API compatibility</li>
+                    <li class="feature-new"><span class="highlight">Reasoning Process</span> - DeepSeek reasoner shows transparent "deepthink" Chain of Thought reasoning</li>
+                    <li class="feature-new"><span class="highlight">Collapsible Thinking</span> - Expandable/collapsible thinking process section with brain icon and smooth animations</li>
+                    <li class="feature-improved"><span class="highlight">Stop Functionality</span> - Improved stop button that immediately cancels streaming responses for all models</li>
+                    <li class="feature-improved"><span class="highlight">Task Cancellation</span> - Proper URLSessionDataTask and Swift Task cancellation architecture</li>
+                    <li class="feature-new"><span class="highlight">Real-time Reasoning</span> - See AI's internal thinking process as it streams during response generation</li>
+                </ul>
+            </div>
+
+            <div class="version">
+                <div class="version-header">
+                    <span class="version-number">v1.13.0</span>
+                    <span class="version-date">April 2024</span>
+                    <span class="version-badge major">New Feature</span>
+                </div>
+                <ul class="changes">
+                    <li class="feature-new"><span class="highlight">AI Chat</span> - New intelligent AI assistant for development questions and code review</li>
+                    <li class="feature-new"><span class="highlight">Chat Interface</span> - Interactive conversation with context-aware responses</li>
+                    <li class="feature-new"><span class="highlight">Developer Context</span> - Specialized knowledge for software development workflows</li>
+                    <li class="feature-new"><span class="highlight">Code Analysis</span> - Real-time code review and technical guidance</li>
+                    <li class="feature-new"><span class="highlight">Multi-language Support</span> - Assistance across various programming languages and frameworks</li>
+                    <li class="feature-new"><span class="highlight">Message History</span> - Persistent chat sessions with conversation management</li>
+                </ul>
+            </div>
+
+            <div class="version">
+                <div class="version-header">
+                    <span class="version-number">v1.12.0</span>
+                    <span class="version-date">March 2024</span>
+                    <span class="version-badge major">Security Tools</span>
+                </div>
+                <ul class="changes">
+                    <li class="feature-new"><span class="highlight">Crypto Tools</span> - New comprehensive cryptographic utility suite</li>
+                    <li class="feature-new"><span class="highlight">Hash Functions</span> - MD5, CRC32, SHA-1, SHA-256, SHA-384, SHA-512 with real-time computation</li>
+                    <li class="feature-new"><span class="highlight">Symmetric Encryption</span> - AES-GCM-256 encrypt/decrypt with key generation and Base64 encoding</li>
+                    <li class="feature-new"><span class="highlight">Asymmetric Encryption</span> - RSA-2048/4096 encrypt/decrypt using Security framework</li>
+                    <li class="feature-new"><span class="highlight">Unified Interface</span> - Three-tab design (Hash/Symmetric/Asymmetric) with consistent UX patterns</li>
+                    <li class="feature-new"><span class="highlight">API Authentication</span> - Perfect for generating tokens for third-party interface calls</li>
+                </ul>
+            </div>
+
+            <div class="version">
+                <div class="version-header">
+                    <span class="version-number">v1.11.1</span>
+                    <span class="version-date">February 2024</span>
+                    <span class="version-badge minor">JWT Enhancement</span>
+                </div>
+                <ul class="changes">
+                    <li class="feature-improved"><span class="highlight">JWT Encoder/Decoder</span> - Enhanced with RSA algorithm support (RS256, RS384, RS512)</li>
+                    <li class="feature-new"><span class="highlight">RSA Cryptography</span> - Implemented using iOS Security framework for key management and signing</li>
+                    <li class="feature-improved"><span class="highlight">Dynamic UI</span> - Interface adapts to show appropriate fields (secret key for HMAC, RSA keys for RSA)</li>
+                    <li class="feature-new"><span class="highlight">Key Management</span> - Support for PEM-formatted RSA keys with auto-population sample keys</li>
+                    <li class="feature-new"><span class="highlight">Algorithm Detection</span> - Real-time detection of JWT algorithm type for verification</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="download-section">
+            <a href="#" class="download-btn">Download Latest Version</a>
+            <p style="margin-top: 15px; color: #666;">macOS 14.0 or later required</p>
+        </div>
+    </div>
+</body>
+</html>
