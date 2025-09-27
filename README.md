@@ -1,6 +1,6 @@
 # DevHelper
 
-A native macOS application for developers, containing 16 essential tools commonly used in software development.
+A native macOS application for developers, containing 17 essential tools commonly used in software development.
 
 > This tool was 100% developed by `Claude Code`.
 
@@ -13,6 +13,7 @@ A native macOS application for developers, containing 16 essential tools commonl
 - **SQL Formatter** - Format and minify SQL queries with syntax validation
 - **HTML Formatter** - Format and minify HTML with proper tag indentation
 - **Base64 Encode/Decode** - Encode and decode Base64 strings
+- **Hex String Converter** - **NEW** Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support and real-time processing
 - **JWT Encoder/Decoder** - Encode and decode JSON Web Tokens with HMAC and RSA signature support
 - **Regex Test** - Test regular expressions with pattern matching
 - **UUID Generator** - Generate UUIDs in various formats including v7 with timestamp extraction
@@ -32,7 +33,7 @@ A native macOS application for developers, containing 16 essential tools commonl
 
 ## Version
 
-Current version: 2.1.0
+Current version: 2.2.0
 
 ## Screenshots
 
@@ -58,6 +59,9 @@ Current version: 2.1.0
 
 #### Base64 Encode/Decode
 ![DevHelper Base64 encode](./images/screenshots/base64.png)
+
+#### Hex String Converter
+![DevHelper Hex String Converter](./images/screenshots/hex.png)
 
 #### JWT Encoder/Decoder
 ![DevHelper JWT encoder](./images/screenshots/jwt.png)
