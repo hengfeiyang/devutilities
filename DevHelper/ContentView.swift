@@ -101,6 +101,8 @@ struct ContentView: View {
                     HTMLFormatterView()
                 case .base64:
                     Base64View()
+                case .hexString:
+                    HexStringConverterView()
                 case .jwt:
                     JWTView()
                 case .regexTest:

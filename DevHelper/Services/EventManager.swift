@@ -380,6 +380,7 @@ extension ToolType {
         case .unitConverter: return "unit_converter"
         case .jsonFormatter: return "json_formatter"
         case .base64: return "base64_codec"
+        case .hexString: return "hex_string_converter"
         case .regexTest: return "regex_test"
         case .uuidGenerator: return "uuid_generator"
         case .urlTools: return "url_tools"

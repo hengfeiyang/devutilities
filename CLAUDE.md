@@ -3,27 +3,28 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevHelper is a native macOS application built with SwiftUI that provides 16 essential developer utilities. Version 2.1.0 with timestamp convert history.
+DevHelper is a native macOS application built with SwiftUI that provides 17 essential developer utilities. Version 2.2.0 with new hex string converter.
 
 ## Key Tools & Status
 
-All 16 tools are ✅ **Complete**:
+All 17 tools are ✅ **Complete**:
 1. **Timestamp Converter** - Bidirectional timestamp conversion with timezone support
 2. **Unit Converter** - 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
 3. **JSON Formatter** - Format, validate, escape/unescape, **visual CodeMirror diff editor**
 4. **Base64 Encode/Decode** - Text encoding/decoding with URL-safe variant
-5. **Regex Test** - Pattern matching with capture groups and common patterns
-6. **UUID Generator** - Multiple versions (v1, v4, v5, v7) with bulk generation
-7. **URL Tools** - Encoding/decoding and comprehensive URL parsing
-8. **IP Query** - Dual IP detection and geolocation queries
-9. **HTTP Request** - Full HTTP client with SSE streaming and JSON tree view
-10. **QR Code** - Generation and scanning with multiple sizes and error correction
-11. **SQL Formatter** - **Enhanced SQL formatting** with native ParquetViewer library support for minimal and beautify modes
-12. **HTML Formatter** - Format and minify HTML with proper indentation
-13. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
-14. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
-15. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
-16. **AI Chat** - **Enhanced AI assistant** with custom model support, DeepSeek reasoning models, and flexible API configuration
+5. **Hex String Converter** - **NEW** Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support
+6. **Regex Test** - Pattern matching with capture groups and common patterns
+7. **UUID Generator** - Multiple versions (v1, v4, v5, v7) with bulk generation
+8. **URL Tools** - Encoding/decoding and comprehensive URL parsing
+9. **IP Query** - Dual IP detection and geolocation queries
+10. **HTTP Request** - Full HTTP client with SSE streaming and JSON tree view
+11. **QR Code** - Generation and scanning with multiple sizes and error correction
+12. **SQL Formatter** - **Enhanced SQL formatting** with native ParquetViewer library support for minimal and beautify modes
+13. **HTML Formatter** - Format and minify HTML with proper indentation
+14. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
+15. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
+16. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
+17. **AI Chat** - **Enhanced AI assistant** with custom model support, DeepSeek reasoning models, and flexible API configuration
 
 ## Architecture & Technical Stack
 - **Platform**: macOS 14.0+ SwiftUI
@@ -43,7 +44,13 @@ xcodebuild -project DevHelper.xcodeproj -scheme DevHelper build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
-## Recent Updates (v2.1.0)
+## Recent Updates (v2.2.0)
+- **Hex String Converter**: NEW tool for bidirectional hex-to-string conversion
+- **Encoding Support**: UTF-8, UTF-16, and ASCII encoding options
+- **Enhanced Developer Tools**: Now 17 complete utilities for developers
+- **Real-time Conversion**: Instant hex encoding/decoding as you type
+
+## Previous Updates (v2.1.0)
 - **Timestamp history**: Added timestamp convert history
 - **IP Query**: Fixed ip query for China
 

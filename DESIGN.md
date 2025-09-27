@@ -1,7 +1,7 @@
 # DevHelper - Design Document
 
 ## Overview
-DevHelper is a native macOS application built with SwiftUI that provides 16 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+DevHelper is a native macOS application built with SwiftUI that provides 17 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
 
 ## Architecture
 
@@ -16,11 +16,12 @@ DevHelper/
 │   ├── ContentView.swift           # Navigation split view
 │   ├── Models/
 │   │   └── ToolType.swift          # Tool definitions
-│   ├── Views/                      # All 16 tool implementations
+│   ├── Views/                      # All 17 tool implementations
 │   │   ├── TimestampConverterView.swift
 │   │   ├── UnitConverterView.swift
 │   │   ├── JSONFormatterView.swift
 │   │   ├── Base64View.swift
+│   │   ├── HexStringConverterView.swift
 │   │   ├── RegexTestView.swift
 │   │   ├── UUIDGeneratorView.swift
 │   │   ├── URLToolsView.swift
@@ -163,7 +164,37 @@ Each tool follows a consistent pattern:
 - URL-safe character substitution
 - UTF-8 encoding/decoding
 
-### 5. Regex Test
+### 5. Hex String Converter
+**File**: `HexStringConverterView.swift`
+
+**Features**:
+- Bidirectional hex-to-string conversion
+- Multiple encoding support (UTF-8, UTF-16, ASCII)
+- Real-time conversion as user types
+- Error handling for invalid hex input
+- Swap functionality between modes
+- Sample data for testing
+- Character validation and formatting
+- State persistence between sessions
+
+**UI Components**:
+- Tab-based interface (String to Hex/Hex to String)
+- Encoding selector dropdown
+- Two-panel layout per mode with arrow indicator
+- Sample and swap buttons
+- Character counters for input/output
+- Copy and clear buttons
+
+**Implementation Details**:
+- `String.data(using:)` for string-to-hex encoding
+- Custom hex-to-data parsing with validation
+- Support for UTF-8, UTF-16, and ASCII encodings
+- Real-time validation of hex characters (0-9, a-f)
+- Even-length requirement for valid hex strings
+- UserDefaults integration for state persistence
+- Comprehensive error handling with descriptive messages
+
+### 6. Regex Test
 **File**: `RegexTestView.swift`
 
 **Features**:
@@ -186,7 +217,7 @@ Each tool follows a consistent pattern:
 - Flag handling for regex options
 - String replacement with capture group support
 
-### 6. UUID Generator
+### 7. UUID Generator
 **File**: `UUIDGeneratorView.swift`
 
 **Features**:
@@ -212,7 +243,7 @@ Each tool follows a consistent pattern:
 - UUID v7 timestamp-ordered generation
 - Automatic timestamp extraction from v7 UUIDs
 
-### 7. URL Tools
+### 8. URL Tools
 **File**: `URLToolsView.swift`
 
 **Features**:
@@ -234,7 +265,7 @@ Each tool follows a consistent pattern:
 - `URLComponents` for parsing
 - Query parameter array management
 
-### 8. IP Query
+### 9. IP Query
 **File**: `IPQueryView.swift`
 
 **Features**:
@@ -258,7 +289,7 @@ Each tool follows a consistent pattern:
 - User-Agent headers to avoid bot detection
 - Comprehensive error handling and validation
 
-### 9. HTTP Request
+### 10. HTTP Request
 **File**: `HTTPRequestView.swift`
 
 **Features**:
@@ -298,7 +329,7 @@ Each tool follows a consistent pattern:
 - Automatic content type detection for response formatting
 - Thread-safe UI updates using `DispatchQueue.main.async`
 
-### 10. QR Code
+### 11. QR Code
 **File**: `QRCodeView.swift`
 
 **Features**:
@@ -333,7 +364,7 @@ Each tool follows a consistent pattern:
 - Real-time UI updates using `onChange` modifiers
 - Error handling for image processing and file operations
 
-### 11. SQL Formatter
+### 12. SQL Formatter
 **File**: `SQLFormatterView.swift`
 
 **Features**:
@@ -358,7 +389,7 @@ Each tool follows a consistent pattern:
 - **Error resilience**: Comprehensive do-catch blocks with intelligent fallback to original text
 - **FFI bridge**: Seamless Swift-to-Rust communication via C header interface
 
-### 12. HTML Formatter
+### 13. HTML Formatter
 **File**: `HTMLFormatterView.swift`
 
 **Features**:
@@ -383,7 +414,7 @@ Each tool follows a consistent pattern:
 - Real-time processing with input validation
 - Error handling with descriptive feedback
 
-### 13. JWT Encoder/Decoder
+### 14. JWT Encoder/Decoder
 **File**: `JWTView.swift`
 
 **Features**:
@@ -413,7 +444,7 @@ Each tool follows a consistent pattern:
 - Error handling for malformed tokens
 - Secure key handling for signature operations
 
-### 14. Parquet Viewer
+### 15. Parquet Viewer
 **File**: `ParquetViewerView.swift`
 
 **Features**:
@@ -445,7 +476,7 @@ Each tool follows a consistent pattern:
 - Automatic file type detection based on extension
 - Comprehensive metadata extraction including row groups and format version
 
-### 15. Crypto Tools
+### 16. Crypto Tools
 **File**: `CryptoToolsView.swift`
 
 **Features**:
@@ -477,7 +508,7 @@ Each tool follows a consistent pattern:
 - Error handling for key format validation
 - Thread-safe operations with proper error messaging
 
-### 16. AI Chat
+### 17. AI Chat
 **File**: `AIChatView.swift`
 
 **Features**:
@@ -552,11 +583,11 @@ Each tool follows a consistent pattern:
 ### ToolType Enum
 ```swift
 enum ToolType: String, CaseIterable, Identifiable {
-    case timestampConverter, unitConverter, jsonFormatter, base64, 
-         regexTest, uuidGenerator, urlTools, ipQuery, httpRequest, 
-         qrCode, sqlFormatter, htmlFormatter, jwt, parquetViewer, 
+    case timestampConverter, unitConverter, jsonFormatter, base64,
+         hexString, regexTest, uuidGenerator, urlTools, ipQuery, httpRequest,
+         qrCode, sqlFormatter, htmlFormatter, jwt, parquetViewer,
          cryptoTools, aiChat
-    
+
     var title: String { /* Display names */ }
     var iconName: String { /* SF Symbols */ }
 }
@@ -568,6 +599,7 @@ enum ToolType: String, CaseIterable, Identifiable {
 - `SQLMode` for SQL formatting operations
 - `HTMLMode` for HTML formatting operations
 - `Base64Tab` for encoding modes
+- `HexStringTab` for hex string converter modes
 - `JWTTab` and `JWTAlgorithm` for JWT operations
 - `UUIDVersion` and `UUIDFormat` for UUID options
 - `URLTab` for URL tool modes

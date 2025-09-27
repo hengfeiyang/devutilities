@@ -1,6 +1,6 @@
 # DevHelper
 
-A native macOS application for developers, containing 16 essential tools commonly used in software development.
+A native macOS application for developers, containing 17 essential tools commonly used in software development.
 
 > This tool was 100% developed by `Claude Code`.
 
@@ -10,6 +10,7 @@ A native macOS application for developers, containing 16 essential tools commonl
 - **Unit Converter** - Convert between different units across 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
 - **JSON Formatter** - Format, validate, escape/unescape, and compare JSON data with visual CodeMirror diff editor
 - **Base64 Encode/Decode** - Text encoding/decoding with URL-safe variant and automatic detection
+- **Hex String Converter** - **NEW** Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support and real-time processing
 - **Regex Test** - Pattern matching with capture groups, flags, and common pattern library
 - **UUID Generator** - Multiple versions (v1, v4, v5, v7) with bulk generation and timestamp extraction
 - **URL Tools** - Encoding/decoding and comprehensive URL parsing with component breakdown
@@ -20,8 +21,8 @@ A native macOS application for developers, containing 16 essential tools commonl
 - **HTML Formatter** - Format and minify HTML with proper tag indentation and structure validation
 - **JWT Encoder/Decoder** - Complete JWT support with HMAC and RSA algorithms using CryptoKit security
 - **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading with schema inspection
-- **Crypto Tools** - **NEW** Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA-1/256/384/512), symmetric encryption (AES-GCM-256), and asymmetric encryption (RSA-2048/4096)
-- **AI Chat** - **LATEST** Intelligent AI assistant with custom model support, DeepSeek reasoning models, flexible API configuration, and enhanced user experience
+- **Crypto Tools** - Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA-1/256/384/512), symmetric encryption (AES-GCM-256), and asymmetric encryption (RSA-2048/4096)
+- **AI Chat** - Intelligent AI assistant with custom model support, DeepSeek reasoning models, flexible API configuration, and enhanced user experience
 
 ## Key Features
 
@@ -32,4 +33,4 @@ A native macOS application for developers, containing 16 essential tools commonl
 
 ## Version
 
-Current version: 2.1.0
+Current version: 2.2.0

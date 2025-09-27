@@ -23,6 +23,7 @@ enum ToolType: String, CaseIterable, Identifiable {
     case sqlFormatter = "sql"
     case htmlFormatter = "html"
     case base64 = "base64"
+    case hexString = "hex-string"
     case jwt = "jwt"
     case regexTest = "regex"
     case uuidGenerator = "uuid"
@@ -51,6 +52,8 @@ enum ToolType: String, CaseIterable, Identifiable {
             return "HTML Formatter"
         case .base64:
             return "Base64 Encode/Decode"
+        case .hexString:
+            return "Hex String Converter"
         case .jwt:
             return "JWT Encoder/Decoder"
         case .regexTest:
@@ -88,6 +91,8 @@ enum ToolType: String, CaseIterable, Identifiable {
             return "chevron.left.forwardslash.chevron.right"
         case .base64:
             return "6.circle"
+        case .hexString:
+            return "textformat.123"
         case .jwt:
             return "key.horizontal"
         case .regexTest:
