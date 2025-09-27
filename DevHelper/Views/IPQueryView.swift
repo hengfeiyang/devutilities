@@ -293,15 +293,6 @@ struct IPQueryView: View {
                         .textSelection(.enabled)
                 }
             }
-
-            if !details.company.isEmpty && details.company != "未知" {
-                HStack {
-                    Text("Company:")
-                        .fontWeight(.medium)
-                    Text(details.company)
-                        .textSelection(.enabled)
-                }
-            }
         }
         .font(.system(.body, design: .default))
     }
@@ -653,7 +644,6 @@ struct BaiduIPData: Codable {
     let city: String?
     let isp: String
     let scene: String
-    let company: String
     let query_ip: String
     let version: String
 
