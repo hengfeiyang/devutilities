@@ -63,12 +63,12 @@ struct HTMLFormatterView: View {
                         }
                     
                     HStack {
-                        Text("\(htmlInput.count) characters")
+                        Text("\(htmlInput.count) characters, \(htmlInput.components(separatedBy: .newlines).count) lines")
                             .font(.caption)
                             .foregroundColor(.secondary)
-                        
+
                         Spacer()
-                        
+
                         if !validationMessage.isEmpty {
                             Text(validationMessage)
                                 .font(.caption)
@@ -99,7 +99,7 @@ struct HTMLFormatterView: View {
                         .padding(5)
                         .frame(maxHeight: .infinity)
                     
-                    Text("\(htmlOutput.count) characters")
+                    Text("\(htmlOutput.count) characters, \(htmlOutput.components(separatedBy: .newlines).count) lines")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }

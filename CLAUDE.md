@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevHelper is a native macOS application built with SwiftUI that provides 17 essential developer utilities. Version 2.2.0 with new hex string converter.
+DevHelper is a native macOS application built with SwiftUI that provides 17 essential developer utilities. Version 2.2.1 with enhanced UI improvements.
 
 ## Key Tools & Status
 
@@ -44,7 +44,13 @@ xcodebuild -project DevHelper.xcodeproj -scheme DevHelper build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
-## Recent Updates (v2.2.0)
+## Recent Updates (v2.2.1)
+- **Enhanced Text Metrics**: Added line count display to HTML, Base64, Hex String, JSON, and SQL formatter tools
+- **Improved User Experience**: All text-based tools now show both character count and line count information
+- **Consistent UI**: Unified metrics display across all formatter utilities
+- **Better Content Analysis**: Enhanced text content analysis with dual character/line tracking
+
+## Previous Updates (v2.2.0)
 - **Hex String Converter**: NEW tool for bidirectional hex-to-string conversion
 - **Encoding Support**: UTF-8, UTF-16, and ASCII encoding options
 - **Enhanced Developer Tools**: Now 17 complete utilities for developers
@@ -124,3 +130,14 @@ mcp__XcodeBuildMCP__build_run_macos
 - Uses `@State` for local view state management
 - All tools have real-time processing and validation
 - App Sandbox enabled with network and file permissions
+
+## Documentation Update Protocol
+When updating the version or adding new features, you must update ALL of these files:
+1. README.md (main repository documentation)
+2. CLAUDE.md (this file - project guidance)
+3. DESIGN.md (technical design document)
+4. website/README.md (website repository documentation)
+5. website/index.html (main website page)
+6. website/release-notes.html (release notes page)
+
+This ensures consistency across all documentation and user-facing materials.

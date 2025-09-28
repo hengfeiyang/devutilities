@@ -61,7 +61,7 @@ struct Base64View: View {
                                 encodeText()
                             }
                         
-                        Text("\(textInput.count) characters")
+                        Text("\(textInput.count) characters, \(textInput.components(separatedBy: .newlines).count) lines")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -94,7 +94,7 @@ struct Base64View: View {
                         .background(AppConstants.lightGrayBackground)
                         .cornerRadius(8)
                         
-                        Text("\(base64Output.count) characters")
+                        Text("\(base64Output.count) characters, \(base64Output.components(separatedBy: .newlines).count) lines")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -119,7 +119,7 @@ struct Base64View: View {
                                 decodeBase64()
                             }
                         
-                        Text("\(base64Input.count) characters")
+                        Text("\(base64Input.count) characters, \(base64Input.components(separatedBy: .newlines).count) lines")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -152,7 +152,7 @@ struct Base64View: View {
                         .background(AppConstants.lightGrayBackground)
                         .cornerRadius(8)
                         
-                        Text("\(decodedOutput.count) characters")
+                        Text("\(decodedOutput.count) characters, \(decodedOutput.components(separatedBy: .newlines).count) lines")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }

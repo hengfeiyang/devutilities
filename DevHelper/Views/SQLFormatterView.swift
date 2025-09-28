@@ -63,7 +63,7 @@ struct SQLFormatterView: View {
                         }
                     
                     HStack {
-                        Text("\(sqlInput.count) characters")
+                        Text("\(sqlInput.count) characters, \(sqlInput.components(separatedBy: .newlines).count) lines")
                             .font(.caption)
                             .foregroundColor(.secondary)
                         
@@ -99,7 +99,7 @@ struct SQLFormatterView: View {
                         .padding(5)
                         .frame(maxHeight: .infinity)
                     
-                    Text("\(sqlOutput.count) characters")
+                    Text("\(sqlOutput.count) characters, \(sqlOutput.components(separatedBy: .newlines).count) lines")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }

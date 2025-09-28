@@ -81,7 +81,7 @@ struct JSONFormatterView: View {
                     
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("JSON 1 (Left): \(jsonInput.count) characters")
+                            Text("JSON 1 (Left): \(jsonInput.count) characters, \(jsonInput.components(separatedBy: .newlines).count) lines")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -89,7 +89,7 @@ struct JSONFormatterView: View {
                         Spacer()
                         
                         VStack(alignment: .trailing, spacing: 2) {
-                            Text("JSON 2 (Right): \(jsonInput2.count) characters")
+                            Text("JSON 2 (Right): \(jsonInput2.count) characters, \(jsonInput2.components(separatedBy: .newlines).count) lines")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -127,7 +127,7 @@ struct JSONFormatterView: View {
                             }
                         
                         HStack {
-                            Text("\(jsonInput.count) characters")
+                            Text("\(jsonInput.count) characters, \(jsonInput.components(separatedBy: .newlines).count) lines")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                             
@@ -163,7 +163,7 @@ struct JSONFormatterView: View {
                             .padding(5)
                             .frame(maxHeight: .infinity)
                         
-                        Text("\(jsonOutput.count) characters")
+                        Text("\(jsonOutput.count) characters, \(jsonOutput.components(separatedBy: .newlines).count) lines")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }

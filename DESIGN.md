@@ -616,7 +616,7 @@ enum ToolType: String, CaseIterable, Identifiable {
 ### Target Settings
 - **Minimum macOS**: 14.0
 - **Bundle Identifier**: com.devhelper.DevHelper
-- **Version**: 1.14.2 (Build 1)
+- **Version**: 2.2.1 (Build 1)
 - **Swift Version**: 5.0
 - **App Sandbox**: Enabled
 - **Hardened Runtime**: Enabled

@@ -59,7 +59,7 @@ struct HexStringConverterView: View {
                                 convertStringToHex()
                             }
 
-                        Text("\(stringInput.count) characters")
+                        Text("\(stringInput.count) characters, \(stringInput.components(separatedBy: .newlines).count) lines")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -92,7 +92,7 @@ struct HexStringConverterView: View {
                         .background(AppConstants.lightGrayBackground)
                         .cornerRadius(8)
 
-                        Text("\(hexOutput.count) characters")
+                        Text("\(hexOutput.count) characters, \(hexOutput.components(separatedBy: .newlines).count) lines")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -117,7 +117,7 @@ struct HexStringConverterView: View {
                                 convertHexToString()
                             }
 
-                        Text("\(hexInput.count) characters")
+                        Text("\(hexInput.count) characters, \(hexInput.components(separatedBy: .newlines).count) lines")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -150,7 +150,7 @@ struct HexStringConverterView: View {
                         .background(AppConstants.lightGrayBackground)
                         .cornerRadius(8)
 
-                        Text("\(decodedOutput.count) characters")
+                        Text("\(decodedOutput.count) characters, \(decodedOutput.components(separatedBy: .newlines).count) lines")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
