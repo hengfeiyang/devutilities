@@ -14,8 +14,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import Foundation
+import SwiftUI
 
-enum ToolType: String, CaseIterable, Identifiable {
+enum ToolType: String, CaseIterable, Identifiable, Codable {
     case aiChat = "ai-chat"
     case timestampConverter = "timestamp"
     case unitConverter = "unit"
@@ -112,5 +113,11 @@ enum ToolType: String, CaseIterable, Identifiable {
         case .parquetViewer:
             return "doc.text.magnifyingglass"
         }
+    }
+}
+
+extension ToolType: Transferable {
+    public static var transferRepresentation: some TransferRepresentation {
+        CodableRepresentation(contentType: .plainText)
     }
 }

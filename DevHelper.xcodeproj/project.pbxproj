@@ -11,6 +11,8 @@
 		349238D69D484963908DFE3B /* ToolIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0029C56C1244558E7E3521 /* ToolIntents.swift */; };
 		611E7E9663A14E0F99567C7B /* DevHelperShortcutsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340D40200B047DAA10319FB /* DevHelperShortcutsProvider.swift */; };
 		7BADF8733C7C4EB4B3C07E84 /* HexStringConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66E3643B7264A049FA9EFDF /* HexStringConverterView.swift */; };
+		813459522E8A95EA003222BC /* FeatureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813459512E8A95EA003222BC /* FeatureManager.swift */; };
+		813459542E8A95FA003222BC /* FeatureSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813459532E8A95FA003222BC /* FeatureSettingsView.swift */; };
 		9332C0382E589984009E68BE /* CodeMirror-SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9332C0372E589984009E68BE /* CodeMirror-SwiftUI */; };
 		9332C0392E589984009E68BE /* CodeMirror-SwiftUI in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 9332C0372E589984009E68BE /* CodeMirror-SwiftUI */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		934569062E5FFCD600491835 /* UpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934569042E5FFCD600491835 /* UpdateChecker.swift */; };
@@ -83,6 +85,8 @@
 		4C0029C56C1244558E7E3521 /* ToolIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolIntents.swift; sourceTree = "<group>"; };
 		66CDC352846A4E27A5EF98B9 /* OpenToolIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenToolIntent.swift; sourceTree = "<group>"; };
 		7340D40200B047DAA10319FB /* DevHelperShortcutsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevHelperShortcutsProvider.swift; sourceTree = "<group>"; };
+		813459512E8A95EA003222BC /* FeatureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManager.swift; sourceTree = "<group>"; };
+		813459532E8A95FA003222BC /* FeatureSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureSettingsView.swift; sourceTree = "<group>"; };
 		9335BB142E66BC3E00C1AE74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		934569042E5FFCD600491835 /* UpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateChecker.swift; sourceTree = "<group>"; };
 		934569052E5FFCD600491835 /* VersionComparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionComparator.swift; sourceTree = "<group>"; };
@@ -224,6 +228,7 @@
 		D5F4E8132C5A1B3000123456 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				813459532E8A95FA003222BC /* FeatureSettingsView.swift */,
 				93DE0EAB2E7ABA1900731598 /* AddModelView.swift */,
 				93DE0EAC2E7ABA1900731598 /* AddProviderView.swift */,
 				93DE0EAD2E7ABA1900731598 /* AIProviderDetailView.swift */,
@@ -253,6 +258,7 @@
 		D5F4E8142C5A1B3000123456 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				813459512E8A95EA003222BC /* FeatureManager.swift */,
 				93DE0EA72E7AB9F200731598 /* AIProvider.swift */,
 				93CECFE42E612F2000F5A131 /* AIModels.swift */,
 				E0199D7662F54B0C83FA0058 /* AppState.swift */,
@@ -367,6 +373,7 @@
 				D5F4E8102C5A1B3000123456 /* URLToolsView.swift in Sources */,
 				HTTP4E7F2C5A1B3000654321 /* HTTPRequestView.swift in Sources */,
 				93C47C932E3312A00069B278 /* CodeEditor.swift in Sources */,
+				813459542E8A95FA003222BC /* FeatureSettingsView.swift in Sources */,
 				93CECFE82E612F2B00F5A131 /* AISettingsView.swift in Sources */,
 				93CECFE92E612F2B00F5A131 /* AIChatView.swift in Sources */,
 				D5F4E8122C5A1B3000123456 /* ToolType.swift in Sources */,
@@ -385,6 +392,7 @@
 				1B24B3CB177E4581917D26C9 /* AppState.swift in Sources */,
 				611E7E9663A14E0F99567C7B /* DevHelperShortcutsProvider.swift in Sources */,
 				9DF690CF055F4760B9362F3C /* OpenToolIntent.swift in Sources */,
+				813459522E8A95EA003222BC /* FeatureManager.swift in Sources */,
 				349238D69D484963908DFE3B /* ToolIntents.swift in Sources */,
 				93B55B4F2E5EF944001ECD91 /* EventStorage.swift in Sources */,
 				93B55B502E5EF944001ECD91 /* EventManager.swift in Sources */,
@@ -541,7 +549,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevHelper/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -564,7 +572,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.1;
+				MARKETING_VERSION = 2.3.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhelper.DevHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -583,7 +591,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevHelper/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -606,7 +614,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.1;
+				MARKETING_VERSION = 2.3.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.devhelper.DevHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";

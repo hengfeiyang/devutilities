@@ -19,6 +19,8 @@ struct ContentView: View {
     @State private var selectedTool: ToolType = .aiChat
     @State private var searchText: String = ""
     @State private var previousTool: ToolType?
+    @State private var showingFeatureSettings = false
+    @StateObject private var featureManager = FeatureManager()
     @EnvironmentObject var updateChecker: UpdateChecker
     @EnvironmentObject var appState: AppState
     
@@ -30,10 +32,11 @@ struct ContentView: View {
     }
     
     var filteredTools: [ToolType] {
+        let enabledTools = featureManager.filteredTools
         if searchText.isEmpty {
-            return ToolType.allCases
+            return enabledTools
         } else {
-            return ToolType.allCases.filter { 
+            return enabledTools.filter {
                 $0.title.localizedCaseInsensitiveContains(searchText)
             }
         }
@@ -48,17 +51,30 @@ struct ContentView: View {
     var body: some View {
         NavigationSplitView {
             VStack(alignment: .leading, spacing: 10) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("DevHelper")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                    Text("Developer Tools \(appVersion)")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("DevHelper")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        Text("Developer Tools \(appVersion)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+
+                    Spacer()
+
+                    Button(action: {
+                        showingFeatureSettings = true
+                    }) {
+                        Image(systemName: "gearshape")
+                            .font(.title3)
+                            .foregroundColor(.secondary)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .help("Feature Settings")
                 }
                 .padding(.horizontal)
                 .padding(.top, 10)
-                .frame(maxWidth: .infinity, alignment: .leading)
                 
                 // Search Bar
                 HStack {
@@ -181,6 +197,9 @@ struct ContentView: View {
             if selectedTool != newValue {
                 selectedTool = newValue
             }
+        }
+        .sheet(isPresented: $showingFeatureSettings) {
+            FeatureSettingsView(featureManager: featureManager)
         }
     }
 }
