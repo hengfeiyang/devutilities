@@ -38,7 +38,7 @@ struct FeatureSettingsView: View {
         }
         .navigationTitle("Feature Management")
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
+            ToolbarItem(placement: .destructiveAction) {
                 Button("Reset") {
                     featureManager.resetToDefault()
                 }
