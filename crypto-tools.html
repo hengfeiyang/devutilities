@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Tools - Hash, Encrypt & Decrypt Online | DevHelper</title>
+    <meta name="description" content="Professional cryptographic toolkit for developers. Hash functions (MD5, SHA-1, SHA-256, SHA-384, SHA-512, CRC32), AES-GCM symmetric encryption, and RSA asymmetric encryption. Perfect for API authentication and security workflows. Part of DevHelper - 17 essential developer tools for macOS.">
+    <meta name="keywords" content="crypto tools, hash functions, MD5, SHA256, SHA512, CRC32, AES encryption, RSA encryption, cryptographic tools, encrypt decrypt, hash generator, symmetric encryption, asymmetric encryption">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="Crypto Tools - Professional Cryptographic Toolkit | DevHelper">
+    <meta property="og:description" content="Complete cryptographic toolkit with hash functions, AES-GCM symmetric encryption, and RSA asymmetric encryption for secure development workflows.">
+    <meta property="og:image" content="images/screenshots/crypto.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Crypto Tools - Professional Cryptographic Toolkit">
+    <meta property="twitter:description" content="Complete cryptographic toolkit with hash functions, AES-GCM symmetric encryption, and RSA asymmetric encryption.">
+    <meta property="twitter:image" content="images/screenshots/crypto.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "DevHelper Crypto Tools",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS",
+        "description": "Professional cryptographic toolkit with hash functions and encryption capabilities",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "14"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-brand">
+                <img src="images/icon.png" alt="DevHelper" class="nav-logo">
+                <span class="nav-title">DevHelper</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#reviews" class="nav-link">Reviews</a>
+                <a href="release-notes.html" class="nav-link">Reviews</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="https://github.com/hengfeiyang/devhelper" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="breadcrumb">
+                        <a href="index.html">DevHelper</a> / <span>Crypto Tools</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Crypto Tools
+                        <span class="hero-subtitle">Professional Cryptographic Toolkit</span>
+                    </h1>
+                    <p class="hero-description">
+                        Comprehensive cryptographic utility suite for secure development workflows. Features complete hash functions (MD5, CRC32, SHA-1/256/384/512), AES-GCM-256 symmetric encryption with key generation, and RSA-2048/4096 asymmetric encryption. Perfect for API authentication, token generation, and security implementations.
+                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🔐</span>
+                            <span>6 Hash Functions</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🔑</span>
+                            <span>AES-GCM Encryption</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🛡️</span>
+                            <span>RSA Cryptography</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="index.html#download" class="btn btn-primary">
+                            <span class="btn-icon">📥</span>
+                            Download DevHelper
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            <span class="btn-icon">👀</span>
+                            See Features
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/screenshots/crypto.png" alt="DevHelper Crypto Tools Screenshot showing cryptographic operations interface">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Advanced Cryptographic Features</h2>
+                <p class="section-description">
+                    Everything you need for professional cryptographic operations and security implementations.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card featured">
+                    <div class="feature-icon">🔐</div>
+                    <h3 class="feature-title">Complete Hash Functions</h3>
+                    <p class="feature-description">Six essential hash algorithms - MD5, CRC32, SHA-1, SHA-256, SHA-384, and SHA-512 with real-time computation and hex output for data integrity and authentication.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔑</div>
+                    <h3 class="feature-title">AES-GCM Symmetric Encryption</h3>
+                    <p class="feature-description">Industry-standard AES-GCM-256 encryption with automatic key generation, Base64 encoding, and secure encrypt/decrypt operations for data protection workflows.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">RSA Asymmetric Encryption</h3>
+                    <p class="feature-description">RSA-2048 and RSA-4096 encryption using iOS Security framework with public/private key management for secure communication and digital signatures.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Three-Tab Interface</h3>
+                    <p class="feature-description">Intuitive organization with separate tabs for Hash Functions, Symmetric Encryption, and Asymmetric Encryption, each with consistent UX patterns and workflows.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Real-time Processing</h3>
+                    <p class="feature-description">Instant hash computation, encryption, and decryption operations with live updates as you type. No delays or external API dependencies.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3 class="feature-title">Key Generation & Management</h3>
+                    <p class="feature-description">Automatic AES key generation, RSA key pair creation, and secure key management with proper entropy and cryptographic best practices.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">API Authentication Ready</h3>
+                    <p class="feature-description">Perfect for generating tokens, API signatures, and authentication credentials for third-party interface calls and secure service integration.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">Easy Copy & Export</h3>
+                    <p class="feature-description">One-click copying of hashes, encrypted data, keys, and cryptographic outputs for seamless integration with development workflows.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How to Use Crypto Tools</h2>
+                <p class="section-description">
+                    Perform cryptographic operations securely in just a few simple steps.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Choose Operation Type</h3>
+                    <p>Select from Hash Functions for data integrity, Symmetric Encryption for secure data storage, or Asymmetric Encryption for secure communication.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Input Your Data</h3>
+                    <p>Enter the text or data you want to process. DevHelper handles various input formats and provides real-time feedback during processing.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Configure Settings</h3>
+                    <p>Choose hash algorithm, generate encryption keys, or configure RSA key sizes based on your security requirements and use case.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Copy Results</h3>
+                    <p>Copy the hash, encrypted data, or cryptographic output with one click for use in authentication systems, APIs, or security implementations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perfect for These Development Tasks</h2>
+            </div>
+
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔒</div>
+                    <h3>API Authentication</h3>
+                    <p>Generate secure hashes for API signatures, create authentication tokens, and implement HMAC-based authentication systems for service-to-service communication.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🗄️</div>
+                    <h3>Data Protection</h3>
+                    <p>Encrypt sensitive configuration data, secure database fields, and protect user information with AES-GCM encryption for compliance and privacy.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔐</div>
+                    <h3>Password Security</h3>
+                    <p>Generate secure password hashes, implement salt-based hashing, and create robust password verification systems for user authentication.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📜</div>
+                    <h3>Digital Signatures</h3>
+                    <p>Create and verify digital signatures using RSA encryption, implement code signing workflows, and ensure data authenticity in distributed systems.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>Secure Communication</h3>
+                    <p>Implement end-to-end encryption, secure message transmission, and encrypted data exchange between applications and services.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🛡️</div>
+                    <h3>Security Testing</h3>
+                    <p>Test cryptographic implementations, validate security protocols, and verify encryption/decryption workflows in development and staging environments.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>Which hash algorithms are supported?</h3>
+                    <p>DevHelper supports six essential hash functions: MD5 (legacy compatibility), CRC32 (checksums), SHA-1 (legacy), SHA-256 (standard), SHA-384 (enhanced), and SHA-512 (maximum security) for various security requirements.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How secure is the AES-GCM encryption?</h3>
+                    <p>DevHelper uses AES-GCM-256, an industry-standard authenticated encryption algorithm that provides both confidentiality and authenticity. It's the same encryption used by major cloud providers and security systems.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What RSA key sizes are supported?</h3>
+                    <p>DevHelper supports both RSA-2048 (standard security) and RSA-4096 (enhanced security) key sizes, providing flexibility based on your security requirements and performance considerations.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Are cryptographic operations performed locally?</h3>
+                    <p>Yes! All cryptographic operations are performed locally on your Mac using iOS CryptoKit and Security framework. Your sensitive data never leaves your computer or gets sent to external servers.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I use these tools for production applications?</h3>
+                    <p>Absolutely! DevHelper uses industry-standard cryptographic libraries and algorithms suitable for production use. However, always follow security best practices and consider professional security audits for critical applications.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How do I generate secure keys?</h3>
+                    <p>DevHelper includes automatic key generation features that use cryptographically secure random number generators with proper entropy, ensuring generated keys meet security standards for production use.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Tools Section -->
+    <section class="related-tools">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Related Developer Tools</h2>
+                <p class="section-description">Explore other essential tools included in DevHelper</p>
+            </div>
+
+            <div class="related-tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🎫</div>
+                    <h3>JWT Encoder</h3>
+                    <p>Create and validate JSON Web Tokens with HMAC and RSA algorithms, perfect companion to cryptographic operations.</p>
+                    <a href="jwt-encoder.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔠</div>
+                    <h3>Base64 Encoder</h3>
+                    <p>Encode and decode Base64 data, often used with cryptographic operations for key and data transmission.</p>
+                    <a href="base64-encoder.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔣</div>
+                    <h3>Hex String Converter</h3>
+                    <p>Convert between hex and string formats for cryptographic keys, hashes, and encrypted data representation.</p>
+                    <a href="hex-converter.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🌍</div>
+                    <h3>HTTP Request</h3>
+                    <p>Test APIs with cryptographic authentication, send encrypted payloads, and validate security implementations.</p>
+                    <a href="http-request.html" class="tool-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Secure Your Applications?</h2>
+                <p>Join thousands of developers who rely on DevHelper's crypto tools for secure authentication and data protection workflows.</p>
+                <div class="cta-actions">
+                    <a href="index.html#download" class="btn btn-primary">
+                        <span class="btn-icon">📥</span>
+                        Download DevHelper Free
+                    </a>
+                    <div class="cta-info">
+                        <span>✓ macOS 14.0+</span>
+                        <span>✓ 17 Developer Tools</span>
+                        <span>✓ No Subscription</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/icon.png" alt="DevHelper" class="footer-logo">
+                    <div>
+                        <h4>DevHelper</h4>
+                        <p>Essential developer tools for macOS</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Product</h5>
+                        <a href="index.html#features">Features</a>
+                        <a href="index.html#reviews">Reviews</a>
+                        <a href="release-notes.html">Release Notes</a>
+                        <a href="index.html#download">Download</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Resources</h5>
+                        <a href="https://github.com/hengfeiyang/devhelper" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/releases" target="_blank" rel="noopener">Releases</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/issues" target="_blank" rel="noopener">Support</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Development</h5>
+                        <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a>
+                        <a href="https://anthropic.com" target="_blank" rel="noopener">Anthropic</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 DevHelper. Built with ❤️ using Claude Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

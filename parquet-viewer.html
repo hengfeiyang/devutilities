@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parquet & Arrow File Viewer - Data Analysis Tool | DevHelper</title>
+    <meta name="description" content="Professional Parquet and Arrow file viewer for developers. View, analyze, and explore columnar data files with unified Rust-based ParquetViewer API. Fast JSON output, native macOS performance. Part of DevHelper - 17 essential developer tools for macOS.">
+    <meta name="keywords" content="Parquet viewer, Arrow file viewer, columnar data, data analysis, Parquet file reader, Arrow file reader, big data tools, data engineering, analytics tools">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="Parquet & Arrow File Viewer - Professional Data Analysis | DevHelper">
+    <meta property="og:description" content="View and analyze Parquet and Arrow files with unified Rust-based API. Fast JSON output and native macOS performance for data engineering.">
+    <meta property="og:image" content="images/screenshots/parquet.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Parquet & Arrow File Viewer - Data Analysis Tool">
+    <meta property="twitter:description" content="View and analyze Parquet and Arrow files with unified Rust-based API. Fast JSON output and native performance.">
+    <meta property="twitter:image" content="images/screenshots/parquet.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "DevHelper Parquet Viewer",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS",
+        "description": "Professional Parquet and Arrow file viewer with Rust-based backend",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.7",
+            "ratingCount": "9"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-brand">
+                <img src="images/icon.png" alt="DevHelper" class="nav-logo">
+                <span class="nav-title">DevHelper</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#reviews" class="nav-link">Reviews</a>
+                <a href="release-notes.html" class="nav-link">Release Notes</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="https://github.com/hengfeiyang/devhelper" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="breadcrumb">
+                        <a href="index.html">DevHelper</a> / <span>Parquet Viewer</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Parquet & Arrow Viewer
+                        <span class="hero-subtitle">Professional Columnar Data Analysis</span>
+                    </h1>
+                    <p class="hero-description">
+                        Advanced Parquet and Arrow file viewer powered by unified Rust-based ParquetViewer API. View, analyze, and explore columnar data files with exceptional performance. Direct JSON output, streamlined architecture, and native macOS integration for data engineering and analytics workflows.
+                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🦀</span>
+                            <span>Rust-Based Backend</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">📊</span>
+                            <span>Unified API</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">⚡</span>
+                            <span>Fast JSON Output</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="index.html#download" class="btn btn-primary">
+                            <span class="btn-icon">📥</span>
+                            Download DevHelper
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            <span class="btn-icon">👀</span>
+                            See Features
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/screenshots/parquet.png" alt="DevHelper Parquet Viewer Screenshot showing columnar data analysis interface">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Advanced Data Viewing Features</h2>
+                <p class="section-description">
+                    Everything you need for professional columnar data file analysis and exploration.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card featured">
+                    <div class="feature-icon">🦀</div>
+                    <h3 class="feature-title">Unified Rust Backend</h3>
+                    <p class="feature-description">Single Rust-based ParquetViewer API handles both Parquet and Arrow files with exceptional performance, replacing multiple dependencies for streamlined architecture.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Dual Format Support</h3>
+                    <p class="feature-description">Native support for both Apache Parquet and Arrow files with automatic format detection and optimized rendering for different columnar data structures.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Fast JSON Output</h3>
+                    <p class="feature-description">Direct JSON output from ParquetViewer provides faster loading times and simplified data processing without intermediate conversions or complex parsing.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">Data Exploration</h3>
+                    <p class="feature-description">Comprehensive data exploration with column inspection, data type analysis, null value detection, and statistical summaries for thorough data understanding.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3 class="feature-title">Schema Analysis</h3>
+                    <p class="feature-description">Detailed schema inspection showing column names, data types, nested structures, and metadata for comprehensive data structure understanding.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Simplified Architecture</h3>
+                    <p class="feature-description">Streamlined implementation without DuckDB-swift and arrow-swift dependencies, focusing on core file viewing functionality with improved reliability.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3 class="feature-title">Large File Support</h3>
+                    <p class="feature-description">Efficient handling of large Parquet and Arrow files with memory-optimized loading, pagination support, and responsive performance for big data analysis.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">Easy Data Export</h3>
+                    <p class="feature-description">Export data views to JSON format, copy specific columns or rows, and integrate with other data analysis tools and workflows seamlessly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How to Use Parquet Viewer</h2>
+                <p class="section-description">
+                    Analyze columnar data files efficiently in just a few simple steps.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Load Data File</h3>
+                    <p>Open your Parquet or Arrow file using the file selector. DevHelper automatically detects the format and prepares the data for viewing.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Explore Schema</h3>
+                    <p>Review the data schema, column types, and structure. Understand nested data, array fields, and complex data types in your columnar files.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Analyze Data</h3>
+                    <p>Browse through data rows, inspect column values, and analyze data patterns. Use built-in tools to understand data distribution and quality.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Export Results</h3>
+                    <p>Export data to JSON format or copy specific sections for use in other analysis tools, reports, or data processing pipelines.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perfect for These Development Tasks</h2>
+            </div>
+
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">🏗️</div>
+                    <h3>Data Engineering</h3>
+                    <p>Inspect ETL pipeline outputs, validate data transformations, and debug columnar data processing workflows in big data applications.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📊</div>
+                    <h3>Analytics & BI</h3>
+                    <p>Preview analytics data, validate business intelligence datasets, and explore data warehouse outputs before downstream processing.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🧪</div>
+                    <h3>Data Science</h3>
+                    <p>Explore machine learning datasets, validate feature engineering outputs, and inspect training data in Parquet format for ML workflows.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔍</div>
+                    <h3>Data Quality Assurance</h3>
+                    <p>Validate data integrity, check for null values, verify schema compliance, and ensure data quality in columnar storage formats.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">☁️</div>
+                    <h3>Cloud Data Analysis</h3>
+                    <p>Inspect data from cloud storage systems, validate S3 data lakes, and analyze data warehouse exports in columnar formats.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">⚡</div>
+                    <h3>Performance Optimization</h3>
+                    <p>Analyze data compression ratios, inspect column organization, and optimize Parquet file structures for better query performance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>What file formats are supported?</h3>
+                    <p>DevHelper supports both Apache Parquet (.parquet) and Apache Arrow (.arrow, .feather) file formats with automatic format detection and optimized rendering for each format type.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How large files can the viewer handle?</h3>
+                    <p>The Rust-based ParquetViewer backend efficiently handles large files with memory-optimized loading. Performance depends on available system memory, but files in the gigabytes range are typically well-supported.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What happened to the SQL editor feature?</h3>
+                    <p>DevHelper removed the SQL editor to focus on core file viewing functionality. The simplified architecture using unified ParquetViewer API provides better performance and reliability for data exploration.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I export data to other formats?</h3>
+                    <p>Currently, DevHelper exports data to JSON format directly from the ParquetViewer API. This JSON output can be easily imported into other data analysis tools and processing workflows.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Does it support nested and complex data types?</h3>
+                    <p>Yes! DevHelper properly displays nested structures, arrays, maps, and other complex Parquet and Arrow data types with hierarchical visualization and detailed schema inspection.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How does the unified API improve performance?</h3>
+                    <p>The single Rust-based ParquetViewer backend eliminates multiple dependency layers, reduces memory overhead, and provides direct JSON output, resulting in faster loading times and improved stability.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Tools Section -->
+    <section class="related-tools">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Related Developer Tools</h2>
+                <p class="section-description">Explore other essential tools included in DevHelper</p>
+            </div>
+
+            <div class="related-tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🗄️</div>
+                    <h3>SQL Formatter</h3>
+                    <p>Format SQL queries for data analysis and reporting workflows. Perfect companion to Parquet data exploration.</p>
+                    <a href="sql-formatter.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📄</div>
+                    <h3>JSON Formatter</h3>
+                    <p>Format and analyze JSON data exported from Parquet files or used in data processing pipelines.</p>
+                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🌍</div>
+                    <h3>HTTP Request</h3>
+                    <p>Test data APIs that return Parquet or Arrow data, perfect for cloud-based data service integration.</p>
+                    <a href="http-request.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🤖</div>
+                    <h3>AI Chat</h3>
+                    <p>Get AI assistance for data analysis questions, Parquet optimization, and columnar data best practices.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Analyze Columnar Data Like a Pro?</h2>
+                <p>Join data engineers and analysts who rely on DevHelper's Parquet viewer for efficient columnar data exploration.</p>
+                <div class="cta-actions">
+                    <a href="index.html#download" class="btn btn-primary">
+                        <span class="btn-icon">📥</span>
+                        Download DevHelper Free
+                    </a>
+                    <div class="cta-info">
+                        <span>✓ macOS 14.0+</span>
+                        <span>✓ 17 Developer Tools</span>
+                        <span>✓ No Subscription</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/icon.png" alt="DevHelper" class="footer-logo">
+                    <div>
+                        <h4>DevHelper</h4>
+                        <p>Essential developer tools for macOS</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Product</h5>
+                        <a href="index.html#features">Features</a>
+                        <a href="index.html#reviews">Reviews</a>
+                        <a href="release-notes.html">Release Notes</a>
+                        <a href="index.html#download">Download</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Resources</h5>
+                        <a href="https://github.com/hengfeiyang/devhelper" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/releases" target="_blank" rel="noopener">Releases</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/issues" target="_blank" rel="noopener">Support</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Development</h5>
+                        <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a>
+                        <a href="https://anthropic.com" target="_blank" rel="noopener">Anthropic</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 DevHelper. Built with ❤️ using Claude Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

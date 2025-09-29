@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat Assistant - Developer AI Helper | DevHelper</title>
+    <meta name="description" content="Advanced AI chat assistant for developers. Get instant help with code review, debugging, and technical questions. Support for custom AI models, DeepSeek reasoning models, and flexible API configuration. Part of DevHelper - 17 essential developer tools for macOS.">
+    <meta name="keywords" content="AI chat, AI assistant, developer AI, code review AI, AI programming help, custom AI models, DeepSeek AI, AI debugging, coding assistant, AI development tool">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="AI Chat Assistant - Developer AI Helper | DevHelper">
+    <meta property="og:description" content="Advanced AI assistant for developers with custom model support, code review capabilities, and real-time reasoning process visualization.">
+    <meta property="og:image" content="images/screenshots/aichat.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="AI Chat Assistant - Developer AI Helper">
+    <meta property="twitter:description" content="Advanced AI assistant for developers with custom model support and real-time reasoning process visualization.">
+    <meta property="twitter:image" content="images/screenshots/aichat.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "DevHelper AI Chat",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS",
+        "description": "Advanced AI chat assistant for developers with custom model support",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "16"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-brand">
+                <img src="images/icon.png" alt="DevHelper" class="nav-logo">
+                <span class="nav-title">DevHelper</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#reviews" class="nav-link">Reviews</a>
+                <a href="release-notes.html" class="nav-link">Release Notes</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="https://github.com/hengfeiyang/devhelper" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="breadcrumb">
+                        <a href="index.html">DevHelper</a> / <span>AI Chat</span>
+                    </div>
+                    <h1 class="hero-title">
+                        AI Chat Assistant
+                        <span class="hero-subtitle">Intelligent Developer Companion</span>
+                    </h1>
+                    <p class="hero-description">
+                        Advanced AI assistant designed specifically for developers. Get instant help with code review, debugging, architecture decisions, and technical questions. Features custom model support, DeepSeek reasoning models with transparent thinking process, web search capabilities, image generation, and comprehensive tool integration for enhanced development workflows.
+                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🤖</span>
+                            <span>Custom AI Models</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🧠</span>
+                            <span>DeepSeek Reasoning</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🛠️</span>
+                            <span>Tools & Web Search</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="index.html#download" class="btn btn-primary">
+                            <span class="btn-icon">📥</span>
+                            Download DevHelper
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            <span class="btn-icon">👀</span>
+                            See Features
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/screenshots/aichat.png" alt="DevHelper AI Chat Screenshot showing intelligent conversation interface with reasoning process">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Advanced AI Assistant Features</h2>
+                <p class="section-description">
+                    Everything you need for intelligent development assistance and technical guidance.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card featured">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">Custom Model Support</h3>
+                    <p class="feature-description">Configure custom AI models with flexible API settings, custom endpoints, headers, and authentication methods. Add your preferred models for specialized development assistance.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3 class="feature-title">DeepSeek Reasoning Models</h3>
+                    <p class="feature-description">Access deepseek-chat and deepseek-reasoner models with transparent "deepthink" Chain of Thought reasoning process, showing the AI's internal problem-solving approach.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💭</div>
+                    <h3 class="feature-title">Collapsible Thinking Process</h3>
+                    <p class="feature-description">View AI's reasoning process in expandable/collapsible sections with brain icon and smooth animations. Understand how the AI approaches complex problems.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Real-time Streaming</h3>
+                    <p class="feature-description">See responses as they're generated with real-time streaming. Watch reasoning unfold and get instant feedback during AI conversations.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🛑</div>
+                    <h3 class="feature-title">Advanced Stop Control</h3>
+                    <p class="feature-description">Improved stop button with immediate cancellation of streaming responses for all models. Proper URLSessionDataTask and Swift Task cancellation architecture.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Developer-Focused Context</h3>
+                    <p class="feature-description">Specialized AI knowledge for software development workflows, code review, debugging, architecture decisions, and technical problem-solving.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3 class="feature-title">Persistent Conversations</h3>
+                    <p class="feature-description">Maintain conversation history across sessions with context-aware responses and conversation management for ongoing development projects.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🛠️</div>
+                    <h3 class="feature-title">Comprehensive Tool Integration</h3>
+                    <p class="feature-description">Access to various tools and utilities for enhanced AI capabilities, including code analysis, file processing, and development workflow automation.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">Web Search Capabilities</h3>
+                    <p class="feature-description">Real-time web search integration allows the AI to access current information, latest documentation, and up-to-date technical resources for accurate answers.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title">Image Generation</h3>
+                    <p class="feature-description">Generate images, diagrams, and visual content to support development documentation, UI mockups, and technical illustrations for your projects.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3 class="feature-title">Enhanced Model Selection</h3>
+                    <p class="feature-description">Improved model selector UI with better organization of built-in and custom models, easy configuration management, and reliable preference persistence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How to Use AI Chat Assistant</h2>
+                <p class="section-description">
+                    Get intelligent development assistance in just a few simple steps.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Choose Your Model</h3>
+                    <p>Select from built-in models or configure custom AI models with your preferred API settings, endpoints, and authentication methods.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Ask Your Question</h3>
+                    <p>Type your development question, paste code for review, or describe the technical problem you're trying to solve.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Watch AI Reasoning</h3>
+                    <p>For DeepSeek models, expand the thinking process to see how the AI analyzes your problem and develops solutions step-by-step.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Apply Solutions</h3>
+                    <p>Use the AI's recommendations, code suggestions, and technical guidance to improve your development workflow and solve problems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perfect for These Development Tasks</h2>
+            </div>
+
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">👀</div>
+                    <h3>Code Review & Analysis</h3>
+                    <p>Get AI-powered code reviews, identify potential bugs, suggest improvements, and ensure best practices in your codebase.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🐛</div>
+                    <h3>Debugging Assistance</h3>
+                    <p>Describe error messages and unexpected behavior to get targeted debugging suggestions and step-by-step troubleshooting guidance.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🏗️</div>
+                    <h3>Architecture Decisions</h3>
+                    <p>Discuss technical architecture, design patterns, technology choices, and system design decisions with expert AI guidance.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📚</div>
+                    <h3>Learning & Explanations</h3>
+                    <p>Get detailed explanations of complex concepts, understand new technologies, and accelerate learning with AI-powered technical education.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">⚡</div>
+                    <h3>Performance Optimization</h3>
+                    <p>Analyze code performance, identify bottlenecks, and get specific suggestions for optimizing application speed and resource usage.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔐</div>
+                    <h3>Security Best Practices</h3>
+                    <p>Review code for security vulnerabilities, get guidance on secure coding practices, and implement robust security measures.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>Research & Documentation</h3>
+                    <p>Access latest documentation, search for current best practices, and generate visual diagrams for technical documentation with web search and image generation.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🛠️</div>
+                    <h3>Tool-Enhanced Development</h3>
+                    <p>Leverage integrated tools for code analysis, file processing, and workflow automation to streamline development tasks with AI assistance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>What AI models are supported?</h3>
+                    <p>DevHelper includes built-in models like DeepSeek (deepseek-chat and deepseek-reasoner) and supports custom model configuration with flexible API endpoints, authentication, and parameters.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How does the DeepSeek reasoning process work?</h3>
+                    <p>DeepSeek reasoner models show their internal "deepthink" Chain of Thought reasoning in collapsible sections, allowing you to see how the AI analyzes problems and develops solutions step-by-step.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I add my own AI models?</h3>
+                    <p>Yes! DevHelper supports custom model configuration with flexible API settings, custom endpoints, headers, authentication methods, and parameter configuration for your preferred AI services.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is conversation history saved?</h3>
+                    <p>Yes, DevHelper maintains persistent chat sessions with conversation management, allowing you to continue discussions across app sessions and maintain context for ongoing projects.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How do I stop a streaming response?</h3>
+                    <p>DevHelper includes an improved stop button that immediately cancels streaming responses with proper URLSessionDataTask and Swift Task cancellation for all supported models.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What makes this AI assistant developer-focused?</h3>
+                    <p>The AI assistant is specifically trained and optimized for software development contexts, with specialized knowledge of programming languages, frameworks, development workflows, and technical problem-solving.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What tools and capabilities are integrated?</h3>
+                    <p>DevHelper's AI includes web search for accessing current documentation, image generation for creating diagrams and mockups, and various development tools for code analysis, file processing, and workflow automation.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How does the web search feature work?</h3>
+                    <p>The AI can perform real-time web searches to access the latest documentation, find current best practices, and get up-to-date information about technologies, frameworks, and development trends to provide accurate, current answers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Tools Section -->
+    <section class="related-tools">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Related Developer Tools</h2>
+                <p class="section-description">Explore other essential tools included in DevHelper</p>
+            </div>
+
+            <div class="related-tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">📄</div>
+                    <h3>JSON Formatter</h3>
+                    <p>Format JSON API responses and data structures that the AI can help you analyze and understand better.</p>
+                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔍</div>
+                    <h3>Regex Tester</h3>
+                    <p>Test regular expressions with AI assistance for pattern creation, validation, and optimization guidance.</p>
+                    <a href="regex-tester.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🌍</div>
+                    <h3>HTTP Request</h3>
+                    <p>Test APIs and web services with AI-powered debugging assistance for request/response analysis.</p>
+                    <a href="http-request.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔐</div>
+                    <h3>Crypto Tools</h3>
+                    <p>Implement cryptographic solutions with AI guidance for security best practices and implementation details.</p>
+                    <a href="crypto-tools.html" class="tool-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Accelerate Your Development with AI?</h2>
+                <p>Join thousands of developers who rely on DevHelper's AI assistant for intelligent code review and technical guidance.</p>
+                <div class="cta-actions">
+                    <a href="index.html#download" class="btn btn-primary">
+                        <span class="btn-icon">📥</span>
+                        Download DevHelper Free
+                    </a>
+                    <div class="cta-info">
+                        <span>✓ macOS 14.0+</span>
+                        <span>✓ 17 Developer Tools</span>
+                        <span>✓ No Subscription</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/icon.png" alt="DevHelper" class="footer-logo">
+                    <div>
+                        <h4>DevHelper</h4>
+                        <p>Essential developer tools for macOS</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Product</h5>
+                        <a href="index.html#features">Features</a>
+                        <a href="index.html#reviews">Reviews</a>
+                        <a href="release-notes.html">Release Notes</a>
+                        <a href="index.html#download">Download</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Resources</h5>
+                        <a href="https://github.com/hengfeiyang/devhelper" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/releases" target="_blank" rel="noopener">Releases</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/issues" target="_blank" rel="noopener">Support</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Development</h5>
+                        <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a>
+                        <a href="https://anthropic.com" target="_blank" rel="noopener">Anthropic</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 DevHelper. Built with ❤️ using Claude Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

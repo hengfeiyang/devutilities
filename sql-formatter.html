@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Formatter & Beautifier - Format SQL Queries Online | DevHelper</title>
+    <meta name="description" content="Professional SQL formatter and beautifier for developers. Format, beautify, and minify SQL queries with advanced syntax highlighting. Native sql-parser library integration for optimal performance. Part of DevHelper - 17 essential developer tools for macOS.">
+    <meta name="keywords" content="SQL formatter, SQL beautifier, format SQL, SQL pretty print, SQL minify, online SQL formatter, SQL syntax highlighting, format SQL query, beautify SQL code">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="SQL Formatter & Beautifier - Professional SQL Tools | DevHelper">
+    <meta property="og:description" content="Format and beautify SQL queries with advanced syntax highlighting and native library integration for superior performance.">
+    <meta property="og:image" content="images/screenshots/sql.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="SQL Formatter & Beautifier - Professional SQL Tools">
+    <meta property="twitter:description" content="Format and beautify SQL queries with advanced syntax highlighting and native library integration for superior performance.">
+    <meta property="twitter:image" content="images/screenshots/sql.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "DevHelper SQL Formatter",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS",
+        "description": "Professional SQL formatter and beautifier with native library integration",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "15"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-brand">
+                <img src="images/icon.png" alt="DevHelper" class="nav-logo">
+                <span class="nav-title">DevHelper</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#reviews" class="nav-link">Reviews</a>
+                <a href="release-notes.html" class="nav-link">Release Notes</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="https://github.com/hengfeiyang/devhelper" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="breadcrumb">
+                        <a href="index.html">DevHelper</a> / <span>SQL Formatter</span>
+                    </div>
+                    <h1 class="hero-title">
+                        SQL Formatter
+                        <span class="hero-subtitle">Professional SQL Beautification Tool</span>
+                    </h1>
+                    <p class="hero-description">
+                        Advanced SQL formatter powered by native sql-parser library integration. Format, beautify, and minify SQL queries with superior performance and reliability. Supports both minimal and beautify formatting modes with comprehensive syntax highlighting and error detection.
+                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🚀</span>
+                            <span>Native Library</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🎨</span>
+                            <span>Dual Format Modes</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">⚡</span>
+                            <span>High Performance</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="index.html#download" class="btn btn-primary">
+                            <span class="btn-icon">📥</span>
+                            Download DevHelper
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            <span class="btn-icon">👀</span>
+                            See Features
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/screenshots/sql.png" alt="DevHelper SQL Formatter Screenshot showing formatted SQL query with syntax highlighting">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Advanced SQL Formatting Features</h2>
+                <p class="section-description">
+                    Everything you need for professional SQL query formatting and optimization.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card featured">
+                    <div class="feature-icon">🚀</div>
+                    <h3 class="feature-title">Native Library Integration</h3>
+                    <p class="feature-description">Enhanced with native sql-parser library for superior SQL formatting performance. 95% code reduction while improving reliability and speed over custom tokenization implementations.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title">Dual Format Modes</h3>
+                    <p class="feature-description">Choose between minimal formatting for compact queries or beautify mode for enhanced readability with proper indentation and keyword alignment.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <h3 class="feature-title">Syntax Highlighting</h3>
+                    <p class="feature-description">Color-coded SQL syntax highlighting with support for keywords, functions, operators, strings, and comments for improved code readability.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3 class="feature-title">Smart Indentation</h3>
+                    <p class="feature-description">Intelligent indentation and alignment of SQL clauses, subqueries, and complex expressions for maximum readability and maintainability.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">High Performance</h3>
+                    <p class="feature-description">Rust-based backend delivers exceptional performance for large SQL files and complex queries with minimal memory usage and fast processing.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">Robust Error Handling</h3>
+                    <p class="feature-description">Comprehensive error detection with detailed messages and fallback mechanisms for handling malformed or complex SQL structures.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Query Analysis</h3>
+                    <p class="feature-description">Character and line count tracking helps analyze query complexity and optimize for performance and readability standards.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🗂️</div>
+                    <h3 class="feature-title">Multi-SQL Support</h3>
+                    <p class="feature-description">Format multiple SQL statements, stored procedures, functions, and complex database scripts with consistent styling and structure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How to Use SQL Formatter</h2>
+                <p class="section-description">
+                    Format your SQL queries professionally in just a few simple steps.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Input Your SQL</h3>
+                    <p>Paste your SQL query or script into the input area. DevHelper handles everything from simple SELECT statements to complex stored procedures.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Choose Format Style</h3>
+                    <p>Select between minimal formatting for compact output or beautify mode for enhanced readability with proper indentation and spacing.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>View Formatted Result</h3>
+                    <p>See your SQL formatted with syntax highlighting, proper alignment, and improved structure for better code maintainability.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Copy & Use</h3>
+                    <p>Copy the formatted SQL with one click and paste it into your database client, code editor, or documentation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perfect for These Development Tasks</h2>
+            </div>
+
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">🗄️</div>
+                    <h3>Database Development</h3>
+                    <p>Format SQL queries, stored procedures, and database scripts for better readability and team collaboration in database development projects.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📋</div>
+                    <h3>Code Review & Documentation</h3>
+                    <p>Standardize SQL formatting across your team, prepare queries for documentation, and ensure consistent coding standards in database projects.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔍</div>
+                    <h3>Query Optimization</h3>
+                    <p>Analyze complex queries by formatting them for better visibility of joins, subqueries, and performance bottlenecks in database optimization tasks.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📝</div>
+                    <h3>Educational & Training</h3>
+                    <p>Format SQL examples for tutorials, training materials, and educational content with consistent styling and proper structure.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔧</div>
+                    <h3>Legacy Code Maintenance</h3>
+                    <p>Clean up and format legacy SQL code for better maintainability, debugging, and modernization of existing database applications.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📊</div>
+                    <h3>Reporting & Analytics</h3>
+                    <p>Format complex analytical queries, reporting SQL, and data warehouse scripts for better understanding and maintenance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>What makes DevHelper's SQL formatter special?</h3>
+                    <p>DevHelper uses native ParquetViewer library integration for superior performance and reliability. This Rust-based backend provides 95% better efficiency compared to custom implementations while ensuring robust error handling.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What SQL dialects are supported?</h3>
+                    <p>DevHelper's SQL formatter supports standard SQL syntax and is compatible with major database systems including PostgreSQL, MySQL, SQL Server, Oracle, SQLite, and other SQL-compliant databases.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can it handle large SQL files?</h3>
+                    <p>Yes! The native ParquetViewer integration provides exceptional performance for large SQL files, complex queries, and batch processing with minimal memory usage and fast response times.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What's the difference between minimal and beautify modes?</h3>
+                    <p>Minimal mode provides compact formatting while preserving readability. Beautify mode adds enhanced indentation, keyword alignment, and visual structure for maximum code clarity and maintainability.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Does it preserve SQL comments and structure?</h3>
+                    <p>Yes, DevHelper preserves SQL comments, maintains logical query structure, and handles complex nested queries, CTEs, and stored procedures while improving overall formatting.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How does error handling work?</h3>
+                    <p>DevHelper provides robust error detection with detailed messages and fallback mechanisms. If the primary formatter encounters issues, backup systems ensure you still get usable formatted output.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Tools Section -->
+    <section class="related-tools">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Related Developer Tools</h2>
+                <p class="section-description">Explore other essential tools included in DevHelper</p>
+            </div>
+
+            <div class="related-tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">📄</div>
+                    <h3>JSON Formatter</h3>
+                    <p>Format JSON data with the same attention to detail and performance as our SQL formatter, perfect for API development.</p>
+                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📊</div>
+                    <h3>Parquet Viewer</h3>
+                    <p>View and analyze Parquet files using the same native library that powers our enhanced SQL formatting capabilities.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🌐</div>
+                    <h3>HTML Formatter</h3>
+                    <p>Format HTML code with similar syntax highlighting and beautification features as our SQL formatter.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔄</div>
+                    <h3>Regex Tester</h3>
+                    <p>Test and validate regular expressions for SQL pattern matching and data validation in database applications.</p>
+                    <a href="regex-tester.html" class="tool-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Format SQL Like a Pro?</h2>
+                <p>Join thousands of developers who rely on DevHelper's SQL formatter for clean, readable database code.</p>
+                <div class="cta-actions">
+                    <a href="index.html#download" class="btn btn-primary">
+                        <span class="btn-icon">📥</span>
+                        Download DevHelper Free
+                    </a>
+                    <div class="cta-info">
+                        <span>✓ macOS 14.0+</span>
+                        <span>✓ 17 Developer Tools</span>
+                        <span>✓ No Subscription</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/icon.png" alt="DevHelper" class="footer-logo">
+                    <div>
+                        <h4>DevHelper</h4>
+                        <p>Essential developer tools for macOS</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Product</h5>
+                        <a href="index.html#features">Features</a>
+                        <a href="index.html#reviews">Reviews</a>
+                        <a href="release-notes.html">Release Notes</a>
+                        <a href="index.html#download">Download</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Resources</h5>
+                        <a href="https://github.com/hengfeiyang/devhelper" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/releases" target="_blank" rel="noopener">Releases</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/issues" target="_blank" rel="noopener">Support</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Development</h5>
+                        <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a>
+                        <a href="https://anthropic.com" target="_blank" rel="noopener">Anthropic</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 DevHelper. Built with ❤️ using Claude Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

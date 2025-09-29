@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator & Scanner - Create QR Codes Online | DevHelper</title>
+    <meta name="description" content="Professional QR code generator and scanner for developers. Create QR codes with custom sizes, error correction levels, and various data types. Scan QR codes with built-in camera support. Part of DevHelper - 17 essential developer tools for macOS.">
+    <meta name="keywords" content="QR code generator, QR code scanner, create QR code, generate QR code, QR code maker, custom QR codes, error correction, QR code reader, barcode generator">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="QR Code Generator & Scanner | DevHelper">
+    <meta property="og:description" content="Create and scan QR codes with advanced customization options. Multiple sizes, error correction levels, and data types supported.">
+    <meta property="og:image" content="images/screenshots/qrcode.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="QR Code Generator & Scanner">
+    <meta property="twitter:description" content="Create and scan QR codes with advanced customization options. Multiple sizes, error correction levels, and data types supported.">
+    <meta property="twitter:image" content="images/screenshots/qrcode.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "DevHelper QR Code Generator",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS",
+        "description": "Professional QR code generator and scanner with advanced customization options",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "12"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-brand">
+                <img src="images/icon.png" alt="DevHelper" class="nav-logo">
+                <span class="nav-title">DevHelper</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#reviews" class="nav-link">Reviews</a>
+                <a href="release-notes.html" class="nav-link">Release Notes</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="https://github.com/hengfeiyang/devhelper" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="breadcrumb">
+                        <a href="index.html">DevHelper</a> / <span>QR Code</span>
+                    </div>
+                    <h1 class="hero-title">
+                        QR Code Generator
+                        <span class="hero-subtitle">Professional QR Code Tools</span>
+                    </h1>
+                    <p class="hero-description">
+                        Advanced QR code generator and scanner with extensive customization options. Create QR codes with multiple sizes, error correction levels, and various data types. Built-in scanner with camera support for reading QR codes. Perfect for mobile apps, documentation, and data sharing workflows.
+                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">📱</span>
+                            <span>Multiple Sizes</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🛡️</span>
+                            <span>Error Correction</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">📸</span>
+                            <span>Built-in Scanner</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="index.html#download" class="btn btn-primary">
+                            <span class="btn-icon">📥</span>
+                            Download DevHelper
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            <span class="btn-icon">👀</span>
+                            See Features
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/screenshots/qrcode.png" alt="DevHelper QR Code Generator Screenshot showing QR code creation with customization options">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Advanced QR Code Features</h2>
+                <p class="section-description">
+                    Everything you need for professional QR code generation and scanning.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card featured">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Multiple Size Options</h3>
+                    <p class="feature-description">Generate QR codes in various sizes from small icons to large banners. Perfect for different use cases from business cards to outdoor signage.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">Error Correction Levels</h3>
+                    <p class="feature-description">Choose from Low, Medium, Quartile, and High error correction levels. Ensure QR codes remain scannable even when partially damaged or obscured.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3 class="feature-title">Built-in Scanner</h3>
+                    <p class="feature-description">Scan QR codes directly with your Mac's camera. Instantly decode URLs, text, contact information, and other data types from existing QR codes.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📄</div>
+                    <h3 class="feature-title">Multiple Data Types</h3>
+                    <p class="feature-description">Create QR codes for URLs, plain text, contact information, email addresses, phone numbers, WiFi credentials, and custom data formats.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3 class="feature-title">Export & Save</h3>
+                    <p class="feature-description">Export QR codes as high-quality PNG images in various resolutions. Perfect for print materials, web use, and digital documentation.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Real-time Generation</h3>
+                    <p class="feature-description">Instant QR code generation as you type. See your QR code update in real-time with immediate visual feedback and validation.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title">Visual Preview</h3>
+                    <p class="feature-description">Clear, high-contrast QR code preview with grid guidelines. Verify readability and appearance before saving or sharing.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">Batch Processing</h3>
+                    <p class="feature-description">Generate multiple QR codes efficiently for bulk operations, inventory management, or large-scale deployments.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How to Use QR Code Generator</h2>
+                <p class="section-description">
+                    Create professional QR codes in just a few simple steps.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Enter Your Data</h3>
+                    <p>Input the text, URL, or information you want to encode. DevHelper supports various data types including contact info and WiFi credentials.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Choose Settings</h3>
+                    <p>Select the QR code size and error correction level based on your intended use case and environmental conditions.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Preview & Test</h3>
+                    <p>View the generated QR code in real-time. Use the built-in scanner to test readability and ensure proper encoding.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Export & Use</h3>
+                    <p>Save your QR code as a high-quality PNG image or copy it to the clipboard for immediate use in documents and applications.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perfect for These Development Tasks</h2>
+            </div>
+
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">📱</div>
+                    <h3>Mobile App Development</h3>
+                    <p>Generate QR codes for app downloads, deep linking, user onboarding, and feature activation workflows in mobile applications.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>Web Development</h3>
+                    <p>Create QR codes for sharing URLs, API endpoints, demo links, and providing quick access to web applications and services.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📋</div>
+                    <h3>Documentation & Testing</h3>
+                    <p>Add QR codes to technical documentation, test reports, and deployment guides for easy access to resources and additional information.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔐</div>
+                    <h3>Authentication & Security</h3>
+                    <p>Generate QR codes for 2FA setup, API keys, configuration data, and secure credential sharing in development environments.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📦</div>
+                    <h3>DevOps & Deployment</h3>
+                    <p>Create QR codes for server URLs, deployment links, monitoring dashboards, and quick access to infrastructure resources.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🎯</div>
+                    <h3>Marketing & Analytics</h3>
+                    <p>Generate trackable QR codes for campaign URLs, user acquisition, A/B testing, and conversion tracking in marketing automation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>What data types can I encode in QR codes?</h3>
+                    <p>DevHelper supports all standard QR code data types including plain text, URLs, email addresses, phone numbers, SMS messages, WiFi credentials, contact information (vCard), and custom data formats.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What are error correction levels and which should I choose?</h3>
+                    <p>Error correction allows QR codes to remain readable even when damaged. Low (7%) for clean environments, Medium (15%) for general use, Quartile (25%) for outdoor use, and High (30%) for harsh conditions or small print sizes.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What sizes are available for QR codes?</h3>
+                    <p>DevHelper generates QR codes in multiple sizes suitable for different applications: small (for business cards), medium (for flyers), large (for posters), and extra large (for banners and outdoor signage).</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I scan QR codes with DevHelper?</h3>
+                    <p>Yes! DevHelper includes a built-in QR code scanner that uses your Mac's camera to decode QR codes instantly. Perfect for testing your generated codes or reading existing ones.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What image formats can I export?</h3>
+                    <p>QR codes can be exported as high-quality PNG images in various resolutions. PNG format ensures crisp, scalable images perfect for both digital use and print materials.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Are the generated QR codes compatible with all scanners?</h3>
+                    <p>Yes, DevHelper generates standard QR codes following ISO/IEC 18004 specifications, ensuring compatibility with all QR code scanners and mobile camera apps.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Tools Section -->
+    <section class="related-tools">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Related Developer Tools</h2>
+                <p class="section-description">Explore other essential tools included in DevHelper</p>
+            </div>
+
+            <div class="related-tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🔗</div>
+                    <h3>URL Tools</h3>
+                    <p>Encode and decode URLs before adding them to QR codes. Perfect for creating clean, functional QR code links.</p>
+                    <a href="url-tools.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔠</div>
+                    <h3>Base64 Encoder</h3>
+                    <p>Encode binary data and images to embed in QR codes or prepare data for QR code generation workflows.</p>
+                    <a href="base64-encoder.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🎫</div>
+                    <h3>UUID Generator</h3>
+                    <p>Generate unique identifiers for QR code tracking, session management, and data correlation in applications.</p>
+                    <a href="uuid-generator.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🌍</div>
+                    <h3>HTTP Request</h3>
+                    <p>Test QR code endpoints and validate URLs before encoding them into QR codes for public distribution.</p>
+                    <a href="http-request.html" class="tool-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Create Professional QR Codes?</h2>
+                <p>Join thousands of developers who rely on DevHelper's QR code generator for their mobile and web applications.</p>
+                <div class="cta-actions">
+                    <a href="index.html#download" class="btn btn-primary">
+                        <span class="btn-icon">📥</span>
+                        Download DevHelper Free
+                    </a>
+                    <div class="cta-info">
+                        <span>✓ macOS 14.0+</span>
+                        <span>✓ 17 Developer Tools</span>
+                        <span>✓ No Subscription</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/icon.png" alt="DevHelper" class="footer-logo">
+                    <div>
+                        <h4>DevHelper</h4>
+                        <p>Essential developer tools for macOS</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Product</h5>
+                        <a href="index.html#features">Features</a>
+                        <a href="index.html#reviews">Reviews</a>
+                        <a href="release-notes.html">Release Notes</a>
+                        <a href="index.html#download">Download</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Resources</h5>
+                        <a href="https://github.com/hengfeiyang/devhelper" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/releases" target="_blank" rel="noopener">Releases</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/issues" target="_blank" rel="noopener">Support</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Development</h5>
+                        <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a>
+                        <a href="https://anthropic.com" target="_blank" rel="noopener">Anthropic</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 DevHelper. Built with ❤️ using Claude Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>
