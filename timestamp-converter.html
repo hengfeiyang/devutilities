@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timestamp Converter - Unix Epoch Time Converter Online | DevHelper</title>
+    <meta name="description" content="Professional timestamp converter for developers. Convert Unix timestamps to human-readable dates and vice versa. Supports multiple timezones, formats, and real-time conversion with history tracking. Part of DevHelper - 17 essential developer tools for macOS.">
+    <meta name="keywords" content="timestamp converter, unix timestamp, epoch time converter, unix time converter, timestamp to date, date to timestamp, timezone converter, epoch converter online, unix epoch, time converter tool">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="Timestamp Converter - Unix Epoch Time Converter | DevHelper">
+    <meta property="og:description" content="Convert Unix timestamps to human-readable dates with timezone support. Real-time conversion, history tracking, and multiple format options for developers.">
+    <meta property="og:image" content="images/screenshots/timestamp.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Timestamp Converter - Unix Epoch Time Converter">
+    <meta property="twitter:description" content="Convert Unix timestamps to human-readable dates with timezone support. Real-time conversion and history tracking.">
+    <meta property="twitter:image" content="images/screenshots/timestamp.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "DevHelper Timestamp Converter",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS",
+        "description": "Professional timestamp converter with timezone support for converting Unix timestamps to human-readable dates",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "10"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-brand">
+                <img src="images/icon.png" alt="DevHelper" class="nav-logo">
+                <span class="nav-title">DevHelper</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#reviews" class="nav-link">Reviews</a>
+                <a href="release-notes.html" class="nav-link">Release Notes</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="https://github.com/hengfeiyang/devhelper" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="breadcrumb">
+                        <a href="index.html">DevHelper</a> / <span>Timestamp Converter</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Timestamp Converter
+                        <span class="hero-subtitle">Unix Epoch Time Converter for Developers</span>
+                    </h1>
+                    <p class="hero-description">
+                        Convert between Unix timestamps and human-readable dates with comprehensive timezone support. Features real-time conversion, history tracking, and multiple date format options. Perfect for debugging applications, analyzing logs, and working with time-sensitive data.
+                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🌍</span>
+                            <span>Timezone Support</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">📝</span>
+                            <span>History Tracking</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">⚡</span>
+                            <span>Real-time Conversion</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="index.html#download" class="btn btn-primary">
+                            <span class="btn-icon">📥</span>
+                            Download DevHelper
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            <span class="btn-icon">👀</span>
+                            See Features
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/screenshots/timestamp.png" alt="DevHelper Timestamp Converter Screenshot showing Unix timestamp conversion with timezone support">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Advanced Timestamp Conversion Features</h2>
+                <p class="section-description">
+                    Everything you need for professional timestamp handling, built into a native macOS application.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card featured">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">Bidirectional Conversion</h3>
+                    <p class="feature-description">Convert Unix timestamps to human-readable dates and vice versa. Supports both seconds and milliseconds precision for maximum compatibility.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3 class="feature-title">Timezone Support</h3>
+                    <p class="feature-description">Convert timestamps across different timezones with automatic daylight saving time adjustments. Perfect for global applications and log analysis.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3 class="feature-title">Multiple Date Formats</h3>
+                    <p class="feature-description">Choose from various date format options including ISO 8601, RFC 2822, custom formats, and locale-specific representations.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3 class="feature-title">Conversion History</h3>
+                    <p class="feature-description">Track your conversion history with automatic saving. Quickly reference previous conversions and copy results for repeated use.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Real-time Processing</h3>
+                    <p class="feature-description">Instant conversion as you type with live validation. No waiting time - see results immediately as you enter timestamps or dates.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Current Time Display</h3>
+                    <p class="feature-description">Always see the current Unix timestamp and formatted date. Useful for generating current timestamps for testing and development.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">Easy Copy & Share</h3>
+                    <p class="feature-description">One-click copying of converted results. Seamlessly integrate with your development workflow and share timestamps across applications.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔢</div>
+                    <h3 class="feature-title">Precision Control</h3>
+                    <p class="feature-description">Handle both seconds and milliseconds timestamps with automatic precision detection. Perfect for different systems and requirements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How to Use Timestamp Converter</h2>
+                <p class="section-description">
+                    Convert between timestamps and dates in just a few simple steps.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Enter Your Data</h3>
+                    <p>Input either a Unix timestamp (seconds or milliseconds) or a human-readable date in your preferred format.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Select Timezone</h3>
+                    <p>Choose your target timezone from the comprehensive list including UTC, local time, and major world timezones.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Choose Format</h3>
+                    <p>Select your preferred date format from multiple options including ISO 8601, RFC 2822, or custom formatting patterns.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Copy & Use</h3>
+                    <p>Copy the converted result with one click. The conversion is saved to history for easy reference later.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perfect for These Development Tasks</h2>
+            </div>
+
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">🐛</div>
+                    <h3>Application Debugging</h3>
+                    <p>Debug timestamp-related issues in applications by converting Unix timestamps from logs, databases, and API responses to readable dates.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📊</div>
+                    <h3>Log Analysis</h3>
+                    <p>Analyze server logs and application logs by converting timestamps to understand when events occurred across different timezones.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔧</div>
+                    <h3>API Development & Testing</h3>
+                    <p>Test APIs that use Unix timestamps by converting between human-readable dates and timestamp values for request/response validation.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🗄️</div>
+                    <h3>Database Operations</h3>
+                    <p>Work with database records that store timestamps by converting between storage formats and human-readable dates for queries and analysis.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📅</div>
+                    <h3>Scheduling & Cron Jobs</h3>
+                    <p>Set up scheduled tasks and cron jobs by converting desired execution times to Unix timestamps for system configuration.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>Global Applications</h3>
+                    <p>Handle timezone conversions for international applications ensuring correct time display for users across different regions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>What is a Unix timestamp?</h3>
+                    <p>A Unix timestamp is the number of seconds (or milliseconds) that have elapsed since January 1, 1970, 00:00:00 UTC. It's a standard way to represent time in computer systems and is timezone-independent.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Does DevHelper handle millisecond timestamps?</h3>
+                    <p>Yes! DevHelper automatically detects whether your timestamp is in seconds or milliseconds and converts accordingly. It supports both formats seamlessly.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How does timezone conversion work?</h3>
+                    <p>DevHelper includes comprehensive timezone support with automatic daylight saving time adjustments. You can convert any timestamp to your local time or any other timezone worldwide.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I see my conversion history?</h3>
+                    <p>Absolutely! DevHelper automatically tracks your conversion history, making it easy to reference previous conversions. This is especially useful when working with multiple timestamps.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What date formats are supported?</h3>
+                    <p>DevHelper supports multiple date formats including ISO 8601, RFC 2822, custom patterns, and locale-specific formats. You can choose the format that best fits your workflow.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is the current timestamp always visible?</h3>
+                    <p>Yes, DevHelper displays the current Unix timestamp and formatted date in real-time. This is perfect for generating current timestamps for testing or development purposes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Tools Section -->
+    <section class="related-tools">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Related Developer Tools</h2>
+                <p class="section-description">Explore other essential tools included in DevHelper</p>
+            </div>
+
+            <div class="related-tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">📏</div>
+                    <h3>Unit Converter</h3>
+                    <p>Convert between different time units, data sizes, and other measurements commonly used in development.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📄</div>
+                    <h3>JSON Formatter</h3>
+                    <p>Format and validate JSON data with visual diff comparison - perfect for API responses with timestamps.</p>
+                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🌍</div>
+                    <h3>HTTP Request</h3>
+                    <p>Test APIs that return timestamp data with our built-in HTTP client and JSON response viewer.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🆔</div>
+                    <h3>UUID Generator</h3>
+                    <p>Generate UUIDs including v7 format which includes timestamp information for sortable unique identifiers.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Simplify Your Timestamp Workflow?</h2>
+                <p>Join thousands of developers who rely on DevHelper's timestamp converter for their daily development tasks.</p>
+                <div class="cta-actions">
+                    <a href="index.html#download" class="btn btn-primary">
+                        <span class="btn-icon">📥</span>
+                        Download DevHelper Free
+                    </a>
+                    <div class="cta-info">
+                        <span>✓ macOS 14.0+</span>
+                        <span>✓ 17 Developer Tools</span>
+                        <span>✓ No Subscription</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/icon.png" alt="DevHelper" class="footer-logo">
+                    <div>
+                        <h4>DevHelper</h4>
+                        <p>Essential developer tools for macOS</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Product</h5>
+                        <a href="index.html#features">Features</a>
+                        <a href="index.html#reviews">Reviews</a>
+                        <a href="release-notes.html">Release Notes</a>
+                        <a href="index.html#download">Download</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Resources</h5>
+                        <a href="https://github.com/hengfeiyang/devhelper" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/releases" target="_blank" rel="noopener">Releases</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/issues" target="_blank" rel="noopener">Support</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Development</h5>
+                        <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a>
+                        <a href="https://anthropic.com" target="_blank" rel="noopener">Anthropic</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 DevHelper. Built with ❤️ using Claude Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

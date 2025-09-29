@@ -1509,6 +1509,61 @@ img[loading="lazy"].loaded {
     color: var(--primary-blue);
 }
 
+/* Conversion Categories Section */
+.conversion-categories {
+    padding: var(--space-3xl) 0;
+    background-color: var(--gray-50);
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+}
+
+.category-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.category-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.category-icon {
+    font-size: 2rem;
+    margin-bottom: var(--space-md);
+}
+
+.category-card h3 {
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--gray-700);
+    margin-bottom: var(--space-md);
+}
+
+.unit-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.unit-list li {
+    padding: var(--space-xs) 0;
+    color: var(--gray-600);
+    font-size: 0.875rem;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.unit-list li:last-child {
+    border-bottom: none;
+}
+
 /* Responsive Design for New Elements */
 @media (max-width: 768px) {
     .steps-grid {
@@ -1538,5 +1593,10 @@ img[loading="lazy"].loaded {
     .cta-info {
         flex-direction: column;
         gap: var(--space-sm);
+    }
+
+    .categories-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: var(--space-md);
     }
 }

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter - Data, Time, Length, Weight & More Online | DevHelper</title>
+    <meta name="description" content="Professional unit converter for developers. Convert data sizes (bytes, MB, GB), time units, length, weight, temperature, area, and volume. 7 conversion categories with real-time calculations. Part of DevHelper - 17 essential developer tools for macOS.">
+    <meta name="keywords" content="unit converter, data size converter, bytes to GB, MB to GB, time converter, length converter, weight converter, temperature converter, area converter, volume converter, measurement converter">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="Unit Converter - Data, Time, Length & More | DevHelper">
+    <meta property="og:description" content="Convert between different units across 7 categories including data sizes, time, length, weight, temperature, area, and volume. Real-time conversion for developers.">
+    <meta property="og:image" content="images/screenshots/unit.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Unit Converter - Data, Time, Length & More">
+    <meta property="twitter:description" content="Convert between different units across 7 categories. Real-time conversion for data sizes, time, length, weight, and more.">
+    <meta property="twitter:image" content="images/screenshots/unit.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "DevHelper Unit Converter",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS",
+        "description": "Professional unit converter with 7 categories for converting data sizes, time, length, weight, temperature, area, and volume",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "10"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-brand">
+                <img src="images/icon.png" alt="DevHelper" class="nav-logo">
+                <span class="nav-title">DevHelper</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#reviews" class="nav-link">Reviews</a>
+                <a href="release-notes.html" class="nav-link">Release Notes</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="https://github.com/hengfeiyang/devhelper" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="breadcrumb">
+                        <a href="index.html">DevHelper</a> / <span>Unit Converter</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Unit Converter
+                        <span class="hero-subtitle">7 Categories of Measurement Conversion</span>
+                    </h1>
+                    <p class="hero-description">
+                        Convert between different units across 7 comprehensive categories: Data, Time, Length, Weight, Temperature, Area, and Volume. Perfect for developers working with file sizes, performance metrics, API specifications, and system configurations.
+                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">💾</span>
+                            <span>Data Size Conversion</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">⏱️</span>
+                            <span>Time & Duration</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">📏</span>
+                            <span>Physical Measurements</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="index.html#download" class="btn btn-primary">
+                            <span class="btn-icon">📥</span>
+                            Download DevHelper
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            <span class="btn-icon">👀</span>
+                            See Features
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/screenshots/unit.png" alt="DevHelper Unit Converter Screenshot showing data size conversion with multiple categories">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Comprehensive Unit Conversion Categories</h2>
+                <p class="section-description">
+                    Seven essential conversion categories covering everything developers need for technical specifications and calculations.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card featured">
+                    <div class="feature-icon">💾</div>
+                    <h3 class="feature-title">Data Size Converter</h3>
+                    <p class="feature-description">Convert between bytes, KB, MB, GB, TB, and more. Essential for file size calculations, memory usage analysis, and storage capacity planning in applications.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⏱️</div>
+                    <h3 class="feature-title">Time Duration Converter</h3>
+                    <p class="feature-description">Convert between milliseconds, seconds, minutes, hours, days, weeks, and years. Perfect for timeout settings, performance metrics, and scheduling calculations.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📏</div>
+                    <h3 class="feature-title">Length & Distance</h3>
+                    <p class="feature-description">Convert between millimeters, centimeters, meters, kilometers, inches, feet, yards, and miles. Useful for UI measurements and geographical calculations.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚖️</div>
+                    <h3 class="feature-title">Weight & Mass</h3>
+                    <p class="feature-description">Convert between grams, kilograms, ounces, pounds, and tons. Essential for shipping calculations and product specifications in e-commerce applications.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🌡️</div>
+                    <h3 class="feature-title">Temperature Conversion</h3>
+                    <p class="feature-description">Convert between Celsius, Fahrenheit, and Kelvin. Critical for IoT applications, weather data processing, and scientific calculations.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📐</div>
+                    <h3 class="feature-title">Area Calculation</h3>
+                    <p class="feature-description">Convert between square millimeters, centimeters, meters, kilometers, inches, feet, yards, and acres. Perfect for mapping and spatial calculations.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🧊</div>
+                    <h3 class="feature-title">Volume Measurement</h3>
+                    <p class="feature-description">Convert between milliliters, liters, fluid ounces, cups, pints, quarts, and gallons. Useful for capacity planning and resource management.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Real-time Conversion</h3>
+                    <p class="feature-description">Instant conversion as you type with high precision calculations. All conversions happen in real-time without delays or loading times.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conversion Categories Section -->
+    <section class="conversion-categories">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Supported Conversion Units</h2>
+                <p class="section-description">Complete list of units available in each conversion category</p>
+            </div>
+
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon">💾</div>
+                    <h3>Data Size</h3>
+                    <ul class="unit-list">
+                        <li>Byte (B)</li>
+                        <li>Kilobyte (KB)</li>
+                        <li>Megabyte (MB)</li>
+                        <li>Gigabyte (GB)</li>
+                        <li>Terabyte (TB)</li>
+                        <li>Petabyte (PB)</li>
+                        <li>Bit, Kilobit, Megabit</li>
+                    </ul>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">⏱️</div>
+                    <h3>Time Duration</h3>
+                    <ul class="unit-list">
+                        <li>Millisecond (ms)</li>
+                        <li>Second (s)</li>
+                        <li>Minute (min)</li>
+                        <li>Hour (hr)</li>
+                        <li>Day</li>
+                        <li>Week</li>
+                        <li>Month, Year</li>
+                    </ul>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">📏</div>
+                    <h3>Length</h3>
+                    <ul class="unit-list">
+                        <li>Millimeter (mm)</li>
+                        <li>Centimeter (cm)</li>
+                        <li>Meter (m)</li>
+                        <li>Kilometer (km)</li>
+                        <li>Inch (in)</li>
+                        <li>Foot (ft)</li>
+                        <li>Yard, Mile</li>
+                    </ul>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">⚖️</div>
+                    <h3>Weight</h3>
+                    <ul class="unit-list">
+                        <li>Gram (g)</li>
+                        <li>Kilogram (kg)</li>
+                        <li>Ounce (oz)</li>
+                        <li>Pound (lb)</li>
+                        <li>Ton (metric)</li>
+                        <li>Ton (US)</li>
+                        <li>Stone</li>
+                    </ul>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">🌡️</div>
+                    <h3>Temperature</h3>
+                    <ul class="unit-list">
+                        <li>Celsius (°C)</li>
+                        <li>Fahrenheit (°F)</li>
+                        <li>Kelvin (K)</li>
+                        <li>Rankine (°R)</li>
+                    </ul>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">📐</div>
+                    <h3>Area</h3>
+                    <ul class="unit-list">
+                        <li>Square mm, cm, m</li>
+                        <li>Square km</li>
+                        <li>Square inch, foot</li>
+                        <li>Square yard</li>
+                        <li>Acre</li>
+                        <li>Hectare</li>
+                    </ul>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">🧊</div>
+                    <h3>Volume</h3>
+                    <ul class="unit-list">
+                        <li>Milliliter (ml)</li>
+                        <li>Liter (L)</li>
+                        <li>Fluid Ounce (fl oz)</li>
+                        <li>Cup, Pint, Quart</li>
+                        <li>Gallon (US/UK)</li>
+                        <li>Cubic cm, m</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How to Use Unit Converter</h2>
+                <p class="section-description">
+                    Convert between any units in just a few simple steps.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Select Category</h3>
+                    <p>Choose from 7 conversion categories: Data, Time, Length, Weight, Temperature, Area, or Volume based on your needs.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Pick Source Unit</h3>
+                    <p>Select the unit you're converting from (e.g., MB, seconds, meters) from the comprehensive list of supported units.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Choose Target Unit</h3>
+                    <p>Select the unit you want to convert to (e.g., GB, minutes, feet) and enter your value for instant conversion.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Get Results</h3>
+                    <p>See the converted result instantly with high precision. Copy the result or switch units to convert in the opposite direction.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perfect for These Development Tasks</h2>
+            </div>
+
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">💾</div>
+                    <h3>File Size & Storage Planning</h3>
+                    <p>Calculate storage requirements, optimize file sizes for web delivery, and plan database storage capacity with accurate data size conversions.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">⚡</div>
+                    <h3>Performance & Timeout Configuration</h3>
+                    <p>Configure API timeouts, cache expiration times, and performance thresholds by converting between different time units accurately.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>API Specifications & Documentation</h3>
+                    <p>Provide clear API documentation with multiple unit options for international audiences and different system requirements.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📱</div>
+                    <h3>Mobile App Development</h3>
+                    <p>Handle screen dimensions, asset sizes, and user preferences across different regions and measurement systems in mobile applications.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🛒</div>
+                    <h3>E-commerce & Shipping</h3>
+                    <p>Calculate shipping costs, product dimensions, and weight specifications for international e-commerce platforms and logistics systems.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🌡️</div>
+                    <h3>IoT & Sensor Data Processing</h3>
+                    <p>Process sensor data from IoT devices, convert temperature readings, and standardize measurements across different hardware systems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>What's the difference between binary and decimal data units?</h3>
+                    <p>DevHelper uses the standard binary system where 1 KB = 1,024 bytes (not 1,000). This is consistent with how operating systems and most development tools calculate file sizes and memory usage.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How accurate are the unit conversions?</h3>
+                    <p>All conversions use high-precision mathematics with support for decimal places. Results are accurate to multiple decimal points, making them suitable for professional development and scientific calculations.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I convert between imperial and metric units?</h3>
+                    <p>Yes! DevHelper supports conversion between imperial (feet, pounds, Fahrenheit) and metric (meters, kilograms, Celsius) units across all applicable categories.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Does it handle temperature conversion formulas correctly?</h3>
+                    <p>Absolutely. Temperature conversions use the correct formulas for Celsius, Fahrenheit, and Kelvin, including proper offset calculations (not just multiplication factors).</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Are there quick shortcuts for common conversions?</h3>
+                    <p>While DevHelper focuses on comprehensive accuracy, the real-time conversion makes it extremely fast to use. Simply type your value and see all results instantly without clicking convert buttons.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I use this for scientific or engineering calculations?</h3>
+                    <p>Yes, the unit converter is designed for professional use with high precision calculations suitable for engineering, scientific applications, and technical documentation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Tools Section -->
+    <section class="related-tools">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Related Developer Tools</h2>
+                <p class="section-description">Explore other essential tools included in DevHelper</p>
+            </div>
+
+            <div class="related-tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🕐</div>
+                    <h3>Timestamp Converter</h3>
+                    <p>Convert Unix timestamps with timezone support - perfect companion for time duration calculations.</p>
+                    <a href="timestamp-converter.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📄</div>
+                    <h3>JSON Formatter</h3>
+                    <p>Format and validate JSON data that often contains size and measurement values in API responses.</p>
+                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🌍</div>
+                    <h3>HTTP Request</h3>
+                    <p>Test APIs that return measurement data, file sizes, and unit-based information with our HTTP client.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔐</div>
+                    <h3>Crypto Tools</h3>
+                    <p>Calculate hash sizes and encryption key lengths with precise byte and bit measurements.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Streamline Your Unit Conversions?</h2>
+                <p>Join thousands of developers who rely on DevHelper's unit converter for accurate measurements and calculations.</p>
+                <div class="cta-actions">
+                    <a href="index.html#download" class="btn btn-primary">
+                        <span class="btn-icon">📥</span>
+                        Download DevHelper Free
+                    </a>
+                    <div class="cta-info">
+                        <span>✓ macOS 14.0+</span>
+                        <span>✓ 17 Developer Tools</span>
+                        <span>✓ No Subscription</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/icon.png" alt="DevHelper" class="footer-logo">
+                    <div>
+                        <h4>DevHelper</h4>
+                        <p>Essential developer tools for macOS</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Product</h5>
+                        <a href="index.html#features">Features</a>
+                        <a href="index.html#reviews">Reviews</a>
+                        <a href="release-notes.html">Release Notes</a>
+                        <a href="index.html#download">Download</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Resources</h5>
+                        <a href="https://github.com/hengfeiyang/devhelper" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/releases" target="_blank" rel="noopener">Releases</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/issues" target="_blank" rel="noopener">Support</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Development</h5>
+                        <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a>
+                        <a href="https://anthropic.com" target="_blank" rel="noopener">Anthropic</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 DevHelper. Built with ❤️ using Claude Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>
