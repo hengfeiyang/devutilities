@@ -26,6 +26,7 @@ A native macOS application for developers, containing 17 essential tools commonl
 
 ## Key Features
 
+- **Customizable Tool Management** - **NEW** Enable/disable tools and organize them with drag-and-drop interface
 - **Search Functionality** - Quickly find tools using the search bar in the sidebar
 - **Selectable Results** - Copy results directly from the output areas
 - **Modern UI** - Clean, intuitive interface designed for macOS
@@ -33,14 +34,27 @@ A native macOS application for developers, containing 17 essential tools commonl
 
 ## Version
 
-Current version: 2.2.1
+Current version: 2.3.0
+
+## What's New in v2.3.0
+
+- **🎛️ Feature Management System**: NEW customizable tool organization system
+- **⚙️ Settings Interface**: Gear icon in sidebar opens visual grid-based tool management
+- **📱 Grid Layout**: 5-column responsive grid showing all 17 tools with icons and names
+- **🔄 Drag-and-Drop**: Move tools between enabled/disabled sections with visual feedback
+- **👁️ Hide Unused Tools**: Reduce sidebar clutter by disabling tools you don't need
+- **💾 Auto-Save**: Preferences automatically saved and restored between sessions
+- **🔄 Reset Option**: One-click restore to default layout with all tools enabled
 
 ## Screenshots
 
-#### AI Chat
-![AI Chat](./images/screenshots/aichat.png)
+#### customizable features
+![Devhelper](./images/screenshots/customize.png)
 
-![AI Chat custom models](./images/screenshots/aichat-models.png)
+#### AI Chat
+![DevHelper AI Chat](./images/screenshots/aichat.png)
+
+![DevHelper AI Chat custom models](./images/screenshots/aichat-models.png)
 
 #### Timestamp Converter
 ![DevHelper Timestamp Converter](./images/screenshots/timestamp.png)
