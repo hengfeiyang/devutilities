@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Tools - URL Encoder, Decoder & Parser Online | DevHelper</title>
+    <meta name="description" content="Professional URL tools for developers. URL encode/decode, comprehensive URL parsing with component breakdown, validation, and query parameter extraction. Real-time processing with detailed URL analysis. Part of DevHelper - 17 essential developer tools for macOS.">
+    <meta name="keywords" content="URL encoder, URL decoder, URL parser, URL encode online, URL decode online, URL validation, query parameters, URL components, percent encoding, URL parsing tool">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="URL Tools - URL Encoder, Decoder & Parser | DevHelper">
+    <meta property="og:description" content="Professional URL tools with encoding/decoding, comprehensive parsing, and component breakdown. Real-time processing for developers.">
+    <meta property="og:image" content="images/screenshots/url.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="URL Tools - URL Encoder, Decoder & Parser">
+    <meta property="twitter:description" content="Professional URL tools with encoding/decoding, comprehensive parsing, and component breakdown. Real-time processing.">
+    <meta property="twitter:image" content="images/screenshots/url.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "DevHelper URL Tools",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS",
+        "description": "Professional URL tools with encoding/decoding, parsing, and component breakdown for developers",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "10"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-brand">
+                <img src="images/icon.png" alt="DevHelper" class="nav-logo">
+                <span class="nav-title">DevHelper</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#reviews" class="nav-link">Reviews</a>
+                <a href="release-notes.html" class="nav-link">Release Notes</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="https://github.com/hengfeiyang/devhelper" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="breadcrumb">
+                        <a href="index.html">DevHelper</a> / <span>URL Tools</span>
+                    </div>
+                    <h1 class="hero-title">
+                        URL Tools
+                        <span class="hero-subtitle">URL Encoder, Decoder & Comprehensive Parser</span>
+                    </h1>
+                    <p class="hero-description">
+                        Professional URL manipulation tools for developers. Encode and decode URLs with percent encoding, parse URLs with comprehensive component breakdown, validate URL format, and extract query parameters. Perfect for web development, API integration, and URL analysis workflows.
+                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🔄</span>
+                            <span>Encode & Decode</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🔍</span>
+                            <span>URL Parsing</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">✅</span>
+                            <span>URL Validation</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="index.html#download" class="btn btn-primary">
+                            <span class="btn-icon">📥</span>
+                            Download DevHelper
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            <span class="btn-icon">👀</span>
+                            See Features
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/screenshots/url.png" alt="DevHelper URL Tools Screenshot showing URL encoding/decoding with component breakdown and validation">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Advanced URL Processing Features</h2>
+                <p class="section-description">
+                    Everything you need for professional URL manipulation, parsing, and analysis in development workflows.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card featured">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">URL Encoding & Decoding</h3>
+                    <p class="feature-description">Comprehensive percent encoding and decoding with support for all special characters. Handles spaces, symbols, Unicode characters, and international domains.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">URL Component Parsing</h3>
+                    <p class="feature-description">Break down URLs into individual components: scheme, host, port, path, query parameters, and fragments with detailed analysis and validation.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Query Parameter Extraction</h3>
+                    <p class="feature-description">Parse and extract query parameters with key-value pair breakdown. Handle multiple values, encoded parameters, and complex query structures.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3 class="feature-title">URL Validation</h3>
+                    <p class="feature-description">Comprehensive URL format validation with detailed error reporting. Check for valid schemes, domain names, port numbers, and overall URL structure.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">International Domain Support</h3>
+                    <p class="feature-description">Full support for internationalized domain names (IDN), Unicode characters in URLs, and punycode encoding/decoding for global web applications.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3 class="feature-title">URL Construction</h3>
+                    <p class="feature-description">Build URLs from components with automatic encoding and validation. Construct complex URLs with parameters, fragments, and proper formatting.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">Copy & Export Options</h3>
+                    <p class="feature-description">Multiple output formats for different use cases. Copy encoded URLs, decoded text, individual components, or complete analysis results.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Real-time Processing</h3>
+                    <p class="feature-description">Instant URL processing and analysis as you type. No delays or loading times - see encoding, decoding, and parsing results immediately.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- URL Components Section -->
+    <section class="url-components">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">URL Component Breakdown</h2>
+                <p class="section-description">Understanding URL structure and components for better web development</p>
+            </div>
+
+            <div class="url-example">
+                <div class="url-display">
+                    <span class="url-part scheme">https://</span><span class="url-part host">api.example.com</span><span class="url-part port">:8080</span><span class="url-part path">/v1/users</span><span class="url-part query">?id=123&name=john%20doe</span><span class="url-part fragment">#section1</span>
+                </div>
+            </div>
+
+            <div class="components-grid">
+                <div class="component-card">
+                    <div class="component-color scheme-color"></div>
+                    <h3>Scheme (Protocol)</h3>
+                    <div class="component-example">https://</div>
+                    <p>Defines the protocol used to access the resource. Common schemes include http, https, ftp, mailto, and custom protocols.</p>
+                </div>
+
+                <div class="component-card">
+                    <div class="component-color host-color"></div>
+                    <h3>Host (Domain)</h3>
+                    <div class="component-example">api.example.com</div>
+                    <p>The domain name or IP address of the server. Can include subdomains and supports internationalized domain names (IDN).</p>
+                </div>
+
+                <div class="component-card">
+                    <div class="component-color port-color"></div>
+                    <h3>Port</h3>
+                    <div class="component-example">:8080</div>
+                    <p>Optional port number for the connection. Default ports (80 for HTTP, 443 for HTTPS) are usually omitted.</p>
+                </div>
+
+                <div class="component-card">
+                    <div class="component-color path-color"></div>
+                    <h3>Path</h3>
+                    <div class="component-example">/v1/users</div>
+                    <p>The specific resource path on the server. Represents the hierarchical structure of resources and endpoints.</p>
+                </div>
+
+                <div class="component-card">
+                    <div class="component-color query-color"></div>
+                    <h3>Query Parameters</h3>
+                    <div class="component-example">?id=123&name=john%20doe</div>
+                    <p>Key-value pairs for additional parameters. Starts with '?' and separated by '&'. Values are URL-encoded for special characters.</p>
+                </div>
+
+                <div class="component-card">
+                    <div class="component-color fragment-color"></div>
+                    <h3>Fragment (Hash)</h3>
+                    <div class="component-example">#section1</div>
+                    <p>Optional fragment identifier for specific sections within a resource. Commonly used for page anchors and single-page app routing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How to Use URL Tools</h2>
+                <p class="section-description">
+                    Encode, decode, and parse URLs in just a few simple steps.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Input Your URL</h3>
+                    <p>Paste your URL or text that needs encoding/decoding. Can be a complete URL, query string, or any text with special characters.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Choose Operation</h3>
+                    <p>Select from URL encoding, URL decoding, or comprehensive URL parsing depending on your specific needs and use case.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>View Analysis</h3>
+                    <p>See real-time results with component breakdown, validation status, and detailed analysis of your URL structure and parameters.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Copy Results</h3>
+                    <p>Copy the processed URL, individual components, or complete analysis results for use in your applications and development workflows.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perfect for These Development Tasks</h2>
+            </div>
+
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>Web Development</h3>
+                    <p>Handle form submissions, process query parameters, construct dynamic URLs, and ensure proper URL encoding for special characters in web applications.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔧</div>
+                    <h3>API Development</h3>
+                    <p>Build and parse API endpoints, handle URL parameters, construct RESTful routes, and validate URL formats in API documentation and testing.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📊</div>
+                    <h3>Data Processing</h3>
+                    <p>Extract and analyze URL data from logs, parse query parameters from analytics data, and process URL-encoded form submissions.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔍</div>
+                    <h3>SEO & Analytics</h3>
+                    <p>Analyze URL structure for SEO optimization, decode tracking parameters, process campaign URLs, and validate canonical URL formats.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🛡️</div>
+                    <h3>Security & Validation</h3>
+                    <p>Validate user-provided URLs, sanitize URL inputs, decode suspicious URLs for security analysis, and prevent URL-based attacks.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔗</div>
+                    <h3>URL Management</h3>
+                    <p>Build dynamic redirects, construct URLs with parameters, manage URL shortening services, and handle internationalized domain names.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>What is URL encoding and when do I need it?</h3>
+                    <p>URL encoding (percent encoding) converts special characters to a format safe for URLs. You need it when URLs contain spaces, symbols, or non-ASCII characters that could break URL parsing.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How does the URL parser handle invalid URLs?</h3>
+                    <p>DevHelper provides detailed validation with specific error messages for invalid URLs. It identifies issues like malformed schemes, invalid characters, or incorrect URL structure with suggestions for fixes.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can it handle international domain names?</h3>
+                    <p>Yes! DevHelper fully supports internationalized domain names (IDN) with automatic punycode conversion and Unicode character handling for global web applications.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What query parameter formats are supported?</h3>
+                    <p>All standard query parameter formats including multiple values for the same key, encoded values, array notation, and complex nested parameter structures used in modern web frameworks.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I build URLs from individual components?</h3>
+                    <p>Yes, DevHelper includes URL construction features where you can input individual components (scheme, host, path, parameters) and automatically build properly formatted URLs.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How accurate is the URL validation?</h3>
+                    <p>DevHelper uses comprehensive URL validation following RFC standards, checking scheme validity, domain name format, port ranges, and overall URL structure for maximum accuracy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Tools Section -->
+    <section class="related-tools">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Related Developer Tools</h2>
+                <p class="section-description">Explore other essential tools included in DevHelper</p>
+            </div>
+
+            <div class="related-tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🌍</div>
+                    <h3>HTTP Request</h3>
+                    <p>Test APIs with URLs you've encoded or parsed. Send requests to endpoints with proper URL formatting and parameter handling.</p>
+                    <a href="http-request.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🎯</div>
+                    <h3>Regex Tester</h3>
+                    <p>Create and test regex patterns for URL validation, parameter extraction, and URL pattern matching in applications.</p>
+                    <a href="regex-tester.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔠</div>
+                    <h3>Base64 Encoder</h3>
+                    <p>Encode URL parameters or decode Base64-encoded data found in URL query parameters and API responses.</p>
+                    <a href="base64-encoder.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📄</div>
+                    <h3>JSON Formatter</h3>
+                    <p>Format JSON data received from APIs accessed through your parsed and validated URLs with proper structure analysis.</p>
+                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Master URL Processing?</h2>
+                <p>Join thousands of developers who rely on DevHelper's URL tools for their web development and API integration tasks.</p>
+                <div class="cta-actions">
+                    <a href="index.html#download" class="btn btn-primary">
+                        <span class="btn-icon">📥</span>
+                        Download DevHelper Free
+                    </a>
+                    <div class="cta-info">
+                        <span>✓ macOS 14.0+</span>
+                        <span>✓ 17 Developer Tools</span>
+                        <span>✓ No Subscription</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/icon.png" alt="DevHelper" class="footer-logo">
+                    <div>
+                        <h4>DevHelper</h4>
+                        <p>Essential developer tools for macOS</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Product</h5>
+                        <a href="index.html#features">Features</a>
+                        <a href="index.html#reviews">Reviews</a>
+                        <a href="release-notes.html">Release Notes</a>
+                        <a href="index.html#download">Download</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Resources</h5>
+                        <a href="https://github.com/hengfeiyang/devhelper" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/releases" target="_blank" rel="noopener">Releases</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/issues" target="_blank" rel="noopener">Support</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Development</h5>
+                        <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a>
+                        <a href="https://anthropic.com" target="_blank" rel="noopener">Anthropic</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 DevHelper. Built with ❤️ using Claude Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

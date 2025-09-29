@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Encoder/Decoder - Encode & Decode Base64 Online | DevHelper</title>
+    <meta name="description" content="Professional Base64 encoder and decoder for developers. Encode text to Base64, decode Base64 to text with URL-safe variant support. Real-time conversion with automatic detection. Part of DevHelper - 17 essential developer tools for macOS.">
+    <meta name="keywords" content="base64 encoder, base64 decoder, base64 encode online, base64 decode online, URL safe base64, base64 converter, encode decode base64, base64 tool online">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="Base64 Encoder/Decoder - Encode & Decode Base64 Online | DevHelper">
+    <meta property="og:description" content="Professional Base64 encoder and decoder with URL-safe variant support. Real-time conversion and automatic detection for developers.">
+    <meta property="og:image" content="images/screenshots/base64.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Base64 Encoder/Decoder - Encode & Decode Base64 Online">
+    <meta property="twitter:description" content="Professional Base64 encoder and decoder with URL-safe variant support. Real-time conversion and automatic detection.">
+    <meta property="twitter:image" content="images/screenshots/base64.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "DevHelper Base64 Encoder/Decoder",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS",
+        "description": "Professional Base64 encoder and decoder with URL-safe variant support and automatic detection",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "10"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-brand">
+                <img src="images/icon.png" alt="DevHelper" class="nav-logo">
+                <span class="nav-title">DevHelper</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#reviews" class="nav-link">Reviews</a>
+                <a href="release-notes.html" class="nav-link">Release Notes</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="https://github.com/hengfeiyang/devhelper" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="breadcrumb">
+                        <a href="index.html">DevHelper</a> / <span>Base64 Encoder/Decoder</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Base64 Encoder & Decoder
+                        <span class="hero-subtitle">Professional Base64 Conversion Tool</span>
+                    </h1>
+                    <p class="hero-description">
+                        Encode text to Base64 and decode Base64 back to readable text with support for URL-safe variants. Features automatic format detection, real-time conversion, and comprehensive error handling. Essential for API authentication, data transmission, and web development.
+                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🔄</span>
+                            <span>Bidirectional Conversion</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🌐</span>
+                            <span>URL-Safe Variants</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🎯</span>
+                            <span>Auto Detection</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="index.html#download" class="btn btn-primary">
+                            <span class="btn-icon">📥</span>
+                            Download DevHelper
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            <span class="btn-icon">👀</span>
+                            See Features
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/screenshots/base64.png" alt="DevHelper Base64 Encoder/Decoder Screenshot showing text encoding with URL-safe options">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Advanced Base64 Conversion Features</h2>
+                <p class="section-description">
+                    Everything you need for professional Base64 encoding and decoding in development workflows.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card featured">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">Bidirectional Conversion</h3>
+                    <p class="feature-description">Seamlessly encode text to Base64 and decode Base64 back to readable text. Handles both standard and URL-safe Base64 encoding formats.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">URL-Safe Base64</h3>
+                    <p class="feature-description">Support for URL-safe Base64 encoding that replaces '+' and '/' with '-' and '_' characters, perfect for web applications and APIs.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Automatic Detection</h3>
+                    <p class="feature-description">Smart format detection automatically identifies whether your input is plain text or Base64 encoded data, streamlining the conversion process.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Real-time Processing</h3>
+                    <p class="feature-description">Instant conversion as you type with live validation. See results immediately without clicking buttons or waiting for processing.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">Error Handling</h3>
+                    <p class="feature-description">Comprehensive error detection for invalid Base64 input with clear error messages and suggestions for fixing common formatting issues.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Content Analysis</h3>
+                    <p class="feature-description">Character and line count tracking for both input and output, helping you understand encoding overhead and data size changes.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">Easy Copy & Share</h3>
+                    <p class="feature-description">One-click copying of encoded/decoded results. Seamlessly integrate with your development workflow and API testing tools.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔤</div>
+                    <h3 class="feature-title">Unicode Support</h3>
+                    <p class="feature-description">Full Unicode and UTF-8 support for encoding international text, special characters, and multi-byte character sequences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Base64 Information Section -->
+    <section class="base64-info">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Understanding Base64 Encoding</h2>
+                <p class="section-description">Learn about Base64 encoding and its applications in modern development</p>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🔤</div>
+                    <h3>What is Base64?</h3>
+                    <p>Base64 is a binary-to-text encoding scheme that represents binary data in ASCII format. It uses 64 characters (A-Z, a-z, 0-9, +, /) to encode data, making it safe for transmission over text-based protocols.</p>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">🌐</div>
+                    <h3>Standard vs URL-Safe</h3>
+                    <p>Standard Base64 uses '+' and '/' characters which can cause issues in URLs. URL-safe Base64 replaces these with '-' and '_', making encoded data safe for use in URLs and filenames.</p>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">📈</div>
+                    <h3>Size Overhead</h3>
+                    <p>Base64 encoding increases data size by approximately 33%. Every 3 bytes of binary data becomes 4 characters of Base64 text, plus padding characters if needed.</p>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">🔧</div>
+                    <h3>Common Applications</h3>
+                    <p>Used in email attachments (MIME), web authentication (Basic Auth), data URLs, API tokens, configuration files, and embedding binary data in JSON/XML.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How to Use Base64 Encoder/Decoder</h2>
+                <p class="section-description">
+                    Encode and decode Base64 data in just a few simple steps.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Input Your Data</h3>
+                    <p>Paste your text to encode to Base64, or paste Base64 encoded data to decode back to readable text.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Choose Format</h3>
+                    <p>Select between standard Base64 or URL-safe Base64 format depending on your use case and requirements.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>See Results</h3>
+                    <p>View the converted result instantly with automatic format detection and error handling for invalid input.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Copy & Use</h3>
+                    <p>Copy the result with one click and use it in your applications, APIs, configuration files, or wherever needed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perfect for These Development Tasks</h2>
+            </div>
+
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔐</div>
+                    <h3>API Authentication</h3>
+                    <p>Encode credentials for HTTP Basic Authentication headers, API keys, and secure token generation for authentication workflows.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📧</div>
+                    <h3>Email & MIME Processing</h3>
+                    <p>Handle email attachments, decode MIME-encoded content, and process email headers that use Base64 encoding for non-ASCII characters.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>Web Development</h3>
+                    <p>Create data URLs for embedding images, encode form data, handle file uploads, and process Base64-encoded content in web applications.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📄</div>
+                    <h3>Configuration Files</h3>
+                    <p>Encode binary data or sensitive information in JSON, YAML, or XML configuration files where plain text isn't suitable.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔧</div>
+                    <h3>API Testing & Development</h3>
+                    <p>Test APIs that send or receive Base64-encoded data, debug authentication issues, and validate data transmission formats.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">💾</div>
+                    <h3>Data Storage & Transmission</h3>
+                    <p>Store binary data in text-based databases, transmit binary data over text-based protocols, and ensure data integrity across systems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>When should I use URL-safe Base64?</h3>
+                    <p>Use URL-safe Base64 when the encoded data will be used in URLs, filenames, or any context where '+' and '/' characters might cause issues. It replaces these characters with '-' and '_' respectively.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How much does Base64 encoding increase data size?</h3>
+                    <p>Base64 encoding increases data size by approximately 33%. Every 3 bytes of original data becomes 4 characters in Base64, plus potential padding characters ('=').</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I encode binary files with this tool?</h3>
+                    <p>This tool is optimized for text content. For binary files, you'll need to first convert them to a text representation or use specialized tools that can handle binary data directly.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What happens if I try to decode invalid Base64?</h3>
+                    <p>DevHelper provides clear error messages when you try to decode invalid Base64 data, including suggestions for common issues like missing padding or invalid characters.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Does it support Unicode and special characters?</h3>
+                    <p>Yes! DevHelper fully supports Unicode characters and international text. The tool properly handles UTF-8 encoding before applying Base64 conversion.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is Base64 the same as encryption?</h3>
+                    <p>No, Base64 is encoding, not encryption. It's designed for data transmission and storage compatibility, not security. Base64 encoded data can be easily decoded by anyone.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Tools Section -->
+    <section class="related-tools">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Related Developer Tools</h2>
+                <p class="section-description">Explore other essential tools included in DevHelper</p>
+            </div>
+
+            <div class="related-tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🔢</div>
+                    <h3>Hex String Converter</h3>
+                    <p>Convert between hexadecimal and string formats - another essential encoding tool for developers.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📄</div>
+                    <h3>JSON Formatter</h3>
+                    <p>Format and validate JSON data that often contains Base64-encoded content in API responses.</p>
+                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🌍</div>
+                    <h3>HTTP Request</h3>
+                    <p>Test APIs that use Base64 authentication or send/receive Base64-encoded data with our HTTP client.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🎫</div>
+                    <h3>JWT Encoder/Decoder</h3>
+                    <p>Work with JSON Web Tokens that use Base64 encoding internally for headers and payloads.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Streamline Your Base64 Workflow?</h2>
+                <p>Join thousands of developers who rely on DevHelper's Base64 encoder for their daily development tasks.</p>
+                <div class="cta-actions">
+                    <a href="index.html#download" class="btn btn-primary">
+                        <span class="btn-icon">📥</span>
+                        Download DevHelper Free
+                    </a>
+                    <div class="cta-info">
+                        <span>✓ macOS 14.0+</span>
+                        <span>✓ 17 Developer Tools</span>
+                        <span>✓ No Subscription</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/icon.png" alt="DevHelper" class="footer-logo">
+                    <div>
+                        <h4>DevHelper</h4>
+                        <p>Essential developer tools for macOS</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Product</h5>
+                        <a href="index.html#features">Features</a>
+                        <a href="index.html#reviews">Reviews</a>
+                        <a href="release-notes.html">Release Notes</a>
+                        <a href="index.html#download">Download</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Resources</h5>
+                        <a href="https://github.com/hengfeiyang/devhelper" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/releases" target="_blank" rel="noopener">Releases</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/issues" target="_blank" rel="noopener">Support</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Development</h5>
+                        <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a>
+                        <a href="https://anthropic.com" target="_blank" rel="noopener">Anthropic</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 DevHelper. Built with ❤️ using Claude Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

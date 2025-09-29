@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP Request Tool - API Testing Client Online | DevHelper</title>
+    <meta name="description" content="Professional HTTP request tool for API testing and development. Send GET, POST, PUT, DELETE requests with headers, authentication, and JSON tree view. Server-sent events (SSE) support included. Part of DevHelper - 17 essential developer tools for macOS.">
+    <meta name="keywords" content="HTTP request tool, API testing, REST client, HTTP client, API tester, POST request, GET request, JSON response viewer, API debugging, server sent events">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="HTTP Request Tool - API Testing Client | DevHelper">
+    <meta property="og:description" content="Professional HTTP request tool with JSON tree view, authentication support, and server-sent events. Perfect for API testing and development.">
+    <meta property="og:image" content="images/screenshots/http.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="HTTP Request Tool - API Testing Client">
+    <meta property="twitter:description" content="Professional HTTP request tool with JSON tree view, authentication support, and server-sent events for API testing.">
+    <meta property="twitter:image" content="images/screenshots/http.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "DevHelper HTTP Request Tool",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS",
+        "description": "Professional HTTP request tool for API testing with JSON tree view, authentication, and server-sent events support",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "10"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-brand">
+                <img src="images/icon.png" alt="DevHelper" class="nav-logo">
+                <span class="nav-title">DevHelper</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#reviews" class="nav-link">Reviews</a>
+                <a href="release-notes.html" class="nav-link">Release Notes</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="https://github.com/hengfeiyang/devhelper" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="breadcrumb">
+                        <a href="index.html">DevHelper</a> / <span>HTTP Request</span>
+                    </div>
+                    <h1 class="hero-title">
+                        HTTP Request Tool
+                        <span class="hero-subtitle">Professional API Testing & Development Client</span>
+                    </h1>
+                    <p class="hero-description">
+                        Send HTTP requests with comprehensive method support, custom headers, authentication, and advanced response handling. Features JSON tree view, server-sent events (SSE) streaming, and request history. Perfect for API development, testing, and debugging workflows.
+                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🌐</span>
+                            <span>All HTTP Methods</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">📊</span>
+                            <span>JSON Tree View</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🔒</span>
+                            <span>Authentication Support</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="index.html#download" class="btn btn-primary">
+                            <span class="btn-icon">📥</span>
+                            Download DevHelper
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            <span class="btn-icon">👀</span>
+                            See Features
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/screenshots/http.png" alt="DevHelper HTTP Request Tool Screenshot showing API testing with JSON response and request headers">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Advanced HTTP Request Features</h2>
+                <p class="section-description">
+                    Everything you need for professional API testing, development, and debugging workflows.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card featured">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">Complete HTTP Method Support</h3>
+                    <p class="feature-description">Send GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS requests with full parameter and body support. Perfect for testing RESTful APIs and web services.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">JSON Tree Viewer</h3>
+                    <p class="feature-description">Beautiful JSON response viewer with collapsible tree structure, syntax highlighting, and easy navigation through complex nested data structures.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">Authentication Support</h3>
+                    <p class="feature-description">Built-in support for Bearer tokens, Basic Auth, API keys, and custom authentication headers. Secure credential management for API testing.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📡</div>
+                    <h3 class="feature-title">Server-Sent Events (SSE)</h3>
+                    <p class="feature-description">Real-time streaming support for server-sent events with live event display. Test streaming APIs, webhooks, and real-time data feeds.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Custom Headers</h3>
+                    <p class="feature-description">Add unlimited custom HTTP headers with key-value pairs. Support for Content-Type, Accept, CORS headers, and any custom API requirements.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3 class="feature-title">Request History</h3>
+                    <p class="feature-description">Automatic request history tracking with quick recall functionality. Save time by reusing previous requests and building on tested API calls.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">Response Details</h3>
+                    <p class="feature-description">Comprehensive response information including status codes, headers, timing data, and content size. Full debugging information at your fingertips.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3 class="feature-title">Request Body Editor</h3>
+                    <p class="feature-description">Advanced request body editor with JSON, XML, form data, and raw text support. Syntax highlighting and validation for structured data formats.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HTTP Methods Section -->
+    <section class="http-methods">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Supported HTTP Methods</h2>
+                <p class="section-description">Full support for all standard HTTP methods with detailed explanations and use cases</p>
+            </div>
+
+            <div class="methods-grid">
+                <div class="method-card">
+                    <div class="method-badge get">GET</div>
+                    <h3>GET Requests</h3>
+                    <p>Retrieve data from APIs, test endpoints, and fetch resources. Perfect for reading operations, data queries, and API exploration without side effects.</p>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-badge post">POST</div>
+                    <h3>POST Requests</h3>
+                    <p>Create new resources, submit form data, and send JSON payloads. Essential for user registration, data creation, and file uploads.</p>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-badge put">PUT</div>
+                    <h3>PUT Requests</h3>
+                    <p>Update entire resources with complete replacement. Ideal for editing user profiles, updating configuration, and replacing data records.</p>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-badge patch">PATCH</div>
+                    <h3>PATCH Requests</h3>
+                    <p>Partial resource updates with specific field modifications. Perfect for incremental changes, status updates, and selective data editing.</p>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-badge delete">DELETE</div>
+                    <h3>DELETE Requests</h3>
+                    <p>Remove resources and clean up data. Essential for user account deletion, content removal, and resource management operations.</p>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-badge options">OPTIONS</div>
+                    <h3>OPTIONS Requests</h3>
+                    <p>Check available methods and CORS policies. Important for preflight requests, API capability discovery, and cross-origin testing.</p>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-badge head">HEAD</div>
+                    <h3>HEAD Requests</h3>
+                    <p>Get response headers without body content. Useful for checking resource existence, metadata retrieval, and bandwidth-efficient testing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How to Use HTTP Request Tool</h2>
+                <p class="section-description">
+                    Send API requests and test endpoints in just a few simple steps.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Configure Request</h3>
+                    <p>Enter your API endpoint URL, select HTTP method (GET, POST, PUT, etc.), and configure any required headers or authentication.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Add Headers & Auth</h3>
+                    <p>Set custom headers, authentication tokens, Content-Type, and any other required headers for your API endpoint.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Prepare Request Body</h3>
+                    <p>For POST/PUT/PATCH requests, add your JSON, XML, or form data in the request body editor with syntax highlighting.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Send & Analyze</h3>
+                    <p>Send the request and view the response with JSON tree view, status codes, headers, and timing information for analysis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perfect for These Development Tasks</h2>
+            </div>
+
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔧</div>
+                    <h3>API Development & Testing</h3>
+                    <p>Test REST APIs during development, validate endpoints, check response formats, and debug API behavior with comprehensive request/response analysis.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔍</div>
+                    <h3>API Integration</h3>
+                    <p>Integrate third-party APIs by testing authentication, exploring endpoints, validating data formats, and understanding API capabilities before implementation.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🐛</div>
+                    <h3>Debugging & Troubleshooting</h3>
+                    <p>Debug API issues, test different request parameters, analyze error responses, and validate authentication mechanisms during development.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📊</div>
+                    <h3>Data Validation</h3>
+                    <p>Validate API responses, test data schemas, verify JSON structures, and ensure data consistency across different API endpoints.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔒</div>
+                    <h3>Authentication Testing</h3>
+                    <p>Test various authentication methods including Bearer tokens, Basic Auth, API keys, and OAuth flows to ensure secure API access.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📡</div>
+                    <h3>Real-time API Testing</h3>
+                    <p>Test streaming APIs, webhooks, server-sent events, and real-time data feeds with live event monitoring and response tracking.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>What authentication methods are supported?</h3>
+                    <p>DevHelper supports Bearer tokens, Basic Authentication, API keys in headers, and custom authentication schemes. You can add any custom headers needed for your API's authentication requirements.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I test GraphQL APIs?</h3>
+                    <p>Yes! You can send GraphQL queries using POST requests with the appropriate Content-Type header and GraphQL query in the request body. The JSON tree view makes it easy to explore GraphQL responses.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How does the JSON tree viewer work?</h3>
+                    <p>The JSON tree viewer automatically parses JSON responses and displays them in a collapsible, hierarchical tree structure with syntax highlighting, making it easy to navigate complex nested data.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I save and reuse requests?</h3>
+                    <p>Yes, DevHelper automatically tracks your request history, allowing you to quickly recall and reuse previous requests. This saves time when testing similar endpoints or iterating on API calls.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What is Server-Sent Events (SSE) support?</h3>
+                    <p>SSE support allows you to test streaming APIs that send real-time data. You can monitor live events, webhooks, and continuous data streams with real-time display of incoming messages.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I test local development APIs?</h3>
+                    <p>Absolutely! DevHelper can send requests to localhost, development servers, and any accessible API endpoints. Perfect for testing APIs during local development and staging environments.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Tools Section -->
+    <section class="related-tools">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Related Developer Tools</h2>
+                <p class="section-description">Explore other essential tools included in DevHelper</p>
+            </div>
+
+            <div class="related-tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">📄</div>
+                    <h3>JSON Formatter</h3>
+                    <p>Format and validate JSON data from API responses. Perfect companion for analyzing and beautifying API response data.</p>
+                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔠</div>
+                    <h3>Base64 Encoder</h3>
+                    <p>Encode authentication credentials and decode Base64 data from API responses for complete request processing workflows.</p>
+                    <a href="base64-encoder.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🎫</div>
+                    <h3>JWT Encoder/Decoder</h3>
+                    <p>Work with JWT tokens for API authentication, decode response tokens, and validate JWT-based authentication flows.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🕐</div>
+                    <h3>Timestamp Converter</h3>
+                    <p>Convert Unix timestamps from API responses to human-readable dates for better data analysis and debugging.</p>
+                    <a href="timestamp-converter.html" class="tool-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Streamline Your API Testing?</h2>
+                <p>Join thousands of developers who rely on DevHelper's HTTP request tool for their daily API development and testing tasks.</p>
+                <div class="cta-actions">
+                    <a href="index.html#download" class="btn btn-primary">
+                        <span class="btn-icon">📥</span>
+                        Download DevHelper Free
+                    </a>
+                    <div class="cta-info">
+                        <span>✓ macOS 14.0+</span>
+                        <span>✓ 17 Developer Tools</span>
+                        <span>✓ No Subscription</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/icon.png" alt="DevHelper" class="footer-logo">
+                    <div>
+                        <h4>DevHelper</h4>
+                        <p>Essential developer tools for macOS</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Product</h5>
+                        <a href="index.html#features">Features</a>
+                        <a href="index.html#reviews">Reviews</a>
+                        <a href="release-notes.html">Release Notes</a>
+                        <a href="index.html#download">Download</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Resources</h5>
+                        <a href="https://github.com/hengfeiyang/devhelper" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/releases" target="_blank" rel="noopener">Releases</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/issues" target="_blank" rel="noopener">Support</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Development</h5>
+                        <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a>
+                        <a href="https://anthropic.com" target="_blank" rel="noopener">Anthropic</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 DevHelper. Built with ❤️ using Claude Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

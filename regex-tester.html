@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regex Tester - Test Regular Expressions Online | DevHelper</title>
+    <meta name="description" content="Professional regex tester for developers. Test regular expressions with pattern matching, capture groups, and common regex patterns. Real-time validation with detailed explanations. Part of DevHelper - 17 essential developer tools for macOS.">
+    <meta name="keywords" content="regex tester, regular expression tester, regex test online, regexp tester, regex validator, regex pattern matcher, test regex online, regex debugger">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="Regex Tester - Test Regular Expressions Online | DevHelper">
+    <meta property="og:description" content="Professional regex tester with pattern matching, capture groups, and common regex patterns. Real-time validation for developers.">
+    <meta property="og:image" content="images/screenshots/regex.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Regex Tester - Test Regular Expressions Online">
+    <meta property="twitter:description" content="Professional regex tester with pattern matching, capture groups, and common regex patterns. Real-time validation.">
+    <meta property="twitter:image" content="images/screenshots/regex.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "DevHelper Regex Tester",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS",
+        "description": "Professional regex tester with pattern matching, capture groups, and common regex patterns for developers",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "10"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-brand">
+                <img src="images/icon.png" alt="DevHelper" class="nav-logo">
+                <span class="nav-title">DevHelper</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#reviews" class="nav-link">Reviews</a>
+                <a href="release-notes.html" class="nav-link">Release Notes</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="https://github.com/hengfeiyang/devhelper" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="breadcrumb">
+                        <a href="index.html">DevHelper</a> / <span>Regex Tester</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Regex Tester
+                        <span class="hero-subtitle">Professional Regular Expression Testing Tool</span>
+                    </h1>
+                    <p class="hero-description">
+                        Test and validate regular expressions with real-time pattern matching, capture group extraction, and comprehensive error reporting. Features common regex patterns, detailed explanations, and advanced testing capabilities for developers and data processors.
+                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🎯</span>
+                            <span>Pattern Matching</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">📋</span>
+                            <span>Capture Groups</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">⚡</span>
+                            <span>Real-time Testing</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="index.html#download" class="btn btn-primary">
+                            <span class="btn-icon">📥</span>
+                            Download DevHelper
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            <span class="btn-icon">👀</span>
+                            See Features
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/screenshots/regex.png" alt="DevHelper Regex Tester Screenshot showing pattern matching with capture groups and real-time validation">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Advanced Regex Testing Features</h2>
+                <p class="section-description">
+                    Everything you need for professional regular expression development, testing, and debugging.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card featured">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Live Pattern Matching</h3>
+                    <p class="feature-description">Real-time regex matching with instant visual feedback. See matches highlighted in your test text as you type your regular expression pattern.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">Capture Groups</h3>
+                    <p class="feature-description">Extract and display capture groups with detailed breakdown. Perfect for parsing structured text, extracting data, and understanding complex patterns.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🏷️</div>
+                    <h3 class="feature-title">Named Groups Support</h3>
+                    <p class="feature-description">Full support for named capture groups with clear labeling and extraction. Makes complex regex patterns more readable and maintainable.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚠️</div>
+                    <h3 class="feature-title">Error Detection</h3>
+                    <p class="feature-description">Comprehensive regex syntax validation with clear error messages and suggestions for fixing common regex pattern mistakes.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3 class="feature-title">Common Patterns Library</h3>
+                    <p class="feature-description">Pre-built regex patterns for emails, URLs, phone numbers, dates, and other common validation scenarios. Quick-start templates for developers.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎛️</div>
+                    <h3 class="feature-title">Regex Flags Support</h3>
+                    <p class="feature-description">Support for all standard regex flags including global (g), case-insensitive (i), multiline (m), and more for comprehensive pattern testing.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Match Statistics</h3>
+                    <p class="feature-description">Detailed statistics showing match count, position information, and performance metrics for regex pattern optimization.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">Replace & Substitute</h3>
+                    <p class="feature-description">Test regex replacement patterns with backreferences and substitution groups. Perfect for text processing and transformation workflows.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Regex Patterns Section -->
+    <section class="regex-patterns">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Common Regex Patterns</h2>
+                <p class="section-description">Ready-to-use regular expression patterns for common validation and extraction tasks</p>
+            </div>
+
+            <div class="patterns-grid">
+                <div class="pattern-card">
+                    <div class="pattern-icon">📧</div>
+                    <h3>Email Validation</h3>
+                    <div class="pattern-code">^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$</div>
+                    <p>Validates email addresses with proper format checking including domain and TLD requirements.</p>
+                </div>
+
+                <div class="pattern-card">
+                    <div class="pattern-icon">🌐</div>
+                    <h3>URL Matching</h3>
+                    <div class="pattern-code">https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)</div>
+                    <p>Matches HTTP and HTTPS URLs with optional www prefix and various URL parameters.</p>
+                </div>
+
+                <div class="pattern-card">
+                    <div class="pattern-icon">📱</div>
+                    <h3>Phone Numbers</h3>
+                    <div class="pattern-code">^\+?1?-?\.?\s?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$</div>
+                    <p>Validates US phone numbers in various formats including international prefix and formatting.</p>
+                </div>
+
+                <div class="pattern-card">
+                    <div class="pattern-icon">📅</div>
+                    <h3>Date Formats</h3>
+                    <div class="pattern-code">^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$</div>
+                    <p>Matches MM/DD/YYYY date format with proper month and day validation ranges.</p>
+                </div>
+
+                <div class="pattern-card">
+                    <div class="pattern-icon">🆔</div>
+                    <h3>UUID Pattern</h3>
+                    <div class="pattern-code">[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}</div>
+                    <p>Validates UUID format with proper hyphen placement and hexadecimal character validation.</p>
+                </div>
+
+                <div class="pattern-card">
+                    <div class="pattern-icon">🔢</div>
+                    <h3>IP Address</h3>
+                    <div class="pattern-code">^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$</div>
+                    <p>Validates IPv4 addresses with proper octet range validation (0-255).</p>
+                </div>
+
+                <div class="pattern-card">
+                    <div class="pattern-icon">💳</div>
+                    <h3>Credit Card</h3>
+                    <div class="pattern-code">^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3[0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12})$</div>
+                    <p>Validates major credit card formats including Visa, MasterCard, American Express.</p>
+                </div>
+
+                <div class="pattern-card">
+                    <div class="pattern-icon">🔒</div>
+                    <h3>Strong Password</h3>
+                    <div class="pattern-code">^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$</div>
+                    <p>Validates strong passwords with lowercase, uppercase, numbers, and special characters.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How to Use Regex Tester</h2>
+                <p class="section-description">
+                    Test and validate regular expressions in just a few simple steps.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Enter Your Pattern</h3>
+                    <p>Type your regular expression pattern in the regex field. Use common patterns from our library or create your own custom pattern.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Add Test Text</h3>
+                    <p>Paste your test text that you want to match against the regex pattern. Can be single lines or multi-line text content.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Set Flags</h3>
+                    <p>Choose appropriate regex flags like global (g), case-insensitive (i), or multiline (m) based on your matching requirements.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>View Results</h3>
+                    <p>See live matches highlighted, capture groups extracted, and detailed statistics about your regex pattern performance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perfect for These Development Tasks</h2>
+            </div>
+
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">✅</div>
+                    <h3>Data Validation</h3>
+                    <p>Validate user input like email addresses, phone numbers, postal codes, and other structured data formats in web forms and applications.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔍</div>
+                    <h3>Text Processing & Parsing</h3>
+                    <p>Extract specific data from logs, configuration files, CSV data, or any structured text content using capture groups and pattern matching.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔄</div>
+                    <h3>Search & Replace Operations</h3>
+                    <p>Perform complex text transformations, format conversions, and batch text processing using regex replacement patterns with backreferences.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📊</div>
+                    <h3>Log Analysis</h3>
+                    <p>Parse server logs, application logs, and error files to extract timestamps, IP addresses, error codes, and other relevant information.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>Web Scraping</h3>
+                    <p>Extract data from HTML content, parse API responses, and clean up scraped text data using sophisticated pattern matching.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">⚙️</div>
+                    <h3>Configuration & Routing</h3>
+                    <p>Create URL routing patterns, validate configuration parameters, and process template strings in web frameworks and applications.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>What regex flags are supported?</h3>
+                    <p>DevHelper supports all standard regex flags: global (g), case-insensitive (i), multiline (m), dotall (s), unicode (u), and sticky (y). These flags modify how your regex pattern behaves.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I test replacement patterns?</h3>
+                    <p>Yes! The regex tester includes replacement functionality with support for backreferences ($1, $2, etc.) and named group references for complex text transformations.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How do I use capture groups effectively?</h3>
+                    <p>Use parentheses () to create capture groups. Named groups (?<name>pattern) are even better for readability. DevHelper shows all captured groups with their values clearly.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What happens with invalid regex patterns?</h3>
+                    <p>DevHelper provides clear error messages for invalid regex syntax, including suggestions for common mistakes like unescaped special characters or unclosed groups.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I test regex against large text files?</h3>
+                    <p>The regex tester is optimized for reasonably sized text content. For very large files, consider testing with smaller samples first to verify your pattern works correctly.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Are there performance warnings for complex patterns?</h3>
+                    <p>DevHelper provides basic performance feedback and will warn about potentially problematic patterns that might cause excessive backtracking or slow execution.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Tools Section -->
+    <section class="related-tools">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Related Developer Tools</h2>
+                <p class="section-description">Explore other essential tools included in DevHelper</p>
+            </div>
+
+            <div class="related-tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🔗</div>
+                    <h3>URL Tools</h3>
+                    <p>Parse and validate URLs that you might be matching with regex patterns for web development tasks.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📄</div>
+                    <h3>JSON Formatter</h3>
+                    <p>Format JSON data that you might be parsing with regex, or validate structured data extraction results.</p>
+                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🌍</div>
+                    <h3>HTTP Request</h3>
+                    <p>Test APIs and process responses that require regex pattern matching for data extraction and validation.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔠</div>
+                    <h3>Base64 Encoder</h3>
+                    <p>Encode or decode text that you're processing with regex patterns for complete data transformation workflows.</p>
+                    <a href="base64-encoder.html" class="tool-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Master Regular Expressions?</h2>
+                <p>Join thousands of developers who rely on DevHelper's regex tester for pattern development and validation.</p>
+                <div class="cta-actions">
+                    <a href="index.html#download" class="btn btn-primary">
+                        <span class="btn-icon">📥</span>
+                        Download DevHelper Free
+                    </a>
+                    <div class="cta-info">
+                        <span>✓ macOS 14.0+</span>
+                        <span>✓ 17 Developer Tools</span>
+                        <span>✓ No Subscription</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/icon.png" alt="DevHelper" class="footer-logo">
+                    <div>
+                        <h4>DevHelper</h4>
+                        <p>Essential developer tools for macOS</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Product</h5>
+                        <a href="index.html#features">Features</a>
+                        <a href="index.html#reviews">Reviews</a>
+                        <a href="release-notes.html">Release Notes</a>
+                        <a href="index.html#download">Download</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Resources</h5>
+                        <a href="https://github.com/hengfeiyang/devhelper" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/releases" target="_blank" rel="noopener">Releases</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/issues" target="_blank" rel="noopener">Support</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Development</h5>
+                        <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a>
+                        <a href="https://anthropic.com" target="_blank" rel="noopener">Anthropic</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 DevHelper. Built with ❤️ using Claude Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>
