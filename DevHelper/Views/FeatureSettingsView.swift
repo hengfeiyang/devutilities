@@ -56,10 +56,17 @@ struct FeatureSettingsView: View {
 
     private var enabledSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Enabled Features")
-                .font(.headline)
-                .foregroundColor(.primary)
-                .padding(.horizontal, 20)
+            HStack (spacing: 4) {
+                Text("Enabled Features")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                    .padding(.horizontal, 20)
+
+                Text("💡 Click to toggle • Drag to reorder")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal, 0)
+            }
 
             LazyVGrid(columns: columns, spacing: 12) {
                 ForEach(featureManager.enabledTools, id: \.self) { tool in
