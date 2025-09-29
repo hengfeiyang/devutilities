@@ -15,7 +15,8 @@ DevHelper/
 │   ├── DevHelperApp.swift          # Main app entry point
 │   ├── ContentView.swift           # Navigation split view
 │   ├── Models/
-│   │   └── ToolType.swift          # Tool definitions
+│   │   ├── ToolType.swift          # Tool definitions
+│   │   └── FeatureManager.swift    # NEW: Feature preferences management
 │   ├── Views/                      # All 17 tool implementations
 │   │   ├── TimestampConverterView.swift
 │   │   ├── UnitConverterView.swift
@@ -33,7 +34,8 @@ DevHelper/
 │   │   ├── JWTView.swift
 │   │   ├── ParquetViewerView.swift
 │   │   ├── CryptoToolsView.swift
-│   │   └── AIChatView.swift
+│   │   ├── AIChatView.swift
+│   │   └── FeatureSettingsView.swift   # NEW: Feature management interface
 │   ├── Components/                 # Shared UI components
 │   │   ├── CodeEditor.swift        # CodeMirror integration & diff editor
 │   │   └── TextEditor.swift        # Custom text editor
@@ -672,6 +674,70 @@ enum ToolType: String, CaseIterable, Identifiable {
 - **Memory**: Efficient handling of large text inputs
 - **Accessibility**: VoiceOver support
 - **Localization**: Multi-language support
+
+## Feature Management System (v2.3.0)
+
+### Overview
+The Feature Management System allows users to customize which tools appear in the sidebar and reorganize them according to their preferences. This addresses the growing sidebar length with 17 tools by letting users hide unused features.
+
+### Architecture
+
+**FeatureManager.swift**:
+- `@ObservableObject` class managing tool preferences
+- `FeaturePreference` struct with `toolType`, `isEnabled`, and `sortOrder`
+- UserDefaults persistence with JSON encoding/decoding
+- Real-time preference updates with `@Published` properties
+
+**FeatureSettingsView.swift**:
+- Modal sheet accessed via gear icon in sidebar header
+- 5-column responsive grid layout using `LazyVGrid`
+- Drag-and-drop functionality with `Transferable` protocol
+- Two-section design: enabled tools (top) and disabled tools (bottom)
+- Visual feedback with custom drag previews and opacity changes
+
+### UI Components
+
+**Feature Cards**:
+- 80x50pt cards showing tool icon and abbreviated name
+- Different visual states for enabled/disabled
+- Tap to toggle between sections
+- Drag handles for reordering
+
+**Grid Layout**:
+- `GridItem(.flexible(), spacing: 0)` for responsive columns
+- Automatic flow between enabled and disabled sections
+- Placeholder text when disabled section is empty
+- Top alignment for items in disabled section
+
+### User Interactions
+
+1. **Access Settings**: Gear icon in sidebar header
+2. **Enable/Disable Tools**: Tap any card to move between sections
+3. **Reorder Tools**: Drag cards within the same section
+4. **Cross-section Drag**: Drag from enabled to disabled (or vice versa)
+5. **Reset**: One-click restore to default layout
+6. **Persistent**: Automatically saves preferences
+
+### Data Flow
+
+1. **Initialization**: FeatureManager loads preferences from UserDefaults
+2. **ContentView Integration**: Uses `featureManager.filteredTools` for sidebar
+3. **Real-time Updates**: Changes immediately reflected in sidebar
+4. **Persistence**: JSON encoding saves preferences automatically
+5. **Migration**: New tools automatically added to enabled section
+
+### Technical Implementation
+
+**ToolType Extensions**:
+- Added `Codable` conformance for JSON persistence
+- Added `Transferable` conformance for drag-and-drop
+- `CodableRepresentation` with plain text content type
+
+**ContentView Updates**:
+- `@StateObject` FeatureManager integration
+- Filtered tools computation based on enabled preferences
+- Sheet presentation for settings modal
+- Gear icon button in sidebar header
 
 ## Maintenance Guidelines
 

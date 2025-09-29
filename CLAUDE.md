@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevHelper is a native macOS application built with SwiftUI that provides 17 essential developer utilities. Version 2.2.1 with enhanced UI improvements.
+DevHelper is a native macOS application built with SwiftUI that provides 17 essential developer utilities. Version 2.3.0 with customizable feature management system.
 
 ## Key Tools & Status
 
@@ -44,7 +44,15 @@ xcodebuild -project DevHelper.xcodeproj -scheme DevHelper build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
-## Recent Updates (v2.2.1)
+## Recent Updates (v2.3.0)
+- **Feature Management System**: NEW customizable tool organization with enable/disable functionality
+- **Grid-based Settings**: Visual 5-column grid interface for managing tools with drag-and-drop reordering
+- **Sidebar Customization**: Users can hide unused tools to reduce sidebar scrolling and clutter
+- **Persistent Preferences**: Tool preferences saved automatically with UserDefaults JSON storage
+- **Intuitive Controls**: Gear icon in sidebar header opens feature management modal with Reset/Done buttons
+- **Drag-and-Drop Interface**: Move tools between enabled/disabled sections with visual feedback
+
+## Previous Updates (v2.2.1)
 - **Enhanced Text Metrics**: Added line count display to HTML, Base64, Hex String, JSON, and SQL formatter tools
 - **Improved User Experience**: All text-based tools now show both character count and line count information
 - **Consistent UI**: Unified metrics display across all formatter utilities
