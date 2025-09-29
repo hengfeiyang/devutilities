@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter & Validator - Format, Validate & Compare JSON Online | DevHelper</title>
+    <meta name="description" content="Professional JSON formatter and validator for developers. Format, validate, minify, and compare JSON data with visual diff editor. Real-time syntax highlighting and error detection. Part of DevHelper - 17 essential developer tools for macOS.">
+    <meta name="keywords" content="JSON formatter, JSON validator, JSON pretty print, JSON minify, JSON compare, JSON diff, online JSON tool, JSON syntax checker, format JSON online, validate JSON online, JSON beautifier">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="JSON Formatter & Validator - Professional JSON Tools | DevHelper">
+    <meta property="og:description" content="Format, validate, and compare JSON data with visual diff editor. Real-time syntax highlighting and error detection for developers.">
+    <meta property="og:image" content="images/screenshots/json.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="JSON Formatter & Validator - Professional JSON Tools">
+    <meta property="twitter:description" content="Format, validate, and compare JSON data with visual diff editor. Real-time syntax highlighting and error detection.">
+    <meta property="twitter:image" content="images/screenshots/json.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "DevHelper JSON Formatter",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS",
+        "description": "Professional JSON formatter and validator with visual diff editor for developers",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "10"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-brand">
+                <img src="images/icon.png" alt="DevHelper" class="nav-logo">
+                <span class="nav-title">DevHelper</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#reviews" class="nav-link">Reviews</a>
+                <a href="release-notes.html" class="nav-link">Release Notes</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="https://github.com/hengfeiyang/devhelper" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="breadcrumb">
+                        <a href="index.html">DevHelper</a> / <span>JSON Formatter</span>
+                    </div>
+                    <h1 class="hero-title">
+                        JSON Formatter & Validator
+                        <span class="hero-subtitle">Professional JSON Tools for Developers</span>
+                    </h1>
+                    <p class="hero-description">
+                        Format, validate, minify, and compare JSON data with our advanced JSON formatter. Features visual CodeMirror diff editor, real-time syntax highlighting, and comprehensive error detection. Perfect for API development, debugging, and data processing workflows.
+                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">⚡</span>
+                            <span>Real-time Validation</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🔍</span>
+                            <span>Visual Diff Editor</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🎨</span>
+                            <span>Syntax Highlighting</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="index.html#download" class="btn btn-primary">
+                            <span class="btn-icon">📥</span>
+                            Download DevHelper
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            <span class="btn-icon">👀</span>
+                            See Features
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/screenshots/json.png" alt="DevHelper JSON Formatter Screenshot showing formatted JSON data with syntax highlighting">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Advanced JSON Processing Features</h2>
+                <p class="section-description">
+                    Everything you need for professional JSON data handling, built into a native macOS application.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card featured">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title">Visual Diff Editor</h3>
+                    <p class="feature-description">Compare JSON structures side-by-side with CodeMirror-powered visual diff highlighting. Perfect for API response comparison and data validation workflows.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3 class="feature-title">Real-time Validation</h3>
+                    <p class="feature-description">Instant JSON syntax validation with detailed error messages and line-by-line highlighting. Catch formatting issues before they cause problems.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3 class="feature-title">Format & Beautify</h3>
+                    <p class="feature-description">Transform minified JSON into beautifully formatted, readable code with proper indentation and structure. Supports custom indentation preferences.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3 class="feature-title">Minify & Compress</h3>
+                    <p class="feature-description">Compress JSON data by removing unnecessary whitespace and formatting. Ideal for reducing payload sizes in production environments.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">Syntax Highlighting</h3>
+                    <p class="feature-description">Color-coded JSON syntax highlighting makes it easy to identify objects, arrays, strings, numbers, and boolean values at a glance.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Data Analysis</h3>
+                    <p class="feature-description">Character and line count tracking helps you understand data size and structure. Perfect for API payload optimization.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">Easy Copy & Export</h3>
+                    <p class="feature-description">One-click copying of formatted results. Seamlessly integrate with your development workflow and paste directly into code editors.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">Escape & Unescape</h3>
+                    <p class="feature-description">Handle JSON string escaping and unescaping for nested JSON structures, API responses, and configuration files.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How to Use JSON Formatter</h2>
+                <p class="section-description">
+                    Get started with professional JSON formatting in just a few simple steps.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Input Your JSON</h3>
+                    <p>Paste your JSON data into the input area. DevHelper accepts both formatted and minified JSON from any source.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Choose Format Option</h3>
+                    <p>Select from formatting options: beautify for readability, minify for compression, or validate for error checking.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>View Results</h3>
+                    <p>See your formatted JSON with syntax highlighting, error detection, and character/line count information.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Copy & Use</h3>
+                    <p>Copy the formatted result with one click and paste it directly into your code editor or API client.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perfect for These Development Tasks</h2>
+            </div>
+
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔧</div>
+                    <h3>API Development & Testing</h3>
+                    <p>Format API responses for better readability. Compare request/response payloads to debug API issues and validate data structures.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📝</div>
+                    <h3>Configuration Files</h3>
+                    <p>Format and validate JSON configuration files for applications, ensuring proper syntax and structure before deployment.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔍</div>
+                    <h3>Data Analysis & Processing</h3>
+                    <p>Clean and format JSON data from databases, APIs, or log files. Make complex nested structures easier to understand and analyze.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📊</div>
+                    <h3>Code Review & Documentation</h3>
+                    <p>Format JSON examples for documentation, code reviews, and technical specifications. Ensure consistent formatting across your team.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🐛</div>
+                    <h3>Debugging & Troubleshooting</h3>
+                    <p>Identify JSON syntax errors, missing brackets, and malformed data structures that cause parsing failures in applications.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">⚡</div>
+                    <h3>Performance Optimization</h3>
+                    <p>Minify JSON payloads to reduce bandwidth usage and improve application performance in production environments.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>What makes DevHelper's JSON formatter different?</h3>
+                    <p>DevHelper offers a native macOS experience with advanced features like visual diff comparison, real-time validation, and CodeMirror integration. Unlike web-based tools, it works offline and integrates seamlessly with your development workflow.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I format large JSON files?</h3>
+                    <p>Yes! DevHelper is optimized for handling large JSON files efficiently. The native application architecture provides better performance than browser-based alternatives for processing substantial data sets.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Does it support JSON validation?</h3>
+                    <p>Absolutely. DevHelper provides comprehensive JSON validation with detailed error messages, line-by-line error highlighting, and suggestions for fixing common syntax issues.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How does the visual diff feature work?</h3>
+                    <p>The visual diff feature uses CodeMirror to highlight differences between two JSON structures side-by-side, making it easy to spot changes, additions, and deletions in API responses or configuration updates.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is my data secure when using DevHelper?</h3>
+                    <p>Yes, completely secure. DevHelper is a native desktop application that processes all data locally on your Mac. Your JSON data never leaves your computer or gets sent to external servers.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What other tools are included with DevHelper?</h3>
+                    <p>DevHelper includes 16 other essential developer tools: timestamp converter, unit converter, base64 encoder, hex string converter, regex tester, UUID generator, URL tools, HTTP client, IP query, QR codes, SQL formatter, HTML formatter, JWT encoder, Parquet viewer, crypto tools, and AI chat assistant.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Tools Section -->
+    <section class="related-tools">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Related Developer Tools</h2>
+                <p class="section-description">Explore other essential tools included in DevHelper</p>
+            </div>
+
+            <div class="related-tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🌍</div>
+                    <h3>HTTP Request</h3>
+                    <p>Test APIs and view JSON responses with our built-in HTTP client. Perfect companion to the JSON formatter.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔠</div>
+                    <h3>Base64 Encoder</h3>
+                    <p>Encode and decode Base64 data, often used in JSON payloads for binary content transmission.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🗄️</div>
+                    <h3>SQL Formatter</h3>
+                    <p>Format SQL queries with the same attention to detail and features as our JSON formatter.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🎫</div>
+                    <h3>JWT Encoder</h3>
+                    <p>Work with JSON Web Tokens - decode, validate, and create JWTs with HMAC and RSA support.</p>
+                    <a href="#" class="tool-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Streamline Your JSON Workflow?</h2>
+                <p>Join thousands of developers who rely on DevHelper's JSON formatter for their daily development tasks.</p>
+                <div class="cta-actions">
+                    <a href="index.html#download" class="btn btn-primary">
+                        <span class="btn-icon">📥</span>
+                        Download DevHelper Free
+                    </a>
+                    <div class="cta-info">
+                        <span>✓ macOS 14.0+</span>
+                        <span>✓ 17 Developer Tools</span>
+                        <span>✓ No Subscription</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/icon.png" alt="DevHelper" class="footer-logo">
+                    <div>
+                        <h4>DevHelper</h4>
+                        <p>Essential developer tools for macOS</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Product</h5>
+                        <a href="index.html#features">Features</a>
+                        <a href="index.html#reviews">Reviews</a>
+                        <a href="release-notes.html">Release Notes</a>
+                        <a href="index.html#download">Download</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Resources</h5>
+                        <a href="https://github.com/hengfeiyang/devhelper" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/releases" target="_blank" rel="noopener">Releases</a>
+                        <a href="https://github.com/hengfeiyang/devhelper/issues" target="_blank" rel="noopener">Support</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Development</h5>
+                        <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a>
+                        <a href="https://anthropic.com" target="_blank" rel="noopener">Anthropic</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 DevHelper. Built with ❤️ using Claude Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>
