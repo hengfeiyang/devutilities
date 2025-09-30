@@ -19,10 +19,12 @@ import AppKit
 struct TextEditor: NSViewRepresentable {
     @Binding var text: String
     let bottom: CGFloat
-    
-    init(text: Binding<String>, bottom: CGFloat = 0) {
+    var onEnterKey: (() -> Void)?
+
+    init(text: Binding<String>, bottom: CGFloat = 0, onEnterKey: (() -> Void)? = nil) {
         self._text = text
         self.bottom = bottom
+        self.onEnterKey = onEnterKey
     }
     
     func makeNSView(context: Context) -> NSScrollView {
@@ -76,17 +78,36 @@ struct TextEditor: NSViewRepresentable {
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-    
+
     class Coordinator: NSObject, NSTextViewDelegate {
         let parent: TextEditor
-        
+
         init(_ parent: TextEditor) {
             self.parent = parent
         }
-        
+
         func textDidChange(_ notification: Notification) {
             guard let textView = notification.object as? NSTextView else { return }
             parent.text = textView.string
+        }
+
+        // Handle key events with IME support
+        func textView(_ textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+            // Check if IME is active (markedRange indicates ongoing composition)
+            if textView.hasMarkedText() {
+                // Let IME handle the event
+                return false
+            }
+
+            // Handle Return key when IME is not active
+            if commandSelector == #selector(NSResponder.insertNewline(_:)) {
+                if let callback = parent.onEnterKey {
+                    callback()
+                    return true // Event handled
+                }
+            }
+
+            return false // Let default behavior handle other commands
         }
     }
 }

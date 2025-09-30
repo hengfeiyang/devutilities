@@ -1388,14 +1388,13 @@ struct ChatInputView: View {
 
     @ViewBuilder
     private var textEditorView: some View {
-        TextEditor(text: $currentMessage)
+        TextEditor(text: $currentMessage, onEnterKey: {
+            sendMessage()
+        })
             .font(.body)
             .scrollContentBackground(.hidden)
             .frame(height: calculatedHeight)
             .disabled(isLoading)
-            .onKeyPress { key in
-                handleKeyPress(key)
-            }
     }
 
     @ViewBuilder
@@ -1507,14 +1506,6 @@ struct ChatInputView: View {
 
     private func removeImage(_ image: ChatMessageImage) {
         selectedImages.removeAll { $0.id == image.id }
-    }
-
-    private func handleKeyPress(_ key: KeyPress) -> KeyPress.Result {
-        if key.key == .return && !key.modifiers.contains(.shift) {
-            sendMessage()
-            return .handled
-        }
-        return .ignored
     }
 
     private func handleUploadImageAction() {
