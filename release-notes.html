@@ -271,6 +271,51 @@
             </div>
 
             <div class="version-list">
+                <!-- Version 2.3.1 -->
+                <article class="version-card">
+                    <div class="version-header">
+                        <div class="version-info">
+                            <h2 class="version-number">v2.3.1</h2>
+                            <span class="version-date">September 2025</span>
+                        </div>
+                        <span class="version-badge patch">Bug Fix</span>
+                    </div>
+
+                    <div class="version-content">
+                        <h3>🐛 Bug Fixes</h3>
+                        <ul class="change-list">
+                            <li class="change-item">
+                                <span class="change-label fix">Fixed</span>
+                                <strong>IME Support</strong> - Fixed AI Chat input to properly support Input Method Editors (IME) for Chinese, Japanese, Korean, and other non-English languages
+                            </li>
+                            <li class="change-item">
+                                <span class="change-label fix">Fixed</span>
+                                <strong>Keyboard Event Handling</strong> - Enhanced TextEditor component with proper IME composition state detection
+                            </li>
+                            <li class="change-item">
+                                <span class="change-label fix">Fixed</span>
+                                <strong>Enter Key Behavior</strong> - Enter key now only sends messages when IME composition is complete, preventing premature message submission
+                            </li>
+                        </ul>
+
+                        <h3>🔧 Technical</h3>
+                        <ul class="change-list">
+                            <li class="change-item">
+                                <span class="change-label improvement">Improved</span>
+                                <strong>TextEditor Component</strong> - Added onEnterKey callback with NSTextViewDelegate integration for better keyboard handling
+                            </li>
+                            <li class="change-item">
+                                <span class="change-label improvement">Improved</span>
+                                <strong>IME Detection</strong> - Implemented hasMarkedText() check to detect active IME composition state
+                            </li>
+                            <li class="change-item">
+                                <span class="change-label improvement">Improved</span>
+                                <strong>Internationalization</strong> - Better support for multilingual text input across all text-based tools
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+
                 <!-- Version 2.3.0 -->
                 <article class="version-card">
                     <div class="version-header">

@@ -34,17 +34,13 @@ A native macOS application for developers, containing 17 essential tools commonl
 
 ## Version
 
-Current version: 2.3.0
+Current version: 2.3.1
 
-## What's New in v2.3.0
+## What's New in v2.3.1
 
-- **🎛️ Feature Management System**: NEW customizable tool organization system
-- **⚙️ Settings Interface**: Gear icon in sidebar opens visual grid-based tool management
-- **📱 Grid Layout**: 5-column responsive grid showing all 17 tools with icons and names
-- **🔄 Drag-and-Drop**: Move tools between enabled/disabled sections with visual feedback
-- **👁️ Hide Unused Tools**: Reduce sidebar clutter by disabling tools you don't need
-- **💾 Auto-Save**: Preferences automatically saved and restored between sessions
-- **🔄 Reset Option**: One-click restore to default layout with all tools enabled
+- **⌨️ IME Support Fix**: Fixed AI Chat input to properly support Input Method Editors (IME) for Chinese, Japanese, Korean, and other languages
+- **✨ Enhanced TextEditor**: Improved keyboard event handling to prevent interference with IME composition
+- **🔧 Better UX**: Enter key now respects IME state, only sending messages when composition is complete
 
 ## Screenshots
 
