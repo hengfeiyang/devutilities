@@ -44,7 +44,14 @@ xcodebuild -project DevHelper.xcodeproj -scheme DevHelper build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
-## Recent Updates (v2.3.0)
+## Recent Updates (v2.3.1)
+- **IME Support Fix**: Fixed TextEditor to properly support Input Method Editors (IME) for non-English languages
+- **Keyboard Event Handling**: Enhanced TextEditor component with `onEnterKey` callback that respects IME composition
+- **Better Internationalization**: Enter key now only sends messages when IME composition is complete
+- **NSTextViewDelegate Integration**: Implemented `textView(_:doCommandBy:)` with `hasMarkedText()` check for IME state detection
+- **AI Chat Input Fix**: Removed `.onKeyPress` modifier that was breaking IME events in AIChatView
+
+## Previous Updates (v2.3.0)
 - **Feature Management System**: NEW customizable tool organization with enable/disable functionality
 - **Grid-based Settings**: Visual 5-column grid interface for managing tools with drag-and-drop reordering
 - **Sidebar Customization**: Users can hide unused tools to reduce sidebar scrolling and clutter

@@ -38,7 +38,7 @@ DevHelper/
 │   │   └── FeatureSettingsView.swift   # NEW: Feature management interface
 │   ├── Components/                 # Shared UI components
 │   │   ├── CodeEditor.swift        # CodeMirror integration & diff editor
-│   │   └── TextEditor.swift        # Custom text editor
+│   │   └── TextEditor.swift        # Custom text editor with IME support
 │   ├── Assets.xcassets/            # App icons and assets
 │   ├── Preview Content/            # SwiftUI preview assets
 │   └── DevHelper.entitlements      # App sandbox permissions
@@ -618,7 +618,7 @@ enum ToolType: String, CaseIterable, Identifiable {
 ### Target Settings
 - **Minimum macOS**: 14.0
 - **Bundle Identifier**: com.devhelper.DevHelper
-- **Version**: 2.2.1 (Build 1)
+- **Version**: 2.3.1 (Build 1)
 - **Swift Version**: 5.0
 - **App Sandbox**: Enabled
 - **Hardened Runtime**: Enabled
@@ -674,6 +674,48 @@ enum ToolType: String, CaseIterable, Identifiable {
 - **Memory**: Efficient handling of large text inputs
 - **Accessibility**: VoiceOver support
 - **Localization**: Multi-language support
+
+## TextEditor Component Enhancements (v2.3.1)
+
+### IME Support
+The TextEditor component was enhanced to properly support Input Method Editors (IME) for non-English languages like Chinese, Japanese, and Korean.
+
+### Technical Implementation
+
+**Problem**: The previous implementation used SwiftUI's `.onKeyPress` modifier which intercepted keyboard events before IME composition was complete, breaking character input for Asian languages.
+
+**Solution**: Implemented NSTextViewDelegate method `textView(_:doCommandBy:)` with IME awareness:
+
+```swift
+func textView(_ textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+    // Check if IME is active (markedRange indicates ongoing composition)
+    if textView.hasMarkedText() {
+        // Let IME handle the event
+        return false
+    }
+
+    // Handle Return key when IME is not active
+    if commandSelector == #selector(NSResponder.insertNewline(_:)) {
+        if let callback = parent.onEnterKey {
+            callback()
+            return true
+        }
+    }
+
+    return false
+}
+```
+
+**Key Features**:
+- `hasMarkedText()` detection for IME composition state
+- Only processes Enter key when composition is complete
+- Optional `onEnterKey` callback for custom behavior
+- Backwards compatible with existing code
+
+**Integration**:
+- AIChatView now uses `TextEditor(text:onEnterKey:)` instead of `.onKeyPress`
+- Seamless message sending on Enter without breaking IME input
+- Proper support for candidate selection during composition
 
 ## Feature Management System (v2.3.0)
 
