@@ -18,8 +18,8 @@ import SwiftUI
 struct AITranslateView: View {
     // MARK: - State Variables
     @State private var selectedMode: TranslationMode = .translate
-    @State private var sourceLanguage: TranslationLanguage = .auto
-    @State private var targetLanguage: TranslationLanguage = TranslationLanguage.detectSystemLanguage()
+    @AppStorage("AITranslate.sourceLanguage") private var sourceLanguageRawValue: String = TranslationLanguage.auto.rawValue
+    @AppStorage("AITranslate.targetLanguage") private var targetLanguageRawValue: String = TranslationLanguage.detectSystemLanguage().rawValue
     @State private var inputText: String = ""
     @State private var outputText: String = ""
     @State private var isTranslating: Bool = false
@@ -29,6 +29,17 @@ struct AITranslateView: View {
 
     @State private var providerManager = ProviderManager.shared
     @State private var chatAPI = ChatCompletionsAPI()
+
+    // Computed properties for language access
+    private var sourceLanguage: TranslationLanguage {
+        get { TranslationLanguage(rawValue: sourceLanguageRawValue) ?? .auto }
+        nonmutating set { sourceLanguageRawValue = newValue.rawValue }
+    }
+
+    private var targetLanguage: TranslationLanguage {
+        get { TranslationLanguage(rawValue: targetLanguageRawValue) ?? .english }
+        nonmutating set { targetLanguageRawValue = newValue.rawValue }
+    }
 
     // Character count
     private var characterCount: Int {
@@ -98,7 +109,7 @@ struct AITranslateView: View {
             modelSelectorView
 
             // Source Language
-            languagePickerView(language: $sourceLanguage, isSource: true)
+            languagePickerView(isSource: true)
 
             // Swap Button
             Button(action: swapLanguages) {
@@ -111,7 +122,7 @@ struct AITranslateView: View {
             .disabled(sourceLanguage == .auto)
 
             // Target Language
-            languagePickerView(language: $targetLanguage, isSource: false)
+            languagePickerView(isSource: false)
 
             // Mode Buttons
             modeButtonsView
@@ -174,17 +185,22 @@ struct AITranslateView: View {
     }
 
     // MARK: - Language Picker
-    private func languagePickerView(language: Binding<TranslationLanguage>, isSource: Bool) -> some View {
+    private func languagePickerView(isSource: Bool) -> some View {
         let languages = isSource ? TranslationLanguage.allCases : TranslationLanguage.targetLanguages
+        let currentLanguage = isSource ? sourceLanguage : targetLanguage
 
         return Menu {
             ForEach(languages) { lang in
                 Button(action: {
-                    language.wrappedValue = lang
+                    if isSource {
+                        sourceLanguageRawValue = lang.rawValue
+                    } else {
+                        targetLanguageRawValue = lang.rawValue
+                    }
                 }) {
                     HStack {
                         Text(lang.displayName)
-                        if lang == language.wrappedValue {
+                        if lang == currentLanguage {
                             Image(systemName: "checkmark")
                         }
                     }
@@ -192,7 +208,7 @@ struct AITranslateView: View {
             }
         } label: {
             HStack(spacing: 4) {
-                Text(language.wrappedValue.displayName)
+                Text(currentLanguage.displayName)
                     .font(.system(size: 13))
                     .foregroundColor(.primary)
                 Image(systemName: "chevron.down")
@@ -407,9 +423,9 @@ struct AITranslateView: View {
     // MARK: - Helper Functions
     private func swapLanguages() {
         guard sourceLanguage != .auto else { return }
-        let temp = sourceLanguage
-        sourceLanguage = targetLanguage
-        targetLanguage = temp
+        let temp = sourceLanguageRawValue
+        sourceLanguageRawValue = targetLanguageRawValue
+        targetLanguageRawValue = temp
     }
 
     private func handleSubmit() {
