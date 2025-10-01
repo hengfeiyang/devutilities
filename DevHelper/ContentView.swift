@@ -105,6 +105,8 @@ struct ContentView: View {
                 case .aiChat:
                     AIChatView()
                         .environmentObject(appState)
+                case .aiTranslate:
+                    AITranslateView()
                 case .timestampConverter:
                     TimestampConverterView()
                 case .unitConverter:

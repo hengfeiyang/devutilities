@@ -196,6 +196,7 @@ struct FeatureCard: View {
     private var abbreviatedName: String {
         switch tool {
         case .aiChat: return "AI"
+        case .aiTranslate: return "Translate"
         case .timestampConverter: return "Time"
         case .unitConverter: return "Unit"
         case .jsonFormatter: return "JSON"

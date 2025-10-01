@@ -18,6 +18,7 @@ import SwiftUI
 
 enum ToolType: String, CaseIterable, Identifiable, Codable {
     case aiChat = "ai-chat"
+    case aiTranslate = "ai-translate"
     case timestampConverter = "timestamp"
     case unitConverter = "unit"
     case jsonFormatter = "json"
@@ -41,6 +42,8 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
         switch self {
         case .aiChat:
             return "AI Chat"
+        case .aiTranslate:
+            return "AI Translate"
         case .timestampConverter:
             return "Timestamp Converter"
         case .unitConverter:
@@ -80,6 +83,8 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
         switch self {
         case .aiChat:
             return "sparkles"
+        case .aiTranslate:
+            return "translate"
         case .timestampConverter:
             return "clock"
         case .unitConverter:

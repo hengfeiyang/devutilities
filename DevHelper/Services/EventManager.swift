@@ -393,6 +393,7 @@ extension ToolType {
         case .parquetViewer: return "parquet_viewer"
         case .cryptoTools: return "crypto_tools"
         case .aiChat: return "ai_chat"
+        case .aiTranslate: return "ai_translate"
         }
     }
 }
