@@ -68,16 +68,12 @@ struct AITranslateView: View {
             Divider()
 
             // Main Content (Input and Output areas)
-            GeometryReader { geometry in
-                VSplitView {
-                    // Input Area (Top)
-                    inputAreaView
-                        .frame(height: geometry.size.height / 2)
+            VSplitView {
+                // Input Area (Top)
+                inputAreaView
 
-                    // Output Area (Bottom)
-                    outputAreaView
-                        .frame(height: geometry.size.height / 2)
-                }
+                // Output Area (Bottom)
+                outputAreaView
             }
         }
         .navigationTitle("AI Translate")
@@ -98,17 +94,6 @@ struct AITranslateView: View {
     // MARK: - Toolbar View
     private var toolbarView: some View {
         HStack(spacing: 12) {
-            // Settings Button
-            Button(action: {
-                showingSettings = true
-            }) {
-                Image(systemName: "gearshape")
-                    .font(.system(size: 16))
-                    .foregroundColor(.secondary)
-            }
-            .buttonStyle(PlainButtonStyle())
-            .help("AI Settings")
-
             // Model Selector
             modelSelectorView
 
@@ -132,6 +117,17 @@ struct AITranslateView: View {
             modeButtonsView
 
             Spacer()
+
+            // Settings Button (moved to the end)
+            Button(action: {
+                showingSettings = true
+            }) {
+                Image(systemName: "gearshape")
+                    .font(.system(size: 16))
+                    .foregroundColor(.secondary)
+            }
+            .buttonStyle(PlainButtonStyle())
+            .help("AI Settings")
         }
     }
 
@@ -249,7 +245,7 @@ struct AITranslateView: View {
             .font(.body)
             .scrollContentBackground(.hidden)
             .padding(12)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 500)
 
             Divider()
 
@@ -296,19 +292,62 @@ struct AITranslateView: View {
     private var outputAreaView: some View {
         VStack(spacing: 0) {
             ScrollView {
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: 0) {
                     if !outputText.isEmpty || isTranslating {
-                        // Status Badge
-                        statusBadgeView
+                        // Divider with Status Badge overlay
+                        ZStack {
+                            Divider()
+                                .padding(.vertical, 16)
 
-                        Divider()
-                            .padding(.vertical, 4)
+                            // Status Badge centered on divider
+                            statusBadgeView
+                                .padding(.horizontal, 12)
+                                .background(Color(NSColor.textBackgroundColor))
+                        }
+                        .padding(.top, 16)
 
                         // Output Text
                         Text(outputText)
                             .font(.body)
+                            .lineSpacing(6)
                             .textSelection(.enabled)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 16)
+                            .padding(.top, 12)
+
+                        // Action buttons (Retry & Copy) - only show when translation is complete
+                        if !isTranslating && !outputText.isEmpty {
+                            HStack {
+                                Spacer()
+
+                                // Retry button
+                                Button(action: handleSubmit) {
+                                    Image(systemName: "arrow.clockwise")
+                                        .font(.system(size: 14))
+                                        .foregroundColor(.secondary)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                .help("Retry translation")
+
+                                // Copy button
+                                Button(action: {
+                                    NSPasteboard.general.clearContents()
+                                    NSPasteboard.general.setString(outputText, forType: .string)
+                                }) {
+                                    Image(systemName: "doc.on.doc")
+                                        .font(.system(size: 14))
+                                        .foregroundColor(.secondary)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                .help("Copy translation")
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.top, 12)
+                        }
+
+                        // Bottom padding
+                        Spacer()
+                            .frame(height: 16)
                     } else {
                         // Empty state
                         VStack(spacing: 12) {
@@ -321,9 +360,9 @@ struct AITranslateView: View {
                                 .foregroundColor(.secondary)
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding(16)
                     }
                 }
-                .padding(16)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(NSColor.textBackgroundColor))
@@ -332,11 +371,19 @@ struct AITranslateView: View {
 
     // MARK: - Status Badge
     private var statusBadgeView: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: 4) {
             if isTranslating {
-                Text(selectedMode.processingStatus)
-                    .font(.system(size: 14, weight: .medium))
+                // Static text part
+                let statusText = selectedMode.processingStatus
+                let textWithoutEmoji = statusText.replacingOccurrences(of: "✍️", with: "").trimmingCharacters(in: .whitespaces)
+
+                Text(textWithoutEmoji)
+                    .font(.system(size: 14))
                     .foregroundColor(.secondary)
+
+                // Animated emoji only
+                Text("✍️")
+                    .font(.system(size: 14))
                     .offset(x: writingOffset)
                     .onAppear {
                         withAnimation(
@@ -351,7 +398,7 @@ struct AITranslateView: View {
                     }
             } else {
                 Text(selectedMode.completedStatus)
-                    .font(.system(size: 14, weight: .medium))
+                    .font(.system(size: 14))
                     .foregroundColor(.green)
             }
         }

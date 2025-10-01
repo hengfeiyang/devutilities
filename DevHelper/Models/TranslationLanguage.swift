@@ -126,15 +126,64 @@ enum TranslationLanguage: String, CaseIterable, Identifiable, Codable {
 
     // Detect system language and map to TranslationLanguage
     static func detectSystemLanguage() -> TranslationLanguage {
+        // Try multiple methods to detect the language
+        let preferredLanguages = Locale.preferredLanguages
         let systemLangCode = Locale.current.language.languageCode?.identifier ?? "en"
 
+        // First check preferred languages (more reliable)
+        if let firstPreferred = preferredLanguages.first {
+            let locale = Locale(identifier: firstPreferred)
+            let langCode = locale.language.languageCode?.identifier ?? systemLangCode
+
+            switch langCode {
+            case "zh":
+                // Check if it's traditional or simplified
+                let scriptCode = locale.language.script?.identifier
+                let regionCode = locale.region?.identifier
+
+                // Traditional Chinese: Hong Kong, Taiwan, Macau
+                if scriptCode == "Hant" || regionCode == "TW" || regionCode == "HK" || regionCode == "MO" {
+                    return .traditionalChinese
+                }
+                return .simplifiedChinese
+            case "ja":
+                return .japanese
+            case "ko":
+                return .korean
+            case "es":
+                return .spanish
+            case "fr":
+                return .french
+            case "de":
+                return .german
+            case "ru":
+                return .russian
+            case "ar":
+                return .arabic
+            case "hi":
+                return .hindi
+            case "pt":
+                return .portuguese
+            case "it":
+                return .italian
+            case "nl":
+                return .dutch
+            case "tr":
+                return .turkish
+            case "vi":
+                return .vietnamese
+            case "th":
+                return .thai
+            case "id":
+                return .indonesian
+            default:
+                return .english
+            }
+        }
+
+        // Fallback to system language code
         switch systemLangCode {
         case "zh":
-            // Check if it's traditional or simplified
-            let scriptCode = Locale.current.language.script?.identifier
-            if scriptCode == "Hant" {
-                return .traditionalChinese
-            }
             return .simplifiedChinese
         case "ja":
             return .japanese

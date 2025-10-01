@@ -101,10 +101,22 @@ struct TextEditor: NSViewRepresentable {
 
             // Handle Return key when IME is not active
             if commandSelector == #selector(NSResponder.insertNewline(_:)) {
-                if let callback = parent.onEnterKey {
-                    callback()
-                    return true // Event handled
+                // Check for modifier keys
+                let modifierFlags = NSEvent.modifierFlags
+                let hasShift = modifierFlags.contains(.shift)
+                let hasOption = modifierFlags.contains(.option)
+                let hasCommand = modifierFlags.contains(.command)
+
+                // Only trigger callback on plain Enter (no modifiers)
+                // Shift+Enter or Option+Enter should insert newline
+                if !hasShift && !hasOption && !hasCommand {
+                    if let callback = parent.onEnterKey {
+                        callback()
+                        return true // Event handled
+                    }
                 }
+                // For Shift+Enter or Option+Enter, let default behavior insert newline
+                return false
             }
 
             return false // Let default behavior handle other commands

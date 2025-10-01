@@ -376,6 +376,8 @@ extension EventManager {
 extension ToolType {
     var eventModuleName: String {
         switch self {
+        case .aiChat: return "ai_chat"
+        case .aiTranslate: return "ai_translate"
         case .timestampConverter: return "timestamp_converter"
         case .unitConverter: return "unit_converter"
         case .jsonFormatter: return "json_formatter"
@@ -392,8 +394,6 @@ extension ToolType {
         case .jwt: return "jwt_codec"
         case .parquetViewer: return "parquet_viewer"
         case .cryptoTools: return "crypto_tools"
-        case .aiChat: return "ai_chat"
-        case .aiTranslate: return "ai_translate"
         }
     }
 }

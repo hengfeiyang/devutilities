@@ -17,6 +17,21 @@ import Foundation
 
 struct TranslationPrompts {
 
+    /// Check if the text is a single word
+    private static func isWord(_ text: String) -> Bool {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        // Check if it's a single word (no spaces, not empty, reasonable length)
+        return !trimmed.isEmpty
+            && !trimmed.contains(" ")
+            && !trimmed.contains("\n")
+            && trimmed.count < 50  // Reasonable word length limit
+    }
+
+    /// Check if target language is Chinese
+    private static func isChinese(_ language: TranslationLanguage) -> Bool {
+        return language == .simplifiedChinese || language == .traditionalChinese
+    }
+
     /// Generate system and user prompts based on mode and languages
     static func generatePrompts(
         mode: TranslationMode,
@@ -27,9 +42,44 @@ struct TranslationPrompts {
 
         let sourceLangName = sourceLanguage.languageName
         let targetLangName = targetLanguage.languageName
+        let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
 
         switch mode {
         case .translate:
+            // Special handling for single word translation
+            if isWord(trimmedText) {
+                if isChinese(targetLanguage) {
+                    // Chinese word mode - detailed with etymology
+                    let systemPrompt = """
+                    你是一个翻译引擎，请翻译给出的文本，只需要翻译不需要解释。当且仅当文本只有一个单词时，请给出单词原始形态（如果有）、单词的语种、对应的音标或转写、所有含义（含词性）、双语示例，至少三条例句。如果你认为单词拼写错误，请提示我最可能的正确拼写，否则请严格按照下面格式给到翻译结果：
+                    <单词>
+                    [<语种>]· / <音标>
+                    [<词性缩写>] <中文含义>
+                    例句：
+                    <序号><例句>(例句翻译)
+                    词源：
+                    <词源>
+                    """
+                    let userPrompt = "好的，我明白了，请给我这个单词。\n\n单词是：\(trimmedText)"
+                    return (systemPrompt, userPrompt)
+                } else {
+                    // English word mode - detailed with etymology
+                    let systemPrompt = """
+                    You are a professional translation engine. Please translate the text into \(targetLangName) without explanation. When the text has only one word, please act as a professional dictionary, and list the original form of the word (if any), the language of the word, the corresponding phonetic notation or transcription, all senses with parts of speech, bilingual sentence examples (at least 3) and etymology. If you think there is a spelling mistake, please tell me the most possible correct word otherwise reply in the following format:
+                    <word> (<original form>)
+                    [<language>]· / <phonetic notation>
+                    [<part of speech>] <translated meaning> / <meaning in source language>
+                    Examples:
+                    <index>. <sentence>(<sentence translation>)
+                    Etymology:
+                    <etymology>
+                    """
+                    let userPrompt = "I understand. Please give me the word.\n\nThe word is: \(trimmedText)"
+                    return (systemPrompt, userPrompt)
+                }
+            }
+
+            // Regular translation mode
             let systemPrompt = "You are a professional translation engine, please translate the text, only translate directly, don't explain."
 
             let userPrompt: String
