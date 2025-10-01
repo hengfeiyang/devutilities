@@ -1,7 +1,7 @@
 # DevHelper - Design Document
 
 ## Overview
-DevHelper is a native macOS application built with SwiftUI that provides 17 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+DevHelper is a native macOS application built with SwiftUI that provides 18 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
 
 ## Architecture
 
@@ -16,8 +16,11 @@ DevHelper/
 │   ├── ContentView.swift           # Navigation split view
 │   ├── Models/
 │   │   ├── ToolType.swift          # Tool definitions
-│   │   └── FeatureManager.swift    # NEW: Feature preferences management
-│   ├── Views/                      # All 17 tool implementations
+│   │   ├── FeatureManager.swift    # Feature preferences management
+│   │   ├── TranslationLanguage.swift   # NEW: 19 language definitions
+│   │   ├── TranslationMode.swift       # NEW: 3 translation modes
+│   │   └── TranslationPrompts.swift    # NEW: Prompt generation logic
+│   ├── Views/                      # All 18 tool implementations
 │   │   ├── TimestampConverterView.swift
 │   │   ├── UnitConverterView.swift
 │   │   ├── JSONFormatterView.swift
@@ -35,7 +38,8 @@ DevHelper/
 │   │   ├── ParquetViewerView.swift
 │   │   ├── CryptoToolsView.swift
 │   │   ├── AIChatView.swift
-│   │   └── FeatureSettingsView.swift   # NEW: Feature management interface
+│   │   ├── AITranslateView.swift       # NEW: AI translation interface
+│   │   └── FeatureSettingsView.swift   # Feature management interface
 │   ├── Components/                 # Shared UI components
 │   │   ├── CodeEditor.swift        # CodeMirror integration & diff editor
 │   │   └── TextEditor.swift        # Custom text editor with IME support
@@ -802,6 +806,84 @@ The Feature Management System allows users to customize which tools appear in th
 - Maintain consistency across all tools
 
 ## Deployment
+
+## AI Translate (v2.4.0)
+
+Professional translation tool with intelligent translation, text polishing, and summarization powered by AI models.
+
+### Features
+- **19 Language Support**: Auto-detect, English, Chinese (Simplified/Traditional), Japanese, Korean, Spanish, French, German, Russian, Arabic, Hindi, Portuguese, Italian, Dutch, Turkish, Vietnamese, Thai, Indonesian
+- **Three Operation Modes**:
+  - **Translate**: Direct translation with special word mode for detailed dictionary-style explanations
+  - **Polishing**: Improve clarity and fluency in the same language
+  - **Summarize**: Create concise summaries in target language
+- **Word Mode**: Automatic detection of single words with enhanced output (phonetic notation, meanings, examples, etymology)
+- **Real-time Streaming**: Live translation results with animated status indicators
+- **Smart Language Detection**: Auto-detect system language for default target language
+- **Action Buttons**: Retry and copy buttons for quick operations
+
+### Architecture
+```
+AITranslateView (Main UI)
+├── Toolbar
+│   ├── Model Selector (reuses AI Chat models)
+│   ├── Source Language Picker
+│   ├── Swap Button
+│   ├── Target Language Picker
+│   ├── Mode Selector (Translate/Polishing/Summarize)
+│   └── Settings Button
+├── Input Area (VSplitView top)
+│   ├── TextEditor (min 200pt, max 500pt)
+│   ├── Character Count
+│   └── Submit Button
+└── Output Area (VSplitView bottom)
+    ├── Status Badge (overlaid on divider)
+    ├── Translated Text (with lineSpacing: 6)
+    └── Action Buttons (Retry/Copy)
+
+TranslationPrompts
+├── isWord() - Detect single word
+├── isChinese() - Check target language
+└── generatePrompts() - Generate system/user prompts
+
+Models
+├── TranslationLanguage - 19 language enum with system detection
+├── TranslationMode - 3 mode enum with status messages
+└── TranslationPrompts - Prompt generation logic
+```
+
+### Prompt Engineering
+Based on openai-translator reference implementation:
+
+**Word Mode (Chinese Target)**:
+```
+你是一个翻译引擎，请翻译给出的文本，只需要翻译不需要解释。当且仅当文本只有一个单词时，请给出单词原始形态（如果有）、单词的语种、对应的音标或转写、所有含义（含词性）、双语示例，至少三条例句。如果你认为单词拼写错误，请提示我最可能的正确拼写，否则请严格按照下面格式给到翻译结果：
+<单词>
+[<语种>]· / <音标>
+[<词性缩写>] <中文含义>
+例句：
+<序号><例句>(例句翻译)
+词源：
+<词源>
+```
+
+**Word Mode (Other Languages)**:
+```
+You are a professional translation engine. Please translate the text into {targetLang} without explanation. When the text has only one word, please act as a professional dictionary, and list the original form of the word (if any), the language of the word, the corresponding phonetic notation or transcription, all senses with parts of speech, bilingual sentence examples (at least 3) and etymology.
+```
+
+### UI Details
+- **Status Animation**: Only the ✍️ emoji animates left-right (10pt offset, 0.5s duration)
+- **Status Badge**: Overlaid on divider with background color
+- **Keyboard Shortcuts**: Enter to submit (plain), Shift+Enter for newline
+- **Line Spacing**: Output text has 6pt line spacing for readability
+- **Flexible Layout**: VSplitView allows user to resize input/output areas
+
+### Integration
+- Reuses `ChatCompletionsAPI` from AI Chat for streaming
+- Reuses `ProviderManager` for model and API key management
+- Reuses `AIProviderSettingsView` for configuration
+- Shares AI Chat's model system (no duplicate configuration)
 
 ### App Store Requirements
 - Code signing configuration

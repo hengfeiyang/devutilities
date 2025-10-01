@@ -245,7 +245,7 @@ struct AITranslateView: View {
             .font(.body)
             .scrollContentBackground(.hidden)
             .padding(12)
-            .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 500)
+            .frame(maxWidth: .infinity, minHeight: 100, maxHeight: 300)
 
             Divider()
 

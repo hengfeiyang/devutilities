@@ -3,11 +3,11 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevHelper is a native macOS application built with SwiftUI that provides 17 essential developer utilities. Version 2.3.0 with customizable feature management system.
+DevHelper is a native macOS application built with SwiftUI that provides 18 essential developer utilities. Version 2.4.0 with AI-powered translation capabilities.
 
 ## Key Tools & Status
 
-All 17 tools are ✅ **Complete**:
+All 18 tools are ✅ **Complete**:
 1. **Timestamp Converter** - Bidirectional timestamp conversion with timezone support
 2. **Unit Converter** - 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
 3. **JSON Formatter** - Format, validate, escape/unescape, **visual CodeMirror diff editor**
@@ -25,6 +25,7 @@ All 17 tools are ✅ **Complete**:
 15. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
 16. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
 17. **AI Chat** - **Enhanced AI assistant** with custom model support, DeepSeek reasoning models, and flexible API configuration
+18. **AI Translate** - **NEW** Professional translation with 3 modes (Translate, Polishing, Summarize), 19 languages, word mode with detailed explanations
 
 ## Architecture & Technical Stack
 - **Platform**: macOS 14.0+ SwiftUI
@@ -44,7 +45,22 @@ xcodebuild -project DevHelper.xcodeproj -scheme DevHelper build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
-## Recent Updates (v2.3.1)
+## Recent Updates (v2.4.0)
+- **AI Translate Tool**: NEW professional translation feature with intelligent translation, polishing, and summarization
+- **19 Language Support**: Auto-detect, English, Chinese (Simplified/Traditional), Japanese, Korean, Spanish, French, German, Russian, Arabic, Hindi, Portuguese, Italian, Dutch, Turkish, Vietnamese, Thai, Indonesian
+- **Three Operation Modes**:
+  - **Translate**: Direct translation with special word mode for detailed explanations (phonetic notation, meanings, examples, etymology)
+  - **Polishing**: Improve clarity and fluency in the same language
+  - **Summarize**: Create concise summaries in target language
+- **Word Mode**: Automatic detection of single words with enhanced dictionary-style output
+- **Real-time Streaming**: Live translation results with animated status indicators (✍️ → 👍)
+- **Smart Language Detection**: Auto-detect system language for default target language
+- **Action Buttons**: Retry and copy buttons for quick operations
+- **Keyboard Shortcuts**: Enter to submit, Shift+Enter for newline
+- **Flexible Input/Output**: Resizable split view with 500pt max input height
+- **Model Integration**: Reuses AI Chat's model system (GPT-4, GPT-5, DeepSeek, custom models)
+
+## Previous Updates (v2.3.1)
 - **IME Support Fix**: Fixed TextEditor to properly support Input Method Editors (IME) for non-English languages
 - **Keyboard Event Handling**: Enhanced TextEditor component with `onEnterKey` callback that respects IME composition
 - **Better Internationalization**: Enter key now only sends messages when IME composition is complete

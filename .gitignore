@@ -1,4 +1,5 @@
 DevHelper.xcodeproj/project.xcworkspace/xcuserdata/*.xcuserdatad/
+DevHelper.xcodeproj/xcuserdata/*.xcuserdatad/
 temp/
 tools/
 build/
