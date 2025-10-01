@@ -178,7 +178,7 @@ body {
 
 /* Hero Section */
 .hero {
-    padding: calc(70px + var(--space-3xl)) 0 var(--space-3xl);
+    padding: calc(10px + var(--space-3xl)) 0 var(--space-3xl);
     background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
     position: relative;
     overflow: hidden;
