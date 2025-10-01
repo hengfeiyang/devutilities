@@ -1,12 +1,13 @@
 # DevHelper
 
-A native macOS application for developers, containing 17 essential tools commonly used in software development.
+A native macOS application for developers, containing 18 essential tools commonly used in software development.
 
 > This tool was 100% developed by `Claude Code`.
 
 ## Features
 
 - **AI Chat** - Intelligent AI assistant with custom model support, flexible API configuration, and enhanced user experience for development questions
+- **AI Translate** - **NEW** Professional translation tool with 3 modes (Translate, Polishing, Summarize), 19 language support, and special word mode with detailed explanations
 - **Timestamp Converter** - Convert between timestamps and human-readable dates with multiple format support
 - **Unit Converter** - Convert between different units (Data, Time, Length, Weight, Temperature, Area, Volume)
 - **JSON Formatter** - Format, validate, and compare JSON data with visual CodeMirror diff editor
@@ -34,13 +35,20 @@ A native macOS application for developers, containing 17 essential tools commonl
 
 ## Version
 
-Current version: 2.3.1
+Current version: 2.4.0
 
-## What's New in v2.3.1
+## What's New in v2.4.0
 
-- **⌨️ IME Support Fix**: Fixed AI Chat input to properly support Input Method Editors (IME) for Chinese, Japanese, Korean, and other languages
-- **✨ Enhanced TextEditor**: Improved keyboard event handling to prevent interference with IME composition
-- **🔧 Better UX**: Enter key now respects IME state, only sending messages when composition is complete
+- **🌐 AI Translate**: NEW professional translation tool with intelligent translation, text polishing, and summarization
+- **🔤 19 Languages Supported**: Auto-detect, English, Chinese (Simplified/Traditional), Japanese, Korean, Spanish, French, German, Russian, Arabic, Hindi, and more
+- **📖 Word Mode**: Special detailed mode for single word translation with phonetic notation, meanings, example sentences, and etymology
+- **⚡ Real-time Streaming**: See translation results as they're generated with animated status indicators
+- **🎯 Three Operation Modes**:
+  - **Translate**: Direct translation between languages with word mode for detailed explanations
+  - **Polishing**: Improve clarity and fluency in the same language
+  - **Summarize**: Create concise summaries in target language
+- **🔄 Retry & Copy**: Quick action buttons for retrying translation or copying results
+- **🤖 AI Model Integration**: Reuses AI Chat's flexible model system (GPT-4, GPT-5, DeepSeek, custom models)
 
 ## Screenshots
 
@@ -51,6 +59,9 @@ Current version: 2.3.1
 ![DevHelper AI Chat](./images/screenshots/aichat.png)
 
 ![DevHelper AI Chat custom models](./images/screenshots/aichat-models.png)
+
+#### AI Translate
+![DevHelper AI Translate](./images/screenshots/aitranslate.png)
 
 #### Timestamp Converter
 ![DevHelper Timestamp Converter](./images/screenshots/timestamp.png)
