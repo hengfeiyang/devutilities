@@ -19,7 +19,7 @@ import Foundation
 // MARK: - JSON Formatter Intent
 struct OpenJSONFormatterIntent: AppIntent {
     nonisolated(unsafe) static var title: LocalizedStringResource = "JSON Formatter"
-    nonisolated(unsafe) static var description = IntentDescription("Open JSON Formatter in DevHelper")
+    nonisolated(unsafe) static var description = IntentDescription("Open JSON Formatter in DevPalette")
     nonisolated(unsafe) static var openAppWhenRun: Bool = true
         
     static var parameterSummary: some ParameterSummary {
@@ -35,14 +35,14 @@ struct OpenJSONFormatterIntent: AppIntent {
             )
         }
         
-        return .result(dialog: "Opening JSON Formatter in DevHelper")
+        return .result(dialog: "Opening JSON Formatter in DevPalette")
     }
 }
 
 // MARK: - Base64 Intent
 struct OpenBase64Intent: AppIntent {
     nonisolated(unsafe) static var title: LocalizedStringResource = "Base64 Encoder/Decoder"
-    nonisolated(unsafe) static var description = IntentDescription("Open Base64 Encoder/Decoder in DevHelper")
+    nonisolated(unsafe) static var description = IntentDescription("Open Base64 Encoder/Decoder in DevPalette")
     nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
@@ -54,14 +54,14 @@ struct OpenBase64Intent: AppIntent {
             )
         }
         
-        return .result(dialog: "Opening Base64 Encoder/Decoder in DevHelper")
+        return .result(dialog: "Opening Base64 Encoder/Decoder in DevPalette")
     }
 }
 
 // MARK: - UUID Generator Intent
 struct OpenUUIDGeneratorIntent: AppIntent {
     nonisolated(unsafe) static var title: LocalizedStringResource = "UUID Generator"
-    nonisolated(unsafe) static var description = IntentDescription("Open UUID Generator in DevHelper")
+    nonisolated(unsafe) static var description = IntentDescription("Open UUID Generator in DevPalette")
     nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
@@ -73,14 +73,14 @@ struct OpenUUIDGeneratorIntent: AppIntent {
             )
         }
         
-        return .result(dialog: "Opening UUID Generator in DevHelper")
+        return .result(dialog: "Opening UUID Generator in DevPalette")
     }
 }
 
 // MARK: - Timestamp Converter Intent
 struct OpenTimestampConverterIntent: AppIntent {
     nonisolated(unsafe) static var title: LocalizedStringResource = "Timestamp Converter"
-    nonisolated(unsafe) static var description = IntentDescription("Open Timestamp Converter in DevHelper")
+    nonisolated(unsafe) static var description = IntentDescription("Open Timestamp Converter in DevPalette")
     nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
@@ -92,14 +92,14 @@ struct OpenTimestampConverterIntent: AppIntent {
             )
         }
         
-        return .result(dialog: "Opening Timestamp Converter in DevHelper")
+        return .result(dialog: "Opening Timestamp Converter in DevPalette")
     }
 }
 
 // MARK: - URL Tools Intent
 struct OpenURLToolsIntent: AppIntent {
     nonisolated(unsafe) static var title: LocalizedStringResource = "URL Tools"
-    nonisolated(unsafe) static var description = IntentDescription("Open URL Tools in DevHelper")
+    nonisolated(unsafe) static var description = IntentDescription("Open URL Tools in DevPalette")
     nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
@@ -111,14 +111,14 @@ struct OpenURLToolsIntent: AppIntent {
             )
         }
         
-        return .result(dialog: "Opening URL Tools in DevHelper")
+        return .result(dialog: "Opening URL Tools in DevPalette")
     }
 }
 
 // MARK: - Regex Test Intent
 struct OpenRegexTestIntent: AppIntent {
     nonisolated(unsafe) static var title: LocalizedStringResource = "Regex Test"
-    nonisolated(unsafe) static var description = IntentDescription("Open Regex Test in DevHelper")
+    nonisolated(unsafe) static var description = IntentDescription("Open Regex Test in DevPalette")
     nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
@@ -130,14 +130,14 @@ struct OpenRegexTestIntent: AppIntent {
             )
         }
         
-        return .result(dialog: "Opening Regex Test in DevHelper")
+        return .result(dialog: "Opening Regex Test in DevPalette")
     }
 }
 
 // MARK: - JWT Intent
 struct OpenJWTIntent: AppIntent {
     nonisolated(unsafe) static var title: LocalizedStringResource = "JWT Encoder/Decoder"
-    nonisolated(unsafe) static var description = IntentDescription("Open JWT Encoder/Decoder in DevHelper")
+    nonisolated(unsafe) static var description = IntentDescription("Open JWT Encoder/Decoder in DevPalette")
     nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
@@ -149,14 +149,14 @@ struct OpenJWTIntent: AppIntent {
             )
         }
         
-        return .result(dialog: "Opening JWT Encoder/Decoder in DevHelper")
+        return .result(dialog: "Opening JWT Encoder/Decoder in DevPalette")
     }
 }
 
 // MARK: - HTTP Request Intent
 struct OpenHTTPRequestIntent: AppIntent {
     nonisolated(unsafe) static var title: LocalizedStringResource = "HTTP Request"
-    nonisolated(unsafe) static var description = IntentDescription("Open HTTP Request in DevHelper")
+    nonisolated(unsafe) static var description = IntentDescription("Open HTTP Request in DevPalette")
     nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
@@ -168,14 +168,14 @@ struct OpenHTTPRequestIntent: AppIntent {
             )
         }
         
-        return .result(dialog: "Opening HTTP Request in DevHelper")
+        return .result(dialog: "Opening HTTP Request in DevPalette")
     }
 }
 
 // MARK: - QR Code Intent
 struct OpenQRCodeIntent: AppIntent {
     nonisolated(unsafe) static var title: LocalizedStringResource = "QR Code"
-    nonisolated(unsafe) static var description = IntentDescription("Open QR Code generator in DevHelper")
+    nonisolated(unsafe) static var description = IntentDescription("Open QR Code generator in DevPalette")
     nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
@@ -187,14 +187,14 @@ struct OpenQRCodeIntent: AppIntent {
             )
         }
         
-        return .result(dialog: "Opening QR Code generator in DevHelper")
+        return .result(dialog: "Opening QR Code generator in DevPalette")
     }
 }
 
 // MARK: - Crypto Tools Intent
 struct OpenCryptoToolsIntent: AppIntent {
     nonisolated(unsafe) static var title: LocalizedStringResource = "Crypto Tools"
-    nonisolated(unsafe) static var description = IntentDescription("Open Crypto Tools in DevHelper")
+    nonisolated(unsafe) static var description = IntentDescription("Open Crypto Tools in DevPalette")
     nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
@@ -206,14 +206,14 @@ struct OpenCryptoToolsIntent: AppIntent {
             )
         }
         
-        return .result(dialog: "Opening Crypto Tools in DevHelper")
+        return .result(dialog: "Opening Crypto Tools in DevPalette")
     }
 }
 
 // MARK: - AI Chat Intent
 struct OpenAIChatIntent: AppIntent {
     nonisolated(unsafe) static var title: LocalizedStringResource = "AI Chat"
-    nonisolated(unsafe) static var description = IntentDescription("Open AI Chat in DevHelper")
+    nonisolated(unsafe) static var description = IntentDescription("Open AI Chat in DevPalette")
     nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
@@ -225,6 +225,6 @@ struct OpenAIChatIntent: AppIntent {
             )
         }
         
-        return .result(dialog: "Opening AI Chat in DevHelper")
+        return .result(dialog: "Opening AI Chat in DevPalette")
     }
 }

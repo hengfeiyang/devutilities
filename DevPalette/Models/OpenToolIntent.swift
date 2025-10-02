@@ -17,8 +17,8 @@ import AppIntents
 import Foundation
 
 struct OpenToolIntent: AppIntent {
-    nonisolated(unsafe) static var title: LocalizedStringResource = "Open DevHelper Tool"
-    nonisolated(unsafe) static var description = IntentDescription("Open a specific tool in DevHelper")
+    nonisolated(unsafe) static var title: LocalizedStringResource = "Open DevPalette Tool"
+    nonisolated(unsafe) static var description = IntentDescription("Open a specific tool in DevPalette")
     nonisolated(unsafe) static var openAppWhenRun: Bool = true
 
     @Parameter(title: "Tool", description: "The tool to open")
@@ -39,7 +39,7 @@ struct OpenToolIntent: AppIntent {
         }
         
         return .result(
-            dialog: "Opening \(tool.displayRepresentation.title) in DevHelper"
+            dialog: "Opening \(tool.displayRepresentation.title) in DevPalette"
         )
     }
 }
@@ -55,12 +55,12 @@ struct ToolEntity: AppEntity {
     var displayRepresentation: DisplayRepresentation {
         DisplayRepresentation(
             title: "\(toolType.title)",
-            subtitle: "DevHelper Tool",
+            subtitle: "DevPalette Tool",
             image: .init(systemName: toolType.iconName)
         )
     }
     
-    nonisolated(unsafe) static var typeDisplayRepresentation: TypeDisplayRepresentation = TypeDisplayRepresentation(name: "DevHelper Tool")
+    nonisolated(unsafe) static var typeDisplayRepresentation: TypeDisplayRepresentation = TypeDisplayRepresentation(name: "DevPalette Tool")
 
     nonisolated(unsafe) static var defaultQuery = ToolEntityQuery()
     

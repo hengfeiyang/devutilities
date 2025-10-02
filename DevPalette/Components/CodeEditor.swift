@@ -28,7 +28,7 @@ struct CodeEditor: View {
     init(
         text: Binding<String>,
         mode: Mode = CodeMode.javascript.mode(),
-        theme: CodeViewTheme = .devhelperNight,
+        theme: CodeViewTheme = .devpaletteNight,
         fontSize: Int = 12,
         showInvisibleCharacters: Bool = false,
         lineWrapping: Bool = true,
@@ -77,7 +77,7 @@ extension CodeEditor {
         CodeEditor(
             text: text,
             mode: CodeMode.json.mode(),
-            theme: .devhelperNight,
+            theme: .devpaletteNight,
             fontSize: 12,
             readOnly: readOnly
         )
@@ -88,7 +88,7 @@ extension CodeEditor {
         CodeEditor(
             text: text,
             mode: CodeMode.text.mode(),
-            theme: .devhelperNight,
+            theme: .devpaletteNight,
             fontSize: 12,
             readOnly: readOnly
         )
@@ -99,7 +99,7 @@ extension CodeEditor {
         CodeEditor(
             text: text,
             mode: CodeMode.json.mode(),
-            theme: .devhelperNight,
+            theme: .devpaletteNight,
             fontSize: 12,
             readOnly: readOnly
         )
@@ -110,7 +110,7 @@ extension CodeEditor {
         CodeEditor(
             text: text,
             mode: CodeMode.swift.mode(),
-            theme: .devhelperNight,
+            theme: .devpaletteNight,
             fontSize: 12,
             readOnly: readOnly
         )
@@ -121,7 +121,7 @@ extension CodeEditor {
         CodeEditor(
             text: text,
             mode: CodeMode.javascript.mode(),
-            theme: .devhelperNight,
+            theme: .devpaletteNight,
             fontSize: 12,
             readOnly: readOnly
         )
@@ -132,7 +132,7 @@ extension CodeEditor {
         CodeEditor(
             text: text,
             mode: CodeMode.python.mode(),
-            theme: .devhelperNight,
+            theme: .devpaletteNight,
             fontSize: 12,
             readOnly: readOnly
         )
@@ -143,7 +143,7 @@ extension CodeEditor {
         CodeEditor(
             text: text,
             mode: CodeMode.html.mode(),
-            theme: .devhelperNight,
+            theme: .devpaletteNight,
             fontSize: 12,
             readOnly: readOnly
         )
@@ -154,7 +154,7 @@ extension CodeEditor {
         CodeEditor(
             text: text,
             mode: CodeMode.css.mode(),
-            theme: .devhelperNight,
+            theme: .devpaletteNight,
             fontSize: 12,
             readOnly: readOnly
         )
@@ -165,7 +165,7 @@ extension CodeEditor {
         CodeEditor(
             text: text,
             mode: CodeMode.sql.mode(),
-            theme: .devhelperNight,
+            theme: .devpaletteNight,
             fontSize: 12,
             readOnly: readOnly
         )
@@ -176,7 +176,7 @@ extension CodeEditor {
         CodeEditor(
             text: text,
             mode: CodeMode.xml.mode(),
-            theme: .devhelperNight,
+            theme: .devpaletteNight,
             fontSize: 12,
             readOnly: readOnly
         )
@@ -187,7 +187,7 @@ extension CodeEditor {
         CodeEditor(
             text: text,
             mode: CodeMode.yaml.mode(),
-            theme: .devhelperNight,
+            theme: .devpaletteNight,
             fontSize: 12,
             readOnly: readOnly
         )
@@ -198,7 +198,7 @@ extension CodeEditor {
         CodeEditor(
             text: text,
             mode: CodeMode.markdown.mode(),
-            theme: .devhelperNight,
+            theme: .devpaletteNight,
             fontSize: 12,
             readOnly: readOnly
         )
@@ -209,7 +209,7 @@ extension CodeEditor {
         CodeEditor(
             text: text,
             mode: CodeMode.shell.mode(),
-            theme: .devhelperNight,
+            theme: .devpaletteNight,
             fontSize: 12,
             readOnly: readOnly
         )
@@ -231,7 +231,7 @@ struct CodeDiffEditor: View {
         leftContent: Binding<String>,
         rightContent: Binding<String>,
         mode: Mode = CodeMode.json.mode(),
-        theme: CodeViewTheme = .devhelperNight,
+        theme: CodeViewTheme = .devpaletteNight,
         fontSize: Int = 12,
         showInvisibleCharacters: Bool = false,
         lineWrapping: Bool = true,
@@ -283,7 +283,7 @@ extension CodeDiffEditor {
             leftContent: leftContent,
             rightContent: rightContent,
             mode: CodeMode.json.mode(),
-            theme: .devhelperNight,
+            theme: .devpaletteNight,
             fontSize: 12,
             readOnly: readOnly
         )

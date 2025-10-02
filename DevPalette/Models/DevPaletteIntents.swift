@@ -17,9 +17,9 @@ import AppIntents
 import Foundation
 
 // Simple intent that can be discovered by Spotlight
-struct DevHelperJSONIntent: AppIntent {
-    static var title: LocalizedStringResource = "DevHelper JSON"
-    static var description = IntentDescription("Open JSON formatter in DevHelper")
+struct DevPaletteJSONIntent: AppIntent {
+    static var title: LocalizedStringResource = "DevPalette JSON"
+    static var description = IntentDescription("Open JSON formatter in DevPalette")
     static var openAppWhenRun: Bool = true
     
     func perform() async throws -> some IntentResult {
@@ -34,9 +34,9 @@ struct DevHelperJSONIntent: AppIntent {
     }
 }
 
-struct DevHelperBase64Intent: AppIntent {
-    static var title: LocalizedStringResource = "DevHelper Base64"
-    static var description = IntentDescription("Open Base64 encoder in DevHelper")
+struct DevPaletteBase64Intent: AppIntent {
+    static var title: LocalizedStringResource = "DevPalette Base64"
+    static var description = IntentDescription("Open Base64 encoder in DevPalette")
     static var openAppWhenRun: Bool = true
     
     func perform() async throws -> some IntentResult {
@@ -51,9 +51,9 @@ struct DevHelperBase64Intent: AppIntent {
     }
 }
 
-struct DevHelperUUIDIntent: AppIntent {
-    static var title: LocalizedStringResource = "DevHelper UUID"
-    static var description = IntentDescription("Open UUID generator in DevHelper")
+struct DevPaletteUUIDIntent: AppIntent {
+    static var title: LocalizedStringResource = "DevPalette UUID"
+    static var description = IntentDescription("Open UUID generator in DevPalette")
     static var openAppWhenRun: Bool = true
     
     func perform() async throws -> some IntentResult {
@@ -68,9 +68,9 @@ struct DevHelperUUIDIntent: AppIntent {
     }
 }
 
-struct DevHelperTimestampIntent: AppIntent {
-    static var title: LocalizedStringResource = "DevHelper Timestamp"
-    static var description = IntentDescription("Open timestamp converter in DevHelper")
+struct DevPaletteTimestampIntent: AppIntent {
+    static var title: LocalizedStringResource = "DevPalette Timestamp"
+    static var description = IntentDescription("Open timestamp converter in DevPalette")
     static var openAppWhenRun: Bool = true
     
     func perform() async throws -> some IntentResult {
@@ -85,9 +85,9 @@ struct DevHelperTimestampIntent: AppIntent {
     }
 }
 
-struct DevHelperRegexIntent: AppIntent {
-    static var title: LocalizedStringResource = "DevHelper Regex"
-    static var description = IntentDescription("Open regex test in DevHelper")
+struct DevPaletteRegexIntent: AppIntent {
+    static var title: LocalizedStringResource = "DevPalette Regex"
+    static var description = IntentDescription("Open regex test in DevPalette")
     static var openAppWhenRun: Bool = true
     
     func perform() async throws -> some IntentResult {
@@ -102,9 +102,9 @@ struct DevHelperRegexIntent: AppIntent {
     }
 }
 
-struct DevHelperJWTIntent: AppIntent {
-    static var title: LocalizedStringResource = "DevHelper JWT"
-    static var description = IntentDescription("Open JWT encoder/decoder in DevHelper")
+struct DevPaletteJWTIntent: AppIntent {
+    static var title: LocalizedStringResource = "DevPalette JWT"
+    static var description = IntentDescription("Open JWT encoder/decoder in DevPalette")
     static var openAppWhenRun: Bool = true
     
     func perform() async throws -> some IntentResult {
@@ -119,9 +119,9 @@ struct DevHelperJWTIntent: AppIntent {
     }
 }
 
-struct DevHelperHTTPIntent: AppIntent {
-    static var title: LocalizedStringResource = "DevHelper HTTP"
-    static var description = IntentDescription("Open HTTP request tool in DevHelper")
+struct DevPaletteHTTPIntent: AppIntent {
+    static var title: LocalizedStringResource = "DevPalette HTTP"
+    static var description = IntentDescription("Open HTTP request tool in DevPalette")
     static var openAppWhenRun: Bool = true
     
     func perform() async throws -> some IntentResult {
@@ -136,9 +136,9 @@ struct DevHelperHTTPIntent: AppIntent {
     }
 }
 
-struct DevHelperCryptoIntent: AppIntent {
-    static var title: LocalizedStringResource = "DevHelper Crypto"
-    static var description = IntentDescription("Open crypto tools in DevHelper")
+struct DevPaletteCryptoIntent: AppIntent {
+    static var title: LocalizedStringResource = "DevPalette Crypto"
+    static var description = IntentDescription("Open crypto tools in DevPalette")
     static var openAppWhenRun: Bool = true
     
     func perform() async throws -> some IntentResult {
@@ -153,9 +153,9 @@ struct DevHelperCryptoIntent: AppIntent {
     }
 }
 
-struct DevHelperURLIntent: AppIntent {
-    static var title: LocalizedStringResource = "DevHelper URL"
-    static var description = IntentDescription("Open URL tools in DevHelper")
+struct DevPaletteURLIntent: AppIntent {
+    static var title: LocalizedStringResource = "DevPalette URL"
+    static var description = IntentDescription("Open URL tools in DevPalette")
     static var openAppWhenRun: Bool = true
     
     func perform() async throws -> some IntentResult {
@@ -170,9 +170,9 @@ struct DevHelperURLIntent: AppIntent {
     }
 }
 
-struct DevHelperQRIntent: AppIntent {
-    static var title: LocalizedStringResource = "DevHelper QR"
-    static var description = IntentDescription("Open QR code generator in DevHelper")
+struct DevPaletteQRIntent: AppIntent {
+    static var title: LocalizedStringResource = "DevPalette QR"
+    static var description = IntentDescription("Open QR code generator in DevPalette")
     static var openAppWhenRun: Bool = true
     
     func perform() async throws -> some IntentResult {

@@ -17,20 +17,20 @@ import SwiftUI
 import MarkdownUI
 
 extension Theme {
-  /// A theme that mimics the DevHelper style.
+  /// A theme that mimics the DevPalette style.
   ///
   /// Style | Preview
   /// --- | ---
-  /// Inline text | ![](DevHelperInlines)
-  /// Headings | ![](DevHelperHeading)
-  /// Blockquote | ![](DevHelperBlockquote)
-  /// Code block | ![](DevHelperCodeBlock)
-  /// Image | ![](DevHelperImage)
-  /// Task list | ![](DevHelperTaskList)
-  /// Bulleted list | ![](DevHelperNestedBulletedList)
-  /// Numbered list | ![](DevHelperNumberedList)
-  /// Table | ![](DevHelperTable)
-  @MainActor public static let devHelper = Theme()
+  /// Inline text | ![](DevPaletteInlines)
+  /// Headings | ![](DevPaletteHeading)
+  /// Blockquote | ![](DevPaletteBlockquote)
+  /// Code block | ![](DevPaletteCodeBlock)
+  /// Image | ![](DevPaletteImage)
+  /// Task list | ![](DevPaletteTaskList)
+  /// Bulleted list | ![](DevPaletteNestedBulletedList)
+  /// Numbered list | ![](DevPaletteNumberedList)
+  /// Table | ![](DevPaletteTable)
+  @MainActor public static let devPalette = Theme()
     .text {
       ForegroundColor(.text)
       BackgroundColor(.background)

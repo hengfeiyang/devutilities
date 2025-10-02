@@ -31,12 +31,12 @@ class EventManager: ObservableObject {
         self.appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
         
         // User ID: Persistent UUID stored in UserDefaults
-        if let savedUserIdString = UserDefaults.standard.string(forKey: "DevHelper_UserID"),
+        if let savedUserIdString = UserDefaults.standard.string(forKey: "DevPalette_UserID"),
            let savedUserId = UUID(uuidString: savedUserIdString) {
             self.userId = savedUserId
         } else {
             self.userId = UUID()
-            UserDefaults.standard.set(self.userId.uuidString, forKey: "DevHelper_UserID")
+            UserDefaults.standard.set(self.userId.uuidString, forKey: "DevPalette_UserID")
         }
         
         // Session ID: New UUID each app launch
@@ -48,16 +48,16 @@ class EventManager: ObservableObject {
         self.batchProcessor = EventBatchProcessor(storage: storage, networkService: networkService)
         
         // Load settings
-        if UserDefaults.standard.object(forKey: "DevHelper_EventsEnabled") == nil {
+        if UserDefaults.standard.object(forKey: "DevPalette_EventsEnabled") == nil {
             // First time - default to enabled
             self.isEnabled = true
-            UserDefaults.standard.set(true, forKey: "DevHelper_EventsEnabled")
+            UserDefaults.standard.set(true, forKey: "DevPalette_EventsEnabled")
         } else {
-            self.isEnabled = UserDefaults.standard.bool(forKey: "DevHelper_EventsEnabled")
+            self.isEnabled = UserDefaults.standard.bool(forKey: "DevPalette_EventsEnabled")
         }
         
         // Load debug mode
-        self.isDebugMode = UserDefaults.standard.bool(forKey: "DevHelper_EventsDebugMode")
+        self.isDebugMode = UserDefaults.standard.bool(forKey: "DevPalette_EventsDebugMode")
         
         // Print initialization status
         print("🚀 [EVENT MANAGER] Initialized")
@@ -211,7 +211,7 @@ class EventManager: ObservableObject {
         guard enabled != isEnabled else { return }
         
         isEnabled = enabled
-        UserDefaults.standard.set(enabled, forKey: "DevHelper_EventsEnabled")
+        UserDefaults.standard.set(enabled, forKey: "DevPalette_EventsEnabled")
         
         if enabled {
             startEventProcessing()
@@ -226,7 +226,7 @@ class EventManager: ObservableObject {
     
     func setDebugMode(_ debug: Bool) {
         isDebugMode = debug
-        UserDefaults.standard.set(debug, forKey: "DevHelper_EventsDebugMode")
+        UserDefaults.standard.set(debug, forKey: "DevPalette_EventsDebugMode")
         
         print("🐛 Event debug mode \(debug ? "enabled" : "disabled")")
     }

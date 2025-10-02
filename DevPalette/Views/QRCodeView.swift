@@ -215,12 +215,12 @@ struct QRCodeView: View {
                 
                 HStack {
                     Button("Sample URL") {
-                        inputText = "https://github.com/hengfeiyang/devhelper"
+                        inputText = "https://github.com/DevPalette/DevPalette"
                     }
                     .buttonStyle(.bordered)
                     
                     Button("Sample Text") {
-                        inputText = "Hello, DevHelper QR Code!"
+                        inputText = "Hello, DevPalette QR Code!"
                     }
                     .buttonStyle(.bordered)
                     

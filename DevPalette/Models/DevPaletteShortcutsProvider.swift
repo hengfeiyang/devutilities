@@ -15,7 +15,7 @@
 
 import AppIntents
 
-struct DevHelperShortcutsProvider: AppShortcutsProvider {
+struct DevPaletteShortcutsProvider: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
         return [
             AppShortcut(

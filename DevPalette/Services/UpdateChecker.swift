@@ -31,7 +31,7 @@ class UpdateChecker: ObservableObject {
     @Published var showUpdateAlert = false
     @Published var showNoUpdateAlert = false
     
-    private let githubApiUrl = "https://api.github.com/repos/hengfeiyang/devhelper/releases/latest"
+    private let githubApiUrl = "https://api.github.com/repos/DevPalette/DevPalette/releases/latest"
     private var isManualCheck = false
     
     func checkForUpdate(manualCheck: Bool = false) {

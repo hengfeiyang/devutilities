@@ -1,18 +1,18 @@
-# DevHelper - Design Document
+# DevPalette - Design Document
 
 ## Overview
-DevHelper is a native macOS application built with SwiftUI that provides 18 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+DevPalette is a native macOS application built with SwiftUI that provides 18 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
 
 ## Architecture
 
 ### Project Structure
 ```
-DevHelper/
-├── DevHelper.xcodeproj/            # Xcode project configuration
+DevPalette/
+├── DevPalette.xcodeproj/            # Xcode project configuration
 │   └── project.xcworkspace/
 │       └── xcshareddata/swiftpm/   # SPM package dependencies
-├── DevHelper/
-│   ├── DevHelperApp.swift          # Main app entry point
+├── DevPalette/
+│   ├── DevPaletteApp.swift          # Main app entry point
 │   ├── ContentView.swift           # Navigation split view
 │   ├── Models/
 │   │   ├── ToolType.swift          # Tool definitions
@@ -45,7 +45,7 @@ DevHelper/
 │   │   └── TextEditor.swift        # Custom text editor with IME support
 │   ├── Assets.xcassets/            # App icons and assets
 │   ├── Preview Content/            # SwiftUI preview assets
-│   └── DevHelper.entitlements      # App sandbox permissions
+│   └── DevPalette.entitlements      # App sandbox permissions
 ├── DESIGN.md                       # This design document
 ├── CLAUDE.md                       # Claude Code guidance
 └── README.md                       # User-facing documentation
@@ -621,7 +621,7 @@ enum ToolType: String, CaseIterable, Identifiable {
 
 ### Target Settings
 - **Minimum macOS**: 14.0
-- **Bundle Identifier**: com.devhelper.DevHelper
+- **Bundle Identifier**: com.devpalette.DevPalette
 - **Version**: 2.3.1 (Build 1)
 - **Swift Version**: 5.0
 - **App Sandbox**: Enabled

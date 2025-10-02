@@ -1165,7 +1165,7 @@ struct ChatMessageView: View {
                                     
                                     // Show final response
                                     Markdown(message.content)
-                                        .markdownTheme(.devHelper)
+                                        .markdownTheme(.devPalette)
                                         .textSelection(.enabled)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 }

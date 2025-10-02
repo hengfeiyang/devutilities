@@ -13,7 +13,7 @@ protocol EventStorageProtocol: Sendable {
 // MARK: - UserDefaults-based Event Storage
 final class EventStorage: EventStorageProtocol, @unchecked Sendable {
     private let userDefaults = UserDefaults.standard
-    private let storageKey = "DevHelper_PendingEvents"
+    private let storageKey = "DevPalette_PendingEvents"
     private let maxEvents = 1000 // Prevent unlimited growth
     private let maxRetries = 3
     

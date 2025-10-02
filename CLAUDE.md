@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevHelper is a native macOS application built with SwiftUI that provides 18 essential developer utilities. Version 2.4.0 with AI-powered translation capabilities.
+DevPalette is a native macOS application built with SwiftUI that provides 18 essential developer utilities. Version 2.4.0 with AI-powered translation capabilities.
 
 ## Key Tools & Status
 
@@ -36,10 +36,10 @@ All 18 tools are ✅ **Complete**:
 ## Build Commands
 ```bash
 # Open in Xcode
-open DevHelper.xcodeproj
+open DevPalette.xcodeproj
 
 # Build and run
-xcodebuild -project DevHelper.xcodeproj -scheme DevHelper build
+xcodebuild -project DevPalette.xcodeproj -scheme DevPalette build
 
 # Using MCP tools
 mcp__XcodeBuildMCP__build_run_macos

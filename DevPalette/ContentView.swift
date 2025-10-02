@@ -53,7 +53,7 @@ struct ContentView: View {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("DevHelper")
+                        Text("DevPalette")
                             .font(.title2)
                             .fontWeight(.bold)
                         Text("Developer Tools \(appVersion)")
@@ -174,7 +174,7 @@ struct ContentView: View {
                 updateChecker.dismissNoUpdateAlert()
             }
         } message: {
-            Text("You're already using the latest version of DevHelper.")
+            Text("You're already using the latest version of DevPalette.")
         }
         .onChange(of: selectedTool) { oldValue, newValue in
             appState.currentTool = newValue

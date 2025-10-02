@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Simple DMG Creation Script for DevHelper
+# Simple DMG Creation Script for DevPalette
 set -e
 
-APP_NAME="DevHelper"
+APP_NAME="DevPalette"
 
 # Read version from project using xcodebuild
 echo -e "${YELLOW}📖 Reading version from project...${NC}"
@@ -37,7 +37,7 @@ xcodebuild -project "$APP_NAME.xcodeproj" -scheme "$APP_NAME" clean
 
 # Build fresh app
 echo -e "${YELLOW}🔨 Building fresh app...${NC}"
-APP_PATH="build/DerivedData/Build/Products/Release/DevHelper.app"
+APP_PATH="build/DerivedData/Build/Products/Release/DevPalette.app"
 xcodebuild -project "$APP_NAME.xcodeproj" -scheme "$APP_NAME" -configuration Release -derivedDataPath build/DerivedData build
 
 # Update version from built app if not found earlier
@@ -91,7 +91,7 @@ tell application "Finder"
         set the bounds of container window to {80, 80, 600, 450}
         set arrangement of icon view options of container window to not arranged
         set icon size of icon view options of container window to 128
-        set position of item "DevHelper.app" of container window to {150, 140}
+        set position of item "DevPalette.app" of container window to {150, 140}
         set position of item "Applications" of container window to {350, 140}
         close
         open

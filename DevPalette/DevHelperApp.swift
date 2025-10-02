@@ -17,14 +17,14 @@ import SwiftUI
 import AppIntents
 
 @main
-struct DevHelperApp: App {
+struct DevPaletteApp: App {
     @StateObject private var updateChecker = UpdateChecker()
     @StateObject private var appState = AppState()
     
     init() {
         // Register app shortcuts
         Task {
-            DevHelperShortcutsProvider.updateAppShortcutParameters()
+            DevPaletteShortcutsProvider.updateAppShortcutParameters()
         }
     }
     
@@ -67,10 +67,10 @@ struct DevHelperApp: App {
 
             CommandGroup(replacing: .help) {
                 Button(action: {
-                    let documents = "https://hengfeiyang.github.io/devhelper/"
+                    let documents = "https://hengfeiyang.github.io/DevPalette/"
                     NSWorkspace.shared.open(URL(string: documents)!)
                 }) {
-                    Text("DevHelper documentation")
+                    Text("DevPalette documentation")
                 }
             }
         }

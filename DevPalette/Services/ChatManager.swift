@@ -647,12 +647,12 @@ class ChatStorage {
     }
     
     private func createDirectoryIfNeeded() {
-        let chatDirectory = documentsDirectory.appendingPathComponent("DevHelper/AIChats")
+        let chatDirectory = documentsDirectory.appendingPathComponent("DevPalette/AIChats")
         try? fileManager.createDirectory(at: chatDirectory, withIntermediateDirectories: true)
     }
     
     private var chatDirectory: URL {
-        documentsDirectory.appendingPathComponent("DevHelper/AIChats")
+        documentsDirectory.appendingPathComponent("DevPalette/AIChats")
     }
     
     func loadChatSessions() -> [ChatSession] {

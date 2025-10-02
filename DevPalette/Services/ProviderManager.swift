@@ -223,7 +223,7 @@ class ProviderKeychainService: @unchecked Sendable {
     static let shared = ProviderKeychainService()
     private init() {}
 
-    private let service = "com.devhelper.provider-api-keys"
+    private let service = "com.devpalette.provider-api-keys"
 
     func saveAPIKey(_ key: String, for providerId: UUID) {
         let data = key.data(using: .utf8)!

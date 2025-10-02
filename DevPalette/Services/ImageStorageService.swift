@@ -27,12 +27,12 @@ final class ImageStorageService: @unchecked Sendable {
     }
     
     private func createDirectoryIfNeeded() {
-        let imageDirectory = documentsDirectory.appendingPathComponent("DevHelper/GeneratedImages")
+        let imageDirectory = documentsDirectory.appendingPathComponent("DevPalette/GeneratedImages")
         try? fileManager.createDirectory(at: imageDirectory, withIntermediateDirectories: true)
     }
     
     private var imageDirectory: URL {
-        documentsDirectory.appendingPathComponent("DevHelper/GeneratedImages")
+        documentsDirectory.appendingPathComponent("DevPalette/GeneratedImages")
     }
     
     func downloadAndSaveImage(from urlString: String, messageId: UUID) async throws -> String {

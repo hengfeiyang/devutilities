@@ -1,7 +1,7 @@
-# DevHelper Event Reporting Design - Implementation Status
+# DevPalette Event Reporting Design - Implementation Status
 
 ## Overview
-✅ **IMPLEMENTED** - Event reporting system for DevHelper to track user engagement and feature popularity without impacting app performance or user experience.
+✅ **IMPLEMENTED** - Event reporting system for DevPalette to track user engagement and feature popularity without impacting app performance or user experience.
 
 ## Core Principles - ✅ ACHIEVED
 1. **Performance First**: ✅ Never blocks UI - all processing via `Task.detached`
@@ -79,12 +79,12 @@ class EventManager: ObservableObject {
     
     init() {
         // ✅ User ID: Persistent UUID in UserDefaults
-        if let savedUserIdString = UserDefaults.standard.string(forKey: "DevHelper_UserID"),
+        if let savedUserIdString = UserDefaults.standard.string(forKey: "DevPalette_UserID"),
            let savedUserId = UUID(uuidString: savedUserIdString) {
             self.userId = savedUserId
         } else {
             self.userId = UUID()
-            UserDefaults.standard.set(self.userId.uuidString, forKey: "DevHelper_UserID")
+            UserDefaults.standard.set(self.userId.uuidString, forKey: "DevPalette_UserID")
         }
         
         // ✅ Session ID: New UUID each app launch
@@ -122,9 +122,9 @@ class EventManager: ObservableObject {
 ```swift
 // Events sent as individual GET requests (not batched)
 // Example URLs generated:
-GET https://api.devhelper.feiliwu.com/event?user_id=550e8400-e29b-41d4-a716-446655440000&session_id=6ba7b810-9dad-11d1-80b4-00c04fd430c8&version=1.11.1&module=app&submodule=start
+GET https://api.DevPalette.feiliwu.com/event?user_id=550e8400-e29b-41d4-a716-446655440000&session_id=6ba7b810-9dad-11d1-80b4-00c04fd430c8&version=1.11.1&module=app&submodule=start
 
-GET https://api.devhelper.feiliwu.com/event?user_id=550e8400-e29b-41d4-a716-446655440000&session_id=6ba7b810-9dad-11d1-80b4-00c04fd430c8&version=1.11.1&module=jwt_codec&submodule=encode
+GET https://api.DevPalette.feiliwu.com/event?user_id=550e8400-e29b-41d4-a716-446655440000&session_id=6ba7b810-9dad-11d1-80b4-00c04fd430c8&version=1.11.1&module=jwt_codec&submodule=encode
 
 // Processing: Up to 10 events per cycle, 0.1s delay between requests
 ```
@@ -150,7 +150,7 @@ GET https://api.devhelper.feiliwu.com/event?user_id=550e8400-e29b-41d4-a716-4466
 4. ✅ **EventBatchProcessor** - Background individual request sending
 
 ### Phase 2: Integration Points - ✅ COMPLETED
-1. ✅ **App Lifecycle** - App start event in `DevHelperApp.swift`
+1. ✅ **App Lifecycle** - App start event in `DevPaletteApp.swift`
 2. ✅ **Navigation Integration** - Module switch tracking in `ContentView.swift`
 3. ✅ **Submodule Events** - JWT tab switching in `JWTView.swift`
 
@@ -164,7 +164,7 @@ GET https://api.devhelper.feiliwu.com/event?user_id=550e8400-e29b-41d4-a716-4466
 
 ### 1. App Start Event - ✅ IMPLEMENTED
 ```swift
-// ✅ In DevHelperApp.swift
+// ✅ In DevPaletteApp.swift
 .onAppear {
     Task.detached {
         await EventManager.shared.reportAppStart()
@@ -369,17 +369,17 @@ enum AppModule: String, CaseIterable {
 ## Files Created - ✅ IMPLEMENTED
 
 ### Core Service Files
-- ✅ `DevHelper/Services/AppEvent.swift` - Event data structure and URL building
-- ✅ `DevHelper/Services/EventStorage.swift` - UserDefaults-based persistence  
-- ✅ `DevHelper/Services/EventNetworkService.swift` - HTTP client with timeouts/circuit breaker
-- ✅ `DevHelper/Services/EventBatchProcessor.swift` - Background processing cycles
-- ✅ `DevHelper/Services/EventManager.swift` - Main coordinator singleton
+- ✅ `DevPalette/Services/AppEvent.swift` - Event data structure and URL building
+- ✅ `DevPalette/Services/EventStorage.swift` - UserDefaults-based persistence  
+- ✅ `DevPalette/Services/EventNetworkService.swift` - HTTP client with timeouts/circuit breaker
+- ✅ `DevPalette/Services/EventBatchProcessor.swift` - Background processing cycles
+- ✅ `DevPalette/Services/EventManager.swift` - Main coordinator singleton
 
 ### Integration Files Modified
-- ✅ `DevHelper/DevHelperApp.swift` - App start event tracking
-- ✅ `DevHelper/ContentView.swift` - Module navigation tracking
-- ✅ `DevHelper/Views/JWTView.swift` - Submodule (tab) tracking
-- ✅ `DevHelper/Models/ToolType.swift` - Extension for event module names
+- ✅ `DevPalette/DevPaletteApp.swift` - App start event tracking
+- ✅ `DevPalette/ContentView.swift` - Module navigation tracking
+- ✅ `DevPalette/Views/JWTView.swift` - Submodule (tab) tracking
+- ✅ `DevPalette/Models/ToolType.swift` - Extension for event module names
 
 ### Documentation  
 - ✅ `event_design.md` - This comprehensive design document
@@ -399,14 +399,14 @@ enum AppModule: String, CaseIterable {
 📱 [EVENT] App Start
    Module: app
    Submodule: start
-   URL: https://api.devhelper.feiliwu.com/event?user_id=550e8400-e29b-41d4-a716-446655440000&session_id=6ba7b810-9dad-11d1-80b4-00c04fd430c8&version=1.11.1&module=app&submodule=start
+   URL: https://api.DevPalette.feiliwu.com/event?user_id=550e8400-e29b-41d4-a716-446655440000&session_id=6ba7b810-9dad-11d1-80b4-00c04fd430c8&version=1.11.1&module=app&submodule=start
 
 💾 [STORAGE] Event saved locally: app/start
 
 📤 [EVENT PROCESSOR] Sending 3 events via individual GET requests
-   1. app/start → https://api.devhelper.feiliwu.com/event?user_id=...&version=1.11.1&module=app&submodule=start
-   2. jwt_codec/enter → https://api.devhelper.feiliwu.com/event?user_id=...&version=1.11.1&module=jwt_codec&submodule=enter
-   3. jwt_codec/decode → https://api.devhelper.feiliwu.com/event?user_id=...&version=1.11.1&module=jwt_codec&submodule=decode
+   1. app/start → https://api.DevPalette.feiliwu.com/event?user_id=...&version=1.11.1&module=app&submodule=start
+   2. jwt_codec/enter → https://api.DevPalette.feiliwu.com/event?user_id=...&version=1.11.1&module=jwt_codec&submodule=enter
+   3. jwt_codec/decode → https://api.DevPalette.feiliwu.com/event?user_id=...&version=1.11.1&module=jwt_codec&submodule=decode
 
 ✅ [EVENT PROCESSOR] Successfully sent 3 events via individual GET API calls
 ```
