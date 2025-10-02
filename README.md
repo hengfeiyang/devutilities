@@ -1,4 +1,4 @@
-# DevHelper
+# DevPalette
 
 A native macOS application for developers, containing 18 essential tools commonly used in software development.
 
@@ -53,60 +53,60 @@ Current version: 2.4.0
 ## Screenshots
 
 #### customizable features
-![Devhelper](./images/screenshots/customize.png)
+![DevPalette](./images/screenshots/customize.png)
 
 #### AI Chat
-![DevHelper AI Chat](./images/screenshots/aichat.png)
+![DevPalette AI Chat](./images/screenshots/aichat.png)
 
-![DevHelper AI Chat custom models](./images/screenshots/aichat-models.png)
+![DevPalette AI Chat custom models](./images/screenshots/aichat-models.png)
 
 #### AI Translate
-![DevHelper AI Translate](./images/screenshots/aitranslate.png)
+![DevPalette AI Translate](./images/screenshots/aitranslate.png)
 
 #### Timestamp Converter
-![DevHelper Timestamp Converter](./images/screenshots/timestamp.png)
+![DevPalette Timestamp Converter](./images/screenshots/timestamp.png)
 
 #### Unit Converter
-![DevHelper Unit Converter](./images/screenshots/unit.png)
+![DevPalette Unit Converter](./images/screenshots/unit.png)
 
 #### Json Formatter
-![DevHelper Json Formatter](./images/screenshots/json.png)
+![DevPalette Json Formatter](./images/screenshots/json.png)
 
 #### SQL Formatter
-![DevHelper SQL Formatter](./images/screenshots/sql.png)
+![DevPalette SQL Formatter](./images/screenshots/sql.png)
 
 #### HTML Formatter
-![DevHelper HTML Formatter](./images/screenshots/html.png)
+![DevPalette HTML Formatter](./images/screenshots/html.png)
 
 #### Base64 Encode/Decode
-![DevHelper Base64 encode](./images/screenshots/base64.png)
+![DevPalette Base64 encode](./images/screenshots/base64.png)
 
 #### Hex String Converter
-![DevHelper Hex String Converter](./images/screenshots/hex.png)
+![DevPalette Hex String Converter](./images/screenshots/hex.png)
 
 #### JWT Encoder/Decoder
-![DevHelper JWT encoder](./images/screenshots/jwt.png)
+![DevPalette JWT encoder](./images/screenshots/jwt.png)
 
 #### URL Tools
-![DevHelper Url Tools](./images/screenshots/url.png)
+![DevPalette Url Tools](./images/screenshots/url.png)
 
 #### Regex Test
-![DevHelper Regex Test](./images/screenshots/regex.png)
+![DevPalette Regex Test](./images/screenshots/regex.png)
 
 #### UUID Generator
-![DevHelper UUID Generator](./images/screenshots/uuid.png)
+![DevPalette UUID Generator](./images/screenshots/uuid.png)
 
 #### Http Request
-![DevHelper Http Request](./images/screenshots/http.png)
+![DevPalette Http Request](./images/screenshots/http.png)
 
 #### IP Query
-![DevHelper IP Query](./images/screenshots/ip.png)
+![DevPalette IP Query](./images/screenshots/ip.png)
 
 #### QR Code
-![DevHelper QR Code](./images/screenshots/qrcode.png)
+![DevPalette QR Code](./images/screenshots/qrcode.png)
 
 #### Parquet Viewer
-![DevHelper Paruqet data view](./images/screenshots/parquet.png)
+![DevPalette Paruqet data view](./images/screenshots/parquet.png)
 
 
 #### Crypto Tools
