@@ -67,7 +67,7 @@ struct DevPaletteApp: App {
 
             CommandGroup(replacing: .help) {
                 Button(action: {
-                    let documents = "https://hengfeiyang.github.io/DevPalette/"
+                    let documents = "https://devpalette.github.io/devpalette/"
                     NSWorkspace.shared.open(URL(string: documents)!)
                 }) {
                     Text("DevPalette documentation")
