@@ -122,9 +122,9 @@ class EventManager: ObservableObject {
 ```swift
 // Events sent as individual GET requests (not batched)
 // Example URLs generated:
-GET https://api.devhelper.feiliwu.com/event?user_id=550e8400-e29b-41d4-a716-446655440000&session_id=6ba7b810-9dad-11d1-80b4-00c04fd430c8&version=1.11.1&module=app&submodule=start
+GET https://api.devpalette.feiliwu.com/event?user_id=550e8400-e29b-41d4-a716-446655440000&session_id=6ba7b810-9dad-11d1-80b4-00c04fd430c8&version=1.11.1&module=app&submodule=start
 
-GET https://api.devhelper.feiliwu.com/event?user_id=550e8400-e29b-41d4-a716-446655440000&session_id=6ba7b810-9dad-11d1-80b4-00c04fd430c8&version=1.11.1&module=jwt_codec&submodule=encode
+GET https://api.devpalette.feiliwu.com/event?user_id=550e8400-e29b-41d4-a716-446655440000&session_id=6ba7b810-9dad-11d1-80b4-00c04fd430c8&version=1.11.1&module=jwt_codec&submodule=encode
 
 // Processing: Up to 10 events per cycle, 0.1s delay between requests
 ```
@@ -399,14 +399,14 @@ enum AppModule: String, CaseIterable {
 📱 [EVENT] App Start
    Module: app
    Submodule: start
-   URL: https://api.DevPalette.devhelper.com/event?user_id=550e8400-e29b-41d4-a716-446655440000&session_id=6ba7b810-9dad-11d1-80b4-00c04fd430c8&version=1.11.1&module=app&submodule=start
+   URL: https://api.DevPalette.devpalette.com/event?user_id=550e8400-e29b-41d4-a716-446655440000&session_id=6ba7b810-9dad-11d1-80b4-00c04fd430c8&version=1.11.1&module=app&submodule=start
 
 💾 [STORAGE] Event saved locally: app/start
 
 📤 [EVENT PROCESSOR] Sending 3 events via individual GET requests
-   1. app/start → https://api.devhelper.feiliwu.com/event?user_id=...&version=1.11.1&module=app&submodule=start
-   2. jwt_codec/enter → https://api.devhelper.feiliwu.com/event?user_id=...&version=1.11.1&module=jwt_codec&submodule=enter
-   3. jwt_codec/decode → https://api.devhelper.feiliwu.com/event?user_id=...&version=1.11.1&module=jwt_codec&submodule=decode
+   1. app/start → https://api.devpalette.feiliwu.com/event?user_id=...&version=1.11.1&module=app&submodule=start
+   2. jwt_codec/enter → https://api.devpalette.feiliwu.com/event?user_id=...&version=1.11.1&module=jwt_codec&submodule=enter
+   3. jwt_codec/decode → https://api.devpalette.feiliwu.com/event?user_id=...&version=1.11.1&module=jwt_codec&submodule=decode
 
 ✅ [EVENT PROCESSOR] Successfully sent 3 events via individual GET API calls
 ```
