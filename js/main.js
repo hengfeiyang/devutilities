@@ -1,4 +1,4 @@
-// DevPalette Website JavaScript
+// DevUtilities Website JavaScript
 (function() {
     'use strict';
     
@@ -314,7 +314,7 @@
         
         // Add ARIA labels for accessibility
         heroSlider.setAttribute('role', 'region');
-        heroSlider.setAttribute('aria-label', 'DevPalette screenshots slideshow');
+        heroSlider.setAttribute('aria-label', 'DevUtilities screenshots slideshow');
         
         indicators.forEach((indicator, index) => {
             indicator.setAttribute('role', 'button');
@@ -534,14 +534,14 @@
                     window.open(downloadUrl, '_blank');
                 } else {
                     // Redirect to GitHub releases
-                    window.open('https://github.com/DevPalette/DevPalette/releases/latest', '_blank');
+                    window.open('https://github.com/hengfeiyang/devutilities/releases/latest', '_blank');
                 }
                 
                 // Track download attempt (you can replace this with your analytics)
                 if (typeof gtag !== 'undefined') {
                     gtag('event', 'download_attempt', {
                         'event_category': 'engagement',
-                        'event_label': 'devpalette_download'
+                        'event_label': 'devutilities_download'
                     });
                 }
             });
