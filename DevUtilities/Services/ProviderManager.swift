@@ -142,23 +142,44 @@ class ProviderManager {
     // MARK: - Connection Testing
 
     func testProviderConnection(_ provider: AIProvider) async -> Bool {
-        guard let apiKey = getAPIKey(for: provider.id), !apiKey.isEmpty else {
+        // Use the API key from the provider parameter if available, otherwise get from keychain
+        let apiKey = !provider.apiKey.isEmpty ? provider.apiKey : (getAPIKey(for: provider.id) ?? "")
+
+        guard !apiKey.isEmpty else {
             return false
         }
 
-        // TODO: Implement actual connection testing
-        // For now, just simulate a test
-        do {
-            try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+        // Test connection by calling the /models endpoint (OpenAI-compatible)
+        let baseURL = provider.baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let url = URL(string: "\(baseURL)/models") else {
+            return false
+        }
 
-            // Update last tested time
-            if let index = providers.firstIndex(where: { $0.id == provider.id }) {
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.timeoutInterval = 10
+
+        do {
+            let (_, response) = try await URLSession.shared.data(for: request)
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                return false
+            }
+
+            // Consider 200-299 status codes as success
+            let success = (200...299).contains(httpResponse.statusCode)
+
+            // Update last tested time if successful
+            if success, let index = providers.firstIndex(where: { $0.id == provider.id }) {
                 providers[index].lastTested = Date()
                 saveProviders()
             }
 
-            return true
+            return success
         } catch {
+            // Network error or timeout
             return false
         }
     }

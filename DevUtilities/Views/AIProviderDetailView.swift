@@ -252,7 +252,15 @@ struct AIProviderDetailView: View {
     }
 
     private func testConnection() {
-        guard let provider = currentProvider else { return }
+        guard var provider = currentProvider else { return }
+
+        // Save the changed information first
+        saveProvider()
+
+        // Use current input values for testing
+        provider.baseURL = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        provider.apiKey = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
+
         isTestingConnection = true
         testResult = nil
 
