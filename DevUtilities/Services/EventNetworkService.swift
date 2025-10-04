@@ -9,7 +9,7 @@ protocol EventNetworkServiceProtocol: Sendable {
 
 // MARK: - Event Network Service
 final class EventNetworkService: EventNetworkServiceProtocol, @unchecked Sendable {
-    private let baseURL = "https://api.devpalette.feiliwu.com"
+    private let baseURL = "https://api.devutilities.feiliwu.com"
     private let session: URLSession
     private let timeout: TimeInterval = 5.0 // 5 second timeout
     private var consecutiveFailures = 0

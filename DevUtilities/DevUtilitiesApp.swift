@@ -16,23 +16,18 @@
 import SwiftUI
 import AppIntents
 
+extension Notification.Name {
+    static let newChatRequested = Notification.Name("newChatRequested")
+}
+
 @main
-struct DevPaletteApp: App {
+struct DevUtilitiesApp: App {
     @StateObject private var updateChecker = UpdateChecker()
-    @StateObject private var appState = AppState()
-    
-    init() {
-        // Register app shortcuts
-        // Task {
-        //     DevPaletteShortcutsProvider.updateAppShortcutParameters()
-        // }
-    }
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(updateChecker)
-                .environmentObject(appState)
                 .onAppear {
                     Task.detached {
                         await EventManager.shared.reportAppStart()
@@ -57,20 +52,17 @@ struct DevPaletteApp: App {
             
             CommandGroup(replacing: .newItem) {
                 Button("New Chat") {
-                    if appState.currentTool == .aiChat {
-                        appState.shouldCreateNewChat = true
-                    }
+                    NotificationCenter.default.post(name: .newChatRequested, object: nil)
                 }
                 .keyboardShortcut("n", modifiers: [.command])
-                .disabled(appState.currentTool != .aiChat)
             }
 
             CommandGroup(replacing: .help) {
                 Button(action: {
-                    let documents = "https://devpalette.github.io/devpalette/"
+                    let documents = "https://hengfeiyang.github.io/devutilities/"
                     NSWorkspace.shared.open(URL(string: documents)!)
                 }) {
-                    Text("DevPalette documentation")
+                    Text("DevUtilities documentation")
                 }
             }
         }

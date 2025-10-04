@@ -1,12 +1,12 @@
-# DevPalette - App Store Submission Guide
+# DevUtilities - App Store Submission Guide
 
 ## Basic App Information
 
-**App Name:** DevPalette
+**App Name:** DevUtilities
 
 **Subtitle:** 18 Essential Developer Utilities for macOS
 
-**Bundle ID:** com.devpalette.DevPalette
+**Bundle ID:** com.hengfeiyang.DevUtilities
 
 **Version:** 2.5.0 (Build 52)
 
@@ -25,7 +25,7 @@ Essential tools for developers
 
 ### Full Description
 
-DevPalette is a native macOS application providing 18 essential utilities for software developers. Built entirely with Claude Code, it offers a clean, intuitive interface with real-time processing.
+DevUtilities is a native macOS application providing 18 essential utilities for software developers. Built entirely with Claude Code, it offers a clean, intuitive interface with real-time processing.
 
 **✨ Core Features:**
 
@@ -123,10 +123,10 @@ Create a 15-30 second video showing:
 ## Support Information
 
 **Support URL:** TODO - Add your GitHub repo or support website
-Example: https://github.com/yourusername/devpalette
+Example: https://github.com/hengfeiyang/devutilities
 
 **Marketing URL:** TODO - Add your marketing website
-Example: https://devpalette.dev
+Example: https://devutilities.dev
 
 **Privacy Policy URL:** TODO - Must create and host privacy policy (see template below)
 
@@ -137,14 +137,14 @@ Example: https://devpalette.dev
 ### Notes for Review:
 
 ```
-DevPalette is a developer utility application that provides 18 essential tools for software development tasks.
+DevUtilities is a developer utility application that provides 18 essential tools for software development tasks.
 
 Data Collection: We collect anonymous usage analytics (feature usage, navigation patterns) to improve the app. No personal information, device IDs, or user content is collected. Users are identified by a randomly generated UUID that cannot be linked to their identity. All analytics are sent to our own server - no third-party analytics services are used.
 
 AI Features: The AI Chat and AI Translate features require users to configure their own API keys. We do not collect, store, or have access to API keys, chat messages, or translation content. The app uses standard OpenAI-compatible APIs.
 
 Network Usage: The app requires network access for:
-- Anonymous usage analytics (our server: api.devpalette.feiliwu.com)
+- Anonymous usage analytics (our server: api.devutilities.feiliwu.com)
 - AI Chat and AI Translate features (user-configured API endpoints)
 - IP Query geolocation lookups (ipinfo.io, ip.sb)
 - HTTP Request testing tool (user-specified endpoints)
@@ -189,7 +189,7 @@ You **MUST** provide a privacy policy URL. The privacy policy must state:
 3. User-provided API keys stored locally only (UserDefaults)
 4. No third-party analytics services (we use our own server)
 5. Network requests explained:
-   - **Analytics**: api.devpalette.feiliwu.com for anonymous usage events
+   - **Analytics**: api.devutilities.feiliwu.com for anonymous usage events
    - **AI features**: User's own API endpoints
    - **IP Query**: ipinfo.io and ip.sb for geolocation
    - **HTTP Request**: User-specified endpoints for testing
@@ -300,7 +300,7 @@ Your app uses standard cryptographic algorithms available in Apple's system libr
 
 ```bash
 # Open Xcode
-open DevPalette.xcodeproj
+open DevUtilities.xcodeproj
 
 # In Xcode:
 # 1. Select "Any Mac (Apple Silicon, Intel)" target

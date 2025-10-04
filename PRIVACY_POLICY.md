@@ -1,16 +1,16 @@
-# Privacy Policy for DevPalette
+# Privacy Policy for DevUtilities
 
 **Last Updated:** October 2025
 
 ## Overview
 
-DevPalette ("the App") is a native macOS developer utility application created by Hengfei Yang. This privacy policy explains how the App handles your information.
+DevUtilities ("the App") is a native macOS developer utility application created by Hengfei Yang. This privacy policy explains how the App handles your information.
 
 ## Information Collection and Use
 
 ### Anonymous Usage Analytics
 
-**DevPalette collects anonymous usage analytics to improve the app and understand which features are most valuable to users.**
+**DevUtilities collects anonymous usage analytics to improve the app and understand which features are most valuable to users.**
 
 #### What We Collect
 
@@ -55,7 +55,7 @@ The App stores the following information **locally on your device only**:
 
 ## Network Usage
 
-DevPalette requires network access for specific features only:
+DevUtilities requires network access for specific features only:
 
 ### 1. AI Features (AI Chat, AI Translate)
 - **Purpose:** Connect to user-configured AI API endpoints
@@ -77,7 +77,7 @@ DevPalette requires network access for specific features only:
 
 ### 4. Usage Analytics
 - **Purpose:** Understand feature usage and improve the app
-- **Service Used:** Our analytics server (api.devpalette.feiliwu.com)
+- **Service Used:** Our analytics server (api.devutilities.feiliwu.com)
 - **Data Sent:** Anonymous events (see "Anonymous Usage Analytics" section above)
 - **Data Format:** GET requests with query parameters (version, module, submodule, anonymous user_id, session_id)
 - **Opt-Out:** You can disable analytics in app preferences (coming soon)
@@ -116,7 +116,7 @@ The App provides cryptographic tools (hash functions, encryption/decryption) for
 ## Third-Party Services
 
 ### Analytics Server
-DevPalette sends anonymous usage events to our own analytics server to understand feature usage. No third-party analytics services (Google Analytics, Mixpanel, etc.) are used. We control the data and do not share it with any third parties.
+DevUtilities sends anonymous usage events to our own analytics server to understand feature usage. No third-party analytics services (Google Analytics, Mixpanel, etc.) are used. We control the data and do not share it with any third parties.
 
 ### No Advertising or Tracking
 - No advertising networks
@@ -129,7 +129,7 @@ When you use AI Chat or AI Translate with your own API keys, you are directly co
 
 ## Children's Privacy
 
-DevPalette is not directed to children under 13. We do not knowingly collect information from children. If you believe a child has used the App, please contact us.
+DevUtilities is not directed to children under 13. We do not knowingly collect information from children. If you believe a child has used the App, please contact us.
 
 ## Data Security
 
@@ -165,7 +165,7 @@ If you have questions or concerns about this privacy policy:
 
 ### Example Analytics Event
 ```
-GET https://api.devpalette.feiliwu.com/event?
+GET https://api.devutilities.feiliwu.com/event?
     user_id=550e8400-e29b-41d4-a716-446655440000&
     session_id=6ba7b810-9dad-11d1-80b4-00c04fd430c8&
     version=2.5.0&
@@ -202,10 +202,10 @@ This privacy policy complies with:
 ## Developer Information
 
 **Developer:** Hengfei Yang
-**App Name:** DevPalette
+**App Name:** DevUtilities
 **Version:** 2.5.0
-**Bundle ID:** com.devpalette.DevPalette
+**Bundle ID:** com.hengfeiyang.DevUtilities
 
 ---
 
-**Summary:** DevPalette respects your privacy. We collect only anonymous usage analytics to improve the app - no personal information, no tracking, no data sales. Your actual work data (JSON, files, API keys, etc.) stays on your device. Network features require explicit user action and configuration.
+**Summary:** DevUtilities respects your privacy. We collect only anonymous usage analytics to improve the app - no personal information, no tracking, no data sales. Your actual work data (JSON, files, API keys, etc.) stays on your device. Network features require explicit user action and configuration.

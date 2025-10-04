@@ -17,19 +17,19 @@ import SwiftUI
 import MarkdownUI
 
 extension Theme {
-  /// A theme that mimics the DevPalette style.
+  /// A theme that mimics the DevUtilities style.
   ///
   /// Style | Preview
   /// --- | ---
-  /// Inline text | ![](DevPaletteInlines)
-  /// Headings | ![](DevPaletteHeading)
-  /// Blockquote | ![](DevPaletteBlockquote)
-  /// Code block | ![](DevPaletteCodeBlock)
-  /// Image | ![](DevPaletteImage)
-  /// Task list | ![](DevPaletteTaskList)
-  /// Bulleted list | ![](DevPaletteNestedBulletedList)
-  /// Numbered list | ![](DevPaletteNumberedList)
-  /// Table | ![](DevPaletteTable)
+  /// Inline text | ![](DevUtilitiesInlines)
+  /// Headings | ![](DevUtilitiesHeading)
+  /// Blockquote | ![](DevUtilitiesBlockquote)
+  /// Code block | ![](DevUtilitiesCodeBlock)
+  /// Image | ![](DevUtilitiesImage)
+  /// Task list | ![](DevUtilitiesTaskList)
+  /// Bulleted list | ![](DevUtilitiesNestedBulletedList)
+  /// Numbered list | ![](DevUtilitiesNumberedList)
+  /// Table | ![](DevUtilitiesTable)
   @MainActor public static let devPalette = Theme()
     .text {
       ForegroundColor(.text)

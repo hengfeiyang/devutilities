@@ -3,7 +3,7 @@
 **Version:** 1.0
 **Date:** 2025-10-01
 **Feature:** AI Translate - Intelligent Translation, Polishing, and Summarization Tool
-**Target Version:** DevPalette v2.4.0
+**Target Version:** DevUtilities v2.4.0
 
 ---
 
@@ -163,20 +163,20 @@ AI Translate is a new developer utility that provides intelligent text translati
 
 **New Components:**
 ```
-DevPalette/Views/
+DevUtilities/Views/
   ├── AITranslateView.swift          (Main UI)
   ├── TranslationModeSelector.swift  (Mode buttons component)
   └── LanguagePicker.swift           (Language dropdown)
 
-DevPalette/Models/
+DevUtilities/Models/
   ├── TranslationMode.swift          (3 modes enum)
   ├── TranslationLanguage.swift      (19 languages enum)
   └── TranslationPrompts.swift       (Prompt templates)
 
-DevPalette/Services/
+DevUtilities/Services/
   └── TranslationService.swift       (Mode-specific prompt generation)
 
-DevPalette/Utils/
+DevUtilities/Utils/
   └── FeatureItem.swift              (Add AI Translate to sidebar)
 ```
 
@@ -511,7 +511,7 @@ var view: some View {
 ## 10. Success Metrics
 
 **Adoption:**
-- 50%+ of DevPalette users try AI Translate within first month
+- 50%+ of DevUtilities users try AI Translate within first month
 - 20%+ weekly active usage rate
 
 **Engagement:**
@@ -544,7 +544,7 @@ var view: some View {
 
 ## 12. Release Plan
 
-**Version:** DevPalette v2.4.0
+**Version:** DevUtilities v2.4.0
 
 **Timeline:**
 1. Week 1: Core UI implementation (AITranslateView, mode selector, language pickers)

@@ -20,9 +20,9 @@ struct ContentView: View {
     @State private var searchText: String = ""
     @State private var previousTool: ToolType?
     @State private var showingFeatureSettings = false
+    @State private var shouldCreateNewChat = false
     @StateObject private var featureManager = FeatureManager()
     @EnvironmentObject var updateChecker: UpdateChecker
-    @EnvironmentObject var appState: AppState
     
     private var appVersion: String {
         if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
@@ -53,7 +53,7 @@ struct ContentView: View {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("DevPalette")
+                        Text("DevUtilities")
                             .font(.title2)
                             .fontWeight(.bold)
                         Text("Developer Tools \(appVersion)")
@@ -103,8 +103,7 @@ struct ContentView: View {
             Group {
                 switch selectedTool {
                 case .aiChat:
-                    AIChatView()
-                        .environmentObject(appState)
+                    AIChatView(shouldCreateNewChat: $shouldCreateNewChat)
                 case .aiTranslate:
                     AITranslateView()
                 case .timestampConverter:
@@ -174,10 +173,9 @@ struct ContentView: View {
                 updateChecker.dismissNoUpdateAlert()
             }
         } message: {
-            Text("You're already using the latest version of DevPalette.")
+            Text("You're already using the latest version of DevUtilities.")
         }
         .onChange(of: selectedTool) { oldValue, newValue in
-            appState.currentTool = newValue
             Task.detached {
                 await EventManager.shared.reportModuleSwitch(
                     from: oldValue.eventModuleName,
@@ -186,7 +184,6 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            appState.currentTool = selectedTool
             // Report initial module selection
             Task.detached {
                 await EventManager.shared.reportModuleSwitch(
@@ -195,9 +192,9 @@ struct ContentView: View {
                 )
             }
         }
-        .onChange(of: appState.currentTool) { oldValue, newValue in
-            if selectedTool != newValue {
-                selectedTool = newValue
+        .onReceive(NotificationCenter.default.publisher(for: .newChatRequested)) { _ in
+            if selectedTool == .aiChat {
+                shouldCreateNewChat = true
             }
         }
         .sheet(isPresented: $showingFeatureSettings) {
@@ -209,5 +206,4 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(UpdateChecker())
-        .environmentObject(AppState())
 }

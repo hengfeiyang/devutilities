@@ -110,7 +110,7 @@ struct HashFunctionView: View {
     @State private var selectedAlgorithm: HashAlgorithm = .md5
     @State private var hashResult: String = ""
     
-    private let sampleText = "Hello, DevPalette!"
+    private let sampleText = "Hello, DevUtilities!"
     
     var body: some View {
         VStack(spacing: 20) {
@@ -260,7 +260,7 @@ struct SymmetricEncryptionView: View {
     @State private var result: String = ""
     @State private var errorMessage: String = ""
     
-    private let sampleText = "Hello, DevPalette! This is a sample message for encryption."
+    private let sampleText = "Hello, DevUtilities! This is a sample message for encryption."
     
     var body: some View {
         VStack(spacing: 20) {
@@ -513,7 +513,7 @@ struct AsymmetricEncryptionView: View {
     @State private var result: String = ""
     @State private var errorMessage: String = ""
     
-    private let sampleText = "Hello, DevPalette!"
+    private let sampleText = "Hello, DevUtilities!"
     
     // Sample RSA key pair for testing
     private let sampleRSAPrivateKey = """

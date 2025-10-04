@@ -20,6 +20,7 @@ import AppKit
 import MarkdownUI
 
 struct AIChatView: View {
+    @Binding var shouldCreateNewChat: Bool
     @State private var chatManager = ChatManager()
     @State private var providerManager = ProviderManager.shared
     @State private var selectedSession: ChatSession?
@@ -28,7 +29,6 @@ struct AIChatView: View {
     @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var windowWidth: CGFloat = 800
-    @EnvironmentObject var appState: AppState
     
     var body: some View {
         GeometryReader { geometry in
@@ -168,11 +168,11 @@ struct AIChatView: View {
                 Text(error)
             }
         }
-        .onChange(of: appState.shouldCreateNewChat) { oldValue, newValue in
+        .onChange(of: shouldCreateNewChat) { oldValue, newValue in
             if newValue {
                 let newSession = chatManager.createNewChat()
                 selectedSession = newSession
-                appState.shouldCreateNewChat = false
+                shouldCreateNewChat = false
             }
         }
     }
@@ -1839,5 +1839,5 @@ struct AttachmentPreviewThumbnail: View {
 }
 
 #Preview {
-    AIChatView()
+    AIChatView(shouldCreateNewChat: .constant(false))
 }

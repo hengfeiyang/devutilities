@@ -1,4 +1,4 @@
-# DevPalette
+# DevUtilities
 
 A native macOS application for developers, containing 18 essential tools commonly used in software development.
 

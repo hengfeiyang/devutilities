@@ -344,7 +344,7 @@ final class KeychainService: @unchecked Sendable {
     static let shared = KeychainService()
     private init() {}
     
-    private let service = "com.devpalette.api-keys"
+    private let service = "com.hengfeiyang.api-keys"
     private let openaiAccount = "api-key-openai"
     
     func saveOpenAIAPIKey(_ key: String) {

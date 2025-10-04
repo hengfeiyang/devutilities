@@ -118,7 +118,7 @@ class EventBatchProcessor: EventBatchProcessorProtocol, ObservableObject {
                     // Try to send chunk of events
                     print("📤 [EVENT PROCESSOR] Sending \(chunk.count) events via individual GET requests")
                     for (index, event) in chunk.enumerated() {
-                        if let url = event.buildURL(baseURL: "https://api.devpalette.feiliwu.com") {
+                        if let url = event.buildURL(baseURL: "https://api.devutilities.feiliwu.com") {
                             print("   \(index + 1). \(event.module)/\(event.submodule) → \(url.absoluteString)")
                         } else {
                             print("   \(index + 1). \(event.module)/\(event.submodule) → [Invalid URL]")

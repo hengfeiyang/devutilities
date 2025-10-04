@@ -38,7 +38,7 @@
 
 ---
 
-## Recommended Screenshots for DevPalette
+## Recommended Screenshots for DevUtilities
 
 ### Priority Order (Top 7 Screenshots):
 
@@ -86,7 +86,7 @@ Use the provided script to batch resize all screenshots:
 
 ```bash
 # Navigate to project root
-cd /Users/yanghengfei/code/swift/devpalette
+cd /Users/yanghengfei/code/swift/devutilities
 
 # Create output directory for App Store screenshots
 mkdir -p AppStore_Screenshots
@@ -113,7 +113,7 @@ system_profiler SPDisplaysDataType | grep Resolution
 ```
 
 #### Step 2: Resize App Window
-1. Launch DevPalette
+1. Launch DevUtilities
 2. Resize window to exactly match target dimensions
 3. Use a tool like **Rectangle** (free) or **BetterSnapTool** to set exact window size
 
@@ -193,7 +193,7 @@ Create this script and run it:
 #!/bin/bash
 # resize_for_appstore.sh
 
-cd /Users/yanghengfei/code/swift/devpalette
+cd /Users/yanghengfei/code/swift/devutilities
 mkdir -p AppStore_Screenshots
 
 # Priority screenshots (resize these first)
@@ -301,7 +301,7 @@ Output: "你好，世界！" with full explanation
 ### For JSON Formatter (Screenshot #4):
 ```json
 {
-  "name": "DevPalette",
+  "name": "DevUtilities",
   "version": "2.5.0",
   "tools": ["JSON", "Base64", "JWT"],
   "features": {
@@ -389,7 +389,7 @@ Before uploading to App Store Connect:
 Run these commands to prepare your screenshots NOW:
 
 ```bash
-cd /Users/yanghengfei/code/swift/devpalette
+cd /Users/yanghengfei/code/swift/devutilities
 
 # Create output directory
 mkdir -p AppStore_Screenshots

@@ -1,6 +1,6 @@
 #!/bin/bash
 # resize_screenshots.sh
-# Resize DevPalette screenshots for App Store submission
+# Resize DevUtilities screenshots for App Store submission
 # Target: 2880 x 1800 pixels (16:10 aspect ratio)
 
 set -e
@@ -13,7 +13,7 @@ NC='\033[0m' # No Color
 
 echo ""
 echo -e "${BLUE}========================================${NC}"
-echo -e "${BLUE}DevPalette Screenshot Resize Tool${NC}"
+echo -e "${BLUE}DevUtilities Screenshot Resize Tool${NC}"
 echo -e "${BLUE}========================================${NC}"
 echo ""
 
