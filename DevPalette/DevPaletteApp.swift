@@ -23,9 +23,9 @@ struct DevPaletteApp: App {
     
     init() {
         // Register app shortcuts
-        Task {
-            DevPaletteShortcutsProvider.updateAppShortcutParameters()
-        }
+        // Task {
+        //     DevPaletteShortcutsProvider.updateAppShortcutParameters()
+        // }
     }
     
     var body: some Scene {
