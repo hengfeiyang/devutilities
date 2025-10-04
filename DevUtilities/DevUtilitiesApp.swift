@@ -41,7 +41,7 @@ struct DevUtilitiesApp: App {
                 }
         }
         .windowResizability(.contentSize)
-        .defaultSize(width: 1024, height: 800)
+        .defaultSize(width: 1024, height: 650)
         .commands {
             CommandGroup(after: .appInfo) {
                 Button("Check for Updates...") {

@@ -162,9 +162,9 @@ struct HexStringConverterView: View {
             HStack(spacing: 20) {
                 Button("Sample") {
                     if selectedTab == .stringToHex {
-                        stringInput = "Welcome to dev helper"
+                        stringInput = "Hello DevUtilities!"
                     } else {
-                        hexInput = "57656c636f6d65746f64657668656c706572"
+                        hexInput = "48656c6c6f204465765574696c697469657321"
                     }
                 }
                 .buttonStyle(.bordered)

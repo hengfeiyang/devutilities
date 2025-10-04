@@ -33,6 +33,7 @@ struct ChatSession: Identifiable, Codable, Hashable {
         self.createdAt = Date()
         self.updatedAt = Date()
         self.messages = []
+        self.selectedTool = .chat  // Explicitly reset tool selection for new sessions
     }
     
     mutating func addMessage(_ message: ChatMessage) {
@@ -344,7 +345,7 @@ final class KeychainService: @unchecked Sendable {
     static let shared = KeychainService()
     private init() {}
     
-    private let service = "com.hengfeiyang.api-keys"
+    private let service = "com.hengfeiyang.devutilities.api-keys"
     private let openaiAccount = "api-key-openai"
     
     func saveOpenAIAPIKey(_ key: String) {

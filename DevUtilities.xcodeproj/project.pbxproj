@@ -566,7 +566,7 @@
 				);
 				MARKETING_VERSION = 2.6.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.DevUtilities;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.devutilities;
 				PRODUCT_NAME = DevUtilities;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
@@ -608,7 +608,7 @@
 				);
 				MARKETING_VERSION = 2.6.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.DevUtilities;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.devutilities;
 				PRODUCT_NAME = DevUtilities;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
