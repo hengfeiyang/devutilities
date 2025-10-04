@@ -157,9 +157,9 @@ We may update this privacy policy from time to time. Updates will be posted on t
 
 If you have questions or concerns about this privacy policy:
 
-**Email:** TODO - Add your email address
-**GitHub:** TODO - Add your GitHub repo URL
-**Website:** TODO - Add your website URL
+**Issues:** https://github.com/hengfeiyang/devutilities/issues
+**GitHub:** https://github.com/hengfeiyang/devutilities
+**Website:** https://hengfeiyang.github.io/devutilities
 
 ## Analytics Data Details
 
