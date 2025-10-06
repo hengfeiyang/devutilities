@@ -35,17 +35,8 @@ A native macOS application for developers, containing 18 essential tools commonl
 
 ## Version
 
-Current version: 2.4.0
+Current version: 2.6.0
 
-## What's New in v2.4.0
+## What's New in v2.6.0
 
-- **🌐 AI Translate**: NEW professional translation tool with intelligent translation, text polishing, and summarization
-- **🔤 19 Languages Supported**: Auto-detect, English, Chinese (Simplified/Traditional), Japanese, Korean, Spanish, French, German, Russian, Arabic, Hindi, and more
-- **📖 Word Mode**: Special detailed mode for single word translation with phonetic notation, meanings, example sentences, and etymology
-- **⚡ Real-time Streaming**: See translation results as they're generated with animated status indicators
-- **🎯 Three Operation Modes**:
-  - **Translate**: Direct translation between languages with word mode for detailed explanations
-  - **Polishing**: Improve clarity and fluency in the same language
-  - **Summarize**: Create concise summaries in target language
-- **🔄 Retry & Copy**: Quick action buttons for retrying translation or copying results
-- **🤖 AI Model Integration**: Reuses AI Chat's flexible model system (GPT-4, GPT-5, DeepSeek, custom models)
+- Prepare for publish to AppStore
