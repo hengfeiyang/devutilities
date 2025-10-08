@@ -22,6 +22,7 @@ extension Notification.Name {
 
 @main
 struct DevUtilitiesApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var updateChecker = UpdateChecker()
 
     var body: some Scene {
@@ -66,5 +67,11 @@ struct DevUtilitiesApp: App {
                 }
             }
         }
+    }
+}
+
+class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return true
     }
 }
