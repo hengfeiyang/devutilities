@@ -21,6 +21,7 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
     case aiTranslate = "ai-translate"
     case timestampConverter = "timestamp"
     case unitConverter = "unit"
+    case baseConverter = "base-number"
     case jsonFormatter = "json"
     case sqlFormatter = "sql"
     case htmlFormatter = "html"
@@ -48,6 +49,8 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
             return "Timestamp Converter"
         case .unitConverter:
             return "Unit Converter"
+        case .baseConverter:
+            return "Base Converter"
         case .jsonFormatter:
             return "JSON Formatter"
         case .sqlFormatter:
@@ -89,6 +92,8 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
             return "clock"
         case .unitConverter:
             return "scalemass"
+        case .baseConverter:
+            return "number.circle"
         case .jsonFormatter:
             return "doc.text"
         case .sqlFormatter:

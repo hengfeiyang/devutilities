@@ -1,6 +1,6 @@
 # DevUtilities
 
-A native macOS application for developers, containing 18 essential tools commonly used in software development.
+A native macOS application for developers, containing 19 essential tools commonly used in software development.
 
 > This tool was 100% developed by `Claude Code`.
 
@@ -8,9 +8,10 @@ A native macOS application for developers, containing 18 essential tools commonl
 
 - **Timestamp Converter** - Bidirectional timestamp conversion with timezone support and multiple format options
 - **Unit Converter** - Convert between different units across 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
+- **Base Converter** - **NEW** Mutual conversion between binary, octal, decimal, and hexadecimal with real-time validation
 - **JSON Formatter** - Format, validate, escape/unescape, and compare JSON data with visual CodeMirror diff editor
 - **Base64 Encode/Decode** - Text encoding/decoding with URL-safe variant and automatic detection
-- **Hex String Converter** - **NEW** Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support and real-time processing
+- **Hex String Converter** - Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support and real-time processing
 - **Regex Test** - Pattern matching with capture groups, flags, and common pattern library
 - **UUID Generator** - Multiple versions (v1, v4, v5, v7) with bulk generation and timestamp extraction
 - **URL Tools** - Encoding/decoding and comprehensive URL parsing with component breakdown
@@ -35,8 +36,10 @@ A native macOS application for developers, containing 18 essential tools commonl
 
 ## Version
 
-Current version: 2.6.0
+Current version: 2.7.0
 
-## What's New in v2.6.0
+## What's New in v2.7.0
 
-- Prepare for publish to AppStore
+- **Base Converter**: NEW tool for mutual conversion between binary (base 2), octal (base 8), decimal (base 10), and hexadecimal (base 16) number systems
+- **Real-time Validation**: Input validation with clear error messages for invalid number formats
+- **19 Essential Tools**: Expanded toolkit now includes all essential developer utilities

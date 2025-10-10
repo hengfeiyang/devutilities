@@ -110,6 +110,8 @@ struct ContentView: View {
                     TimestampConverterView()
                 case .unitConverter:
                     UnitConverterView()
+                case .baseConverter:
+                    BaseConverterView()
                 case .jsonFormatter:
                     JSONFormatterView()
                 case .sqlFormatter:

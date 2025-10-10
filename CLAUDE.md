@@ -3,29 +3,30 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 18 essential developer utilities. Version 2.4.0 with AI-powered translation capabilities.
+DevUtilities is a native macOS application built with SwiftUI that provides 19 essential developer utilities. Version 2.7.0 with base number conversion capabilities.
 
 ## Key Tools & Status
 
-All 18 tools are ✅ **Complete**:
+All 19 tools are ✅ **Complete**:
 1. **Timestamp Converter** - Bidirectional timestamp conversion with timezone support
 2. **Unit Converter** - 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
-3. **JSON Formatter** - Format, validate, escape/unescape, **visual CodeMirror diff editor**
-4. **Base64 Encode/Decode** - Text encoding/decoding with URL-safe variant
-5. **Hex String Converter** - **NEW** Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support
-6. **Regex Test** - Pattern matching with capture groups and common patterns
-7. **UUID Generator** - Multiple versions (v1, v4, v5, v7) with bulk generation
-8. **URL Tools** - Encoding/decoding and comprehensive URL parsing
-9. **IP Query** - Dual IP detection and geolocation queries
-10. **HTTP Request** - Full HTTP client with SSE streaming and JSON tree view
-11. **QR Code** - Generation and scanning with multiple sizes and error correction
-12. **SQL Formatter** - **Enhanced SQL formatting** with native ParquetViewer library support for minimal and beautify modes
-13. **HTML Formatter** - Format and minify HTML with proper indentation
-14. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
-15. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
-16. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
-17. **AI Chat** - **Enhanced AI assistant** with custom model support, DeepSeek reasoning models, and flexible API configuration
-18. **AI Translate** - **NEW** Professional translation with 3 modes (Translate, Polishing, Summarize), 19 languages, word mode with detailed explanations
+3. **Base Converter** - **NEW** Mutual conversion between binary, octal, decimal, and hexadecimal number systems
+4. **JSON Formatter** - Format, validate, escape/unescape, **visual CodeMirror diff editor**
+5. **Base64 Encode/Decode** - Text encoding/decoding with URL-safe variant
+6. **Hex String Converter** - Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support
+7. **Regex Test** - Pattern matching with capture groups and common patterns
+8. **UUID Generator** - Multiple versions (v1, v4, v5, v7) with bulk generation
+9. **URL Tools** - Encoding/decoding and comprehensive URL parsing
+10. **IP Query** - Dual IP detection and geolocation queries
+11. **HTTP Request** - Full HTTP client with SSE streaming and JSON tree view
+12. **QR Code** - Generation and scanning with multiple sizes and error correction
+13. **SQL Formatter** - **Enhanced SQL formatting** with native ParquetViewer library support for minimal and beautify modes
+14. **HTML Formatter** - Format and minify HTML with proper indentation
+15. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
+16. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
+17. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
+18. **AI Chat** - **Enhanced AI assistant** with custom model support, DeepSeek reasoning models, and flexible API configuration
+19. **AI Translate** - Professional translation with 3 modes (Translate, Polishing, Summarize), 19 languages, word mode with detailed explanations
 
 ## Architecture & Technical Stack
 - **Platform**: macOS 14.0+ SwiftUI
@@ -45,8 +46,16 @@ xcodebuild -project DevUtilities.xcodeproj -scheme DevUtilities build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
-## Recent Updates (v2.4.0)
-- **AI Translate Tool**: NEW professional translation feature with intelligent translation, polishing, and summarization
+## Recent Updates (v2.7.0)
+- **Base Converter**: NEW tool for mutual conversion between binary (base 2), octal (base 8), decimal (base 10), and hexadecimal (base 16) number systems
+- **Real-time Validation**: Input validation with clear error messages for invalid number formats (binary accepts only 0-1, octal 0-7, hexadecimal 0-9 A-F)
+- **Four Base Support**: Complete support for all common number bases used in programming
+- **Copy to Clipboard**: Quick copy functionality for each converted result
+- **State Persistence**: Automatically saves and restores conversion state between sessions
+- **19 Essential Tools**: Expanded toolkit now includes all essential developer utilities
+
+## Previous Updates (v2.4.0)
+- **AI Translate Tool**: Professional translation feature with intelligent translation, polishing, and summarization
 - **19 Language Support**: Auto-detect, English, Chinese (Simplified/Traditional), Japanese, Korean, Spanish, French, German, Russian, Arabic, Hindi, Portuguese, Italian, Dutch, Turkish, Vietnamese, Thai, Indonesian
 - **Three Operation Modes**:
   - **Translate**: Direct translation with special word mode for detailed explanations (phonetic notation, meanings, examples, etymology)

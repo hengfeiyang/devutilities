@@ -15,6 +15,7 @@
 		81E0D1EF2E8D518E00F2A91A /* TranslationPrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E0D1ED2E8D518E00F2A91A /* TranslationPrompts.swift */; };
 		81E0D1F12E8D518E00F2A91A /* TranslationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E0D1EC2E8D518E00F2A91A /* TranslationMode.swift */; };
 		81E0D1F32E8D51B200F2A91A /* AITranslateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E0D1F22E8D51B200F2A91A /* AITranslateView.swift */; };
+		84B700DDC3D540AA80A1F943 /* BaseConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB51B2D620B842BA9AEC226E /* BaseConverterView.swift */; };
 		9332C0382E589984009E68BE /* CodeMirror-SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9332C0372E589984009E68BE /* CodeMirror-SwiftUI */; };
 		9332C0392E589984009E68BE /* CodeMirror-SwiftUI in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 9332C0372E589984009E68BE /* CodeMirror-SwiftUI */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		934569062E5FFCD600491835 /* UpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934569042E5FFCD600491835 /* UpdateChecker.swift */; };
@@ -115,6 +116,7 @@
 		93DE0EAE2E7ABA1900731598 /* AIProviderSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProviderSettingsView.swift; sourceTree = "<group>"; };
 		B41BCA88D09D488EA2A4ABAB /* CryptoToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoToolsView.swift; sourceTree = "<group>"; };
 		B822A4CAC32A426BA9E4E438123457 /* IPQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPQueryView.swift; sourceTree = "<group>"; };
+		BB51B2D620B842BA9AEC226E /* BaseConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseConverterView.swift; sourceTree = "<group>"; };
 		C66E3643B7264A049FA9EFDF /* HexStringConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexStringConverterView.swift; sourceTree = "<group>"; };
 		D5F4E7F02C5A1B2E00123456 /* DevUtilities.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevUtilities.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5F4E7F52C5A1B2E00123456 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 				D5F4E8052C5A1B3000123456 /* JSONFormatterView.swift */,
 				D5F4E8072C5A1B3000123456 /* Base64View.swift */,
 				C66E3643B7264A049FA9EFDF /* HexStringConverterView.swift */,
+				BB51B2D620B842BA9AEC226E /* BaseConverterView.swift */,
 				D5F4E80B2C5A1B3000123456 /* RegexTestView.swift */,
 				D5F4E80D2C5A1B3000123456 /* UUIDGeneratorView.swift */,
 				D5F4E80F2C5A1B3000123456 /* URLToolsView.swift */,
@@ -359,6 +362,7 @@
 				D5F4E8062C5A1B3000123456 /* JSONFormatterView.swift in Sources */,
 				D5F4E8082C5A1B3000123456 /* Base64View.swift in Sources */,
 				7BADF8733C7C4EB4B3C07E84 /* HexStringConverterView.swift in Sources */,
+				84B700DDC3D540AA80A1F943 /* BaseConverterView.swift in Sources */,
 				934569062E5FFCD600491835 /* UpdateChecker.swift in Sources */,
 				934569072E5FFCD600491835 /* VersionComparator.swift in Sources */,
 				D5F4E80C2C5A1B3000123456 /* RegexTestView.swift in Sources */,
@@ -540,7 +544,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 58;
+				CURRENT_PROJECT_VERSION = 59;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -564,7 +568,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 2.6.1;
+				MARKETING_VERSION = 2.7.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.devutilities;
 				PRODUCT_NAME = DevUtilities;
@@ -582,7 +586,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 58;
+				CURRENT_PROJECT_VERSION = 59;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -606,7 +610,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 2.6.1;
+				MARKETING_VERSION = 2.7.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.devutilities;
 				PRODUCT_NAME = DevUtilities;

@@ -1,7 +1,7 @@
 # DevUtilities - Design Document
 
 ## Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 18 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+DevUtilities is a native macOS application built with SwiftUI that provides 19 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
 
 ## Architecture
 
@@ -20,9 +20,10 @@ DevUtilities/
 │   │   ├── TranslationLanguage.swift   # NEW: 19 language definitions
 │   │   ├── TranslationMode.swift       # NEW: 3 translation modes
 │   │   └── TranslationPrompts.swift    # NEW: Prompt generation logic
-│   ├── Views/                      # All 18 tool implementations
+│   ├── Views/                      # All 19 tool implementations
 │   │   ├── TimestampConverterView.swift
 │   │   ├── UnitConverterView.swift
+│   │   ├── BaseConverterView.swift
 │   │   ├── JSONFormatterView.swift
 │   │   ├── Base64View.swift
 │   │   ├── HexStringConverterView.swift
@@ -120,7 +121,40 @@ Each tool follows a consistent pattern:
 - Base unit conversion pattern
 - Time conversions from nanoseconds to years
 
-### 3. JSON Formatter
+### 3. Base Converter
+**File**: `BaseConverterView.swift`
+
+**Features**:
+- Mutual conversion between binary (base 2), octal (base 8), decimal (base 10), and hexadecimal (base 16)
+- Real-time validation of input for each number base
+- Automatic conversion when typing in any field
+- Clear error messages for invalid input formats
+- Copy to clipboard functionality for all results
+- Clear all button to reset converter
+- State persistence between sessions
+
+**UI Components**:
+- Four separate TextEditor areas (one for each number base)
+- Copy buttons next to each result
+- Error message display for invalid inputs
+- Clear All button at bottom
+
+**Implementation Details**:
+- Swift `Int(radix:)` for parsing different number bases
+- Character set validation for each base (binary: 0-1, octal: 0-7, decimal: 0-9, hex: 0-9 A-F)
+- Real-time conversion using `onChange` modifiers
+- Active field tracking to prevent conversion loops
+- UserDefaults integration for state persistence
+- Support for uppercase hex output (A-F)
+- `NumberBase` enum for field tracking
+
+**Validation Rules**:
+- Binary: Only 0 and 1 allowed
+- Octal: Only digits 0-7 allowed
+- Decimal: Only digits 0-9 allowed, no negative numbers
+- Hexadecimal: Digits 0-9 and letters A-F (case-insensitive), optional 0x prefix
+
+### 4. JSON Formatter
 **File**: `JSONFormatterView.swift`
 
 **Features**:
@@ -622,7 +656,7 @@ enum ToolType: String, CaseIterable, Identifiable {
 ### Target Settings
 - **Minimum macOS**: 14.0
 - **Bundle Identifier**: com.hengfeiyang.devutilities
-- **Version**: 2.3.1 (Build 1)
+- **Version**: 2.7.0 (Build 1)
 - **Swift Version**: 5.0
 - **App Sandbox**: Enabled
 - **Hardened Runtime**: Enabled
