@@ -523,20 +523,7 @@
     // Download button functionality
     function initDownloadButton() {
         if (downloadBtn) {
-            downloadBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Check if we have a direct download link
-                const downloadUrl = this.getAttribute('data-download-url');
-                
-                if (downloadUrl) {
-                    // Direct download
-                    window.open(downloadUrl, '_blank');
-                } else {
-                    // Redirect to GitHub releases
-                    window.open('https://github.com/hengfeiyang/devutilities/releases/latest', '_blank');
-                }
-                
+            downloadBtn.addEventListener('click', function() {
                 // Track download attempt (you can replace this with your analytics)
                 if (typeof gtag !== 'undefined') {
                     gtag('event', 'download_attempt', {

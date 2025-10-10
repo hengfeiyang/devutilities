@@ -4,6 +4,10 @@ A native macOS application for developers, containing 18 essential tools commonl
 
 > This tool was 100% developed by `Claude Code`.
 
+## Download
+
+[Download on the App Store](https://apps.apple.com/app/devutilities/id6753612551)
+
 ## Features
 
 - **AI Chat** - Intelligent AI assistant with custom model support, flexible API configuration, and enhanced user experience for development questions

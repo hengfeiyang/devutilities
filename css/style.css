@@ -616,6 +616,13 @@ body {
 .btn-icon {
     font-size: 1.2rem;
     margin-right: var(--space-xs);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-icon img {
+    display: block;
 }
 
 /* Section Headers */
