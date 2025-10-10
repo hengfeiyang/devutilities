@@ -144,8 +144,8 @@ struct ContentView: View {
         }
         .frame(minWidth: 1024, minHeight: 650)
         .alert("Update Available", isPresented: $updateChecker.showUpdateAlert) {
-            Button("Download") {
-                updateChecker.openDownloadPage()
+            Button("Open App Store") {
+                updateChecker.openAppStore()
             }
             Button("Close", role: .cancel) {
                 updateChecker.dismissAlert()

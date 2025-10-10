@@ -1,26 +1,26 @@
 import Foundation
 import AppKit
 
-struct GitHubRelease: Codable {
-    let tagName: String
-    let name: String
-    let htmlUrl: String
-    let publishedAt: String
-    let body: String?
-    
+struct AppStoreResponse: Codable {
+    let results: [AppStoreApp]
+}
+
+struct AppStoreApp: Codable {
+    let version: String
+    let releaseNotes: String?
+    let currentVersionReleaseDate: String?
+
     enum CodingKeys: String, CodingKey {
-        case tagName = "tag_name"
-        case name
-        case htmlUrl = "html_url"
-        case publishedAt = "published_at"
-        case body
+        case version
+        case releaseNotes
+        case currentVersionReleaseDate
     }
 }
 
 struct UpdateInfo {
     let currentVersion: String
     let latestVersion: String
-    let downloadUrl: String
+    let appStoreUrl: String
     let releaseNotes: String?
 }
 
@@ -30,8 +30,9 @@ class UpdateChecker: ObservableObject {
     @Published var updateAvailable: UpdateInfo?
     @Published var showUpdateAlert = false
     @Published var showNoUpdateAlert = false
-    
-    private let githubApiUrl = "https://api.github.com/repos/hengfeiyang/devutilities/releases/latest"
+
+    private let appStoreLookupUrl = "https://itunes.apple.com/lookup?bundleId=com.hengfeiyang.devutilities"
+    private let appStoreUrl = "https://apps.apple.com/app/devutilities/id6753612551"
     private var isManualCheck = false
     
     func checkForUpdate(manualCheck: Bool = false) {
@@ -43,15 +44,15 @@ class UpdateChecker: ObservableObject {
         
         Task {
             do {
-                let latestRelease = try await fetchLatestRelease()
+                let appStoreApp = try await fetchLatestRelease()
                 let currentVersion = getCurrentVersion()
-                
-                if VersionComparator.isNewerVersion(latestRelease.tagName, than: currentVersion) {
+
+                if VersionComparator.isNewerVersion(appStoreApp.version, than: currentVersion) {
                     let updateInfo = UpdateInfo(
                         currentVersion: currentVersion,
-                        latestVersion: latestRelease.tagName,
-                        downloadUrl: latestRelease.htmlUrl,
-                        releaseNotes: latestRelease.body
+                        latestVersion: appStoreApp.version,
+                        appStoreUrl: self.appStoreUrl,
+                        releaseNotes: appStoreApp.releaseNotes
                     )
                     
                     await MainActor.run {
@@ -80,24 +81,29 @@ class UpdateChecker: ObservableObject {
         }
     }
     
-    private func fetchLatestRelease() async throws -> GitHubRelease {
-        guard let url = URL(string: githubApiUrl) else {
+    private func fetchLatestRelease() async throws -> AppStoreApp {
+        guard let url = URL(string: appStoreLookupUrl) else {
             throw URLError(.badURL)
         }
-        
+
         var request = URLRequest(url: url)
-        request.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
         request.timeoutInterval = 10.0
-        
+
         let (data, response) = try await URLSession.shared.data(for: request)
-        
+
         guard let httpResponse = response as? HTTPURLResponse,
               200...299 ~= httpResponse.statusCode else {
             throw URLError(.badServerResponse)
         }
-        
+
         let decoder = JSONDecoder()
-        return try decoder.decode(GitHubRelease.self, from: data)
+        let appStoreResponse = try decoder.decode(AppStoreResponse.self, from: data)
+
+        guard let app = appStoreResponse.results.first else {
+            throw URLError(.cannotFindHost)
+        }
+
+        return app
     }
     
     private func getCurrentVersion() -> String {
@@ -107,10 +113,10 @@ class UpdateChecker: ObservableObject {
         return "1.12.0" // Fallback to current version
     }
     
-    func openDownloadPage() {
+    func openAppStore() {
         guard let updateInfo = updateAvailable,
-              let url = URL(string: updateInfo.downloadUrl) else { return }
-        
+              let url = URL(string: updateInfo.appStoreUrl) else { return }
+
         NSWorkspace.shared.open(url)
     }
     
