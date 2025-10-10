@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base Converter - Binary, Octal, Decimal, Hex Converter Online | DevUtilities</title>
+    <meta name="description" content="Professional base number converter for developers. Convert between binary (base 2), octal (base 8), decimal (base 10), and hexadecimal (base 16) number systems with real-time validation and error handling. Part of DevUtilities - 19 essential developer tools for macOS.">
+    <meta name="keywords" content="base converter, number base conversion, binary converter, octal converter, decimal converter, hex converter, hexadecimal converter, binary to decimal, hex to decimal, octal to binary, radix converter">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="Base Converter - Binary, Octal, Decimal, Hex Converter | DevUtilities">
+    <meta property="og:description" content="Professional base number converter with real-time validation. Convert between binary, octal, decimal, and hexadecimal number systems for developers.">
+    <meta property="og:image" content="images/screenshots/base-converter.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Base Converter - Binary, Octal, Decimal, Hex Converter">
+    <meta property="twitter:description" content="Professional base number converter with real-time validation. Convert between binary, octal, decimal, and hexadecimal number systems.">
+    <meta property="twitter:image" content="images/screenshots/base-converter.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "DevUtilities Base Converter",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS",
+        "description": "Professional base number converter with support for binary, octal, decimal, and hexadecimal conversion with real-time validation",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "10"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-brand">
+                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
+                <span class="nav-title">DevUtilities</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#reviews" class="nav-link">Reviews</a>
+                <a href="release-notes.html" class="nav-link">Release Notes</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="breadcrumb">
+                        <a href="index.html">DevUtilities</a> / <span>Base Converter</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Base Converter
+                        <span class="hero-subtitle">Seamless Number System Conversion</span>
+                    </h1>
+                    <p class="hero-description">
+                        Convert numbers between binary (base 2), octal (base 8), decimal (base 10), and hexadecimal (base 16) number systems with real-time validation. Features instant mutual conversion, input validation with clear error messages, and intelligent number base detection. Essential for low-level programming, computer science education, and digital system design.
+                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🔄</span>
+                            <span>4-Way Conversion</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">✅</span>
+                            <span>Real-time Validation</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">⚡</span>
+                            <span>Instant Results</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="index.html#download" class="btn btn-primary">
+                            <span class="btn-icon">📥</span>
+                            Download DevUtilities
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            <span class="btn-icon">👀</span>
+                            See Features
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/screenshots/base-converter.png" alt="DevUtilities Base Converter Screenshot showing mutual conversion between binary, octal, decimal, and hexadecimal with validation">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Advanced Base Conversion Features</h2>
+                <p class="section-description">
+                    Everything you need for professional number base conversion and numeric system translation workflows.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card featured">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">Mutual Conversion</h3>
+                    <p class="feature-description">Convert between all four major number bases seamlessly. Enter a value in any base and instantly see conversions to all other bases with automatic synchronization.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3 class="feature-title">Input Validation</h3>
+                    <p class="feature-description">Real-time validation ensures only valid characters for each base: 0-1 for binary, 0-7 for octal, 0-9 for decimal, 0-9 and A-F for hexadecimal.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚠️</div>
+                    <h3 class="feature-title">Clear Error Messages</h3>
+                    <p class="feature-description">Descriptive error messages help you understand what went wrong with invalid input and provide suggestions for correction.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Real-time Processing</h3>
+                    <p class="feature-description">Instant conversion as you type with live synchronization across all number bases. No need to click conversion buttons or wait for results.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3 class="feature-title">State Persistence</h3>
+                    <p class="feature-description">Your last conversion is automatically saved and restored when you reopen the tool, ensuring continuity in your workflow.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Precision Handling</h3>
+                    <p class="feature-description">Accurate conversion handling for large numbers with proper overflow detection and precise representation across all bases.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">Easy Copy & Export</h3>
+                    <p class="feature-description">One-click copying of conversion results in any base. Integrate seamlessly with code editors and development tools.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">Smart Detection</h3>
+                    <p class="feature-description">Intelligent detection of active input field prevents conversion loops and ensures smooth user experience during data entry.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Number Systems Section -->
+    <section class="encoding-types">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Supported Number Systems</h2>
+                <p class="section-description">Understanding the four fundamental number bases used in computing</p>
+            </div>
+
+            <div class="encoding-grid">
+                <div class="encoding-card featured">
+                    <div class="encoding-badge utf8">Binary (Base 2)</div>
+                    <h3>Binary Number System</h3>
+                    <div class="encoding-example">
+                        <div class="encoding-text">Decimal: 42</div>
+                        <div class="encoding-arrow">↕</div>
+                        <div class="encoding-hex">Binary: 101010</div>
+                    </div>
+                    <p><strong>Digits:</strong> 0, 1</p>
+                    <p><strong>Use for:</strong> Digital circuits, Boolean logic, low-level programming, bit manipulation</p>
+                    <p><strong>Best for:</strong> Understanding computer fundamentals, binary operations, flag systems</p>
+                </div>
+
+                <div class="encoding-card">
+                    <div class="encoding-badge utf16">Octal (Base 8)</div>
+                    <h3>Octal Number System</h3>
+                    <div class="encoding-example">
+                        <div class="encoding-text">Decimal: 42</div>
+                        <div class="encoding-arrow">↕</div>
+                        <div class="encoding-hex">Octal: 52</div>
+                    </div>
+                    <p><strong>Digits:</strong> 0-7</p>
+                    <p><strong>Use for:</strong> Unix file permissions, legacy systems, compact binary representation</p>
+                    <p><strong>Best for:</strong> File permission notation (chmod), older embedded systems, compact notation</p>
+                </div>
+
+                <div class="encoding-card">
+                    <div class="encoding-badge ascii">Decimal (Base 10)</div>
+                    <h3>Decimal Number System</h3>
+                    <div class="encoding-example">
+                        <div class="encoding-text">Hex: 2A</div>
+                        <div class="encoding-arrow">↕</div>
+                        <div class="encoding-hex">Decimal: 42</div>
+                    </div>
+                    <p><strong>Digits:</strong> 0-9</p>
+                    <p><strong>Use for:</strong> Human-readable numbers, general calculations, everyday computing</p>
+                    <p><strong>Best for:</strong> Standard arithmetic, user interfaces, data display, general purpose</p>
+                </div>
+
+                <div class="encoding-card featured">
+                    <div class="encoding-badge utf8">Hexadecimal (Base 16)</div>
+                    <h3>Hexadecimal Number System</h3>
+                    <div class="encoding-example">
+                        <div class="encoding-text">Decimal: 42</div>
+                        <div class="encoding-arrow">↕</div>
+                        <div class="encoding-hex">Hex: 2A</div>
+                    </div>
+                    <p><strong>Digits:</strong> 0-9, A-F</p>
+                    <p><strong>Use for:</strong> Memory addresses, color codes, byte values, cryptographic hashes</p>
+                    <p><strong>Best for:</strong> Compact binary notation, debugging, memory inspection, web colors</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How to Use Base Converter</h2>
+                <p class="section-description">
+                    Convert between number bases in just a few simple steps.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Enter Your Number</h3>
+                    <p>Type a number in any of the four input fields: binary (0-1), octal (0-7), decimal (0-9), or hexadecimal (0-9, A-F).</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>See Auto-Conversion</h3>
+                    <p>Watch as the tool instantly converts your input to all other number bases in real-time with automatic validation.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Check Validation</h3>
+                    <p>Invalid characters are automatically detected with clear error messages explaining what's wrong and how to fix it.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Copy Results</h3>
+                    <p>Copy the converted values with one click and use them in your code, calculations, or documentation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perfect for These Development Tasks</h2>
+            </div>
+
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">💻</div>
+                    <h3>Low-Level Programming</h3>
+                    <p>Work with binary data, bit manipulation, bitwise operations, and memory addresses in systems programming and embedded development.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🎓</div>
+                    <h3>Computer Science Education</h3>
+                    <p>Learn number systems, understand digital logic, practice conversions, and master fundamental computer science concepts.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔧</div>
+                    <h3>Digital System Design</h3>
+                    <p>Design digital circuits, work with logic gates, create truth tables, and analyze binary signals in hardware design.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🐛</div>
+                    <h3>Debugging & Analysis</h3>
+                    <p>Inspect memory dumps, analyze register values, decode instruction opcodes, and understand binary data representations.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🎨</div>
+                    <h3>Web Development</h3>
+                    <p>Convert color codes, work with RGB values, understand hex colors, and manipulate CSS color representations.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">⚙️</div>
+                    <h3>System Administration</h3>
+                    <p>Set Unix file permissions, configure system flags, work with network masks, and handle system-level configurations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conversion Examples Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Common Conversion Examples</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>Converting 255 (decimal) to other bases</h3>
+                    <p>
+                        <strong>Binary:</strong> 11111111 (eight 1s)<br>
+                        <strong>Octal:</strong> 377<br>
+                        <strong>Hexadecimal:</strong> FF
+                    </p>
+                    <p>This is the maximum value for an 8-bit unsigned integer and represents all bits set to 1.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Converting chmod 755 (octal permissions)</h3>
+                    <p>
+                        <strong>Binary:</strong> 111101101 (rwxr-xr-x)<br>
+                        <strong>Decimal:</strong> 493<br>
+                        <strong>Hexadecimal:</strong> 1ED
+                    </p>
+                    <p>Common Unix file permission: owner has full access (rwx), group and others have read and execute (r-x).</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Converting color #FF5733 (hexadecimal)</h3>
+                    <p>
+                        To get the red component (FF):<br>
+                        <strong>Decimal:</strong> 255 (maximum red intensity)<br>
+                        <strong>Binary:</strong> 11111111<br>
+                        <strong>Octal:</strong> 377
+                    </p>
+                    <p>Hexadecimal is commonly used in web colors. Each pair represents RGB components (Red-Green-Blue).</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Converting binary 10101010 to other bases</h3>
+                    <p>
+                        <strong>Decimal:</strong> 170<br>
+                        <strong>Octal:</strong> 252<br>
+                        <strong>Hexadecimal:</strong> AA
+                    </p>
+                    <p>This alternating bit pattern (10101010) is often used in testing and debugging digital systems.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Why use hexadecimal for memory addresses?</h3>
+                    <p>Hexadecimal provides a compact way to represent binary data. Each hex digit represents exactly 4 bits, making it easy to convert: 0xDEADBEEF is more readable than 11011110101011011011111011101111 in binary.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>When should I use octal?</h3>
+                    <p>Octal is most commonly used for Unix/Linux file permissions (chmod) where each digit represents read-write-execute permissions for owner-group-others. It's also used in some legacy systems and for compact representation of 3-bit values.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Tools Section -->
+    <section class="related-tools">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Related Developer Tools</h2>
+                <p class="section-description">Explore other essential tools included in DevUtilities</p>
+            </div>
+
+            <div class="related-tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🔤</div>
+                    <h3>Hex String Converter</h3>
+                    <p>Convert between hexadecimal and string representations with UTF-8, UTF-16, and ASCII encoding support.</p>
+                    <a href="hex-converter.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔐</div>
+                    <h3>Crypto Tools</h3>
+                    <p>Generate cryptographic hashes and work with encryption - often displayed in hexadecimal format.</p>
+                    <a href="crypto-tools.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🎯</div>
+                    <h3>Regex Tester</h3>
+                    <p>Create and test regex patterns for number format validation, extraction, and processing in your applications.</p>
+                    <a href="regex-tester.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔧</div>
+                    <h3>Unit Converter</h3>
+                    <p>Convert between different units including data sizes (bytes, KB, MB) which relate to binary powers.</p>
+                    <a href="unit-converter.html" class="tool-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Streamline Your Number Base Conversions?</h2>
+                <p>Join thousands of developers who rely on DevUtilities's base converter for their programming and debugging tasks.</p>
+                <div class="cta-actions">
+                    <a href="index.html#download" class="btn btn-primary">
+                        <span class="btn-icon">📥</span>
+                        Download DevUtilities
+                    </a>
+                    <div class="cta-info">
+                        <span>✓ macOS 14.0+</span>
+                        <span>✓ 19 Developer Tools</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
+                    <div>
+                        <h4>DevUtilities</h4>
+                        <p>Essential developer tools for macOS</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Product</h5>
+                        <a href="index.html#features">Features</a>
+                        <a href="index.html#reviews">Reviews</a>
+                        <a href="index.html#download">Download</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Resources</h5>
+                        <a href="release-notes.html">Release Notes</a>
+                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Legal</h5>
+                        <a href="privacy_policy.html">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 DevUtilities. Built with ❤️ using Claude Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

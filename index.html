@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevUtilities - 18 Essential Developer Tools for macOS</title>
-    <meta name="description" content="DevUtilities is a native macOS application containing 18 essential developer tools including AI translate, AI chat, timestamp converter, JSON formatter, hex string converter, regex test, HTTP client, and more.">
-    <meta name="keywords" content="developer tools, macOS app, AI translate, JSON formatter, timestamp converter, hex string converter, regex test, HTTP client, Base64, UUID generator">
+    <title>DevUtilities - 19 Essential Developer Tools for macOS</title>
+    <meta name="description" content="DevUtilities is a native macOS application containing 19 essential developer tools including AI translate, AI chat, base converter, timestamp converter, JSON formatter, hex string converter, regex test, HTTP client, and more.">
+    <parameter name="keywords" content="developer tools, macOS app, AI translate, base converter, JSON formatter, timestamp converter, hex string converter, regex test, HTTP client, Base64, UUID generator">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="">
-    <meta property="og:title" content="DevUtilities - 18 Essential Developer Tools for macOS">
-    <meta property="og:description" content="Native macOS app with AI translate, AI chat, timestamp converter, JSON formatter, hex string converter, regex test, HTTP client, and 11 more developer utilities.">
+    <meta property="og:title" content="DevUtilities - 19 Essential Developer Tools for macOS">
+    <meta property="og:description" content="Native macOS app with AI translate, AI chat, base converter, timestamp converter, JSON formatter, hex string converter, regex test, HTTP client, and 12 more developer utilities.">
     <meta property="og:image" content="images/devutilities-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="DevUtilities - 18 Essential Developer Tools for macOS">
-    <meta property="twitter:description" content="Native macOS app with 18 essential developer utilities in one clean interface.">
+    <meta property="twitter:title" content="DevUtilities - 19 Essential Developer Tools for macOS">
+    <meta property="twitter:description" content="Native macOS app with 19 essential developer utilities in one clean interface.">
     <meta property="twitter:image" content="images/devutilities-og.png">
 
     <!-- Structured Data -->
@@ -26,10 +26,10 @@
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "DevUtilities",
-        "description": "DevUtilities is a native macOS application containing 18 essential developer tools including AI translate, AI chat, timestamp converter, JSON formatter, hex string converter, regex test, HTTP client, and more.",
+        "description": "DevUtilities is a native macOS application containing 19 essential developer tools including AI translate, AI chat, base converter, timestamp converter, JSON formatter, hex string converter, regex test, HTTP client, and more.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "macOS",
-        "softwareVersion": "2.6.0",
+        "softwareVersion": "2.7.0",
         "datePublished": "2025-01-01",
         "dateModified": "2025-10-01",
         "author": {
@@ -63,6 +63,7 @@
             "AI Chat with custom model support",
             "Timestamp Converter with timezone support",
             "Unit Converter for 7 categories",
+            "Base Converter for binary, octal, decimal, and hexadecimal",
             "JSON Formatter with visual diff editor",
             "SQL Formatter with syntax validation",
             "HTML Formatter and minifier",
@@ -122,7 +123,7 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <h1 class="hero-title">
-                        18 essential developer tools
+                        19 essential developer tools
                         <span class="hero-subtitle">in One Native macOS App</span>
                     </h1>
                     <p class="hero-description">
@@ -166,6 +167,9 @@
                         </div>
                         <div class="slide">
                             <img src="images/screenshots/unit.png" alt="Unit Converter Screenshot">
+                        </div>
+                        <div class="slide">
+                            <img src="images/screenshots/base-converter.png" alt="Base Converter Screenshot">
                         </div>
                         <div class="slide">
                             <img src="images/screenshots/json.png" alt="JSON Formatter Screenshot">
@@ -242,6 +246,7 @@
                             <div class="indicator" data-slide="15"></div>
                             <div class="indicator" data-slide="16"></div>
                             <div class="indicator" data-slide="17"></div>
+                            <div class="indicator" data-slide="18"></div>
                         </div>
                         
                         <div class="slider-progress">
@@ -274,13 +279,13 @@
                     <a href="ai-chat.html" class="feature-link">Learn More →</a>
                 </div>
 
-                <div class="feature-card featured">
+                <div class="feature-card">
                     <div class="feature-icon">
                         🌐
                     </div>
                     <h3 class="feature-title"><a href="ai-translate.html">AI Translate</a></h3>
                     <p class="feature-description">Professional translation with 3 modes (Translate, Polishing, Summarize), 19 language support, and special word mode with detailed explanations including phonetic notation, meanings, examples, and etymology. Real-time streaming results with animated status indicators.</p>
-                    <span class="feature-badge new">New in v2.6.0</span>
+                    <span class="feature-badge">Updated in v2.4.0</span>
                     <a href="ai-translate.html" class="feature-link">Learn More →</a>
                 </div>
 
@@ -301,6 +306,16 @@
                     <h3 class="feature-title"><a href="unit-converter.html">Unit Converter</a></h3>
                     <p class="feature-description">Convert between different units across 7 categories: Data, Time, Length, Weight, Temperature, Area, and Volume.</p>
                     <a href="unit-converter.html" class="feature-link">Learn More →</a>
+                </div>
+
+                <div class="feature-card featured">
+                    <div class="feature-icon">
+                        🔢
+                    </div>
+                    <h3 class="feature-title"><a href="base-converter.html">Base Converter</a></h3>
+                    <p class="feature-description">Mutual conversion between binary, octal, decimal, and hexadecimal number systems with real-time validation and clear error messages. Essential tool for low-level programming and debugging.</p>
+                    <span class="feature-badge new">New in v2.7.0</span>
+                    <a href="base-converter.html" class="feature-link">Learn More →</a>
                 </div>
 
                 <div class="feature-card">
@@ -619,7 +634,7 @@
                             <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" height="30"></span>
                             <div class="btn-content">
                                 <span class="btn-title">Download on the App Store</span>
-                                <span class="btn-subtitle">Version 2.6.0</span>
+                                <span class="btn-subtitle">Version 2.7.0</span>
                             </div>
                         </a>
 
@@ -634,11 +649,11 @@
                     
                     <div class="download-stats">
                         <div class="stat">
-                            <span class="stat-number">18</span>
+                            <span class="stat-number">19</span>
                             <span class="stat-label">Developer Tools</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-number">2.6.0</span>
+                            <span class="stat-number">2.7.0</span>
                             <span class="stat-label">Latest Version</span>
                         </div>
                         <div class="stat">

@@ -1,6 +1,6 @@
 # DevUtilities
 
-A native macOS application for developers, containing 18 essential tools commonly used in software development.
+A native macOS application for developers, containing 19 essential tools commonly used in software development.
 
 > This tool was 100% developed by `Claude Code`.
 
@@ -11,14 +11,15 @@ A native macOS application for developers, containing 18 essential tools commonl
 ## Features
 
 - **AI Chat** - Intelligent AI assistant with custom model support, flexible API configuration, and enhanced user experience for development questions
-- **AI Translate** - **NEW** Professional translation tool with 3 modes (Translate, Polishing, Summarize), 19 language support, and special word mode with detailed explanations
+- **AI Translate** - Professional translation tool with 3 modes (Translate, Polishing, Summarize), 19 language support, and special word mode with detailed explanations
 - **Timestamp Converter** - Convert between timestamps and human-readable dates with multiple format support
 - **Unit Converter** - Convert between different units (Data, Time, Length, Weight, Temperature, Area, Volume)
+- **Base Converter** - **NEW** Mutual conversion between binary, octal, decimal, and hexadecimal number systems with real-time validation
 - **JSON Formatter** - Format, validate, and compare JSON data with visual CodeMirror diff editor
 - **SQL Formatter** - Format and minify SQL queries with syntax validation
 - **HTML Formatter** - Format and minify HTML with proper tag indentation
 - **Base64 Encode/Decode** - Encode and decode Base64 strings
-- **Hex String Converter** - **NEW** Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support and real-time processing
+- **Hex String Converter** - Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support and real-time processing
 - **JWT Encoder/Decoder** - Encode and decode JSON Web Tokens with HMAC and RSA signature support
 - **Regex Test** - Test regular expressions with pattern matching
 - **UUID Generator** - Generate UUIDs in various formats including v7 with timestamp extraction
@@ -39,11 +40,13 @@ A native macOS application for developers, containing 18 essential tools commonl
 
 ## Version
 
-Current version: 2.6.0
+Current version: 2.7.0
 
-## What's New in v2.6.0
+## What's New in v2.7.0
 
-- Prepare for publish to AppStore
+- **Base Converter**: NEW tool for mutual conversion between binary (base 2), octal (base 8), decimal (base 10), and hexadecimal (base 16) number systems
+- **Real-time Validation**: Input validation with clear error messages for invalid number formats
+- **19 Essential Tools**: Expanded toolkit now includes all essential developer utilities
 
 ## Screenshots
 
@@ -63,6 +66,9 @@ Current version: 2.6.0
 
 #### Unit Converter
 ![DevUtilities Unit Converter](./images/screenshots/unit.png)
+
+#### Base Converter
+![DevUtilities Base Converter](./images/screenshots/base-converter.png)
 
 #### Json Formatter
 ![DevUtilities Json Formatter](./images/screenshots/json.png)
