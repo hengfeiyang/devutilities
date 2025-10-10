@@ -28,6 +28,10 @@ struct AIProviderDetailView: View {
     @State private var showingAddModel = false
     @State private var editingModel: AIModelV2?
 
+    // Save state management
+    @State private var isSaving = false
+    @State private var saveSuccess = false
+
     // Get the current provider state from the manager
     private var currentProvider: AIProvider? {
         providerManager.getProviderById(providerId)
@@ -197,11 +201,22 @@ struct AIProviderDetailView: View {
         }
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
-                Button("Save") {
+                Button(action: {
                     saveProvider()
+                }) {
+                    HStack(spacing: 4) {
+                        if isSaving {
+                            ProgressView()
+                                .scaleEffect(0.7)
+                                .frame(width: 12, height: 12)
+                        } else if saveSuccess {
+                            Image(systemName: "checkmark")
+                        }
+                        Text(isSaving ? "Saving..." : (saveSuccess ? "Saved" : "Save"))
+                    }
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(name.isEmpty || baseURL.isEmpty)
+                .disabled(name.isEmpty || baseURL.isEmpty || isSaving)
 
                 if !provider.isBuiltIn {
                     Button("Delete", role: .destructive) {
@@ -244,11 +259,38 @@ struct AIProviderDetailView: View {
 
     private func saveProvider() {
         guard var provider = currentProvider else { return }
-        provider.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        provider.baseURL = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
-        provider.apiKey = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        providerManager.updateProvider(provider)
+        // Set saving state
+        isSaving = true
+        saveSuccess = false
+
+        // Async save operation with UI feedback
+        Task {
+            // Trim and prepare data
+            provider.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+            provider.baseURL = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
+            provider.apiKey = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
+
+            // Small delay for better UX (shows the "Saving..." state)
+            try? await Task.sleep(nanoseconds: 300_000_000) // 0.3 seconds
+
+            // Save to provider manager
+            providerManager.updateProvider(provider)
+
+            // Update UI on main thread
+            await MainActor.run {
+                isSaving = false
+                saveSuccess = true
+
+                // Reset success state after 2 seconds
+                Task {
+                    try? await Task.sleep(nanoseconds: 2_000_000_000)
+                    await MainActor.run {
+                        saveSuccess = false
+                    }
+                }
+            }
+        }
     }
 
     private func testConnection() {
