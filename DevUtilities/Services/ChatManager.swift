@@ -40,7 +40,26 @@ class ChatManager {
     }
     
     func createNewChat() -> ChatSession {
-        let session = ChatSession()
+        // Create new session
+        var session = ChatSession()
+
+        // Set default model from AI Settings
+        if let defaultModelKey = AIUISettings.shared.selectedDefaultModelKey {
+            let components = defaultModelKey.split(separator: "|")
+            if components.count == 2,
+               let providerIdStr = components.first,
+               let modelIdStr = components.last,
+               let providerId = UUID(uuidString: String(providerIdStr)),
+               let modelId = UUID(uuidString: String(modelIdStr)) {
+                session.selectedProviderModelId = providerId
+                session.selectedModelId = modelId
+            }
+        }
+
+        print("🆕 CREATE NEW CHAT:")
+        print("  - Inherited Tool: \(session.selectedTool.displayName) (\(session.selectedTool.rawValue))")
+        print("  - Provider ID: \(session.selectedProviderModelId?.uuidString ?? "nil (using default)")")
+        print("  - Model ID: \(session.selectedModelId?.uuidString ?? "nil (using default)")")
         chatSessions.insert(session, at: 0)
         storage.saveChatSession(session)
         return session
@@ -89,11 +108,15 @@ class ChatManager {
     
     func updateSessionTool(at index: Int, tool: ChatToolMode) {
         guard index < chatSessions.count else { return }
-        
+
         var updatedSession = chatSessions[index]
+        print("🔄 UPDATE SESSION TOOL:")
+        print("  - Previous Tool: \(updatedSession.selectedTool.displayName) (\(updatedSession.selectedTool.rawValue))")
+        print("  - New Tool: \(tool.displayName) (\(tool.rawValue))")
+
         updatedSession.selectedTool = tool
         updatedSession.updatedAt = Date()
-        
+
         chatSessions[index] = updatedSession
         storage.saveChatSession(updatedSession)
     }
@@ -108,14 +131,14 @@ class ChatManager {
     ) async {
         // Cancel any existing task
         cancelCurrentTask()
-        
+
         currentTask = Task { @MainActor in
         guard let sessionIndex = chatSessions.firstIndex(where: { $0.id == sessionId }) else {
             errorMessage.wrappedValue = "Chat session not found."
             isLoading.wrappedValue = false
             return
         }
-        
+
         let userMessage = ChatMessage(role: .user, content: content)
         chatSessions[sessionIndex].addMessage(userMessage)
         storage.saveChatSession(chatSessions[sessionIndex])
@@ -123,6 +146,7 @@ class ChatManager {
         errorMessage.wrappedValue = nil
 
         let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-4.1"
+        print("  - Resolved Model ID: \(modelId)")
 
         guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
             errorMessage.wrappedValue = "No API key configured for the selected provider. Please configure your provider in settings."
@@ -205,7 +229,7 @@ class ChatManager {
             isLoading.wrappedValue = false
             return
         }
-        
+
         let userMessage = ChatMessage(role: .user, content: content, images: images)
         chatSessions[sessionIndex].addMessage(userMessage)
         storage.saveChatSession(chatSessions[sessionIndex])
@@ -286,10 +310,10 @@ class ChatManager {
         switch tool {
         case .chat:
             await sendMessage(content, in: sessionId, isLoading: isLoading, errorMessage: errorMessage)
-            
+
         case .webSearch:
             await performWebSearch(content, in: sessionId, isLoading: isLoading, errorMessage: errorMessage)
-            
+
         case .imageGeneration:
             await generateImage(content, in: sessionId, isLoading: isLoading, errorMessage: errorMessage)
         }
@@ -306,10 +330,10 @@ class ChatManager {
         switch tool {
         case .chat:
             await sendMessageWithImages(content, images: images, in: sessionId, isLoading: isLoading, errorMessage: errorMessage)
-            
+
         case .webSearch:
             await performWebSearch(content, in: sessionId, isLoading: isLoading, errorMessage: errorMessage)
-            
+
         case .imageGeneration:
             await generateImageWithReferenceImages(content, referenceImages: images, in: sessionId, isLoading: isLoading, errorMessage: errorMessage)
         }

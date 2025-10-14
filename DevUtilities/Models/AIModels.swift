@@ -27,13 +27,13 @@ struct ChatSession: Identifiable, Codable, Hashable {
     var selectedModelId: UUID?  // Reference to selected model within provider
     var selectedTool: ChatToolMode = .chat
 
+    @MainActor
     init(title: String = "New Chat") {
         self.id = UUID()
         self.title = title
         self.createdAt = Date()
         self.updatedAt = Date()
         self.messages = []
-        self.selectedTool = .chat  // Explicitly reset tool selection for new sessions
     }
     
     mutating func addMessage(_ message: ChatMessage) {
