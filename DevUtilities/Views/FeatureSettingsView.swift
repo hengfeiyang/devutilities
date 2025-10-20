@@ -204,6 +204,7 @@ struct FeatureCard: View {
         case .sqlFormatter: return "SQL"
         case .htmlFormatter: return "HTML"
         case .base64: return "Base64"
+        case .colorPicker: return "Color"
         case .hexString: return "Hex"
         case .jwt: return "JWT"
         case .regexTest: return "Regex"

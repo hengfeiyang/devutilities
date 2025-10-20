@@ -112,6 +112,8 @@ struct ContentView: View {
                     UnitConverterView()
                 case .baseConverter:
                     BaseConverterView()
+                case .colorPicker:
+                    ColorPickerView()
                 case .jsonFormatter:
                     JSONFormatterView()
                 case .sqlFormatter:

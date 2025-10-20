@@ -1,7 +1,7 @@
 # DevUtilities - Design Document
 
 ## Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 19 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+DevUtilities is a native macOS application built with SwiftUI that provides 20 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
 
 ## Architecture
 
@@ -20,10 +20,11 @@ DevUtilities/
 │   │   ├── TranslationLanguage.swift   # NEW: 19 language definitions
 │   │   ├── TranslationMode.swift       # NEW: 3 translation modes
 │   │   └── TranslationPrompts.swift    # NEW: Prompt generation logic
-│   ├── Views/                      # All 19 tool implementations
+│   ├── Views/                      # All 20 tool implementations
 │   │   ├── TimestampConverterView.swift
 │   │   ├── UnitConverterView.swift
 │   │   ├── BaseConverterView.swift
+│   │   ├── ColorPickerView.swift
 │   │   ├── JSONFormatterView.swift
 │   │   ├── Base64View.swift
 │   │   ├── HexStringConverterView.swift
@@ -154,7 +155,55 @@ Each tool follows a consistent pattern:
 - Decimal: Only digits 0-9 allowed, no negative numbers
 - Hexadecimal: Digits 0-9 and letters A-F (case-insensitive), optional 0x prefix
 
-### 4. JSON Formatter
+### 4. Color Picker
+**File**: `ColorPickerView.swift`
+
+**Features**:
+- Professional color format converter with real-time conversion between 7 color formats
+- Support for HEX (#RRGGBB or #RRGGBBAA), RGB, RGBA, HSL, HSLA, HSB, and CMYK color formats
+- Visual color preview box (80x80pt) with system color picker integration
+- Color history tracking (up to 22 colors) with visual swatches for quick color reuse
+- Editable format fields - edit any format and see instant updates across all formats
+- Copy to clipboard functionality for each color format
+- State persistence between sessions (saves last selected color and history)
+- Real-time color space conversion algorithms
+
+**UI Components**:
+- Large color preview box with rounded corners and border
+- System ColorPicker integration for precise color selection
+- Color history section with clickable color swatches (20x20pt)
+- Format conversion section with labeled rows for each color format
+- TextField for each format with monospaced font
+- Copy buttons next to each format value
+- Tip section explaining editable format feature
+
+**Implementation Details**:
+- Uses SwiftUI `ColorPicker` for system color panel integration
+- Custom color space conversion functions:
+  - `rgbToHSL` and `hslToRGB` for HSL color space
+  - `rgbToHSB` and `hsbToRGB` for HSB/HSV color space
+  - `rgbToCMYK` and `cmykToRGB` for CMYK color space
+- Real-time parsing and validation using regex patterns:
+  - HEX: `#RRGGBB` or `#RRGGBBAA` format
+  - RGB: `rgb(r, g, b)` format with 0-255 range
+  - RGBA: `rgba(r, g, b, a)` format with alpha 0-1
+  - HSL: `hsl(h, s%, l%)` format
+  - HSLA: `hsla(h, s%, l%, a)` format
+  - HSB: `hsb(h, s%, b%)` format
+  - CMYK: `cmyk(c%, m%, y%, k%)` format
+- Color history management with hex string storage
+- State update prevention using `isUpdatingFromPicker` flag to avoid conversion loops
+- UserDefaults persistence for color value and history array
+- NSColor/Color conversion for macOS color space handling
+- Scanner-based hex string parsing for robust hex-to-color conversion
+
+**Color Space Conversion Algorithms**:
+- RGB to HSL: Lightness-based color representation
+- RGB to HSB: Brightness-based color representation (also known as HSV)
+- RGB to CMYK: Subtractive color model for print applications
+- All conversions maintain color accuracy and handle edge cases (black, white, grays)
+
+### 5. JSON Formatter
 **File**: `JSONFormatterView.swift`
 
 **Features**:
@@ -182,7 +231,7 @@ Each tool follows a consistent pattern:
 - CodeMirror-SwiftUI integration for diff visualization
 - `CodeDiffEditor` component for visual diff comparison
 
-### 4. Base64 Encode/Decode
+### 6. Base64 Encode/Decode
 **File**: `Base64View.swift`
 
 **Features**:
@@ -204,7 +253,7 @@ Each tool follows a consistent pattern:
 - URL-safe character substitution
 - UTF-8 encoding/decoding
 
-### 5. Hex String Converter
+### 7. Hex String Converter
 **File**: `HexStringConverterView.swift`
 
 **Features**:
@@ -234,7 +283,7 @@ Each tool follows a consistent pattern:
 - UserDefaults integration for state persistence
 - Comprehensive error handling with descriptive messages
 
-### 6. Regex Test
+### 8. Regex Test
 **File**: `RegexTestView.swift`
 
 **Features**:
@@ -257,7 +306,7 @@ Each tool follows a consistent pattern:
 - Flag handling for regex options
 - String replacement with capture group support
 
-### 7. UUID Generator
+### 9. UUID Generator
 **File**: `UUIDGeneratorView.swift`
 
 **Features**:
@@ -283,7 +332,7 @@ Each tool follows a consistent pattern:
 - UUID v7 timestamp-ordered generation
 - Automatic timestamp extraction from v7 UUIDs
 
-### 8. URL Tools
+### 10. URL Tools
 **File**: `URLToolsView.swift`
 
 **Features**:
@@ -305,7 +354,7 @@ Each tool follows a consistent pattern:
 - `URLComponents` for parsing
 - Query parameter array management
 
-### 9. IP Query
+### 11. IP Query
 **File**: `IPQueryView.swift`
 
 **Features**:
@@ -329,7 +378,7 @@ Each tool follows a consistent pattern:
 - User-Agent headers to avoid bot detection
 - Comprehensive error handling and validation
 
-### 10. HTTP Request
+### 12. HTTP Request
 **File**: `HTTPRequestView.swift`
 
 **Features**:
@@ -369,7 +418,7 @@ Each tool follows a consistent pattern:
 - Automatic content type detection for response formatting
 - Thread-safe UI updates using `DispatchQueue.main.async`
 
-### 11. QR Code
+### 13. QR Code
 **File**: `QRCodeView.swift`
 
 **Features**:
@@ -404,7 +453,7 @@ Each tool follows a consistent pattern:
 - Real-time UI updates using `onChange` modifiers
 - Error handling for image processing and file operations
 
-### 12. SQL Formatter
+### 14. SQL Formatter
 **File**: `SQLFormatterView.swift`
 
 **Features**:
@@ -429,7 +478,7 @@ Each tool follows a consistent pattern:
 - **Error resilience**: Comprehensive do-catch blocks with intelligent fallback to original text
 - **FFI bridge**: Seamless Swift-to-Rust communication via C header interface
 
-### 13. HTML Formatter
+### 15. HTML Formatter
 **File**: `HTMLFormatterView.swift`
 
 **Features**:
@@ -454,7 +503,7 @@ Each tool follows a consistent pattern:
 - Real-time processing with input validation
 - Error handling with descriptive feedback
 
-### 14. JWT Encoder/Decoder
+### 16. JWT Encoder/Decoder
 **File**: `JWTView.swift`
 
 **Features**:
@@ -484,7 +533,7 @@ Each tool follows a consistent pattern:
 - Error handling for malformed tokens
 - Secure key handling for signature operations
 
-### 15. Parquet Viewer
+### 17. Parquet Viewer
 **File**: `ParquetViewerView.swift`
 
 **Features**:
@@ -516,7 +565,7 @@ Each tool follows a consistent pattern:
 - Automatic file type detection based on extension
 - Comprehensive metadata extraction including row groups and format version
 
-### 16. Crypto Tools
+### 18. Crypto Tools
 **File**: `CryptoToolsView.swift`
 
 **Features**:
@@ -548,7 +597,7 @@ Each tool follows a consistent pattern:
 - Error handling for key format validation
 - Thread-safe operations with proper error messaging
 
-### 17. AI Chat
+### 19. AI Chat
 **File**: `AIChatView.swift`
 
 **Features**:
@@ -623,10 +672,10 @@ Each tool follows a consistent pattern:
 ### ToolType Enum
 ```swift
 enum ToolType: String, CaseIterable, Identifiable {
-    case timestampConverter, unitConverter, jsonFormatter, base64,
+    case timestampConverter, unitConverter, baseConverter, colorPicker, jsonFormatter, base64,
          hexString, regexTest, uuidGenerator, urlTools, ipQuery, httpRequest,
          qrCode, sqlFormatter, htmlFormatter, jwt, parquetViewer,
-         cryptoTools, aiChat
+         cryptoTools, aiChat, aiTranslate
 
     var title: String { /* Display names */ }
     var iconName: String { /* SF Symbols */ }
@@ -656,7 +705,7 @@ enum ToolType: String, CaseIterable, Identifiable {
 ### Target Settings
 - **Minimum macOS**: 14.0
 - **Bundle Identifier**: com.hengfeiyang.devutilities
-- **Version**: 2.7.0 (Build 1)
+- **Version**: 2.8.0 (Build 1)
 - **Swift Version**: 5.0
 - **App Sandbox**: Enabled
 - **Hardened Runtime**: Enabled
@@ -758,7 +807,7 @@ func textView(_ textView: NSTextView, doCommandBy commandSelector: Selector) -> 
 ## Feature Management System (v2.3.0)
 
 ### Overview
-The Feature Management System allows users to customize which tools appear in the sidebar and reorganize them according to their preferences. This addresses the growing sidebar length with 17 tools by letting users hide unused features.
+The Feature Management System allows users to customize which tools appear in the sidebar and reorganize them according to their preferences. This addresses the growing sidebar length with 20 tools by letting users hide unused features.
 
 ### Architecture
 

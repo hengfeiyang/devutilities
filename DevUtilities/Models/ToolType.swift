@@ -22,6 +22,7 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
     case timestampConverter = "timestamp"
     case unitConverter = "unit"
     case baseConverter = "base-number"
+    case colorPicker = "color-picker"
     case jsonFormatter = "json"
     case sqlFormatter = "sql"
     case htmlFormatter = "html"
@@ -51,6 +52,8 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
             return "Unit Converter"
         case .baseConverter:
             return "Base Converter"
+        case .colorPicker:
+            return "Color Picker"
         case .jsonFormatter:
             return "JSON Formatter"
         case .sqlFormatter:
@@ -94,6 +97,8 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
             return "scalemass"
         case .baseConverter:
             return "number.circle"
+        case .colorPicker:
+            return "paintpalette.fill"
         case .jsonFormatter:
             return "doc.text"
         case .sqlFormatter:

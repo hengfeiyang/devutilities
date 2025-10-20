@@ -3,30 +3,31 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 19 essential developer utilities. Version 2.7.0 with base number conversion capabilities.
+DevUtilities is a native macOS application built with SwiftUI that provides 20 essential developer utilities. Version 2.8.0 with professional color format conversion capabilities.
 
 ## Key Tools & Status
 
-All 19 tools are ✅ **Complete**:
+All 20 tools are ✅ **Complete**:
 1. **Timestamp Converter** - Bidirectional timestamp conversion with timezone support
 2. **Unit Converter** - 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
-3. **Base Converter** - **NEW** Mutual conversion between binary, octal, decimal, and hexadecimal number systems
-4. **JSON Formatter** - Format, validate, escape/unescape, **visual CodeMirror diff editor**
-5. **Base64 Encode/Decode** - Text encoding/decoding with URL-safe variant
-6. **Hex String Converter** - Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support
-7. **Regex Test** - Pattern matching with capture groups and common patterns
-8. **UUID Generator** - Multiple versions (v1, v4, v5, v7) with bulk generation
-9. **URL Tools** - Encoding/decoding and comprehensive URL parsing
-10. **IP Query** - Dual IP detection and geolocation queries
-11. **HTTP Request** - Full HTTP client with SSE streaming and JSON tree view
-12. **QR Code** - Generation and scanning with multiple sizes and error correction
-13. **SQL Formatter** - **Enhanced SQL formatting** with native ParquetViewer library support for minimal and beautify modes
-14. **HTML Formatter** - Format and minify HTML with proper indentation
-15. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
-16. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
-17. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
-18. **AI Chat** - **Enhanced AI assistant** with custom model support, DeepSeek reasoning models, and flexible API configuration
-19. **AI Translate** - Professional translation with 3 modes (Translate, Polishing, Summarize), 19 languages, word mode with detailed explanations
+3. **Base Converter** - Mutual conversion between binary, octal, decimal, and hexadecimal number systems
+4. **Color Picker** - **NEW** Professional color format converter with HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK support and color history
+5. **JSON Formatter** - Format, validate, escape/unescape, **visual CodeMirror diff editor**
+6. **Base64 Encode/Decode** - Text encoding/decoding with URL-safe variant
+7. **Hex String Converter** - Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support
+8. **Regex Test** - Pattern matching with capture groups and common patterns
+9. **UUID Generator** - Multiple versions (v1, v4, v5, v7) with bulk generation
+10. **URL Tools** - Encoding/decoding and comprehensive URL parsing
+11. **IP Query** - Dual IP detection and geolocation queries
+12. **HTTP Request** - Full HTTP client with SSE streaming and JSON tree view
+13. **QR Code** - Generation and scanning with multiple sizes and error correction
+14. **SQL Formatter** - **Enhanced SQL formatting** with native ParquetViewer library support for minimal and beautify modes
+15. **HTML Formatter** - Format and minify HTML with proper indentation
+16. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
+17. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
+18. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
+19. **AI Chat** - **Enhanced AI assistant** with custom model support, DeepSeek reasoning models, and flexible API configuration
+20. **AI Translate** - Professional translation with 3 modes (Translate, Polishing, Summarize), 19 languages, word mode with detailed explanations
 
 ## Architecture & Technical Stack
 - **Platform**: macOS 14.0+ SwiftUI
@@ -45,6 +46,16 @@ xcodebuild -project DevUtilities.xcodeproj -scheme DevUtilities build
 # Using MCP tools
 mcp__XcodeBuildMCP__build_run_macos
 ```
+
+## Recent Updates (v2.8.0)
+- **Color Picker**: NEW professional color format converter for HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK
+- **Multi-format Support**: Real-time conversion between 7 different color format standards
+- **Visual Preview**: Large color preview box with system color picker integration
+- **Color History**: Automatically tracks up to 22 recently used colors with visual swatches
+- **Editable Formats**: Direct editing of any color format with instant synchronization
+- **Copy to Clipboard**: One-click copying for each color format
+- **State Persistence**: Saves and restores color state and history between sessions
+- **20 Essential Tools**: Complete toolkit with all essential developer utilities
 
 ## Recent Updates (v2.7.0)
 - **Base Converter**: NEW tool for mutual conversion between binary (base 2), octal (base 8), decimal (base 10), and hexadecimal (base 16) number systems
