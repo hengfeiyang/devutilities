@@ -1,6 +1,6 @@
 # DevUtilities
 
-A native macOS application for developers, containing 19 essential tools commonly used in software development.
+A native macOS application for developers, containing 20 essential tools commonly used in software development.
 
 > This tool was 100% developed by `Claude Code`.
 
@@ -14,7 +14,8 @@ A native macOS application for developers, containing 19 essential tools commonl
 - **AI Translate** - Professional translation tool with 3 modes (Translate, Polishing, Summarize), 19 language support, and special word mode with detailed explanations
 - **Timestamp Converter** - Convert between timestamps and human-readable dates with multiple format support
 - **Unit Converter** - Convert between different units (Data, Time, Length, Weight, Temperature, Area, Volume)
-- **Base Converter** - **NEW** Mutual conversion between binary, octal, decimal, and hexadecimal number systems with real-time validation
+- **Base Converter** - Mutual conversion between binary, octal, decimal, and hexadecimal number systems with real-time validation
+- **Color Picker** - **NEW** Professional color format converter with HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK support and color history
 - **JSON Formatter** - Format, validate, and compare JSON data with visual CodeMirror diff editor
 - **SQL Formatter** - Format and minify SQL queries with syntax validation
 - **HTML Formatter** - Format and minify HTML with proper tag indentation
@@ -40,13 +41,15 @@ A native macOS application for developers, containing 19 essential tools commonl
 
 ## Version
 
-Current version: 2.7.0
+Current version: 2.8.0
 
-## What's New in v2.7.0
+## What's New in v2.8.0
 
-- **Base Converter**: NEW tool for mutual conversion between binary (base 2), octal (base 8), decimal (base 10), and hexadecimal (base 16) number systems
-- **Real-time Validation**: Input validation with clear error messages for invalid number formats
-- **19 Essential Tools**: Expanded toolkit now includes all essential developer utilities
+- **Color Picker**: NEW professional color format converter with real-time conversion between HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK formats
+- **Color History**: Built-in color history tracking to quickly access and reuse previously selected colors
+- **Visual Color Preview**: Large color preview box with system color panel integration for precise color selection
+- **Format Flexibility**: Edit any color format directly - changes instantly reflect across all other formats
+- **20 Essential Tools**: Comprehensive toolkit covering all essential developer utilities
 
 ## Screenshots
 
@@ -69,6 +72,9 @@ Current version: 2.7.0
 
 #### Base Converter
 ![DevUtilities Base Converter](./images/screenshots/base-converter.png)
+
+#### Color Picker
+![DevUtilities Color Picker](./images/screenshots/color-picker.png)
 
 #### Json Formatter
 ![DevUtilities Json Formatter](./images/screenshots/json.png)
