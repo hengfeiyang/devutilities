@@ -30,8 +30,11 @@ struct ColorPickerView: View {
 
     @State private var colorHistory: [String] = [] // Store as hex strings
     @State private var isUpdatingFromPicker = false
+    @State private var isAddingToHistory = false
+    @State private var lastHistoryAddTime: Date = Date.distantPast
 
     private let maxHistoryCount = 22
+    private let historyDebounceInterval: TimeInterval = 0.2 // 200ms
 
     var body: some View {
         ScrollView {
@@ -238,12 +241,33 @@ struct ColorPickerView: View {
     // MARK: - Color History Management
 
     private func addToHistory(_ color: Color) {
+        // Prevent concurrent calls - if already adding, skip this call
+        if isAddingToHistory {
+            print("Skipping history add - already in progress")
+            return
+        }
+
+        // Set flag to prevent concurrent calls
+        isAddingToHistory = true
+        defer { isAddingToHistory = false } // Always reset flag when done
+
+        let now = Date()
+        let timeSinceLastAdd = now.timeIntervalSince(lastHistoryAddTime)
+
+        // Debouncing: Don't add if less than 100ms since last add
+        // This prevents multiple rapid changes from creating duplicate entries
+        if timeSinceLastAdd < historyDebounceInterval {
+            print("Skipping history add - too soon (timeSinceLastAdd: \(timeSinceLastAdd * 1000)ms)")
+            return
+        }
+
         // Convert color to hex string
         let hexString = colorToHex(color)
         print("Adding color to history: \(hexString)")
 
         // Don't add if it's the same as the most recent color
         if let lastHex = colorHistory.first, lastHex == hexString {
+            print("Skipping history add - same as most recent color")
             return
         }
 
@@ -254,6 +278,10 @@ struct ColorPickerView: View {
         if colorHistory.count > maxHistoryCount {
             colorHistory = Array(colorHistory.prefix(maxHistoryCount))
         }
+
+        // Update last add time
+        lastHistoryAddTime = now
+        print("Color added to history successfully. History count: \(colorHistory.count)")
     }
 
     private func colorToHex(_ color: Color) -> String {
@@ -310,6 +338,10 @@ struct ColorPickerView: View {
     // MARK: - Color Conversion Functions
 
     private func updateAllFormatsFromColor(_ color: Color) {
+        updateOtherFormatsFromColor(color, excluding: nil)
+    }
+
+    private func updateOtherFormatsFromColor(_ color: Color, excluding: String?) {
         guard !isUpdatingFromPicker else { return }
         isUpdatingFromPicker = true
 
@@ -325,31 +357,45 @@ struct ColorPickerView: View {
         let a = rgbColor.alphaComponent
 
         // HEX
-        if a < 1.0 {
-            let alpha = Int(a * 255)
-            hexValue = String(format: "#%02X%02X%02X%02X", r, g, b, alpha)
-        } else {
-            hexValue = String(format: "#%02X%02X%02X", r, g, b)
+        if excluding != "hex" {
+            if a < 1.0 {
+                let alpha = Int(a * 255)
+                hexValue = String(format: "#%02X%02X%02X%02X", r, g, b, alpha)
+            } else {
+                hexValue = String(format: "#%02X%02X%02X", r, g, b)
+            }
         }
 
         // RGB
-        rgbValue = "rgb(\(r), \(g), \(b))"
+        if excluding != "rgb" {
+            rgbValue = "rgb(\(r), \(g), \(b))"
+        }
 
         // RGBA
-        rgbaValue = String(format: "rgba(%d, %d, %d, %.2f)", r, g, b, a)
+        if excluding != "rgba" {
+            rgbaValue = String(format: "rgba(%d, %d, %d, %.2f)", r, g, b, a)
+        }
 
         // HSL
         let (h, s, l) = rgbToHSL(r: Double(r)/255, g: Double(g)/255, b: Double(b)/255)
-        hslValue = String(format: "hsl(%.0f, %.0f%%, %.0f%%)", h, s * 100, l * 100)
-        hslaValue = String(format: "hsla(%.0f, %.0f%%, %.0f%%, %.2f)", h, s * 100, l * 100, a)
+        if excluding != "hsl" {
+            hslValue = String(format: "hsl(%.0f, %.0f%%, %.0f%%)", h, s * 100, l * 100)
+        }
+        if excluding != "hsla" {
+            hslaValue = String(format: "hsla(%.0f, %.0f%%, %.0f%%, %.2f)", h, s * 100, l * 100, a)
+        }
 
         // HSB
         let (hh, ss, bb) = rgbToHSB(r: Double(r)/255, g: Double(g)/255, b: Double(b)/255)
-        hsbValue = String(format: "hsb(%.0f, %.0f%%, %.0f%%)", hh, ss * 100, bb * 100)
+        if excluding != "hsb" {
+            hsbValue = String(format: "hsb(%.0f, %.0f%%, %.0f%%)", hh, ss * 100, bb * 100)
+        }
 
         // CMYK
         let (c, m, y, k) = rgbToCMYK(r: Double(r)/255, g: Double(g)/255, b: Double(b)/255)
-        cmykValue = String(format: "cmyk(%.0f%%, %.0f%%, %.0f%%, %.0f%%)", c * 100, m * 100, y * 100, k * 100)
+        if excluding != "cmyk" {
+            cmykValue = String(format: "cmyk(%.0f%%, %.0f%%, %.0f%%, %.0f%%)", c * 100, m * 100, y * 100, k * 100)
+        }
 
         isUpdatingFromPicker = false
     }
@@ -375,7 +421,10 @@ struct ColorPickerView: View {
             return
         }
 
+        isUpdatingFromPicker = true
         selectedColor = Color(.sRGB, red: Double(r) / 255, green: Double(g) / 255, blue: Double(b) / 255, opacity: Double(a) / 255)
+        updateOtherFormatsFromColor(selectedColor, excluding: "hex")
+        isUpdatingFromPicker = false
     }
 
     private func updateColorFromRGB(_ rgb: String) {
@@ -389,7 +438,10 @@ struct ColorPickerView: View {
         let g = Int((rgb as NSString).substring(with: match.range(at: 2))) ?? 0
         let b = Int((rgb as NSString).substring(with: match.range(at: 3))) ?? 0
 
+        isUpdatingFromPicker = true
         selectedColor = Color(.sRGB, red: Double(r) / 255, green: Double(g) / 255, blue: Double(b) / 255)
+        updateOtherFormatsFromColor(selectedColor, excluding: "rgb")
+        isUpdatingFromPicker = false
     }
 
     private func updateColorFromRGBA(_ rgba: String) {
@@ -404,7 +456,10 @@ struct ColorPickerView: View {
         let b = Int((rgba as NSString).substring(with: match.range(at: 3))) ?? 0
         let a = Double((rgba as NSString).substring(with: match.range(at: 4))) ?? 1.0
 
+        isUpdatingFromPicker = true
         selectedColor = Color(.sRGB, red: Double(r) / 255, green: Double(g) / 255, blue: Double(b) / 255, opacity: a)
+        updateOtherFormatsFromColor(selectedColor, excluding: "rgba")
+        isUpdatingFromPicker = false
     }
 
     private func updateColorFromHSL(_ hsl: String) {
@@ -420,7 +475,10 @@ struct ColorPickerView: View {
 
         let (r, g, b) = hslToRGB(h: h, s: s, l: l)
 
+        isUpdatingFromPicker = true
         selectedColor = Color(.sRGB, red: r, green: g, blue: b)
+        updateOtherFormatsFromColor(selectedColor, excluding: "hsl")
+        isUpdatingFromPicker = false
     }
 
     private func updateColorFromHSLA(_ hsla: String) {
@@ -437,7 +495,10 @@ struct ColorPickerView: View {
 
         let (r, g, b) = hslToRGB(h: h, s: s, l: l)
 
+        isUpdatingFromPicker = true
         selectedColor = Color(.sRGB, red: r, green: g, blue: b, opacity: a)
+        updateOtherFormatsFromColor(selectedColor, excluding: "hsla")
+        isUpdatingFromPicker = false
     }
 
     private func updateColorFromHSB(_ hsb: String) {
@@ -453,7 +514,10 @@ struct ColorPickerView: View {
 
         let (r, g, bb) = hsbToRGB(h: h, s: s, b: b)
 
+        isUpdatingFromPicker = true
         selectedColor = Color(.sRGB, red: r, green: g, blue: bb)
+        updateOtherFormatsFromColor(selectedColor, excluding: "hsb")
+        isUpdatingFromPicker = false
     }
 
     private func updateColorFromCMYK(_ cmyk: String) {
@@ -470,7 +534,10 @@ struct ColorPickerView: View {
 
         let (r, g, b) = cmykToRGB(c: c, m: m, y: y, k: k)
 
+        isUpdatingFromPicker = true
         selectedColor = Color(.sRGB, red: r, green: g, blue: b)
+        updateOtherFormatsFromColor(selectedColor, excluding: "cmyk")
+        isUpdatingFromPicker = false
     }
 
     // MARK: - Color Space Conversions

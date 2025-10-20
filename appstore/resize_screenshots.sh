@@ -53,14 +53,14 @@ priority_names=(
 # Optional screenshots
 optional_sources=(
     "screenshots/8-http.png"
-    "screenshots/9-ip.png"
-    "screenshots/10-parquet.png"
+    "screenshots/9-parquet.png"
+    "screenshots/10-color-picker.png"
 )
 
 optional_names=(
     "08_http_request_client"
-    "09_ip_query"
-    "10_parquet_viewer"
+    "09_parquet_viewer"
+    "10_color_picker"
 )
 
 echo -e "${YELLOW}Resizing priority screenshots (1-7)...${NC}"
