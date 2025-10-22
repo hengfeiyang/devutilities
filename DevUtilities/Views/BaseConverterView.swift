@@ -23,10 +23,14 @@ struct BaseConverterView: View {
     @State private var octalValue: String = ""
     @State private var decimalValue: String = ""
     @State private var hexValue: String = ""
+    @State private var base62Value: String = ""
 
     @State private var activeField: NumberBase? = nil
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
+
+    // Base62 character set for number conversion (0-9, A-Z, a-z)
+    private let base62Chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
     var body: some View {
         VStack(spacing: 20) {
@@ -154,6 +158,37 @@ struct BaseConverterView: View {
                     }
             }
 
+            // Base62 Input
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Text("Base62 (Base 62)")
+                        .font(.headline)
+                    Spacer()
+                    if !base62Value.isEmpty {
+                        Button(action: {
+                            NSPasteboard.general.clearContents()
+                            NSPasteboard.general.setString(base62Value, forType: .string)
+                        }) {
+                            Image(systemName: "doc.on.doc")
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .help("Copy to clipboard")
+                    }
+                }
+
+                TextEditor(text: $base62Value)
+                    .font(.system(.body, design: .monospaced))
+                    .frame(minHeight: 60, maxHeight: 100)
+                    .border(Color.gray.opacity(0.3), width: 1)
+                    .cornerRadius(4)
+                    .onChange(of: base62Value) { _, newValue in
+                        if activeField != .base62 {
+                            activeField = .base62
+                            convertFromBase62(newValue)
+                        }
+                    }
+            }
+
             // Error Message
             if showError {
                 HStack {
@@ -218,6 +253,7 @@ struct BaseConverterView: View {
         octalValue = String(decimalInt, radix: 8, uppercase: false)
         decimalValue = String(decimalInt)
         hexValue = String(decimalInt, radix: 16, uppercase: true)
+        base62Value = toBase62(decimalInt)
 
         activeField = nil
     }
@@ -251,6 +287,7 @@ struct BaseConverterView: View {
         binaryValue = String(decimalInt, radix: 2)
         decimalValue = String(decimalInt)
         hexValue = String(decimalInt, radix: 16, uppercase: true)
+        base62Value = toBase62(decimalInt)
 
         activeField = nil
     }
@@ -282,6 +319,7 @@ struct BaseConverterView: View {
         binaryValue = String(decimalInt, radix: 2)
         octalValue = String(decimalInt, radix: 8, uppercase: false)
         hexValue = String(decimalInt, radix: 16, uppercase: true)
+        base62Value = toBase62(decimalInt)
 
         activeField = nil
     }
@@ -317,8 +355,76 @@ struct BaseConverterView: View {
         binaryValue = String(decimalInt, radix: 2)
         octalValue = String(decimalInt, radix: 8, uppercase: false)
         decimalValue = String(decimalInt)
+        base62Value = toBase62(decimalInt)
 
         activeField = nil
+    }
+
+    private func convertFromBase62(_ input: String) {
+        let cleaned = input.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard !cleaned.isEmpty else {
+            clearOthers(except: .base62)
+            showError = false
+            return
+        }
+
+        // Validate Base62 input
+        let validChars = CharacterSet(charactersIn: base62Chars)
+        guard cleaned.rangeOfCharacter(from: validChars.inverted) == nil else {
+            showError = true
+            errorMessage = "Invalid Base62 input. Only 0-9, A-Z, and a-z are allowed."
+            clearOthers(except: .base62)
+            return
+        }
+
+        guard let decimalInt = fromBase62(cleaned) else {
+            showError = true
+            errorMessage = "Invalid Base62 input."
+            clearOthers(except: .base62)
+            return
+        }
+
+        showError = false
+        binaryValue = String(decimalInt, radix: 2)
+        octalValue = String(decimalInt, radix: 8, uppercase: false)
+        decimalValue = String(decimalInt)
+        hexValue = String(decimalInt, radix: 16, uppercase: true)
+
+        activeField = nil
+    }
+
+    // MARK: - Base62 Conversion Helpers
+
+    private func toBase62(_ decimal: Int) -> String {
+        guard decimal >= 0 else { return "" }
+        guard decimal > 0 else { return "0" }
+
+        var number = decimal
+        var result = ""
+
+        while number > 0 {
+            let remainder = number % 62
+            let char = base62Chars[base62Chars.index(base62Chars.startIndex, offsetBy: remainder)]
+            result = String(char) + result
+            number = number / 62
+        }
+
+        return result
+    }
+
+    private func fromBase62(_ input: String) -> Int? {
+        var result = 0
+
+        for char in input {
+            guard let index = base62Chars.firstIndex(of: char) else {
+                return nil
+            }
+            let value = base62Chars.distance(from: base62Chars.startIndex, to: index)
+            result = result * 62 + value
+        }
+
+        return result
     }
 
     // MARK: - Helper Functions
@@ -329,18 +435,27 @@ struct BaseConverterView: View {
             octalValue = ""
             decimalValue = ""
             hexValue = ""
+            base62Value = ""
         case .octal:
             binaryValue = ""
             decimalValue = ""
             hexValue = ""
+            base62Value = ""
         case .decimal:
             binaryValue = ""
             octalValue = ""
             hexValue = ""
+            base62Value = ""
         case .hexadecimal:
             binaryValue = ""
             octalValue = ""
             decimalValue = ""
+            base62Value = ""
+        case .base62:
+            binaryValue = ""
+            octalValue = ""
+            decimalValue = ""
+            hexValue = ""
         }
     }
 
@@ -349,6 +464,7 @@ struct BaseConverterView: View {
         octalValue = ""
         decimalValue = ""
         hexValue = ""
+        base62Value = ""
         showError = false
         errorMessage = ""
         activeField = nil
@@ -362,6 +478,7 @@ struct BaseConverterView: View {
         defaults.set(octalValue, forKey: "BaseConverter.octalValue")
         defaults.set(decimalValue, forKey: "BaseConverter.decimalValue")
         defaults.set(hexValue, forKey: "BaseConverter.hexValue")
+        defaults.set(base62Value, forKey: "BaseConverter.base62Value")
     }
 
     private func loadState() {
@@ -371,6 +488,7 @@ struct BaseConverterView: View {
         octalValue = defaults.string(forKey: "BaseConverter.octalValue") ?? ""
         decimalValue = defaults.string(forKey: "BaseConverter.decimalValue") ?? ""
         hexValue = defaults.string(forKey: "BaseConverter.hexValue") ?? ""
+        base62Value = defaults.string(forKey: "BaseConverter.base62Value") ?? ""
     }
 }
 
@@ -379,6 +497,7 @@ enum NumberBase {
     case octal
     case decimal
     case hexadecimal
+    case base62
 }
 
 #Preview {

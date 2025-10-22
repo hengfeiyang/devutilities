@@ -8,7 +8,7 @@ A native macOS application for developers, containing 20 essential tools commonl
 
 - **Timestamp Converter** - Bidirectional timestamp conversion with timezone support and multiple format options
 - **Unit Converter** - Convert between different units across 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
-- **Base Converter** - Mutual conversion between binary, octal, decimal, and hexadecimal with real-time validation
+- **Base Converter** - Mutual conversion between binary, octal, decimal, hexadecimal, and Base62 with real-time validation
 - **Color Picker** - **NEW** Professional color format converter with support for HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK formats, including color history
 - **JSON Formatter** - Format, validate, escape/unescape, and compare JSON data with visual CodeMirror diff editor
 - **Base64 Encode/Decode** - Text encoding/decoding with URL-safe variant and automatic detection
@@ -37,7 +37,14 @@ A native macOS application for developers, containing 20 essential tools commonl
 
 ## Version
 
-Current version: 2.8.0
+Current version: 2.8.1
+
+## What's New in v2.8.1
+
+- **Base62 Support**: Enhanced Base Converter with Base62 number system support (0-9, A-Z, a-z)
+- **Five Base Systems**: Now supports conversion between binary, octal, decimal, hexadecimal, and Base62
+- **Real-time Conversion**: All five number bases convert simultaneously as you type
+- **Comprehensive Validation**: Each base has specific character validation rules
 
 ## What's New in v2.8.0
 

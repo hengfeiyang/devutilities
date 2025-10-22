@@ -126,7 +126,7 @@ Each tool follows a consistent pattern:
 **File**: `BaseConverterView.swift`
 
 **Features**:
-- Mutual conversion between binary (base 2), octal (base 8), decimal (base 10), and hexadecimal (base 16)
+- Mutual conversion between binary (base 2), octal (base 8), decimal (base 10), hexadecimal (base 16), and Base62 (base 62)
 - Real-time validation of input for each number base
 - Automatic conversion when typing in any field
 - Clear error messages for invalid input formats
@@ -135,25 +135,29 @@ Each tool follows a consistent pattern:
 - State persistence between sessions
 
 **UI Components**:
-- Four separate TextEditor areas (one for each number base)
+- Five separate TextEditor areas (one for each number base)
 - Copy buttons next to each result
 - Error message display for invalid inputs
 - Clear All button at bottom
 
 **Implementation Details**:
-- Swift `Int(radix:)` for parsing different number bases
-- Character set validation for each base (binary: 0-1, octal: 0-7, decimal: 0-9, hex: 0-9 A-F)
+- Swift `Int(radix:)` for parsing binary, octal, decimal, and hexadecimal
+- Custom Base62 conversion algorithms:
+  - `toBase62()`: Converts decimal to Base62 using character set "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+  - `fromBase62()`: Converts Base62 back to decimal with character index lookup
+- Character set validation for each base (binary: 0-1, octal: 0-7, decimal: 0-9, hex: 0-9 A-F, Base62: 0-9 A-Z a-z)
 - Real-time conversion using `onChange` modifiers
 - Active field tracking to prevent conversion loops
 - UserDefaults integration for state persistence
 - Support for uppercase hex output (A-F)
-- `NumberBase` enum for field tracking
+- `NumberBase` enum for field tracking (.binary, .octal, .decimal, .hexadecimal, .base62)
 
 **Validation Rules**:
 - Binary: Only 0 and 1 allowed
 - Octal: Only digits 0-7 allowed
 - Decimal: Only digits 0-9 allowed, no negative numbers
 - Hexadecimal: Digits 0-9 and letters A-F (case-insensitive), optional 0x prefix
+- Base62: Digits 0-9, uppercase A-Z, lowercase a-z (62 characters total)
 
 ### 4. Color Picker
 **File**: `ColorPickerView.swift`
@@ -705,7 +709,7 @@ enum ToolType: String, CaseIterable, Identifiable {
 ### Target Settings
 - **Minimum macOS**: 14.0
 - **Bundle Identifier**: com.hengfeiyang.devutilities
-- **Version**: 2.8.0 (Build 1)
+- **Version**: 2.8.1 (Build 1)
 - **Swift Version**: 5.0
 - **App Sandbox**: Enabled
 - **Hardened Runtime**: Enabled

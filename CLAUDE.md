@@ -3,14 +3,14 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 20 essential developer utilities. Version 2.8.0 with professional color format conversion capabilities.
+DevUtilities is a native macOS application built with SwiftUI that provides 20 essential developer utilities. Version 2.8.1 with Base62 number system support.
 
 ## Key Tools & Status
 
 All 20 tools are ✅ **Complete**:
 1. **Timestamp Converter** - Bidirectional timestamp conversion with timezone support
 2. **Unit Converter** - 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
-3. **Base Converter** - Mutual conversion between binary, octal, decimal, and hexadecimal number systems
+3. **Base Converter** - Mutual conversion between binary, octal, decimal, hexadecimal, and Base62 number systems
 4. **Color Picker** - **NEW** Professional color format converter with HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK support and color history
 5. **JSON Formatter** - Format, validate, escape/unescape, **visual CodeMirror diff editor**
 6. **Base64 Encode/Decode** - Text encoding/decoding with URL-safe variant
@@ -46,6 +46,14 @@ xcodebuild -project DevUtilities.xcodeproj -scheme DevUtilities build
 # Using MCP tools
 mcp__XcodeBuildMCP__build_run_macos
 ```
+
+## Recent Updates (v2.8.1)
+- **Base62 Support**: Enhanced Base Converter with Base62 number system (0-9, A-Z, a-z)
+- **Five Base Systems**: Complete support for binary (base 2), octal (base 8), decimal (base 10), hexadecimal (base 16), and Base62 (base 62)
+- **Real-time Conversion**: Automatic conversion across all five number bases as you type
+- **Custom Algorithms**: Implemented custom toBase62 and fromBase62 conversion functions
+- **Comprehensive Validation**: Character set validation for Base62 (alphanumeric)
+- **State Persistence**: Saves and restores Base62 values between sessions
 
 ## Recent Updates (v2.8.0)
 - **Color Picker**: NEW professional color format converter for HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK
