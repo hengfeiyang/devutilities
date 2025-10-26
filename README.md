@@ -11,11 +11,11 @@ A native macOS application for developers, containing 20 essential tools commonl
 ## Features
 
 - **AI Chat** - Intelligent AI assistant with custom model support, flexible API configuration, and enhanced user experience for development questions
-- **AI Translate** - Professional translation tool with 3 modes (Translate, Polishing, Summarize), 19 language support, and special word mode with detailed explanations
+- **AI Translate** - **NEW TTS** Professional translation tool with 3 modes, 19 language support, text-to-speech playback, and special word mode with detailed explanations
 - **Timestamp Converter** - Convert between timestamps and human-readable dates with multiple format support
 - **Unit Converter** - Convert between different units (Data, Time, Length, Weight, Temperature, Area, Volume)
 - **Base Converter** - Mutual conversion between binary, octal, decimal, hexadecimal, and Base62 number systems with real-time validation
-- **Color Picker** - **NEW** Professional color format converter with HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK support and color history
+- **Color Picker** - Professional color format converter with HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK support and color history
 - **JSON Formatter** - Format, validate, and compare JSON data with visual CodeMirror diff editor
 - **SQL Formatter** - Format and minify SQL queries with syntax validation
 - **HTML Formatter** - Format and minify HTML with proper tag indentation
@@ -33,15 +33,24 @@ A native macOS application for developers, containing 20 essential tools commonl
 
 ## Key Features
 
-- **Customizable Tool Management** - **NEW** Enable/disable tools and organize them with drag-and-drop interface
+- **Customizable Tool Management** - Enable/disable tools and organize them with drag-and-drop interface
 - **Search Functionality** - Quickly find tools using the search bar in the sidebar
 - **Selectable Results** - Copy results directly from the output areas
 - **Modern UI** - Clean, intuitive interface designed for macOS
 - **Real-time Conversion** - Instant results as you type
+- **Text-to-Speech** - **NEW** Native macOS TTS for AI Translate with multi-language voice support
 
 ## Version
 
-Current version: 2.8.1
+Current version: 2.8.2
+
+## What's New in v2.8.2
+
+- **Text-to-Speech (TTS)**: Integrated native macOS TTS in AI Translate for listening to both source and translated text
+- **Multi-language TTS**: Supports all 19 translation languages with proper voice selection
+- **Animated Speaker Icons**: Visual feedback with smooth wave animations during playback
+- **Smart Sanitization**: Prevents audio errors by escaping special characters
+- **Thread-safe**: Optimized implementation without performance warnings
 
 ## What's New in v2.8.1
 
