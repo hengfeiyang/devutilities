@@ -272,6 +272,17 @@ struct AITranslateView: View {
                     .foregroundColor(.secondary)
                     .padding(.leading, 12)
 
+                // Speaker button for input text
+                if !inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    SpeakerButton(
+                        text: inputText,
+                        language: sourceLanguage == .auto ? targetLanguage.ttsLanguageCode : sourceLanguage.ttsLanguageCode
+                    )
+                    .font(.system(size: 12))
+                    .foregroundColor(.secondary)
+                    .help("Speak input text")
+                }
+
                 Spacer()
 
                 Text("Press <Enter> to submit, <Shift+Enter> for new line")
@@ -333,7 +344,7 @@ struct AITranslateView: View {
 
                         // Action buttons (Retry & Copy) - only show when translation is complete
                         if !isTranslating && !outputText.isEmpty {
-                            HStack {
+                            HStack(spacing: 8) {
                                 Spacer()
 
                                 // Retry button
@@ -344,6 +355,15 @@ struct AITranslateView: View {
                                 }
                                 .buttonStyle(PlainButtonStyle())
                                 .help("Retry translation")
+
+                                // Speaker button (TTS)
+                                SpeakerButton(
+                                    text: outputText,
+                                    language: targetLanguage.ttsLanguageCode
+                                )
+                                .font(.system(size: 14))
+                                .foregroundColor(.secondary)
+                                .help("Speak translation")
 
                                 // Copy button
                                 Button(action: {

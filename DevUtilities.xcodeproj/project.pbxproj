@@ -10,6 +10,9 @@
 		7BADF8733C7C4EB4B3C07E84 /* HexStringConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66E3643B7264A049FA9EFDF /* HexStringConverterView.swift */; };
 		813459522E8A95EA003222BC /* FeatureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813459512E8A95EA003222BC /* FeatureManager.swift */; };
 		813459542E8A95FA003222BC /* FeatureSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813459532E8A95FA003222BC /* FeatureSettingsView.swift */; };
+		816683E92EADF7E70050027B /* AVSpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816683E82EADF7E70050027B /* AVSpeechService.swift */; };
+		816683EC2EADF7FC0050027B /* SpeakerMotionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816683EB2EADF7FC0050027B /* SpeakerMotionView.swift */; };
+		816683ED2EADF7FC0050027B /* SpeakerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816683EA2EADF7FC0050027B /* SpeakerButton.swift */; };
 		818449F62E90D8E200398FEC /* DevUtilitiesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818449F52E90D8E200398FEC /* DevUtilitiesApp.swift */; };
 		8191E97B2EA524730035ADC7 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8191E97A2EA524730035ADC7 /* ColorPickerView.swift */; };
 		81E0D1EE2E8D518E00F2A91A /* TranslationLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E0D1EB2E8D518E00F2A91A /* TranslationLanguage.swift */; };
@@ -84,6 +87,9 @@
 /* Begin PBXFileReference section */
 		813459512E8A95EA003222BC /* FeatureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManager.swift; sourceTree = "<group>"; };
 		813459532E8A95FA003222BC /* FeatureSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureSettingsView.swift; sourceTree = "<group>"; };
+		816683E82EADF7E70050027B /* AVSpeechService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVSpeechService.swift; sourceTree = "<group>"; };
+		816683EA2EADF7FC0050027B /* SpeakerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerButton.swift; sourceTree = "<group>"; };
+		816683EB2EADF7FC0050027B /* SpeakerMotionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerMotionView.swift; sourceTree = "<group>"; };
 		818449F42E90D8E200398FEC /* DevUtilities.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevUtilities.entitlements; sourceTree = "<group>"; };
 		818449F52E90D8E200398FEC /* DevUtilitiesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevUtilitiesApp.swift; sourceTree = "<group>"; };
 		8191E97A2EA524730035ADC7 /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
@@ -168,6 +174,7 @@
 		93B55B4D2E5EF944001ECD91 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				816683E82EADF7E70050027B /* AVSpeechService.swift */,
 				93DE0EA92E7ABA0300731598 /* ProviderManager.swift */,
 				93DB98A22E635E5200E70747 /* ImageStorageService.swift */,
 				93CECFEA2E612F3400F5A131 /* ChatManager.swift */,
@@ -275,6 +282,8 @@
 		D5F4E8152C5A1B3000123456 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				816683EA2EADF7FC0050027B /* SpeakerButton.swift */,
+				816683EB2EADF7FC0050027B /* SpeakerMotionView.swift */,
 				93B179232E6EF62A00A6B491 /* MarkdownTheme.swift */,
 				D5F4E8172C5A1B3000123456 /* TextEditor.swift */,
 				93C47C922E3312A00069B278 /* CodeEditor.swift */,
@@ -376,6 +385,8 @@
 				D5F4E8102C5A1B3000123456 /* URLToolsView.swift in Sources */,
 				HTTP4E7F2C5A1B3000654321 /* HTTPRequestView.swift in Sources */,
 				93C47C932E3312A00069B278 /* CodeEditor.swift in Sources */,
+				816683EC2EADF7FC0050027B /* SpeakerMotionView.swift in Sources */,
+				816683ED2EADF7FC0050027B /* SpeakerButton.swift in Sources */,
 				813459542E8A95FA003222BC /* FeatureSettingsView.swift in Sources */,
 				93CECFE82E612F2B00F5A131 /* AISettingsView.swift in Sources */,
 				93CECFE92E612F2B00F5A131 /* AIChatView.swift in Sources */,
@@ -400,6 +411,7 @@
 				93DB98A32E635E5200E70747 /* ImageStorageService.swift in Sources */,
 				93DE0EAF2E7ABA1900731598 /* AIProviderDetailView.swift in Sources */,
 				93DE0EB02E7ABA1900731598 /* AIProviderSettingsView.swift in Sources */,
+				816683E92EADF7E70050027B /* AVSpeechService.swift in Sources */,
 				93DE0EB12E7ABA1900731598 /* AddModelView.swift in Sources */,
 				81E0D1EE2E8D518E00F2A91A /* TranslationLanguage.swift in Sources */,
 				81E0D1EF2E8D518E00F2A91A /* TranslationPrompts.swift in Sources */,
@@ -548,7 +560,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 61;
+				CURRENT_PROJECT_VERSION = 62;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -572,7 +584,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 2.8.1;
+				MARKETING_VERSION = 2.8.2;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.devutilities;
 				PRODUCT_NAME = DevUtilities;
@@ -590,7 +602,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 61;
+				CURRENT_PROJECT_VERSION = 62;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -614,7 +626,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 2.8.1;
+				MARKETING_VERSION = 2.8.2;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.devutilities;
 				PRODUCT_NAME = DevUtilities;

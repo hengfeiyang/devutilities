@@ -224,4 +224,50 @@ enum TranslationLanguage: String, CaseIterable, Identifiable, Codable {
     static var targetLanguages: [TranslationLanguage] {
         return allCases.filter { $0 != .auto }
     }
+
+    // MARK: - TTS Language Code Mapping
+
+    /// Convert to AVSpeech language code for Text-to-Speech
+    var ttsLanguageCode: String {
+        switch self {
+        case .auto:
+            return "en-US"  // Default to English for auto
+        case .english:
+            return "en-US"
+        case .simplifiedChinese:
+            return "zh-CN"
+        case .traditionalChinese:
+            return "zh-TW"
+        case .japanese:
+            return "ja-JP"
+        case .korean:
+            return "ko-KR"
+        case .spanish:
+            return "es-ES"
+        case .french:
+            return "fr-FR"
+        case .german:
+            return "de-DE"
+        case .russian:
+            return "ru-RU"
+        case .arabic:
+            return "ar-SA"
+        case .hindi:
+            return "hi-IN"
+        case .portuguese:
+            return "pt-BR"
+        case .italian:
+            return "it-IT"
+        case .dutch:
+            return "nl-NL"
+        case .turkish:
+            return "tr-TR"
+        case .vietnamese:
+            return "vi-VN"
+        case .thai:
+            return "th-TH"
+        case .indonesian:
+            return "id-ID"
+        }
+    }
 }
