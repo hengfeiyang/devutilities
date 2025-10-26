@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 20 essential developer utilities. Version 2.8.1 with Base62 number system support.
+DevUtilities is a native macOS application built with SwiftUI that provides 20 essential developer utilities. Version 2.8.2 with Text-to-Speech (TTS) support for AI Translate.
 
 ## Key Tools & Status
 
@@ -11,7 +11,7 @@ All 20 tools are ✅ **Complete**:
 1. **Timestamp Converter** - Bidirectional timestamp conversion with timezone support
 2. **Unit Converter** - 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
 3. **Base Converter** - Mutual conversion between binary, octal, decimal, hexadecimal, and Base62 number systems
-4. **Color Picker** - **NEW** Professional color format converter with HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK support and color history
+4. **Color Picker** - Professional color format converter with HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK support and color history
 5. **JSON Formatter** - Format, validate, escape/unescape, **visual CodeMirror diff editor**
 6. **Base64 Encode/Decode** - Text encoding/decoding with URL-safe variant
 7. **Hex String Converter** - Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support
@@ -27,13 +27,14 @@ All 20 tools are ✅ **Complete**:
 17. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
 18. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
 19. **AI Chat** - **Enhanced AI assistant** with custom model support, DeepSeek reasoning models, and flexible API configuration
-20. **AI Translate** - Professional translation with 3 modes (Translate, Polishing, Summarize), 19 languages, word mode with detailed explanations
+20. **AI Translate** - **NEW TTS** Professional translation with 3 modes, 19 languages, text-to-speech support, and word mode
 
 ## Architecture & Technical Stack
 - **Platform**: macOS 14.0+ SwiftUI
 - **Navigation**: NavigationSplitView with sidebar search
 - **Dependencies**: CodeMirror-SwiftUI via SPM, ParquetViewer (Rust FFI)
 - **Security**: CryptoKit for JWT HMAC operations, Security framework for RSA operations
+- **TTS**: AVFoundation for native macOS text-to-speech
 
 ## Build Commands
 ```bash
@@ -46,6 +47,15 @@ xcodebuild -project DevUtilities.xcodeproj -scheme DevUtilities build
 # Using MCP tools
 mcp__XcodeBuildMCP__build_run_macos
 ```
+
+## Recent Updates (v2.8.2)
+- **Text-to-Speech (TTS)**: Integrated native macOS TTS in AI Translate for both input and output text
+- **Multi-language TTS**: Support for all 19 translation languages with proper voice selection
+- **Animated Speaker Icons**: Visual feedback with wave animation during speech playback
+- **Smart Text Sanitization**: Prevents SSML parsing errors by escaping special characters
+- **Thread-safe Implementation**: Eliminates priority inversion warnings with internal state tracking
+- **One-click Playback**: Speaker buttons next to input text and translated output
+- **Error Handling**: Comprehensive validation for empty text, missing voices, and edge cases
 
 ## Recent Updates (v2.8.1)
 - **Base62 Support**: Enhanced Base Converter with Base62 number system (0-9, A-Z, a-z)
@@ -198,5 +208,6 @@ When updating the version or adding new features, you must update ALL of these f
 4. website/README.md (website repository documentation)
 5. website/index.html (main website page)
 6. website/release-notes.html (release notes page)
+7. website/ai-translate.html (AI Translate feature page)
 
 This ensures consistency across all documentation and user-facing materials.

@@ -25,7 +25,7 @@ A native macOS application for developers, containing 20 essential tools commonl
 - **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading with schema inspection
 - **Crypto Tools** - Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA-1/256/384/512), symmetric encryption (AES-GCM-256), and asymmetric encryption (RSA-2048/4096)
 - **AI Chat** - Intelligent AI assistant with custom model support, DeepSeek reasoning models, flexible API configuration, and enhanced user experience
-- **AI Translate** - **NEW** Professional translation tool with 3 modes (Translate, Polishing, Summarize), 19 language support, special word mode with detailed explanations, and real-time streaming results
+- **AI Translate** - **NEW TTS** Professional translation tool with 3 modes (Translate, Polishing, Summarize), 19 language support, text-to-speech playback, special word mode, and real-time streaming
 
 ## Key Features
 
@@ -34,10 +34,19 @@ A native macOS application for developers, containing 20 essential tools commonl
 - **Selectable Results** - Copy results directly from the output areas
 - **Modern UI** - Clean, intuitive interface designed for macOS
 - **Real-time Conversion** - Instant results as you type
+- **Text-to-Speech** - **NEW** Native macOS TTS for AI Translate with multi-language voice support
 
 ## Version
 
-Current version: 2.8.1
+Current version: 2.8.2
+
+## What's New in v2.8.2
+
+- **Text-to-Speech (TTS)**: Integrated native macOS TTS in AI Translate for listening to both source and translated text
+- **Multi-language TTS**: Supports all 19 translation languages with proper voice selection
+- **Animated Speaker Icons**: Visual feedback with smooth wave animations during playback
+- **Smart Sanitization**: Prevents audio errors by escaping special characters
+- **Thread-safe**: Optimized implementation without performance warnings
 
 ## What's New in v2.8.1
 

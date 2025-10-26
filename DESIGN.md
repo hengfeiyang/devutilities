@@ -17,7 +17,7 @@ DevUtilities/
 │   ├── Models/
 │   │   ├── ToolType.swift          # Tool definitions
 │   │   ├── FeatureManager.swift    # Feature preferences management
-│   │   ├── TranslationLanguage.swift   # NEW: 19 language definitions
+│   │   ├── TranslationLanguage.swift   # NEW: 19 language definitions + TTS mapping (v2.8.2)
 │   │   ├── TranslationMode.swift       # NEW: 3 translation modes
 │   │   └── TranslationPrompts.swift    # NEW: Prompt generation logic
 │   ├── Views/                      # All 20 tool implementations
@@ -44,7 +44,14 @@ DevUtilities/
 │   │   └── FeatureSettingsView.swift   # Feature management interface
 │   ├── Components/                 # Shared UI components
 │   │   ├── CodeEditor.swift        # CodeMirror integration & diff editor
-│   │   └── TextEditor.swift        # Custom text editor with IME support
+│   │   ├── TextEditor.swift        # Custom text editor with IME support
+│   │   ├── SpeakerButton.swift     # NEW: TTS playback button (v2.8.2)
+│   │   └── SpeakerMotionView.swift # NEW: Animated speaker icon (v2.8.2)
+│   ├── Services/                   # Application services
+│   │   ├── ChatManager.swift       # AI chat session management
+│   │   ├── ProviderManager.swift   # API provider configuration
+│   │   ├── EventManager.swift      # Analytics and telemetry
+│   │   └── AVSpeechService.swift   # NEW: Text-to-speech engine (v2.8.2)
 │   ├── Assets.xcassets/            # App icons and assets
 │   ├── Preview Content/            # SwiftUI preview assets
 │   └── DevUtilities.entitlements      # App sandbox permissions
@@ -971,6 +978,74 @@ You are a professional translation engine. Please translate the text into {targe
 - Reuses `ProviderManager` for model and API key management
 - Reuses `AIProviderSettingsView` for configuration
 - Shares AI Chat's model system (no duplicate configuration)
+
+## Text-to-Speech (TTS) for AI Translate (v2.8.2)
+
+Native macOS text-to-speech integration for AI Translate, allowing users to listen to both source and translated text.
+
+### Features
+- **Native AVFoundation TTS**: Uses macOS built-in speech synthesizer (no external dependencies)
+- **19 Language Support**: Automatic voice selection for all translation languages
+- **Dual TTS Buttons**: Speaker buttons for both input and output text
+- **Animated Feedback**: Wave animation during playback with smooth transitions
+- **Smart Text Processing**: SSML character escaping and whitespace validation
+- **Thread-safe**: Internal state tracking to avoid priority inversion warnings
+
+### Architecture
+```
+AVSpeechService (Singleton)
+├── AVSpeechSynthesizer (macOS native)
+├── Internal state tracking (isCurrentlySpeaking)
+├── Text sanitization (escapes XML/SSML chars)
+└── Delegate callbacks (onStart/onFinish)
+
+SpeakerButton (SwiftUI Component)
+├── SpeakerViewModel (@MainActor)
+│   ├── isSpeaking state
+│   └── AVSpeechService.shared reference
+└── Visual states:
+    ├── Idle: speaker.wave.3 icon
+    └── Speaking: SpeakerMotionView animation
+
+SpeakerMotionView (Animated Icon)
+├── Three layered icons (speaker.wave.1/2/3)
+├── Staggered opacity animations (0.2s delay each)
+└── Left-aligned ZStack (prevents jitter)
+
+TranslationLanguage Extension
+└── ttsLanguageCode property
+    └── Maps 19 languages to TTS codes (en-US, zh-CN, etc.)
+```
+
+### Implementation Details
+
+**Text Sanitization**:
+- Escapes XML/SSML special characters (`&`, `<`, `>`, `"`, `'`)
+- Removes control characters to prevent parsing errors
+- Filters non-printable characters while preserving whitespace
+
+**Thread Safety**:
+- Internal `isCurrentlySpeaking` state instead of querying synthesizer
+- Avoids priority inversion by not blocking on lower QoS threads
+- Delegate methods update internal state atomically
+
+**Error Prevention**:
+- Triple-layer validation (Service, ViewModel, Button)
+- Validates text is non-empty after trimming whitespace
+- Checks voice availability before speaking
+- Graceful fallback with callback execution
+
+**UI Integration**:
+- Input speaker button: Next to character count in bottom bar
+- Output speaker button: Alongside retry/copy buttons
+- Buttons auto-disable when text is empty
+- Left-aligned animation prevents icon shifting
+
+### Performance
+- Singleton pattern reduces memory overhead
+- No network requests (fully offline)
+- Instant playback start (< 0.05s)
+- Zero external dependencies
 
 ### App Store Requirements
 - Code signing configuration
