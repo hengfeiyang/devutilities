@@ -1,6 +1,6 @@
 # DevUtilities
 
-A native macOS application for developers, containing 20 essential tools commonly used in software development.
+A native macOS application for developers, containing 21 essential tools commonly used in software development.
 
 > This tool was 100% developed by `Claude Code`.
 
@@ -15,6 +15,7 @@ A native macOS application for developers, containing 20 essential tools commonl
 - **Hex String Converter** - Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support and real-time processing
 - **Regex Test** - Pattern matching with capture groups, flags, and common pattern library
 - **UUID Generator** - Multiple versions (v1, v4, v5, v7) with bulk generation and timestamp extraction
+- **Random String Generator** - **NEW** Cryptographically secure random string generation with 5 presets and advanced requirements
 - **URL Tools** - Encoding/decoding and comprehensive URL parsing with component breakdown
 - **IP Query** - Dual IP detection (international vs China networks) and geolocation queries
 - **HTTP Request** - Full HTTP client with SSE streaming, JSON tree view, and request history
@@ -38,7 +39,17 @@ A native macOS application for developers, containing 20 essential tools commonl
 
 ## Version
 
-Current version: 2.8.2
+Current version: 2.9.0
+
+## What's New in v2.9.0
+
+- **Random String Generator**: NEW tool for secure random string generation with cryptographic security
+- **Customizable Character Sets**: Choose from uppercase, lowercase, numbers, and symbols
+- **5 Built-in Presets**: Strong Password, API Key, Hex String, PIN Code, and Readable Code templates
+- **Advanced Requirements**: Enforce minimum requirements for uppercase, numbers, or special characters
+- **Bulk Generation**: Create up to 20 random strings simultaneously
+- **Flexible Length**: Configure string length from 1 to 100 characters
+- **Secure by Design**: Uses SecRandomCopyBytes for cryptographically secure randomness
 
 ## What's New in v2.8.2
 

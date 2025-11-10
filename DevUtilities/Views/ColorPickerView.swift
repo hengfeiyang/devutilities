@@ -37,54 +37,52 @@ struct ColorPickerView: View {
     private let historyDebounceInterval: TimeInterval = 0.2 // 200ms
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                // Color Preview and Picker Section
-                VStack(spacing: 16) {
-                    HStack(spacing: 20) {
-                        // Color Preview Box - Reduced size from 150 to 80
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(selectedColor)
-                            .frame(width: 80, height: 80)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                            )
+        VStack(alignment: .leading, spacing: 24) {
+            // Color Preview and Picker Section
+            VStack(spacing: 16) {
+                HStack(spacing: 20) {
+                    // Color Preview Box - Reduced size from 150 to 80
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(selectedColor)
+                        .frame(width: 80, height: 80)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                        )
 
-                        VStack(alignment: .leading, spacing: 12) {
-                            ColorPicker("Select Color", selection: $selectedColor)
-                                .onChange(of: selectedColor) { _, newValue in
-                                    updateAllFormatsFromColor(newValue)
-                                    addToHistory(newValue)
-                                }
+                    VStack(alignment: .leading, spacing: 12) {
+                        ColorPicker("Select Color", selection: $selectedColor)
+                            .onChange(of: selectedColor) { _, newValue in
+                                updateAllFormatsFromColor(newValue)
+                                addToHistory(newValue)
+                            }
 
-                            Text("Click to open the system color panel")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                        Text("Click to open the system color panel")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
 
 
-                            // Color History Section
-                            if !colorHistory.isEmpty {
-                                HStack(spacing: 8) {
-                                    Text("History")
-                                        .font(.subheadline)
-                                        .foregroundColor(.primary)
+                        // Color History Section
+                        if !colorHistory.isEmpty {
+                            HStack(spacing: 8) {
+                                Text("History")
+                                    .font(.subheadline)
+                                    .foregroundColor(.primary)
 
-                                    HStack(spacing: 6) {
-                                        ForEach(Array(colorHistory.enumerated()), id: \.offset) { _, hexString in
-                                            if let color = hexStringToColor(hexString) {
-                                                RoundedRectangle(cornerRadius: 3)
-                                                    .fill(color)
-                                                    .frame(width: 20, height: 20)
-                                                    .overlay(
-                                                        RoundedRectangle(cornerRadius: 3)
-                                                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                                                    )
-                                                    .onTapGesture {
-                                                        selectedColor = color
-                                                        updateAllFormatsFromColor(color)
-                                                    }
-                                            }
+                                HStack(spacing: 6) {
+                                    ForEach(Array(colorHistory.enumerated()), id: \.offset) { _, hexString in
+                                        if let color = hexStringToColor(hexString) {
+                                            RoundedRectangle(cornerRadius: 3)
+                                                .fill(color)
+                                                .frame(width: 20, height: 20)
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 3)
+                                                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                                                )
+                                                .onTapGesture {
+                                                    selectedColor = color
+                                                    updateAllFormatsFromColor(color)
+                                                }
                                         }
                                     }
                                 }
@@ -92,107 +90,107 @@ struct ColorPickerView: View {
                         }
                     }
                 }
-                .padding()
-                .background(Color(NSColor.controlBackgroundColor))
-                .cornerRadius(8)
-
-                // Format Conversions Section
-                VStack(spacing: 0) {
-                    Text("Format Conversions")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom, 12)
-
-                    Divider()
-
-                    // HEX
-                    formatRow(
-                        label: "HEX",
-                        value: $hexValue,
-                        placeholder: "#RRGGBB or #RRGGBBAA",
-                        onChange: { updateColorFromHex(hexValue) }
-                    )
-
-                    Divider()
-
-                    // RGB
-                    formatRow(
-                        label: "RGB",
-                        value: $rgbValue,
-                        placeholder: "rgb(r, g, b)",
-                        onChange: { updateColorFromRGB(rgbValue) }
-                    )
-
-                    Divider()
-
-                    // RGBA
-                    formatRow(
-                        label: "RGBA",
-                        value: $rgbaValue,
-                        placeholder: "rgba(r, g, b, a)",
-                        onChange: { updateColorFromRGBA(rgbaValue) }
-                    )
-
-                    Divider()
-
-                    // HSL
-                    formatRow(
-                        label: "HSL",
-                        value: $hslValue,
-                        placeholder: "hsl(h, s%, l%)",
-                        onChange: { updateColorFromHSL(hslValue) }
-                    )
-
-                    Divider()
-
-                    // HSLA
-                    formatRow(
-                        label: "HSLA",
-                        value: $hslaValue,
-                        placeholder: "hsla(h, s%, l%, a)",
-                        onChange: { updateColorFromHSLA(hslaValue) }
-                    )
-
-                    Divider()
-
-                    // HSB
-                    formatRow(
-                        label: "HSB",
-                        value: $hsbValue,
-                        placeholder: "hsb(h, s%, b%)",
-                        onChange: { updateColorFromHSB(hsbValue) }
-                    )
-
-                    Divider()
-
-                    // CMYK
-                    formatRow(
-                        label: "CMYK",
-                        value: $cmykValue,
-                        placeholder: "cmyk(c%, m%, y%, k%)",
-                        onChange: { updateColorFromCMYK(cmykValue) }
-                    )
-
-                    Divider()
-
-                    // Tip message
-                    HStack {
-                        Image(systemName: "lightbulb.fill")
-                            .foregroundColor(.orange)
-                        Text("Tip: You can edit any format value above to change the color")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                    .padding(.vertical, 20)
-                }
-                .padding()
-                .background(Color(NSColor.controlBackgroundColor))
-                .cornerRadius(8)
-
-                Spacer()
             }
             .padding()
+            .background(Color(NSColor.controlBackgroundColor))
+            .cornerRadius(8)
+
+            // Format Conversions Section
+            VStack(spacing: 0) {
+                Text("Format Conversions")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.bottom, 12)
+
+                Divider()
+
+                // HEX
+                formatRow(
+                    label: "HEX",
+                    value: $hexValue,
+                    placeholder: "#RRGGBB or #RRGGBBAA",
+                    onChange: { updateColorFromHex(hexValue) }
+                )
+
+                Divider()
+
+                // RGB
+                formatRow(
+                    label: "RGB",
+                    value: $rgbValue,
+                    placeholder: "rgb(r, g, b)",
+                    onChange: { updateColorFromRGB(rgbValue) }
+                )
+
+                Divider()
+
+                // RGBA
+                formatRow(
+                    label: "RGBA",
+                    value: $rgbaValue,
+                    placeholder: "rgba(r, g, b, a)",
+                    onChange: { updateColorFromRGBA(rgbaValue) }
+                )
+
+                Divider()
+
+                // HSL
+                formatRow(
+                    label: "HSL",
+                    value: $hslValue,
+                    placeholder: "hsl(h, s%, l%)",
+                    onChange: { updateColorFromHSL(hslValue) }
+                )
+
+                Divider()
+
+                // HSLA
+                formatRow(
+                    label: "HSLA",
+                    value: $hslaValue,
+                    placeholder: "hsla(h, s%, l%, a)",
+                    onChange: { updateColorFromHSLA(hslaValue) }
+                )
+
+                Divider()
+
+                // HSB
+                formatRow(
+                    label: "HSB",
+                    value: $hsbValue,
+                    placeholder: "hsb(h, s%, b%)",
+                    onChange: { updateColorFromHSB(hsbValue) }
+                )
+
+                Divider()
+
+                // CMYK
+                formatRow(
+                    label: "CMYK",
+                    value: $cmykValue,
+                    placeholder: "cmyk(c%, m%, y%, k%)",
+                    onChange: { updateColorFromCMYK(cmykValue) }
+                )
+
+                Divider()
+
+                // Tip message
+                HStack {
+                    Image(systemName: "lightbulb.fill")
+                        .foregroundColor(.orange)
+                    Text("Tip: You can edit any format value above to change the color")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                .padding(.vertical, 20)
+            }
+            .padding()
+            .background(Color(NSColor.controlBackgroundColor))
+            .cornerRadius(8)
+
+            Spacer()
         }
+        .padding()
         .navigationTitle(screenName)
         .onAppear {
             loadState()

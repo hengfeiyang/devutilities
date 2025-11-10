@@ -387,6 +387,7 @@ extension ToolType {
         case .hexString: return "hex_string_converter"
         case .regexTest: return "regex_test"
         case .uuidGenerator: return "uuid_generator"
+        case .randomString: return "random_string"
         case .urlTools: return "url_tools"
         case .ipQuery: return "ip_query"
         case .httpRequest: return "http_request"

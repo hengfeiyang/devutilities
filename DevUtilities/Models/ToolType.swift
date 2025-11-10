@@ -31,6 +31,7 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
     case jwt = "jwt"
     case regexTest = "regex"
     case uuidGenerator = "uuid"
+    case randomString = "random-string"
     case cryptoTools = "crypto"
     case urlTools = "url"
     case httpRequest = "http"
@@ -70,6 +71,8 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
             return "Regex Test"
         case .uuidGenerator:
             return "UUID Generator"
+        case .randomString:
+            return "Random String"
         case .cryptoTools:
             return "Crypto Tools"
         case .urlTools:
@@ -115,6 +118,8 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
             return "magnifyingglass"
         case .uuidGenerator:
             return "dice"
+        case .randomString:
+            return "chart.dots.scatter"
         case .cryptoTools:
             return "lock.shield"
         case .urlTools:

@@ -130,6 +130,8 @@ struct ContentView: View {
                     RegexTestView()
                 case .uuidGenerator:
                     UUIDGeneratorView()
+                case .randomString:
+                    RandomStringView()
                 case .cryptoTools:
                     CryptoToolsView()
                 case .urlTools:

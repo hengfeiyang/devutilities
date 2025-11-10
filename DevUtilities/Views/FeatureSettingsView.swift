@@ -209,6 +209,7 @@ struct FeatureCard: View {
         case .jwt: return "JWT"
         case .regexTest: return "Regex"
         case .uuidGenerator: return "UUID"
+        case .randomString: return "Random"
         case .cryptoTools: return "Crypto"
         case .urlTools: return "URL"
         case .httpRequest: return "HTTP"

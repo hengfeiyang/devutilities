@@ -67,6 +67,9 @@
 		PQ3DE90A2C5A1B3000234567 /* ParquetViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = PQ3DE9092C5A1B3000234567 /* ParquetViewerView.swift */; };
 		QR2CE8092C5A1B3000123456 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = QR2CE8082C5A1B3000123456 /* QRCodeView.swift */; };
 		SQL8E8092C5A1B3000123457 /* SQLFormatterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SQL8E8082C5A1B3000123457 /* SQLFormatterView.swift */; };
+		D5D7233B349D652C5A1B3000123456 /* RandomStringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59F4A10B6E7B92C5A1B3000123456 /* RandomStringView.swift */; };
+		D55EA880013AC12C5A1B3000123456 /* RandomStringConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C36719A405D2C5A1B3000123456 /* RandomStringConfig.swift */; };
+		D5475F403A461C2C5A1B3000123456 /* RandomStringGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50B1BC668DF802C5A1B3000123456 /* RandomStringGenerator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -145,6 +148,9 @@
 		PQ3DE9092C5A1B3000234567 /* ParquetViewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParquetViewerView.swift; sourceTree = "<group>"; };
 		QR2CE8082C5A1B3000123456 /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		SQL8E8082C5A1B3000123457 /* SQLFormatterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLFormatterView.swift; sourceTree = "<group>"; };
+		D59F4A10B6E7B92C5A1B3000123456 /* RandomStringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStringView.swift; sourceTree = "<group>"; };
+		D53C36719A405D2C5A1B3000123456 /* RandomStringConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStringConfig.swift; sourceTree = "<group>"; };
+		D50B1BC668DF802C5A1B3000123456 /* RandomStringGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStringGenerator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +191,7 @@
 				93B55B4A2E5EF944001ECD91 /* EventManager.swift */,
 				93B55B4B2E5EF944001ECD91 /* EventNetworkService.swift */,
 				93B55B4C2E5EF944001ECD91 /* EventStorage.swift */,
+				D50B1BC668DF802C5A1B3000123456 /* RandomStringGenerator.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -252,6 +259,7 @@
 				BB51B2D620B842BA9AEC226E /* BaseConverterView.swift */,
 				D5F4E80B2C5A1B3000123456 /* RegexTestView.swift */,
 				D5F4E80D2C5A1B3000123456 /* UUIDGeneratorView.swift */,
+				D59F4A10B6E7B92C5A1B3000123456 /* RandomStringView.swift */,
 				D5F4E80F2C5A1B3000123456 /* URLToolsView.swift */,
 				B822A4CAC32A426BA9E4E438123457 /* IPQueryView.swift */,
 				HTTP4E7F2C5A1B3000654322 /* HTTPRequestView.swift */,
@@ -275,6 +283,7 @@
 				93DE0EA72E7AB9F200731598 /* AIProvider.swift */,
 				93CECFE42E612F2000F5A131 /* AIModels.swift */,
 				D5F4E8112C5A1B3000123456 /* ToolType.swift */,
+				D53C36719A405D2C5A1B3000123456 /* RandomStringConfig.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -419,6 +428,9 @@
 				81E0D1F12E8D518E00F2A91A /* TranslationMode.swift in Sources */,
 				93DE0EB22E7ABA1900731598 /* AddProviderView.swift in Sources */,
 				93B500A02E5D81D500F38E50 /* ParquetViewer.swift in Sources */,
+				D5D7233B349D652C5A1B3000123456 /* RandomStringView.swift in Sources */,
+				D55EA880013AC12C5A1B3000123456 /* RandomStringConfig.swift in Sources */,
+				D5475F403A461C2C5A1B3000123456 /* RandomStringGenerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -560,7 +572,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 62;
+				CURRENT_PROJECT_VERSION = 63;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -584,7 +596,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 2.8.2;
+				MARKETING_VERSION = 2.9.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.devutilities;
 				PRODUCT_NAME = DevUtilities;
@@ -602,7 +614,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 62;
+				CURRENT_PROJECT_VERSION = 63;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -626,7 +638,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 2.8.2;
+				MARKETING_VERSION = 2.9.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.devutilities;
 				PRODUCT_NAME = DevUtilities;

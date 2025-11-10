@@ -1,7 +1,7 @@
 # DevUtilities - Design Document
 
 ## Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 20 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+DevUtilities is a native macOS application built with SwiftUI that provides 21 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
 
 ## Architecture
 
@@ -17,10 +17,11 @@ DevUtilities/
 │   ├── Models/
 │   │   ├── ToolType.swift          # Tool definitions
 │   │   ├── FeatureManager.swift    # Feature preferences management
-│   │   ├── TranslationLanguage.swift   # NEW: 19 language definitions + TTS mapping (v2.8.2)
-│   │   ├── TranslationMode.swift       # NEW: 3 translation modes
-│   │   └── TranslationPrompts.swift    # NEW: Prompt generation logic
-│   ├── Views/                      # All 20 tool implementations
+│   │   ├── TranslationLanguage.swift   # 19 language definitions + TTS mapping
+│   │   ├── TranslationMode.swift       # 3 translation modes
+│   │   ├── TranslationPrompts.swift    # Prompt generation logic
+│   │   └── RandomStringConfig.swift    # NEW: Random string configuration (v2.9.0)
+│   ├── Views/                      # All 21 tool implementations
 │   │   ├── TimestampConverterView.swift
 │   │   ├── UnitConverterView.swift
 │   │   ├── BaseConverterView.swift
@@ -30,6 +31,7 @@ DevUtilities/
 │   │   ├── HexStringConverterView.swift
 │   │   ├── RegexTestView.swift
 │   │   ├── UUIDGeneratorView.swift
+│   │   ├── RandomStringView.swift       # NEW: Random string generator (v2.9.0)
 │   │   ├── URLToolsView.swift
 │   │   ├── IPQueryView.swift
 │   │   ├── HTTPRequestView.swift
@@ -51,7 +53,8 @@ DevUtilities/
 │   │   ├── ChatManager.swift       # AI chat session management
 │   │   ├── ProviderManager.swift   # API provider configuration
 │   │   ├── EventManager.swift      # Analytics and telemetry
-│   │   └── AVSpeechService.swift   # NEW: Text-to-speech engine (v2.8.2)
+│   │   ├── AVSpeechService.swift   # Text-to-speech engine
+│   │   └── RandomStringGenerator.swift # NEW: Secure random generation (v2.9.0)
 │   ├── Assets.xcassets/            # App icons and assets
 │   ├── Preview Content/            # SwiftUI preview assets
 │   └── DevUtilities.entitlements      # App sandbox permissions

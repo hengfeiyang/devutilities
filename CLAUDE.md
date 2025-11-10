@@ -3,11 +3,11 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 20 essential developer utilities. Version 2.8.2 with Text-to-Speech (TTS) support for AI Translate.
+DevUtilities is a native macOS application built with SwiftUI that provides 21 essential developer utilities. Version 2.9.0 with Random String Generator.
 
 ## Key Tools & Status
 
-All 20 tools are ✅ **Complete**:
+All 21 tools are ✅ **Complete**:
 1. **Timestamp Converter** - Bidirectional timestamp conversion with timezone support
 2. **Unit Converter** - 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
 3. **Base Converter** - Mutual conversion between binary, octal, decimal, hexadecimal, and Base62 number systems
@@ -17,17 +17,18 @@ All 20 tools are ✅ **Complete**:
 7. **Hex String Converter** - Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support
 8. **Regex Test** - Pattern matching with capture groups and common patterns
 9. **UUID Generator** - Multiple versions (v1, v4, v5, v7) with bulk generation
-10. **URL Tools** - Encoding/decoding and comprehensive URL parsing
-11. **IP Query** - Dual IP detection and geolocation queries
-12. **HTTP Request** - Full HTTP client with SSE streaming and JSON tree view
-13. **QR Code** - Generation and scanning with multiple sizes and error correction
-14. **SQL Formatter** - **Enhanced SQL formatting** with native ParquetViewer library support for minimal and beautify modes
-15. **HTML Formatter** - Format and minify HTML with proper indentation
-16. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
-17. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
-18. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
-19. **AI Chat** - **Enhanced AI assistant** with custom model support, DeepSeek reasoning models, and flexible API configuration
-20. **AI Translate** - **NEW TTS** Professional translation with 3 modes, 19 languages, text-to-speech support, and word mode
+10. **Random String Generator** - **NEW** Cryptographically secure random string generation with customizable character sets, presets, and requirements
+11. **URL Tools** - Encoding/decoding and comprehensive URL parsing
+12. **IP Query** - Dual IP detection and geolocation queries
+13. **HTTP Request** - Full HTTP client with SSE streaming and JSON tree view
+14. **QR Code** - Generation and scanning with multiple sizes and error correction
+15. **SQL Formatter** - **Enhanced SQL formatting** with native ParquetViewer library support for minimal and beautify modes
+16. **HTML Formatter** - Format and minify HTML with proper indentation
+17. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
+18. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
+19. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
+20. **AI Chat** - **Enhanced AI assistant** with custom model support, DeepSeek reasoning models, and flexible API configuration
+21. **AI Translate** - Professional translation with 3 modes, 19 languages, text-to-speech support, and word mode
 
 ## Architecture & Technical Stack
 - **Platform**: macOS 14.0+ SwiftUI
@@ -47,6 +48,16 @@ xcodebuild -project DevUtilities.xcodeproj -scheme DevUtilities build
 # Using MCP tools
 mcp__XcodeBuildMCP__build_run_macos
 ```
+
+## Recent Updates (v2.9.0)
+- **Random String Generator**: NEW tool for cryptographically secure random string generation
+- **Customizable Character Sets**: Support for uppercase, lowercase, numbers, and symbols
+- **Preset Templates**: 5 built-in presets (Strong Password, API Key, Hex String, PIN Code, Readable Code)
+- **Advanced Requirements**: Optional requirements for minimum uppercase, numbers, or symbols
+- **Bulk Generation**: Generate up to 20 random strings at once
+- **Length Control**: Configurable string length from 1 to 100 characters
+- **Secure Randomness**: Uses SecRandomCopyBytes for cryptographically secure random generation
+- **21 Essential Tools**: Complete developer toolkit with all essential utilities
 
 ## Recent Updates (v2.8.2)
 - **Text-to-Speech (TTS)**: Integrated native macOS TTS in AI Translate for both input and output text
