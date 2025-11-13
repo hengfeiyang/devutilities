@@ -55,12 +55,14 @@ optional_sources=(
     "screenshots/8-http.png"
     "screenshots/9-parquet.png"
     "screenshots/10-color-picker.png"
+    "screenshots/11-random-string.png"
 )
 
 optional_names=(
     "08_http_request_client"
     "09_parquet_viewer"
     "10_color_picker"
+    "11_random_string_generator"
 )
 
 echo -e "${YELLOW}Resizing priority screenshots (1-7)...${NC}"
