@@ -49,6 +49,9 @@
 		93DE0EB12E7ABA1900731598 /* AddModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EAB2E7ABA1900731598 /* AddModelView.swift */; };
 		93DE0EB22E7ABA1900731598 /* AddProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EAC2E7ABA1900731598 /* AddProviderView.swift */; };
 		B41BCA88D09D488EA2A4ABAC /* CryptoToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41BCA88D09D488EA2A4ABAB /* CryptoToolsView.swift */; };
+		D5475F403A461C2C5A1B3000123456 /* RandomStringGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50B1BC668DF802C5A1B3000123456 /* RandomStringGenerator.swift */; };
+		D55EA880013AC12C5A1B3000123456 /* RandomStringConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C36719A405D2C5A1B3000123456 /* RandomStringConfig.swift */; };
+		D5D7233B349D652C5A1B3000123456 /* RandomStringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59F4A10B6E7B92C5A1B3000123456 /* RandomStringView.swift */; };
 		D5F4E7F62C5A1B2E00123456 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4E7F52C5A1B2E00123456 /* ContentView.swift */; };
 		D5F4E7F82C5A1B2F00123456 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5F4E7F72C5A1B2F00123456 /* Assets.xcassets */; };
 		D5F4E7FB2C5A1B2F00123456 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5F4E7FA2C5A1B2F00123456 /* Preview Assets.xcassets */; };
@@ -67,9 +70,6 @@
 		PQ3DE90A2C5A1B3000234567 /* ParquetViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = PQ3DE9092C5A1B3000234567 /* ParquetViewerView.swift */; };
 		QR2CE8092C5A1B3000123456 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = QR2CE8082C5A1B3000123456 /* QRCodeView.swift */; };
 		SQL8E8092C5A1B3000123457 /* SQLFormatterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SQL8E8082C5A1B3000123457 /* SQLFormatterView.swift */; };
-		D5D7233B349D652C5A1B3000123456 /* RandomStringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59F4A10B6E7B92C5A1B3000123456 /* RandomStringView.swift */; };
-		D55EA880013AC12C5A1B3000123456 /* RandomStringConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C36719A405D2C5A1B3000123456 /* RandomStringConfig.swift */; };
-		D5475F403A461C2C5A1B3000123456 /* RandomStringGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50B1BC668DF802C5A1B3000123456 /* RandomStringGenerator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -129,6 +129,9 @@
 		B822A4CAC32A426BA9E4E438123457 /* IPQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPQueryView.swift; sourceTree = "<group>"; };
 		BB51B2D620B842BA9AEC226E /* BaseConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseConverterView.swift; sourceTree = "<group>"; };
 		C66E3643B7264A049FA9EFDF /* HexStringConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexStringConverterView.swift; sourceTree = "<group>"; };
+		D50B1BC668DF802C5A1B3000123456 /* RandomStringGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStringGenerator.swift; sourceTree = "<group>"; };
+		D53C36719A405D2C5A1B3000123456 /* RandomStringConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStringConfig.swift; sourceTree = "<group>"; };
+		D59F4A10B6E7B92C5A1B3000123456 /* RandomStringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStringView.swift; sourceTree = "<group>"; };
 		D5F4E7F02C5A1B2E00123456 /* DevUtilities.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevUtilities.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5F4E7F52C5A1B2E00123456 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D5F4E7F72C5A1B2F00123456 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -148,9 +151,6 @@
 		PQ3DE9092C5A1B3000234567 /* ParquetViewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParquetViewerView.swift; sourceTree = "<group>"; };
 		QR2CE8082C5A1B3000123456 /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		SQL8E8082C5A1B3000123457 /* SQLFormatterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLFormatterView.swift; sourceTree = "<group>"; };
-		D59F4A10B6E7B92C5A1B3000123456 /* RandomStringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStringView.swift; sourceTree = "<group>"; };
-		D53C36719A405D2C5A1B3000123456 /* RandomStringConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStringConfig.swift; sourceTree = "<group>"; };
-		D50B1BC668DF802C5A1B3000123456 /* RandomStringGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStringGenerator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -572,7 +572,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 63;
+				CURRENT_PROJECT_VERSION = 64;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -614,7 +614,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 63;
+				CURRENT_PROJECT_VERSION = 64;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;

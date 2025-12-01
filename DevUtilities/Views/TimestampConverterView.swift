@@ -182,6 +182,7 @@ struct TimestampConverterView: View {
                     Button("Current Date") {
                         let formatter = DateFormatter()
                         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                        formatter.timeZone = isLocalTime ? TimeZone.current : TimeZone(abbreviation: "UTC")
                         dateInput = formatter.string(from: Date())
                     }
                     .buttonStyle(.bordered)
