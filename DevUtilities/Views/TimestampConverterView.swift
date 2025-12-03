@@ -399,18 +399,29 @@ struct TimestampConverterView: View {
             convertedTimestamp = ""
             return
         }
-        
+
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
+        formatter.isLenient = false  // Strict date parsing
+
         if isLocalTime {
             formatter.timeZone = TimeZone.current
         } else {
             formatter.timeZone = TimeZone(abbreviation: "UTC")
         }
-        
+
         if let date = formatter.date(from: dateString) {
             let timestamp = Int64(date.timeIntervalSince1970)
+
+            // Validate timestamp range to prevent overflow
+            let maxSafeTimestamp: Int64 = Int64.max / 1_000_000_000
+            let minSafeTimestamp: Int64 = Int64.min / 1_000_000_000
+
+            if timestamp > maxSafeTimestamp || timestamp < minSafeTimestamp {
+                convertedTimestamp = "Date is out of supported range"
+                return
+            }
+
             convertedTimestamp = generateTimestampResult(timestamp)
 
             // Add to history
@@ -422,7 +433,7 @@ struct TimestampConverterView: View {
             )
             historyManager.addEntry(historyEntry)
         } else {
-            convertedTimestamp = "Invalid date format. Use: YYYY-MM-DD HH:MM:SS"
+            convertedTimestamp = "Invalid date format. Use: YYYY-MM-DD HH:MM:SS (example: 2025-02-01 21:44:45)"
         }
     }
     
@@ -456,14 +467,40 @@ struct TimestampConverterView: View {
     }
     
     private func generateTimestampResult(_ timestamp: Int64) -> String {
+        // Use checked multiplication to prevent overflow
+        let milliseconds: String
+        let microseconds: String
+        let nanoseconds: String
+
+        let msResult = timestamp.multipliedReportingOverflow(by: 1000)
+        if !msResult.overflow {
+            milliseconds = "\(msResult.partialValue)"
+        } else {
+            milliseconds = "Overflow"
+        }
+
+        let usResult = timestamp.multipliedReportingOverflow(by: 1_000_000)
+        if !usResult.overflow {
+            microseconds = "\(usResult.partialValue)"
+        } else {
+            microseconds = "Overflow"
+        }
+
+        let nsResult = timestamp.multipliedReportingOverflow(by: 1_000_000_000)
+        if !nsResult.overflow {
+            nanoseconds = "\(nsResult.partialValue)"
+        } else {
+            nanoseconds = "Overflow"
+        }
+
         return """
         Seconds: \(timestamp)
-        
-        Milliseconds: \(timestamp * 1000)
-        
-        Microseconds: \(timestamp * 1_000_000)
-        
-        Nanoseconds: \(timestamp * 1_000_000_000)
+
+        Milliseconds: \(milliseconds)
+
+        Microseconds: \(microseconds)
+
+        Nanoseconds: \(nanoseconds)
         """
     }
     
