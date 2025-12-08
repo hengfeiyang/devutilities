@@ -632,6 +632,7 @@ struct TimestampConverterView: View {
         defaults.set(convertedDate, forKey: "TimestampConverter.convertedDate")
         defaults.set(convertedTimestamp, forKey: "TimestampConverter.convertedTimestamp")
         defaults.set(isLocalTime, forKey: "TimestampConverter.isLocalTime")
+        defaults.set(showHistory, forKey: "TimestampConverter.showHistory")
     }
     
     private func loadState() {
@@ -641,7 +642,8 @@ struct TimestampConverterView: View {
         convertedDate = defaults.string(forKey: "TimestampConverter.convertedDate") ?? ""
         convertedTimestamp = defaults.string(forKey: "TimestampConverter.convertedTimestamp") ?? ""
         isLocalTime = defaults.bool(forKey: "TimestampConverter.isLocalTime")
-        
+        showHistory = defaults.bool(forKey: "TimestampConverter.showHistory")
+
         // If we have initial values, trigger conversions
         if !timestampInput.isEmpty {
             convertTimestampToDate(timestampInput)
