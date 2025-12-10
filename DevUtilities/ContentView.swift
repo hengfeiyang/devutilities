@@ -98,7 +98,7 @@ struct ContentView: View {
                         .tag(tool)
                 }
             }
-            .navigationSplitViewColumnWidth(min: 220, ideal: 220, max: 300)
+            .navigationSplitViewColumnWidth(min: 220, ideal: 220, max: 220)
         } detail: {
             Group {
                 switch selectedTool {
