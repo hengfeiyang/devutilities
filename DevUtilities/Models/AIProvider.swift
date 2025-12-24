@@ -47,6 +47,37 @@ struct AIProvider: Identifiable, Codable, Hashable {
         self.lastTested = nil
     }
 
+    // Custom Codable implementation to handle missing lastTested field
+    enum CodingKeys: String, CodingKey {
+        case id, name, baseURL, apiKey, isBuiltIn, isActive, models, createdAt, lastTested
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        baseURL = try container.decode(String.self, forKey: .baseURL)
+        apiKey = try container.decode(String.self, forKey: .apiKey)
+        isBuiltIn = try container.decode(Bool.self, forKey: .isBuiltIn)
+        isActive = try container.decode(Bool.self, forKey: .isActive)
+        models = try container.decode([AIModelV2].self, forKey: .models)
+        createdAt = try container.decode(Date.self, forKey: .createdAt)
+        lastTested = try container.decodeIfPresent(Date.self, forKey: .lastTested)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(baseURL, forKey: .baseURL)
+        try container.encode(apiKey, forKey: .apiKey)
+        try container.encode(isBuiltIn, forKey: .isBuiltIn)
+        try container.encode(isActive, forKey: .isActive)
+        try container.encode(models, forKey: .models)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encodeIfPresent(lastTested, forKey: .lastTested)
+    }
+
     var statusColor: String {
         if !isActive { return "red" }
         if lastTested == nil { return "yellow" }

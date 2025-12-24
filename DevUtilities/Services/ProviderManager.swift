@@ -141,18 +141,18 @@ class ProviderManager {
 
     // MARK: - Connection Testing
 
-    func testProviderConnection(_ provider: AIProvider) async -> Bool {
+    func testProviderConnection(_ provider: AIProvider) async -> (success: Bool, message: String?) {
         // Use the API key from the provider parameter if available, otherwise get from keychain
         let apiKey = !provider.apiKey.isEmpty ? provider.apiKey : (getAPIKey(for: provider.id) ?? "")
 
         guard !apiKey.isEmpty else {
-            return false
+            return (false, "API key is empty")
         }
 
         // Test connection by calling the /models endpoint (OpenAI-compatible)
         let baseURL = provider.baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
         guard let url = URL(string: "\(baseURL)/models") else {
-            return false
+            return (false, "Invalid base URL")
         }
 
         var request = URLRequest(url: url)
@@ -162,10 +162,10 @@ class ProviderManager {
         request.timeoutInterval = 10
 
         do {
-            let (_, response) = try await URLSession.shared.data(for: request)
+            let (data, response) = try await URLSession.shared.data(for: request)
 
             guard let httpResponse = response as? HTTPURLResponse else {
-                return false
+                return (false, "Invalid HTTP response")
             }
 
             // Consider 200-299 status codes as success
@@ -177,10 +177,20 @@ class ProviderManager {
                 saveProviders()
             }
 
-            return success
+            if !success {
+                // Try to extract error message from response
+                if let errorJson = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                   let error = errorJson["error"] as? [String: Any],
+                   let message = error["message"] as? String {
+                    return (false, "HTTP \(httpResponse.statusCode): \(message)")
+                }
+                return (false, "HTTP status code: \(httpResponse.statusCode)")
+            }
+
+            return (true, nil)
         } catch {
             // Network error or timeout
-            return false
+            return (false, "Network error: \(error.localizedDescription)")
         }
     }
 

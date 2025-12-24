@@ -58,10 +58,7 @@ struct AIProviderSettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var selectedItem: AISettingsItem? = .general
     @State private var showingAddProvider = false
-
-    private var providerManager: ProviderManager {
-        ProviderManager.shared
-    }
+    @State private var providerManager = ProviderManager.shared
 
     var body: some View {
         NavigationSplitView {

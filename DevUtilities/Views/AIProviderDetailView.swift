@@ -25,6 +25,7 @@ struct AIProviderDetailView: View {
     @State private var showingKeySecurely = false
     @State private var isTestingConnection = false
     @State private var testResult: Bool?
+    @State private var testErrorMessage: String?
     @State private var showingAddModel = false
     @State private var editingModel: AIModelV2?
 
@@ -57,6 +58,7 @@ struct AIProviderDetailView: View {
             if let provider = newProvider {
                 loadProviderData(from: provider)
                 testResult = nil
+                testErrorMessage = nil
             }
         }
     }
@@ -130,12 +132,19 @@ struct AIProviderDetailView: View {
                             }
 
                             if let testResult = testResult {
-                                HStack {
+                                HStack(alignment: .top) {
                                     Image(systemName: testResult ? "checkmark.circle.fill" : "xmark.circle.fill")
                                         .foregroundColor(testResult ? .green : .red)
-                                    Text(testResult ? "Connection successful" : "Connection failed")
-                                        .font(.caption)
-                                        .foregroundColor(testResult ? .green : .red)
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(testResult ? "Connection successful" : "Connection failed")
+                                            .font(.caption)
+                                            .foregroundColor(testResult ? .green : .red)
+                                        if !testResult, let errorMessage = testErrorMessage {
+                                            Text(errorMessage)
+                                                .font(.caption2)
+                                                .foregroundColor(.secondary)
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -296,21 +305,24 @@ struct AIProviderDetailView: View {
     private func testConnection() {
         guard var provider = currentProvider else { return }
 
-        // Save the changed information first
-        saveProvider()
-
-        // Use current input values for testing
+        // Update provider with current form values (without the delay from saveProvider)
+        provider.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
         provider.baseURL = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
         provider.apiKey = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
 
+        // Save immediately before testing
+        providerManager.updateProvider(provider)
+
         isTestingConnection = true
         testResult = nil
+        testErrorMessage = nil
 
         Task {
-            let result = await providerManager.testProviderConnection(provider)
+            let (success, message) = await providerManager.testProviderConnection(provider)
 
             await MainActor.run {
-                testResult = result
+                testResult = success
+                testErrorMessage = message
                 isTestingConnection = false
             }
         }
