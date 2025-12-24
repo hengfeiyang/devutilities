@@ -170,8 +170,8 @@ extension AIProvider {
 
         // GPT-5 Series
         let gpt5 = AIModelV2(
-            name: "GPT-5.1",
-            modelId: "gpt-5.1",
+            name: "GPT-5.2",
+            modelId: "gpt-5.2",
             capabilities: ModelCapabilities(
                 supportsStreaming: true,
                 supportsFunctionCalls: true,
