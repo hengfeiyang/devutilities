@@ -34,6 +34,7 @@ struct CurrencyConverterView: View {
     @State private var change24h: Double = 0.0
     @State private var changePercent24h: Double = 0.0
     @State private var lastCurrencyPair: String = ""
+    @State private var isInitialLoad: Bool = true
 
     var body: some View {
         ScrollView {
@@ -48,13 +49,17 @@ struct CurrencyConverterView: View {
                         }
                         .pickerStyle(MenuPickerStyle())
                         .onChange(of: fromCurrency) { _, _ in
-                            performConversion()
+                            if !isInitialLoad {
+                                performConversion()
+                            }
                         }
 
                         TextField("Amount", text: $inputAmount)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .onChange(of: inputAmount) { _, _ in
-                                performConversion()
+                                if !isInitialLoad {
+                                    performConversion()
+                                }
                             }
 
                         // Sample amount buttons
@@ -90,7 +95,9 @@ struct CurrencyConverterView: View {
                         }
                         .pickerStyle(MenuPickerStyle())
                         .onChange(of: toCurrency) { _, _ in
-                            performConversion()
+                            if !isInitialLoad {
+                                performConversion()
+                            }
                         }
 
                         TextField("Result", text: $outputAmount)
@@ -253,6 +260,7 @@ struct CurrencyConverterView: View {
         .navigationTitle("\(screenName)")
         .onAppear {
             loadState()
+            isInitialLoad = false
             performConversion()
         }
         .onDisappear {
