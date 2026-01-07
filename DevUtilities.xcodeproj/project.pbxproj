@@ -15,6 +15,10 @@
 		816683ED2EADF7FC0050027B /* SpeakerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816683EA2EADF7FC0050027B /* SpeakerButton.swift */; };
 		818449F62E90D8E200398FEC /* DevUtilitiesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818449F52E90D8E200398FEC /* DevUtilitiesApp.swift */; };
 		8191E97B2EA524730035ADC7 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8191E97A2EA524730035ADC7 /* ColorPickerView.swift */; };
+		81A270AC2F0E13FD009C40D8 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A270AA2F0E13FD009C40D8 /* Currency.swift */; };
+		81A270AD2F0E13FD009C40D8 /* ExchangeRateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A270AB2F0E13FD009C40D8 /* ExchangeRateData.swift */; };
+		81A270AF2F0E140C009C40D8 /* CurrencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A270AE2F0E140C009C40D8 /* CurrencyService.swift */; };
+		81A270B12F0E141D009C40D8 /* CurrencyConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A270B02F0E141D009C40D8 /* CurrencyConverterView.swift */; };
 		81E0D1EE2E8D518E00F2A91A /* TranslationLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E0D1EB2E8D518E00F2A91A /* TranslationLanguage.swift */; };
 		81E0D1EF2E8D518E00F2A91A /* TranslationPrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E0D1ED2E8D518E00F2A91A /* TranslationPrompts.swift */; };
 		81E0D1F12E8D518E00F2A91A /* TranslationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E0D1EC2E8D518E00F2A91A /* TranslationMode.swift */; };
@@ -96,6 +100,10 @@
 		818449F42E90D8E200398FEC /* DevUtilities.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevUtilities.entitlements; sourceTree = "<group>"; };
 		818449F52E90D8E200398FEC /* DevUtilitiesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevUtilitiesApp.swift; sourceTree = "<group>"; };
 		8191E97A2EA524730035ADC7 /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
+		81A270AA2F0E13FD009C40D8 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		81A270AB2F0E13FD009C40D8 /* ExchangeRateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateData.swift; sourceTree = "<group>"; };
+		81A270AE2F0E140C009C40D8 /* CurrencyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyService.swift; sourceTree = "<group>"; };
+		81A270B02F0E141D009C40D8 /* CurrencyConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterView.swift; sourceTree = "<group>"; };
 		81E0D1EB2E8D518E00F2A91A /* TranslationLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationLanguage.swift; sourceTree = "<group>"; };
 		81E0D1EC2E8D518E00F2A91A /* TranslationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationMode.swift; sourceTree = "<group>"; };
 		81E0D1ED2E8D518E00F2A91A /* TranslationPrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationPrompts.swift; sourceTree = "<group>"; };
@@ -180,6 +188,7 @@
 		93B55B4D2E5EF944001ECD91 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				81A270AE2F0E140C009C40D8 /* CurrencyService.swift */,
 				816683E82EADF7E70050027B /* AVSpeechService.swift */,
 				93DE0EA92E7ABA0300731598 /* ProviderManager.swift */,
 				93DB98A22E635E5200E70747 /* ImageStorageService.swift */,
@@ -242,6 +251,7 @@
 		D5F4E8132C5A1B3000123456 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				81A270B02F0E141D009C40D8 /* CurrencyConverterView.swift */,
 				8191E97A2EA524730035ADC7 /* ColorPickerView.swift */,
 				81E0D1F22E8D51B200F2A91A /* AITranslateView.swift */,
 				813459532E8A95FA003222BC /* FeatureSettingsView.swift */,
@@ -276,6 +286,8 @@
 		D5F4E8142C5A1B3000123456 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				81A270AA2F0E13FD009C40D8 /* Currency.swift */,
+				81A270AB2F0E13FD009C40D8 /* ExchangeRateData.swift */,
 				81E0D1EB2E8D518E00F2A91A /* TranslationLanguage.swift */,
 				81E0D1EC2E8D518E00F2A91A /* TranslationMode.swift */,
 				81E0D1ED2E8D518E00F2A91A /* TranslationPrompts.swift */,
@@ -379,6 +391,7 @@
 				81E0D1F32E8D51B200F2A91A /* AITranslateView.swift in Sources */,
 				93A6A9212E588B98006A2798 /* Constants.swift in Sources */,
 				D5F4E8022C5A1B3000123456 /* TimestampConverterView.swift in Sources */,
+				81A270B12F0E141D009C40D8 /* CurrencyConverterView.swift in Sources */,
 				D5F4E8042C5A1B3000123456 /* UnitConverterView.swift in Sources */,
 				D5F4E8062C5A1B3000123456 /* JSONFormatterView.swift in Sources */,
 				D5F4E8082C5A1B3000123456 /* Base64View.swift in Sources */,
@@ -400,6 +413,8 @@
 				93CECFE82E612F2B00F5A131 /* AISettingsView.swift in Sources */,
 				93CECFE92E612F2B00F5A131 /* AIChatView.swift in Sources */,
 				D5F4E8122C5A1B3000123456 /* ToolType.swift in Sources */,
+				81A270AC2F0E13FD009C40D8 /* Currency.swift in Sources */,
+				81A270AD2F0E13FD009C40D8 /* ExchangeRateData.swift in Sources */,
 				D5F4E8162C5A1B3000123456 /* TextEditor.swift in Sources */,
 				QR2CE8092C5A1B3000123456 /* QRCodeView.swift in Sources */,
 				PQ3DE90A2C5A1B3000234567 /* ParquetViewerView.swift in Sources */,
@@ -414,6 +429,7 @@
 				813459522E8A95EA003222BC /* FeatureManager.swift in Sources */,
 				93B55B4F2E5EF944001ECD91 /* EventStorage.swift in Sources */,
 				93B55B502E5EF944001ECD91 /* EventManager.swift in Sources */,
+				81A270AF2F0E140C009C40D8 /* CurrencyService.swift in Sources */,
 				93B55B512E5EF944001ECD91 /* AppEvent.swift in Sources */,
 				93B55B522E5EF944001ECD91 /* EventNetworkService.swift in Sources */,
 				D5F4E7F62C5A1B2E00123456 /* ContentView.swift in Sources */,
@@ -572,7 +588,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 67;
+				CURRENT_PROJECT_VERSION = 68;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -587,7 +603,7 @@
 				INFOPLIST_KEY_CFBundleName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_LSMinimumSystemVersion = 14.0;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Hengfei Yang. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Hengfei Yang. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -596,7 +612,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 2.9.3;
+				MARKETING_VERSION = 2.10.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.devutilities;
 				PRODUCT_NAME = DevUtilities;
@@ -614,7 +630,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 67;
+				CURRENT_PROJECT_VERSION = 68;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -629,7 +645,7 @@
 				INFOPLIST_KEY_CFBundleName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_LSMinimumSystemVersion = 14.0;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Hengfei Yang. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Hengfei Yang. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -638,7 +654,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 2.9.3;
+				MARKETING_VERSION = 2.10.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.devutilities;
 				PRODUCT_NAME = DevUtilities;

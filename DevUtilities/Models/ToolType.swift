@@ -1,4 +1,4 @@
-// Copyright 2025 Hengfei Yang.
+// Copyright 2026 Hengfei Yang.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
@@ -38,7 +38,8 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
     case ipQuery = "ip"
     case qrCode = "qrcode"
     case parquetViewer = "parquet"
-    
+    case currencyConverter = "currency"
+
     var id: String { rawValue }
     
     var title: String {
@@ -85,6 +86,8 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
             return "QR Code"
         case .parquetViewer:
             return "Parquet Viewer"
+        case .currencyConverter:
+            return "Currency Converter"
         }
     }
     
@@ -132,6 +135,8 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
             return "qrcode"
         case .parquetViewer:
             return "doc.text.magnifyingglass"
+        case .currencyConverter:
+            return "dollarsign.circle"
         }
     }
 }

@@ -1,4 +1,4 @@
-// Copyright 2025 Hengfei Yang.
+// Copyright 2026 Hengfei Yang.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
@@ -216,6 +216,7 @@ struct FeatureCard: View {
         case .ipQuery: return "IP"
         case .qrCode: return "QR"
         case .parquetViewer: return "Parquet"
+        case .currencyConverter: return "Currency"
         }
     }
 

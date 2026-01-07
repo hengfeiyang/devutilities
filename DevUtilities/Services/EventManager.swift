@@ -397,6 +397,7 @@ extension ToolType {
         case .jwt: return "jwt_codec"
         case .parquetViewer: return "parquet_viewer"
         case .cryptoTools: return "crypto_tools"
+        case .currencyConverter: return "currency_converter"
         }
     }
 }

@@ -1,7 +1,7 @@
 # DevUtilities - Design Document
 
 ## Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 21 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+DevUtilities is a native macOS application built with SwiftUI that provides 22 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
 
 ## Architecture
 
@@ -20,8 +20,10 @@ DevUtilities/
 │   │   ├── TranslationLanguage.swift   # 19 language definitions + TTS mapping
 │   │   ├── TranslationMode.swift       # 3 translation modes
 │   │   ├── TranslationPrompts.swift    # Prompt generation logic
-│   │   └── RandomStringConfig.swift    # NEW: Random string configuration (v2.9.0)
-│   ├── Views/                      # All 21 tool implementations
+│   │   ├── RandomStringConfig.swift    # Random string configuration (v2.9.0)
+│   │   ├── Currency.swift              # NEW: 38 currency definitions with flags (v2.10.0)
+│   │   └── ExchangeRateData.swift      # NEW: API response & cache models (v2.10.0)
+│   ├── Views/                      # All 22 tool implementations
 │   │   ├── TimestampConverterView.swift
 │   │   ├── UnitConverterView.swift
 │   │   ├── BaseConverterView.swift
@@ -42,7 +44,8 @@ DevUtilities/
 │   │   ├── ParquetViewerView.swift
 │   │   ├── CryptoToolsView.swift
 │   │   ├── AIChatView.swift
-│   │   ├── AITranslateView.swift       # NEW: AI translation interface
+│   │   ├── AITranslateView.swift       # AI translation interface
+│   │   ├── CurrencyConverterView.swift # NEW: Currency converter (v2.10.0)
 │   │   └── FeatureSettingsView.swift   # Feature management interface
 │   ├── Components/                 # Shared UI components
 │   │   ├── CodeEditor.swift        # CodeMirror integration & diff editor
@@ -54,7 +57,8 @@ DevUtilities/
 │   │   ├── ProviderManager.swift   # API provider configuration
 │   │   ├── EventManager.swift      # Analytics and telemetry
 │   │   ├── AVSpeechService.swift   # Text-to-speech engine
-│   │   └── RandomStringGenerator.swift # NEW: Secure random generation (v2.9.0)
+│   │   ├── RandomStringGenerator.swift # Secure random generation (v2.9.0)
+│   │   └── CurrencyService.swift   # NEW: Currency API & caching (v2.10.0)
 │   ├── Assets.xcassets/            # App icons and assets
 │   ├── Preview Content/            # SwiftUI preview assets
 │   └── DevUtilities.entitlements      # App sandbox permissions

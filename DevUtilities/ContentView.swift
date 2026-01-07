@@ -1,4 +1,4 @@
-// Copyright 2025 Hengfei Yang.
+// Copyright 2026 Hengfei Yang.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
@@ -144,6 +144,8 @@ struct ContentView: View {
                     QRCodeView()
                 case .parquetViewer:
                     ParquetViewerView()
+                case .currencyConverter:
+                    CurrencyConverterView()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

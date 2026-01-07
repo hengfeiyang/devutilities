@@ -1,4 +1,4 @@
-// Copyright 2025 Hengfei Yang.
+// Copyright 2026 Hengfei Yang.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
@@ -535,7 +535,7 @@ body { font-family: Arial, sans-serif; margin: 20px; }
 <img src="sample.jpg" alt="Sample image description">
 </div>
 <div class="footer">
-<p>&copy; 2025 Sample Website. All rights reserved.</p>
+<p>&copy; 2026 Sample Website. All rights reserved.</p>
 </div>
 </div>
 </body>

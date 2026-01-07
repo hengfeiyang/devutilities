@@ -3,11 +3,11 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 21 essential developer utilities. Version 2.9.0 with Random String Generator.
+DevUtilities is a native macOS application built with SwiftUI that provides 22 essential developer utilities. Version 2.10.0 with Currency Converter.
 
 ## Key Tools & Status
 
-All 21 tools are ✅ **Complete**:
+All 22 tools are ✅ **Complete**:
 1. **Timestamp Converter** - Bidirectional timestamp conversion with timezone support
 2. **Unit Converter** - 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
 3. **Base Converter** - Mutual conversion between binary, octal, decimal, hexadecimal, and Base62 number systems
@@ -17,7 +17,7 @@ All 21 tools are ✅ **Complete**:
 7. **Hex String Converter** - Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support
 8. **Regex Test** - Pattern matching with capture groups and common patterns
 9. **UUID Generator** - Multiple versions (v1, v4, v5, v7) with bulk generation
-10. **Random String Generator** - **NEW** Cryptographically secure random string generation with customizable character sets, presets, and requirements
+10. **Random String Generator** - Cryptographically secure random string generation with customizable character sets, presets, and requirements
 11. **URL Tools** - Encoding/decoding and comprehensive URL parsing
 12. **IP Query** - Dual IP detection and geolocation queries
 13. **HTTP Request** - Full HTTP client with SSE streaming and JSON tree view
@@ -29,6 +29,7 @@ All 21 tools are ✅ **Complete**:
 19. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
 20. **AI Chat** - **Enhanced AI assistant** with custom model support, DeepSeek reasoning models, and flexible API configuration
 21. **AI Translate** - Professional translation with 3 modes, 19 languages, text-to-speech support, and word mode
+22. **Currency Converter** - **NEW** Real-time currency conversion with 38 currencies, 24-hour caching, 30-day price history, and trend indicators
 
 ## Architecture & Technical Stack
 - **Platform**: macOS 14.0+ SwiftUI
@@ -49,6 +50,19 @@ xcodebuild -project DevUtilities.xcodeproj -scheme DevUtilities build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
+## Recent Updates (v2.10.0)
+- **Currency Converter**: NEW tool for real-time currency conversion with comprehensive features
+- **40 Currencies Supported**: Major global currencies including USD, EUR, GBP, JPY, CNY, KRW, INR, and 33 others
+- **24-Hour Caching**: Smart exchange rate caching to minimize API calls and improve performance
+- **30-Day Price History**: Incremental daily snapshots building a complete 30-day historical view
+- **24-Hour Trend Indicators**: Visual up/down arrows with percentage change vs yesterday
+- **Flexible Number Input**: Supports both formatted (1,000,000) and plain (1000000) number formats
+- **Optimized Performance**: History loads only when currency pair changes, instant conversion on amount changes
+- **Two-Column Layout**: Clean UI with currency pickers, swap button, and sample amount shortcuts
+- **Offline Mode**: Uses cached data when network unavailable with clear offline indicators
+- **State Persistence**: Remembers your last conversion settings between sessions
+- **22 Essential Tools**: Complete developer toolkit with all essential utilities
+
 ## Recent Updates (v2.9.0)
 - **Random String Generator**: NEW tool for cryptographically secure random string generation
 - **Customizable Character Sets**: Support for uppercase, lowercase, numbers, and symbols
@@ -57,7 +71,6 @@ mcp__XcodeBuildMCP__build_run_macos
 - **Bulk Generation**: Generate up to 20 random strings at once
 - **Length Control**: Configurable string length from 1 to 100 characters
 - **Secure Randomness**: Uses SecRandomCopyBytes for cryptographically secure random generation
-- **21 Essential Tools**: Complete developer toolkit with all essential utilities
 
 ## Recent Updates (v2.8.2)
 - **Text-to-Speech (TTS)**: Integrated native macOS TTS in AI Translate for both input and output text

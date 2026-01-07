@@ -1,6 +1,6 @@
 # DevUtilities
 
-A native macOS application for developers, containing 21 essential tools commonly used in software development.
+A native macOS application for developers, containing 22 essential tools commonly used in software development.
 
 > This tool was 100% developed by `Claude Code`.
 
@@ -26,7 +26,8 @@ A native macOS application for developers, containing 21 essential tools commonl
 - **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading with schema inspection
 - **Crypto Tools** - Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA-1/256/384/512), symmetric encryption (AES-GCM-256), and asymmetric encryption (RSA-2048/4096)
 - **AI Chat** - Intelligent AI assistant with custom model support, DeepSeek reasoning models, flexible API configuration, and enhanced user experience
-- **AI Translate** - **NEW TTS** Professional translation tool with 3 modes (Translate, Polishing, Summarize), 19 language support, text-to-speech playback, special word mode, and real-time streaming
+- **AI Translate** - Professional translation tool with 3 modes (Translate, Polishing, Summarize), 19 language support, text-to-speech playback, special word mode, and real-time streaming
+- **Currency Converter** - **NEW** Real-time currency conversion with 38 currencies, 24-hour caching, 30-day price history, 24-hour trend indicators, and flexible number input formats
 
 ## Key Features
 
@@ -39,7 +40,20 @@ A native macOS application for developers, containing 21 essential tools commonl
 
 ## Version
 
-Current version: 2.9.0
+Current version: 2.10.0
+
+## What's New in v2.10.0
+
+- **Currency Converter**: NEW tool for real-time currency conversion with comprehensive features
+- **40 Currencies Supported**: Major global currencies including USD, EUR, GBP, JPY, CNY, KRW (Korean Won), INR (Indian Rupee), and 33 others
+- **24-Hour Smart Caching**: Intelligent exchange rate caching to minimize API calls while keeping data fresh
+- **30-Day Price History**: Incremental daily snapshots automatically build a complete 30-day historical view
+- **24-Hour Trend Indicators**: Visual up/down arrows with percentage change compared to yesterday
+- **Flexible Number Input**: Supports both formatted numbers (1,000,000) and plain numbers (1000000)
+- **Optimized Performance**: History loads only when currency pair changes, providing instant conversion on amount changes
+- **Clean Two-Column Layout**: Intuitive UI with currency pickers, swap button, and quick amount shortcuts (1, 100, 1K, 10K)
+- **Offline Mode**: Continues working with cached data when network is unavailable, with clear indicators
+- **State Persistence**: Automatically remembers your last conversion settings between app sessions
 
 ## What's New in v2.9.0
 

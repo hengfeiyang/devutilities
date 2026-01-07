@@ -14,7 +14,7 @@
 
 **Minimum OS:** macOS 14.0+
 
-**Copyright:** Copyright © 2025 Hengfei Yang. All rights reserved.
+**Copyright:** Copyright © 2026 Hengfei Yang. All rights reserved.
 
 ---
 
