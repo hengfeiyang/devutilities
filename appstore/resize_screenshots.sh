@@ -56,6 +56,7 @@ optional_sources=(
     "screenshots/9-parquet.png"
     "screenshots/10-color-picker.png"
     "screenshots/11-random-string.png"
+    "screenshots/12-currency.png"
 )
 
 optional_names=(
@@ -63,6 +64,7 @@ optional_names=(
     "09_parquet_viewer"
     "10_color_picker"
     "11_random_string_generator"
+    "12_currency_converter"
 )
 
 echo -e "${YELLOW}Resizing priority screenshots (1-7)...${NC}"
