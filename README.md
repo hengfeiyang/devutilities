@@ -1,6 +1,6 @@
 # DevUtilities
 
-A native macOS application for developers, containing 21 essential tools commonly used in software development.
+A native macOS application for developers, containing 22 essential tools commonly used in software development.
 
 > This tool was 100% developed by `Claude Code`.
 
@@ -31,6 +31,7 @@ A native macOS application for developers, containing 21 essential tools commonl
 - **QR Code** - Generate QR codes with multiple sizes and error correction levels, scan QR codes from images
 - **Parquet Viewer** - Read and explore Parquet / arrow files with schema inspection and data export
 - **Crypto Tools** - Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA-1/256/384/512), symmetric encryption (AES-GCM-256), and asymmetric encryption (RSA-2048/4096)
+- **Currency Converter** - **NEW** Real-time currency conversion with 38 currencies, 24-hour caching, 30-day price history, and 24-hour trend indicators
 
 ## Key Features
 
@@ -43,7 +44,19 @@ A native macOS application for developers, containing 21 essential tools commonl
 
 ## Version
 
-Current version: 2.9.0
+Current version: 2.10.0
+
+## What's New in v2.10.0
+
+- **Currency Converter**: NEW tool for real-time currency conversion with comprehensive features
+- **40 Currencies Supported**: Major global currencies including USD, EUR, GBP, JPY, CNY, KRW (Korean Won), INR (Indian Rupee), and 33 others
+- **24-Hour Smart Caching**: Intelligent exchange rate caching to minimize API calls while keeping data fresh
+- **30-Day Price History**: Incremental daily snapshots automatically build a complete 30-day historical view
+- **24-Hour Trend Indicators**: Visual up/down arrows with percentage change compared to yesterday
+- **Flexible Number Input**: Supports both formatted numbers (1,000,000) and plain numbers (1000000)
+- **Optimized Performance**: History loads only when currency pair changes, providing instant conversion on amount changes
+- **Clean Two-Column Layout**: Intuitive UI with currency pickers, swap button, and quick amount shortcuts
+- **Offline Mode**: Continues working with cached data when network is unavailable
 
 ## What's New in v2.9.0
 
@@ -63,20 +76,6 @@ Current version: 2.9.0
 - **Smart Sanitization**: Prevents audio errors by escaping special characters
 - **Thread-safe**: Optimized implementation without performance warnings
 
-## What's New in v2.8.1
-
-- **Base62 Support**: Enhanced Base Converter with Base62 number system support (0-9, A-Z, a-z)
-- **Five Base Systems**: Now supports conversion between binary, octal, decimal, hexadecimal, and Base62
-- **Real-time Conversion**: All five number bases convert simultaneously as you type
-- **Comprehensive Validation**: Each base has specific character validation rules
-
-## What's New in v2.8.0
-
-- **Color Picker**: NEW professional color format converter with real-time conversion between HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK formats
-- **Color History**: Built-in color history tracking to quickly access and reuse previously selected colors
-- **Visual Color Preview**: Large color preview box with system color panel integration for precise color selection
-- **Format Flexibility**: Edit any color format directly - changes instantly reflect across all other formats
-- **20 Essential Tools**: Comprehensive toolkit covering all essential developer utilities
 
 ## Screenshots
 
