@@ -57,7 +57,27 @@ actor CurrencyService {
 
         // Cache expired or missing - fetch from API
         print("🌐 [CURRENCY] Fetching fresh rates for \(baseCurrency.rawValue)")
-        return try await fetchFromAPI(baseCurrency: baseCurrency)
+        do {
+            return try await fetchFromAPI(baseCurrency: baseCurrency)
+        } catch {
+            // API failed - check if we have expired cache to use as fallback
+            if let cached = loadCacheFromDisk(),
+               cached.baseCurrency == baseCurrency.rawValue {
+                print("⚠️ [CURRENCY] API failed, using expired cache for \(baseCurrency.rawValue)")
+                memoryCache = cached
+                return cached
+            }
+
+            // No cache at all - use embedded default rates as last resort
+            print("🔄 [CURRENCY] API failed with no cache, using embedded default rates for \(baseCurrency.rawValue)")
+            let fallbackData = DefaultExchangeRates.createFallbackData(for: baseCurrency)
+
+            // Save fallback data to cache so it can be used next time
+            memoryCache = fallbackData
+            saveCacheToDisk(fallbackData)
+
+            return fallbackData
+        }
     }
 
     /// Convert amount from one currency to another
@@ -206,7 +226,8 @@ actor CurrencyService {
                 baseCurrency: apiResponse.base,
                 rates: apiResponse.rates,
                 timestamp: Date(),
-                lastUpdated: apiResponse.date
+                lastUpdated: apiResponse.date,
+                isUsingDefaultRates: false
             )
 
             // Save to cache

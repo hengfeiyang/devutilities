@@ -34,6 +34,15 @@ struct CachedExchangeRateData: Codable {
     let rates: [String: Double]
     let timestamp: Date
     let lastUpdated: String // Human-readable date from API
+    let isUsingDefaultRates: Bool // Indicates if using embedded fallback rates
+
+    init(baseCurrency: String, rates: [String: Double], timestamp: Date, lastUpdated: String, isUsingDefaultRates: Bool = false) {
+        self.baseCurrency = baseCurrency
+        self.rates = rates
+        self.timestamp = timestamp
+        self.lastUpdated = lastUpdated
+        self.isUsingDefaultRates = isUsingDefaultRates
+    }
 
     var isExpired: Bool {
         let hoursSinceCache = Date().timeIntervalSince(timestamp) / 3600

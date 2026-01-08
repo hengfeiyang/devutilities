@@ -30,6 +30,7 @@ struct CurrencyConverterView: View {
     @State private var lastUpdated: String = ""
     @State private var cacheAge: String = ""
     @State private var isOfflineMode: Bool = false
+    @State private var isUsingDefaultRates: Bool = false
     @State private var priceHistory: [DailyExchangeRate] = []
     @State private var change24h: Double = 0.0
     @State private var changePercent24h: Double = 0.0
@@ -140,13 +141,18 @@ struct CurrencyConverterView: View {
 
                             Spacer()
 
-                            if isOfflineMode {
+                            if isUsingDefaultRates {
+                                Label("Using Default Rates", systemImage: "exclamationmark.shield")
+                                    .font(.caption)
+                                    .foregroundColor(.orange)
+                                    .help("Network unavailable. Using embedded fallback rates from \(lastUpdated)")
+                            } else if isOfflineMode {
                                 Label("Offline Mode", systemImage: "wifi.slash")
                                     .font(.caption)
                                     .foregroundColor(.orange)
                             }
 
-                            if !lastUpdated.isEmpty {
+                            if !lastUpdated.isEmpty && !isUsingDefaultRates {
                                 Text("Updated: \(lastUpdated)")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
@@ -319,6 +325,7 @@ struct CurrencyConverterView: View {
                         lastUpdated = cachedData.lastUpdated
                         cacheAge = cachedData.cacheAge
                         isOfflineMode = cachedData.isExpired
+                        isUsingDefaultRates = cachedData.isUsingDefaultRates
                         priceHistory = history
                         change24h = change?.change ?? 0
                         changePercent24h = change?.percentage ?? 0
