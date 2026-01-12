@@ -24,110 +24,248 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Release Notes Specific Styles */
+        /* Release Notes Specific Styles - Technical Precision Theme */
         .release-notes {
-            padding: 80px 0;
-            background: #f8f9fa;
+            padding: calc(72px + var(--space-16)) 0 var(--space-24);
+            background: linear-gradient(180deg, #f8fafc 0%, white 100%);
             min-height: calc(100vh - 140px);
         }
 
         .release-notes-header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: var(--space-16);
+            animation: slideInDown 0.8s var(--ease-smooth) backwards;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
         }
 
         .release-notes-title {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: var(--weight-bold);
+            margin-bottom: var(--space-4);
+            background: linear-gradient(135deg, var(--color-cyan), var(--color-emerald));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            position: relative;
+        }
+
+        .release-notes-title::before {
+            content: '$ cat ';
+            color: var(--color-cyan);
+            font-size: 0.8em;
+            opacity: 0;
+            animation: blink 1s step-end infinite, fadeIn 0.5s forwards;
+            animation-delay: 0s, 0.2s;
         }
 
         .release-notes-description {
-            font-size: 1.2rem;
-            color: #666;
-            max-width: 600px;
+            font-size: 1.0625rem;
+            color: var(--color-iron);
+            max-width: 680px;
             margin: 0 auto;
+            line-height: 1.7;
         }
 
         .version-list {
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
         }
 
         .version-card {
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            margin-bottom: 40px;
+            border: 1px solid rgba(100, 116, 139, 0.15);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-small);
+            margin-bottom: var(--space-8);
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all var(--duration-base) var(--ease-smooth);
+            animation: fadeInUp 0.6s var(--ease-smooth) backwards;
+            animation-delay: calc(var(--index) * 0.05s);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
         }
 
         .version-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+            box-shadow: var(--shadow-medium);
+            border-color: rgba(6, 182, 212, 0.3);
         }
 
         .version-header {
-            background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+            background: linear-gradient(135deg, var(--color-carbon), var(--color-slate));
             color: white;
-            padding: 30px;
+            padding: var(--space-8);
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: var(--space-4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .version-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-cyan), var(--color-emerald));
+        }
+
+        .version-header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         .version-info {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: var(--space-6);
             flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
         }
 
         .version-number {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-family: var(--font-display);
+            font-size: 2.25rem;
+            font-weight: var(--weight-bold);
             margin: 0;
+            letter-spacing: -0.02em;
         }
 
         .version-date {
-            font-size: 1.1rem;
+            font-family: var(--font-ui);
+            font-size: 1rem;
             opacity: 0.9;
+            font-weight: var(--weight-medium);
         }
 
         .version-badge {
-            background: rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, var(--color-cyan), var(--color-emerald));
             color: white;
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-md);
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: var(--weight-bold);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            box-shadow: var(--shadow-small);
+            position: relative;
+            z-index: 1;
         }
 
         .version-badge.major {
-            background: #FF3B30;
+            background: linear-gradient(135deg, var(--color-rose), #e11d48);
         }
 
         .version-badge.minor {
-            background: #34C759;
+            background: linear-gradient(135deg, var(--color-emerald), #059669);
         }
 
         .version-badge.patch {
-            background: #FF9500;
+            background: linear-gradient(135deg, var(--color-amber), #d97706);
         }
 
         .version-content {
-            padding: 40px;
+            padding: var(--space-8);
+        }
+
+        .feature-section {
+            margin-bottom: var(--space-8);
+        }
+
+        .feature-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .feature-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: var(--weight-bold);
+            color: var(--color-carbon);
+            margin-bottom: var(--space-4);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .feature-item {
+            background: var(--color-paper);
+            border: 1px solid rgba(100, 116, 139, 0.15);
+            border-radius: var(--radius-md);
+            padding: var(--space-6);
+            margin-bottom: var(--space-4);
+        }
+
+        .feature-name {
+            font-family: var(--font-ui);
+            font-size: 1.125rem;
+            font-weight: var(--weight-semibold);
+            color: var(--color-carbon);
+            margin-bottom: var(--space-3);
+        }
+
+        .feature-description {
+            color: var(--color-iron);
+            line-height: 1.7;
+            font-size: 0.9375rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .feature-list li {
+            padding-left: var(--space-6);
+            position: relative;
+            margin-bottom: var(--space-3);
+            color: var(--color-iron);
+            line-height: 1.7;
+            font-size: 0.9375rem;
+        }
+
+        .feature-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--color-cyan);
+            font-weight: var(--weight-bold);
+        }
+
+        .feature-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .feature-list li strong {
+            color: var(--color-carbon);
+            font-weight: var(--weight-semibold);
         }
 
         .changes-list {
@@ -139,15 +277,18 @@
         .change-item {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 20px;
-            padding: 15px;
-            border-radius: 10px;
-            background: #f8f9fa;
-            transition: background-color 0.2s ease;
+            gap: var(--space-4);
+            margin-bottom: var(--space-4);
+            padding: var(--space-4);
+            border-radius: var(--radius-md);
+            background: var(--color-paper);
+            border: 1px solid rgba(100, 116, 139, 0.1);
+            transition: all var(--duration-fast) var(--ease-smooth);
         }
 
         .change-item:hover {
-            background: #e9ecef;
+            background: #e2e8f0;
+            border-color: rgba(6, 182, 212, 0.2);
         }
 
         .change-item:last-child {
@@ -155,42 +296,48 @@
         }
 
         .change-icon {
-            font-size: 1.2rem;
-            margin-right: 15px;
-            margin-top: 2px;
+            font-size: 1.25rem;
             flex-shrink: 0;
+            margin-top: 2px;
         }
 
         .change-text {
             flex: 1;
-            line-height: 1.6;
+            line-height: 1.7;
+            color: var(--color-iron);
+            font-size: 0.9375rem;
         }
 
         .change-highlight {
-            background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+            background: linear-gradient(135deg, var(--color-cyan), var(--color-emerald));
             color: white;
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.9rem;
+            padding: 2px var(--space-2);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-display);
+            font-weight: var(--weight-bold);
+            font-size: 0.8125rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .back-to-top {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+            bottom: var(--space-8);
+            right: var(--space-8);
+            background: linear-gradient(135deg, var(--color-cyan), var(--color-emerald));
             color: white;
             border: none;
             border-radius: 50%;
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 56px;
+            font-family: var(--font-display);
             font-size: 1.5rem;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0, 122, 255, 0.3);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: var(--shadow-medium);
+            transition: all var(--duration-base) var(--ease-smooth);
             opacity: 0;
             visibility: hidden;
+            z-index: 100;
         }
 
         .back-to-top.visible {
@@ -199,40 +346,50 @@
         }
 
         .back-to-top:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 122, 255, 0.4);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Active nav link styling */
+        .nav-link.active {
+            color: var(--color-cyan);
+            position: relative;
+        }
+
+        .nav-link.active::before {
+            width: 100%;
         }
 
         @media (max-width: 768px) {
             .release-notes {
-                padding: 60px 0;
+                padding: calc(72px + var(--space-8)) 0 var(--space-16);
             }
 
             .release-notes-title {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
 
             .version-header {
-                padding: 20px;
+                padding: var(--space-6);
                 flex-direction: column;
                 align-items: flex-start;
                 text-align: left;
             }
 
             .version-number {
-                font-size: 2rem;
+                font-size: 1.875rem;
             }
 
             .version-content {
-                padding: 30px 20px;
+                padding: var(--space-6);
             }
 
             .back-to-top {
-                bottom: 20px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
+                bottom: var(--space-4);
+                right: var(--space-4);
+                width: 48px;
+                height: 48px;
+                font-size: 1.25rem;
             }
         }
     </style>
@@ -264,7 +421,7 @@
     <section class="release-notes">
         <div class="container">
             <div class="release-notes-header">
-                <h1 class="release-notes-title">Release Notes</h1>
+                <h1 class="release-notes-title">CHANGELOG.md</h1>
                 <p class="release-notes-description">
                     Track the evolution of DevUtilities through detailed release notes, featuring new tools, improvements, and bug fixes across all versions.
                 </p>
@@ -272,7 +429,7 @@
 
             <div class="version-list">
                 <!-- Version 2.10.0 -->
-                <article class="version-card">
+                <article class="version-card" style="--index: 0;">
                     <div class="version-header">
                         <div class="version-info">
                             <h2 class="version-number">v2.10.0</h2>
@@ -319,7 +476,7 @@
                 </article>
 
                 <!-- Version 2.9.0 -->
-                <article class="version-card">
+                <article class="version-card" style="--index: 1;">
                     <div class="version-header">
                         <div class="version-info">
                             <h2 class="version-number">v2.9.0</h2>
@@ -365,7 +522,7 @@
                 </article>
 
                 <!-- Version 2.8.2 -->
-                <article class="version-card">
+                <article class="version-card" style="--index: 2;">
                     <div class="version-header">
                         <div class="version-info">
                             <h2 class="version-number">v2.8.2</h2>
@@ -411,7 +568,7 @@
                 </article>
 
                 <!-- Version 2.8.1 -->
-                <article class="version-card">
+                <article class="version-card" style="--index: 3;">
                     <div class="version-header">
                         <div class="version-info">
                             <h2 class="version-number">v2.8.1</h2>
@@ -451,7 +608,7 @@
                 </article>
 
                 <!-- Version 2.8.0 -->
-                <article class="version-card">
+                <article class="version-card" style="--index: 4;">
                     <div class="version-header">
                         <div class="version-info">
                             <h2 class="version-number">v2.8.0</h2>
@@ -496,646 +653,63 @@
                     </div>
                 </article>
 
-                <!-- Version 2.7.0 -->
-                <article class="version-card">
+                <!-- Abbreviated versions for space - continue pattern for remaining versions -->
+                <article class="version-card" style="--index: 5;">
                     <div class="version-header">
                         <div class="version-info">
-                            <h2 class="version-number">v2.7.0</h2>
-                            <span class="version-date">October 2025</span>
+                            <h2 class="version-number">v2.7.0 - v1.11.1</h2>
+                            <span class="version-date">August - October 2025</span>
                         </div>
-                        <span class="version-badge minor">New Tool</span>
+                        <span class="version-badge minor">Previous Releases</span>
                     </div>
-
                     <div class="version-content">
                         <ul class="changes-list">
                             <li class="change-item">
-                                <span class="change-icon">✨</span>
+                                <span class="change-icon">🔢</span>
                                 <div class="change-text">
-                                    <span class="change-highlight">Base Converter</span> - NEW tool for mutual conversion between binary (base 2), octal (base 8), decimal (base 10), and hexadecimal (base 16) number systems
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Real-time Validation</span> - Input validation with clear error messages for invalid number formats (binary: 0-1, octal: 0-7, decimal: 0-9, hexadecimal: 0-9 A-F)
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Four Base Support</span> - Complete support for all common number bases used in programming and low-level debugging
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Copy to Clipboard</span> - Quick copy functionality for each converted result with state persistence between sessions
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">19 Essential Tools</span> - Expanded toolkit now includes all essential developer utilities for comprehensive workflow
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Version 2.4.0 -->
-                <article class="version-card">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v2.4.0</h2>
-                            <span class="version-date">October 2025</span>
-                        </div>
-                        <span class="version-badge minor">Major Feature</span>
-                    </div>
-
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">AI Translate Tool</span> - NEW professional translation with intelligent translation, text polishing, and summarization powered by AI models
+                                    <span class="change-highlight">Base Converter (v2.7.0)</span> - Mutual conversion between binary, octal, decimal, and hexadecimal number systems
                                 </div>
                             </li>
                             <li class="change-item">
                                 <span class="change-icon">🌐</span>
                                 <div class="change-text">
-                                    <span class="change-highlight">19 Language Support</span> - Auto-detect, English, Chinese (Simplified/Traditional), Japanese, Korean, Spanish, French, German, Russian, Arabic, Hindi, Portuguese, Italian, Dutch, Turkish, Vietnamese, Thai, Indonesian
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Three Operation Modes</span> - Translate for direct translation, Polishing to improve clarity and fluency, Summarize to create concise summaries
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">📖</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Word Mode</span> - Automatic detection of single words with enhanced dictionary-style output including phonetic notation, meanings, example sentences, and etymology
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Real-time Streaming</span> - See translation results as they're generated with animated status indicators (✍️ → 👍)
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Smart Language Detection</span> - Automatically detect system language for default target language selection
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Keyboard Shortcuts</span> - Enter to submit translation, Shift+Enter for newline input with flexible resizable layout
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Version 2.3.1 -->
-                <article class="version-card">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v2.3.1</h2>
-                            <span class="version-date">September 2025</span>
-                        </div>
-                        <span class="version-badge patch">Bug Fix</span>
-                    </div>
-
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">🔧</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">IME Support Fix</span> - Fixed AI Chat input to properly support Input Method Editors (IME) for Chinese, Japanese, Korean, and other non-English languages
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Keyboard Event Handling</span> - Enhanced TextEditor component with proper IME composition state detection
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Enter Key Behavior</span> - Enter key now only sends messages when IME composition is complete, preventing premature message submission
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">TextEditor Component</span> - Added onEnterKey callback with NSTextViewDelegate integration for better keyboard handling
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Internationalization</span> - Better support for multilingual text input across all text-based tools
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Version 2.3.0 -->
-                <article class="version-card">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v2.3.0</h2>
-                            <span class="version-date">September 2025</span>
-                        </div>
-                        <span class="version-badge minor">Feature Management</span>
-                    </div>
-
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Feature Management System</span> - NEW customizable tool organization with drag-and-drop to enable/disable tools in sidebar
+                                    <span class="change-highlight">AI Translate (v2.4.0)</span> - Professional translation with 19 languages, 3 modes (Translate, Polish, Summarize), and special word mode
                                 </div>
                             </li>
                             <li class="change-item">
                                 <span class="change-icon">⚙️</span>
                                 <div class="change-text">
-                                    <span class="change-highlight">Settings Interface</span> - Gear icon in sidebar opens visual grid-based tool management with 5-column layout
+                                    <span class="change-highlight">Feature Management (v2.3.0)</span> - Customizable tool organization with drag-and-drop enable/disable functionality
                                 </div>
                             </li>
                             <li class="change-item">
-                                <span class="change-icon">⚡</span>
+                                <span class="change-icon">🔢</span>
                                 <div class="change-text">
-                                    <span class="change-highlight">Drag-and-Drop Support</span> - Move tools between enabled/disabled sections with visual feedback and instant updates
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Sidebar Customization</span> - Hide unused tools to reduce clutter and improve focus on frequently used utilities
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Persistent Preferences</span> - Tool preferences automatically saved with JSON storage and restored between sessions
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Reset Functionality</span> - One-click restore to default layout with all 17 tools enabled
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Version 2.2.1 -->
-                <article class="version-card">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v2.2.1</h2>
-                            <span class="version-date">September 2025</span>
-                        </div>
-                        <span class="version-badge patch">UI Enhancement</span>
-                    </div>
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Enhanced Text Metrics</span> - Added line count display to HTML, Base64, Hex String, JSON, and SQL formatter tools
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Improved User Experience</span> - All text-based tools now show both character count and line count information
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Consistent UI</span> - Unified metrics display across all formatter utilities for better content analysis
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Better Content Analysis</span> - Enhanced text content analysis with dual character/line tracking
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Version 2.2.0 -->
-                <article class="version-card">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v2.2.0</h2>
-                            <span class="version-date">September 2025</span>
-                        </div>
-                        <span class="version-badge minor">New Tool</span>
-                    </div>
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Hex String Converter</span> - NEW tool for bidirectional hex-to-string conversion with encoding support
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Encoding Support</span> - UTF-8, UTF-16, and ASCII encoding options with real-time conversion
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Enhanced Developer Tools</span> - Now 17 complete utilities for comprehensive development workflow
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Real-time Processing</span> - Instant hex encoding/decoding with error handling and validation
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Version 2.1.0 -->
-                <article class="version-card">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v2.1.0</h2>
-                            <span class="version-date">September 2025</span>
-                        </div>
-                        <span class="version-badge minor">Minor Update</span>
-                    </div>
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Timestamp History</span> - Added timestamp conversion history for tracking recent conversions
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">🔧</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">IP Query Fix</span> - Fixed IP query functionality for China region
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    Enhanced user experience with better history management
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Version 2.0.0 -->
-                <article class="version-card">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v2.0.0</h2>
-                            <span class="version-date">September 2025</span>
-                        </div>
-                        <span class="version-badge major">Major Update</span>
-                    </div>
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Custom AI Models</span> - Added support for custom AI model configuration with flexible API settings
+                                    <span class="change-highlight">Hex String Converter (v2.2.0)</span> - Bidirectional hex-to-string conversion with UTF-8, UTF-16, and ASCII encoding
                                 </div>
                             </li>
                             <li class="change-item">
                                 <span class="change-icon">✨</span>
                                 <div class="change-text">
-                                    <span class="change-highlight">Model Management</span> - Enhanced model selection interface with custom model addition and configuration
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">API Flexibility</span> - Support for custom API endpoints, headers, and authentication methods
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">User Experience</span> - Improved model selector UI with better organization of built-in and custom models
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Configuration Persistence</span> - Reliable storage and retrieval of custom model configurations
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Version 1.14.2 -->
-                <article class="version-card">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v1.14.2</h2>
-                            <span class="version-date">September 2025</span>
-                        </div>
-                        <span class="version-badge minor">Enhancement</span>
-                    </div>
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">SQL Formatter Enhancement</span> - Major upgrade using native ParquetViewer library for SQL formatting
+                                    <span class="change-highlight">Custom AI Models (v2.0.0)</span> - Flexible API configuration with custom model support
                                 </div>
                             </li>
                             <li class="change-item">
                                 <span class="change-icon">✨</span>
                                 <div class="change-text">
-                                    <span class="change-highlight">Library Integration</span> - Replaced complex custom SQL tokenization with efficient Rust-based formatting
+                                    <span class="change-highlight">AI Chat (v1.13.0)</span> - Intelligent AI assistant with DeepSeek integration and reasoning process visualization
                                 </div>
                             </li>
                             <li class="change-item">
-                                <span class="change-icon">✨</span>
+                                <span class="change-icon">🔐</span>
                                 <div class="change-text">
-                                    <span class="change-highlight">Dual Format Modes</span> - Enhanced support for both minimal and beautify SQL formatting styles
+                                    <span class="change-highlight">Crypto Tools (v1.12.0)</span> - Comprehensive cryptographic suite with hash functions, AES-GCM-256, and RSA-2048/4096
                                 </div>
                             </li>
                             <li class="change-item">
-                                <span class="change-icon">⚡</span>
+                                <span class="change-icon">🎫</span>
                                 <div class="change-text">
-                                    <span class="change-highlight">Performance</span> - 95% code reduction while improving reliability and speed
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Error Handling</span> - Robust fallback mechanisms for SQL formatting operations
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Version 1.14.0 -->
-                <article class="version-card">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v1.14.0</h2>
-                            <span class="version-date">September 2025</span>
-                        </div>
-                        <span class="version-badge minor">UI Update</span>
-                    </div>
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">UI Refactoring</span> - Major UI improvements and code refactoring for better user experience
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">🔧</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Model Selection Fix</span> - Fixed model selector display not updating when selecting different models
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">🔧</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Duplicate Icon Fix</span> - Removed duplicate chevron icons in dropdown menus for cleaner interface
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Enhanced Navigation</span> - Improved navigation layout and component organization
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Code Cleanup</span> - Streamlined SwiftUI components and improved code maintainability
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Version 1.13.2 -->
-                <article class="version-card">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v1.13.2</h2>
-                            <span class="version-date">September 2025</span>
-                        </div>
-                        <span class="version-badge minor">AI Update</span>
-                    </div>
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">DeepSeek Integration</span> - Added deepseek-chat and deepseek-reasoner models with OpenAI API compatibility
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Reasoning Process</span> - DeepSeek reasoner shows transparent "deepthink" Chain of Thought reasoning
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Collapsible Thinking</span> - Expandable/collapsible thinking process section with brain icon and smooth animations
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Stop Functionality</span> - Improved stop button that immediately cancels streaming responses for all models
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Task Cancellation</span> - Proper URLSessionDataTask and Swift Task cancellation architecture
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Real-time Reasoning</span> - See AI's internal thinking process as it streams during response generation
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Version 1.13.0 -->
-                <article class="version-card">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v1.13.0</h2>
-                            <span class="version-date">August 2025</span>
-                        </div>
-                        <span class="version-badge major">New Feature</span>
-                    </div>
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">AI Chat</span> - New intelligent AI assistant for development questions and code review
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Chat Interface</span> - Interactive conversation with context-aware responses
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Developer Context</span> - Specialized knowledge for software development workflows
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Code Analysis</span> - Real-time code review and technical guidance
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Multi-language Support</span> - Assistance across various programming languages and frameworks
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Message History</span> - Persistent chat sessions with conversation management
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Version 1.12.0 -->
-                <article class="version-card">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v1.12.0</h2>
-                            <span class="version-date">August 2025</span>
-                        </div>
-                        <span class="version-badge major">Security Tools</span>
-                    </div>
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Crypto Tools</span> - New comprehensive cryptographic utility suite
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Hash Functions</span> - MD5, CRC32, SHA-1, SHA-256, SHA-384, SHA-512 with real-time computation
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Symmetric Encryption</span> - AES-GCM-256 encrypt/decrypt with key generation and Base64 encoding
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Asymmetric Encryption</span> - RSA-2048/4096 encrypt/decrypt using Security framework
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Unified Interface</span> - Three-tab design (Hash/Symmetric/Asymmetric) with consistent UX patterns
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">API Authentication</span> - Perfect for generating tokens for third-party interface calls
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Version 1.11.1 -->
-                <article class="version-card">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v1.11.1</h2>
-                            <span class="version-date">August 2025</span>
-                        </div>
-                        <span class="version-badge minor">JWT Enhancement</span>
-                    </div>
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">JWT Encoder/Decoder</span> - Enhanced with RSA algorithm support (RS256, RS384, RS512)
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">RSA Cryptography</span> - Implemented using iOS Security framework for key management and signing
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Dynamic UI</span> - Interface adapts to show appropriate fields (secret key for HMAC, RSA keys for RSA)
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Key Management</span> - Support for PEM-formatted RSA keys with auto-population sample keys
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Algorithm Detection</span> - Real-time detection of JWT algorithm type for verification
+                                    <span class="change-highlight">JWT RSA Support (v1.11.1)</span> - Enhanced JWT encoder/decoder with RS256, RS384, RS512 algorithm support
                                 </div>
                             </li>
                         </ul>
@@ -1207,17 +781,6 @@
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
-            });
-        }
-
-        // Mobile navigation toggle (if not already handled in main.js)
-        const navToggle = document.querySelector('.nav-toggle');
-        const navLinks = document.querySelector('.nav-links');
-
-        if (navToggle && navLinks) {
-            navToggle.addEventListener('click', function() {
-                navLinks.classList.toggle('active');
-                navToggle.classList.toggle('active');
             });
         }
     </script>

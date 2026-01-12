@@ -328,14 +328,16 @@
         
         function updateHeader() {
             if (!header) return;
-            
+
             const scrolled = window.pageYOffset > 10;
-            
+
             if (scrolled) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-            } else {
+                header.classList.add('scrolled');
                 header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 4px 24px rgba(0, 0, 0, 0.08)';
+            } else {
+                header.classList.remove('scrolled');
+                header.style.background = 'rgba(255, 255, 255, 0.8)';
                 header.style.boxShadow = 'none';
             }
         }
