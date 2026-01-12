@@ -104,15 +104,24 @@ actor CurrencyService {
 
     /// Save daily snapshot to price history (if not already saved today)
     func saveDailySnapshot(from: Currency, to: Currency, rate: Double) async {
-        var history = await getPriceHistory(from: from, to: to)
+        // Load ALL history from cache/disk (not filtered!)
+        if historyCache == nil {
+            historyCache = loadHistoryFromDisk()
+        }
+        var allHistory = historyCache ?? []
 
-        // Check if today's snapshot already exists
+        // Check if today's snapshot already exists for this currency pair
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
 
-        if let lastEntry = history.first,
-           calendar.isDate(lastEntry.date, inSameDayAs: today) {
-            print("📅 [CURRENCY] Today's snapshot already exists, skipping")
+        let existingTodayEntry = allHistory.first { entry in
+            entry.baseCurrency == from.rawValue &&
+            entry.targetCurrency == to.rawValue &&
+            calendar.isDate(entry.date, inSameDayAs: today)
+        }
+
+        if existingTodayEntry != nil {
+            print("📅 [CURRENCY] Today's snapshot already exists for \(from.rawValue)→\(to.rawValue), skipping")
             return
         }
 
@@ -125,18 +134,22 @@ actor CurrencyService {
         )
 
         // Add to beginning (most recent first)
-        history.insert(snapshot, at: 0)
+        allHistory.insert(snapshot, at: 0)
 
-        // Maintain max 30 entries (remove oldest)
-        if history.count > 30 {
-            history = Array(history.prefix(30))
+        // Maintain max 30 entries PER currency pair
+        // Group by currency pair and keep only 30 most recent entries per pair
+        var pairCounts: [String: Int] = [:]
+        allHistory = allHistory.filter { entry in
+            let pairKey = "\(entry.baseCurrency)-\(entry.targetCurrency)"
+            pairCounts[pairKey, default: 0] += 1
+            return pairCounts[pairKey]! <= 30
         }
 
-        // Update cache
-        historyCache = history
-        saveHistoryToDisk(history)
+        // Update cache with ALL history
+        historyCache = allHistory
+        saveHistoryToDisk(allHistory)
 
-        print("💾 [CURRENCY] Saved daily snapshot: \(from.rawValue)→\(to.rawValue) = \(rate)")
+        print("💾 [CURRENCY] Saved daily snapshot: \(from.rawValue)→\(to.rawValue) = \(rate) (Total entries: \(allHistory.count))")
     }
 
     /// Get price history for a currency pair (last 30 days)
