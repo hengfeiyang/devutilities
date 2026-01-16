@@ -52,7 +52,7 @@ mcp__XcodeBuildMCP__build_run_macos
 
 ## Recent Updates (v2.10.0)
 - **Currency Converter**: NEW tool for real-time currency conversion with comprehensive features
-- **40 Currencies Supported**: Major global currencies including USD, EUR, GBP, JPY, CNY, KRW, INR, and 33 others
+- **38 Currencies Supported**: Major global currencies including USD, EUR, GBP, JPY, CNY, KRW, INR, and 33 others
 - **24-Hour Caching**: Smart exchange rate caching to minimize API calls and improve performance
 - **30-Day Price History**: Incremental daily snapshots building a complete 30-day historical view
 - **24-Hour Trend Indicators**: Visual up/down arrows with percentage change vs yesterday
