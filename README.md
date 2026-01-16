@@ -49,7 +49,7 @@ Current version: 2.10.0
 ## What's New in v2.10.0
 
 - **Currency Converter**: NEW tool for real-time currency conversion with comprehensive features
-- **40 Currencies Supported**: Major global currencies including USD, EUR, GBP, JPY, CNY, KRW (Korean Won), INR (Indian Rupee), and 33 others
+- **38 Currencies Supported**: Major global currencies including USD, EUR, GBP, JPY, CNY, KRW (Korean Won), INR (Indian Rupee), and 33 others
 - **24-Hour Smart Caching**: Intelligent exchange rate caching to minimize API calls while keeping data fresh
 - **30-Day Price History**: Incremental daily snapshots automatically build a complete 30-day historical view
 - **24-Hour Trend Indicators**: Visual up/down arrows with percentage change compared to yesterday
