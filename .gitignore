@@ -3,6 +3,7 @@ DevUtilities.xcodeproj/xcuserdata/*.xcuserdatad/
 temp/
 tools/
 build/
+.claude/
 *.dmg
 .DS_Store
 */.DS_Store
