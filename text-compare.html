@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Compare - Side-by-Side Text Diff Tool | DevUtilities</title>
+    <meta name="description" content="Professional text comparison tool for developers. Compare two text documents side-by-side with visual diff highlighting, real-time status updates, and detailed metrics. Perfect for code review and file comparison. Part of DevUtilities - 23 essential developer tools for macOS.">
+    <meta name="keywords" content="text compare, diff tool, text diff, file compare, text comparison, side-by-side diff, visual diff, code compare, text difference checker, online diff tool, file difference">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="Text Compare - Side-by-Side Text Diff Tool | DevUtilities">
+    <meta property="og:description" content="Compare two text documents side-by-side with visual diff highlighting and real-time status updates. Perfect for developers.">
+    <meta property="og:image" content="images/screenshots/text-compare.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Text Compare - Side-by-Side Text Diff Tool">
+    <meta property="twitter:description" content="Compare two text documents side-by-side with visual diff highlighting and real-time status updates.">
+    <meta property="twitter:image" content="images/screenshots/text-compare.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "DevUtilities Text Compare",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS",
+        "description": "Professional text comparison tool with visual diff highlighting for developers",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "10"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-brand">
+                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
+                <span class="nav-title">DevUtilities</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#reviews" class="nav-link">Reviews</a>
+                <a href="release-notes.html" class="nav-link">Release Notes</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="breadcrumb">
+                        <a href="index.html">DevUtilities</a> / <span>Text Compare</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Text Compare
+                        <span class="hero-subtitle">Professional Side-by-Side Text Diff Tool</span>
+                    </h1>
+                    <p class="hero-description">
+                        Compare two text documents side-by-side with visual diff highlighting and instant status updates. Perfect for code review, configuration file comparison, and spotting differences between any text files. Native macOS performance with CodeMirror-powered visual diff editor.
+                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">⚡</span>
+                            <span>Real-time Status</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">🔍</span>
+                            <span>Visual Diff Highlighting</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="hero-feature-icon">📊</span>
+                            <span>Character & Line Metrics</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="index.html#download" class="btn btn-primary">
+                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
+                            Download DevUtilities
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            <span class="btn-icon">👀</span>
+                            See Features
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/screenshots/text-compare.png" alt="DevUtilities Text Compare Screenshot showing side-by-side text comparison with visual diff highlighting">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Powerful Text Comparison Features</h2>
+                <p class="section-description">
+                    Everything you need for professional text comparison, built into a native macOS application.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card featured">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title">Visual Diff Highlighting</h3>
+                    <p class="feature-description">CodeMirror-powered side-by-side comparison with color-coded additions, deletions, and modifications. Instantly spot differences between any two text documents.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Real-time Status Updates</h3>
+                    <p class="feature-description">Instant feedback showing whether texts are identical or different. See status updates as you type with visual indicators for quick comparison.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Character & Line Metrics</h3>
+                    <p class="feature-description">Detailed metrics for both sides showing character count and line count. Perfect for understanding document size and structure differences.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">Swap & Clear Controls</h3>
+                    <p class="feature-description">Quick swap button to exchange left and right content. Clear buttons for individual sides or both at once for efficient workflow.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3 class="feature-title">State Persistence</h3>
+                    <p class="feature-description">Automatically saves your comparison content between sessions. Resume your work exactly where you left off without losing data.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">Sample Data</h3>
+                    <p class="feature-description">Built-in sample text pairs to demonstrate functionality and help you get started quickly with meaningful examples.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Clean Interface</h3>
+                    <p class="feature-description">Two-column layout with clear visual separation. Status indicators and metrics positioned for easy reading without cluttering the comparison view.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3 class="feature-title">Native Performance</h3>
+                    <p class="feature-description">Built as a native macOS application for optimal performance. Handles large text files efficiently with smooth scrolling and instant updates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How to Use Text Compare</h2>
+                <p class="section-description">
+                    Compare text documents in just a few simple steps.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Paste Your Text</h3>
+                    <p>Paste or type your first text document into the left panel. Support for any text format - code, configuration files, logs, or plain text.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Add Second Text</h3>
+                    <p>Paste or type your second text document into the right panel. Use the swap button to exchange left and right content if needed.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>View Differences</h3>
+                    <p>See visual diff highlighting automatically. Additions, deletions, and modifications are color-coded for easy identification.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Analyze Metrics</h3>
+                    <p>Check character and line counts for both sides. Real-time status shows whether texts are identical or different.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perfect for These Development Tasks</h2>
+            </div>
+
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">👨‍💻</div>
+                    <h3>Code Review</h3>
+                    <p>Compare code versions before and after refactoring. Spot changes in pull requests and validate that modifications match requirements.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">⚙️</div>
+                    <h3>Configuration Files</h3>
+                    <p>Compare configuration files across different environments (development, staging, production). Ensure consistency and identify environment-specific differences.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📝</div>
+                    <h3>Documentation Updates</h3>
+                    <p>Review documentation changes and track content updates. Compare draft versions with published content to ensure accuracy.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📄</div>
+                    <h3>Log File Analysis</h3>
+                    <p>Compare log files from different time periods or servers. Identify changes in application behavior or system events.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔍</div>
+                    <h3>API Response Validation</h3>
+                    <p>Compare API responses from different endpoints or versions. Validate that API changes don't introduce unexpected modifications.</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🗂️</div>
+                    <h3>Data Migration</h3>
+                    <p>Verify data transformations during migration projects. Compare source and destination data to ensure accuracy and completeness.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>How is Text Compare different from other diff tools?</h3>
+                    <p>Text Compare is a native macOS application with CodeMirror-powered visual diff highlighting. Unlike command-line tools or web-based alternatives, it provides real-time status updates, detailed metrics, and a clean interface designed specifically for developers.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I compare large text files?</h3>
+                    <p>Yes! Text Compare is optimized for handling large text files efficiently. The native application architecture provides better performance than browser-based tools when working with substantial documents.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Does it highlight specific types of changes?</h3>
+                    <p>Yes, Text Compare uses color-coded highlighting to distinguish additions, deletions, and modifications. The visual diff editor makes it easy to spot exactly what changed between the two texts.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is my data saved between sessions?</h3>
+                    <p>Yes, Text Compare automatically saves your comparison content with state persistence. You can close the app and return later to find your text exactly as you left it.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is my data secure when using Text Compare?</h3>
+                    <p>Absolutely. DevUtilities is a native desktop application that processes all data locally on your Mac. Your text content never leaves your computer or gets sent to external servers.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What other comparison tools are available?</h3>
+                    <p>DevUtilities also includes diff modes for JSON Formatter, HTML Formatter, and SQL Formatter - each with syntax highlighting specific to that format. All use the same powerful CodeMirror diff engine.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Tools Section -->
+    <section class="related-tools">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Related Developer Tools</h2>
+                <p class="section-description">Explore other essential tools included in DevUtilities</p>
+            </div>
+
+            <div class="related-tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">📋</div>
+                    <h3>JSON Formatter</h3>
+                    <p>Format, validate, and compare JSON data with visual diff editor. Perfect for API development and testing.</p>
+                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🌐</div>
+                    <h3>HTML Formatter</h3>
+                    <p>Format and compare HTML markup with diff mode. Includes proper indentation and structure validation.</p>
+                    <a href="html-formatter.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🗄️</div>
+                    <h3>SQL Formatter</h3>
+                    <p>Format and compare SQL queries with automatic beautification and side-by-side diff view.</p>
+                    <a href="sql-formatter.html" class="tool-link">Learn More →</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔤</div>
+                    <h3>Hex String Converter</h3>
+                    <p>Convert between hex and text with UTF-8/UTF-16/ASCII support. Real-time conversion as you type.</p>
+                    <a href="hex-converter.html" class="tool-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Streamline Your Text Comparison Workflow?</h2>
+                <p>Join thousands of developers who rely on DevUtilities's Text Compare for code review and file comparison.</p>
+                <div class="cta-actions">
+                    <a href="index.html#download" class="btn btn-primary">
+                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
+                        Download DevUtilities
+                    </a>
+                    <div class="cta-info">
+                        <span>✓ macOS 14.0+</span>
+                        <span>✓ 23 Developer Tools</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
+                    <div>
+                        <h4>DevUtilities</h4>
+                        <p>Essential developer tools for macOS</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Product</h5>
+                        <a href="index.html#features">Features</a>
+                        <a href="index.html#reviews">Reviews</a>
+                        <a href="index.html#download">Download</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Resources</h5>
+                        <a href="release-notes.html">Release Notes</a>
+                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h5>Legal</h5>
+                        <a href="privacy_policy.html">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

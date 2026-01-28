@@ -1,6 +1,6 @@
 # DevUtilities
 
-A native macOS application for developers, containing 22 essential tools commonly used in software development.
+A native macOS application for developers, containing 23 essential tools commonly used in software development.
 
 > This tool was 100% developed by `Claude Code`.
 
@@ -16,9 +16,10 @@ A native macOS application for developers, containing 22 essential tools commonl
 - **Unit Converter** - Convert between different units (Data, Time, Length, Weight, Temperature, Area, Volume)
 - **Base Converter** - Mutual conversion between binary, octal, decimal, hexadecimal, and Base62 number systems with real-time validation
 - **Color Picker** - Professional color format converter with HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK support and color history
-- **JSON Formatter** - Format, validate, and compare JSON data with visual CodeMirror diff editor
-- **SQL Formatter** - Format and minify SQL queries with syntax validation
-- **HTML Formatter** - Format and minify HTML with proper tag indentation
+- **Text Compare** - **NEW** Dedicated side-by-side text comparison with visual diff highlighting and real-time status
+- **JSON Formatter** - Format, validate, and **compare JSON** with visual CodeMirror diff editor
+- **SQL Formatter** - Format and minify SQL queries with **diff mode** and syntax validation
+- **HTML Formatter** - Format and minify HTML with **diff mode** and proper tag indentation
 - **Base64 Encode/Decode** - Encode and decode Base64 strings
 - **Hex String Converter** - Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support and real-time processing
 - **JWT Encoder/Decoder** - Encode and decode JSON Web Tokens with HMAC and RSA signature support
@@ -44,7 +45,18 @@ A native macOS application for developers, containing 22 essential tools commonl
 
 ## Version
 
-Current version: 2.10.0
+Current version: 2.11.0
+
+## What's New in v2.11.0
+
+- **Text Compare Tool**: NEW dedicated tool for side-by-side text comparison with visual diff highlighting
+- **Enhanced JSON Formatter**: Added diff mode with visual CodeMirror diff editor for comparing JSON documents
+- **Enhanced HTML Formatter**: Added diff mode for side-by-side HTML comparison with syntax highlighting
+- **Enhanced SQL Formatter**: Added diff mode for comparing SQL queries with automatic formatting
+- **Unified Diff Experience**: Consistent diff interface across all formatters with real-time status updates
+- **Optimized Comparison**: Reusable comparison logic pattern for better code maintainability
+- **Sample Data**: Each diff mode includes meaningful sample data pairs
+- **Character & Line Metrics**: Detailed metrics display for both sides of comparison
 
 ## What's New in v2.10.0
 
