@@ -21,7 +21,7 @@
 ## App Description
 
 ### Short Description (170 chars max)
-23 essential developer tools: Text compare, AI chat, AI translate, JSON/HTML/SQL formatters with diff, color picker, timestamp converter, Base64, UUID, regex and more.
+23 essential developer tools: Text compare, AI chat, AI translate, JSON/HTML/SQL formatters with diff, color picker, timestamp converter, Base64, UUID, parquet and more.
 
 ### Full Description
 
@@ -145,7 +145,7 @@ Bug Fixes and Stability:
 
 (max 100 characters)
 
-devutils,timestamp,json,base64,sql,html,uuid,jwt,crypto,random,currency,diff,compare,converter
+devutils,timestamp,json,base64,sql,html,uuid,jwt,parquet,random,currency,diff,compare,converter
 
 ---
 
