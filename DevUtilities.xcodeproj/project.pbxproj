@@ -16,7 +16,6 @@
 		818449F62E90D8E200398FEC /* DevUtilitiesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818449F52E90D8E200398FEC /* DevUtilitiesApp.swift */; };
 		8191E97B2EA524730035ADC7 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8191E97A2EA524730035ADC7 /* ColorPickerView.swift */; };
 		81A270AC2F0E13FD009C40D8 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A270AA2F0E13FD009C40D8 /* Currency.swift */; };
-		EQUB3H0J89FFUXC7CIRIEDV0 /* DefaultExchangeRates.swift in Sources */ = {isa = PBXBuildFile; fileRef = ZWW843AQRGOJHXWNFGDLFRAA /* DefaultExchangeRates.swift */; };
 		81A270AD2F0E13FD009C40D8 /* ExchangeRateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A270AB2F0E13FD009C40D8 /* ExchangeRateData.swift */; };
 		81A270AF2F0E140C009C40D8 /* CurrencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A270AE2F0E140C009C40D8 /* CurrencyService.swift */; };
 		81A270B12F0E141D009C40D8 /* CurrencyConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A270B02F0E141D009C40D8 /* CurrencyConverterView.swift */; };
@@ -54,6 +53,7 @@
 		93DE0EB12E7ABA1900731598 /* AddModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EAB2E7ABA1900731598 /* AddModelView.swift */; };
 		93DE0EB22E7ABA1900731598 /* AddProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EAC2E7ABA1900731598 /* AddProviderView.swift */; };
 		B41BCA88D09D488EA2A4ABAC /* CryptoToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41BCA88D09D488EA2A4ABAB /* CryptoToolsView.swift */; };
+		B8ED45ECE89552CE6769C282 /* TextCompareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9128D604EF103C7A961E03 /* TextCompareView.swift */; };
 		D5475F403A461C2C5A1B3000123456 /* RandomStringGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50B1BC668DF802C5A1B3000123456 /* RandomStringGenerator.swift */; };
 		D55EA880013AC12C5A1B3000123456 /* RandomStringConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C36719A405D2C5A1B3000123456 /* RandomStringConfig.swift */; };
 		D5D7233B349D652C5A1B3000123456 /* RandomStringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59F4A10B6E7B92C5A1B3000123456 /* RandomStringView.swift */; };
@@ -69,6 +69,7 @@
 		D5F4E8102C5A1B3000123456 /* URLToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4E80F2C5A1B3000123456 /* URLToolsView.swift */; };
 		D5F4E8122C5A1B3000123456 /* ToolType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4E8112C5A1B3000123456 /* ToolType.swift */; };
 		D5F4E8162C5A1B3000123456 /* TextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4E8172C5A1B3000123456 /* TextEditor.swift */; };
+		EQUB3H0J89FFUXC7CIRIEDV0 /* DefaultExchangeRates.swift in Sources */ = {isa = PBXBuildFile; fileRef = ZWW843AQRGOJHXWNFGDLFRAA /* DefaultExchangeRates.swift */; };
 		HTML8E8092C5A1B3000123456 /* HTMLFormatterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = HTML8E8082C5A1B3000123456 /* HTMLFormatterView.swift */; };
 		HTTP4E7F2C5A1B3000654321 /* HTTPRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = HTTP4E7F2C5A1B3000654322 /* HTTPRequestView.swift */; };
 		JWT4E8102C5A1B3000765432 /* JWTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = JWT4E8112C5A1B3000765432 /* JWTView.swift */; };
@@ -93,6 +94,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3E9128D604EF103C7A961E03 /* TextCompareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCompareView.swift; sourceTree = "<group>"; };
 		813459512E8A95EA003222BC /* FeatureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManager.swift; sourceTree = "<group>"; };
 		813459532E8A95FA003222BC /* FeatureSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureSettingsView.swift; sourceTree = "<group>"; };
 		816683E82EADF7E70050027B /* AVSpeechService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVSpeechService.swift; sourceTree = "<group>"; };
@@ -102,7 +104,6 @@
 		818449F52E90D8E200398FEC /* DevUtilitiesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevUtilitiesApp.swift; sourceTree = "<group>"; };
 		8191E97A2EA524730035ADC7 /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
 		81A270AA2F0E13FD009C40D8 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
-		ZWW843AQRGOJHXWNFGDLFRAA /* DefaultExchangeRates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultExchangeRates.swift; sourceTree = "<group>"; };
 		81A270AB2F0E13FD009C40D8 /* ExchangeRateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateData.swift; sourceTree = "<group>"; };
 		81A270AE2F0E140C009C40D8 /* CurrencyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyService.swift; sourceTree = "<group>"; };
 		81A270B02F0E141D009C40D8 /* CurrencyConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterView.swift; sourceTree = "<group>"; };
@@ -161,6 +162,7 @@
 		PQ3DE9092C5A1B3000234567 /* ParquetViewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParquetViewerView.swift; sourceTree = "<group>"; };
 		QR2CE8082C5A1B3000123456 /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		SQL8E8082C5A1B3000123457 /* SQLFormatterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLFormatterView.swift; sourceTree = "<group>"; };
+		ZWW843AQRGOJHXWNFGDLFRAA /* DefaultExchangeRates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultExchangeRates.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				81A270B02F0E141D009C40D8 /* CurrencyConverterView.swift */,
+				3E9128D604EF103C7A961E03 /* TextCompareView.swift */,
 				8191E97A2EA524730035ADC7 /* ColorPickerView.swift */,
 				81E0D1F22E8D51B200F2A91A /* AITranslateView.swift */,
 				813459532E8A95FA003222BC /* FeatureSettingsView.swift */,
@@ -395,6 +398,7 @@
 				93A6A9212E588B98006A2798 /* Constants.swift in Sources */,
 				D5F4E8022C5A1B3000123456 /* TimestampConverterView.swift in Sources */,
 				81A270B12F0E141D009C40D8 /* CurrencyConverterView.swift in Sources */,
+				B8ED45ECE89552CE6769C282 /* TextCompareView.swift in Sources */,
 				D5F4E8042C5A1B3000123456 /* UnitConverterView.swift in Sources */,
 				D5F4E8062C5A1B3000123456 /* JSONFormatterView.swift in Sources */,
 				D5F4E8082C5A1B3000123456 /* Base64View.swift in Sources */,
@@ -592,7 +596,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -616,7 +620,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 2.10.0;
+				MARKETING_VERSION = 2.11.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.devutilities;
 				PRODUCT_NAME = DevUtilities;
@@ -634,7 +638,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -658,7 +662,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 2.10.0;
+				MARKETING_VERSION = 2.11.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.devutilities;
 				PRODUCT_NAME = DevUtilities;

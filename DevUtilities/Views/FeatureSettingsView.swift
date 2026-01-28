@@ -217,6 +217,7 @@ struct FeatureCard: View {
         case .qrCode: return "QR"
         case .parquetViewer: return "Parquet"
         case .currencyConverter: return "Currency"
+        case .textCompare: return "Diff"
         }
     }
 

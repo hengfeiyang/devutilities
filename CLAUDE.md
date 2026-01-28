@@ -3,33 +3,34 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 22 essential developer utilities. Version 2.10.0 with Currency Converter.
+DevUtilities is a native macOS application built with SwiftUI that provides 23 essential developer utilities. Version 2.11.0 with Text Compare and enhanced diff modes.
 
 ## Key Tools & Status
 
-All 22 tools are ✅ **Complete**:
+All 23 tools are ✅ **Complete**:
 1. **Timestamp Converter** - Bidirectional timestamp conversion with timezone support
 2. **Unit Converter** - 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
 3. **Base Converter** - Mutual conversion between binary, octal, decimal, hexadecimal, and Base62 number systems
 4. **Color Picker** - Professional color format converter with HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK support and color history
-5. **JSON Formatter** - Format, validate, escape/unescape, **visual CodeMirror diff editor**
-6. **Base64 Encode/Decode** - Text encoding/decoding with URL-safe variant
-7. **Hex String Converter** - Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support
-8. **Regex Test** - Pattern matching with capture groups and common patterns
-9. **UUID Generator** - Multiple versions (v1, v4, v5, v7) with bulk generation
-10. **Random String Generator** - Cryptographically secure random string generation with customizable character sets, presets, and requirements
-11. **URL Tools** - Encoding/decoding and comprehensive URL parsing
-12. **IP Query** - Dual IP detection and geolocation queries
-13. **HTTP Request** - Full HTTP client with SSE streaming and JSON tree view
-14. **QR Code** - Generation and scanning with multiple sizes and error correction
-15. **SQL Formatter** - **Enhanced SQL formatting** with native ParquetViewer library support for minimal and beautify modes
-16. **HTML Formatter** - Format and minify HTML with proper indentation
-17. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
-18. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
-19. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
-20. **AI Chat** - **Enhanced AI assistant** with custom model support, DeepSeek reasoning models, and flexible API configuration
-21. **AI Translate** - Professional translation with 3 modes, 19 languages, text-to-speech support, and word mode
-22. **Currency Converter** - **NEW** Real-time currency conversion with 38 currencies, 24-hour caching, 30-day price history, and trend indicators
+5. **Text Compare** - **NEW** Dedicated side-by-side text comparison with visual diff highlighting
+6. **JSON Formatter** - Format, validate, escape/unescape, **diff mode with visual CodeMirror editor**
+7. **Base64 Encode/Decode** - Text encoding/decoding with URL-safe variant
+8. **Hex String Converter** - Bidirectional hex-to-string conversion with UTF-8/UTF-16/ASCII encoding support
+9. **Regex Test** - Pattern matching with capture groups and common patterns
+10. **UUID Generator** - Multiple versions (v1, v4, v5, v7) with bulk generation
+11. **Random String Generator** - Cryptographically secure random string generation with customizable character sets, presets, and requirements
+12. **URL Tools** - Encoding/decoding and comprehensive URL parsing
+13. **IP Query** - Dual IP detection and geolocation queries
+14. **HTTP Request** - Full HTTP client with SSE streaming and JSON tree view
+15. **QR Code** - Generation and scanning with multiple sizes and error correction
+16. **SQL Formatter** - **Enhanced with diff mode** using native ParquetViewer library for minimal and beautify modes
+17. **HTML Formatter** - **Enhanced with diff mode** for side-by-side HTML comparison and proper indentation
+18. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
+19. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
+20. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
+21. **AI Chat** - **Enhanced AI assistant** with custom model support, DeepSeek reasoning models, and flexible API configuration
+22. **AI Translate** - Professional translation with 3 modes, 19 languages, text-to-speech support, and word mode
+23. **Currency Converter** - Real-time currency conversion with 38 currencies, 24-hour caching, 30-day price history, and trend indicators
 
 ## Architecture & Technical Stack
 - **Platform**: macOS 14.0+ SwiftUI
@@ -49,6 +50,18 @@ xcodebuild -project DevUtilities.xcodeproj -scheme DevUtilities build
 # Using MCP tools
 mcp__XcodeBuildMCP__build_run_macos
 ```
+
+## Recent Updates (v2.11.0)
+- **Text Compare Tool**: NEW dedicated tool for side-by-side text comparison with visual diff highlighting
+- **Enhanced Diff Modes**: Added diff functionality to JSON, HTML, and SQL formatters
+- **CodeDiffEditor Extensions**: Added html() and sql() methods to CodeDiffEditor component
+- **Unified Comparison Pattern**: Implemented reusable `updateComparisonStatus()` across all diff views
+- **Real-time Status Updates**: All diff views show instant "same" or "different" status with visual indicators
+- **Character & Line Metrics**: Both sides display character count and line count for detailed analysis
+- **Auto-formatting**: Diff modes automatically format content for optimal comparison
+- **Sample Data**: Each diff mode includes meaningful sample data pairs
+- **State Persistence**: All comparison views save content between sessions
+- **23 Essential Tools**: Complete developer toolkit with comprehensive diff capabilities
 
 ## Recent Updates (v2.10.0)
 - **Currency Converter**: NEW tool for real-time currency conversion with comprehensive features

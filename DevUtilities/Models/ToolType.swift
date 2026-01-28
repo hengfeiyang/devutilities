@@ -39,6 +39,7 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
     case qrCode = "qrcode"
     case parquetViewer = "parquet"
     case currencyConverter = "currency"
+    case textCompare = "text-compare"
 
     var id: String { rawValue }
     
@@ -88,6 +89,8 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
             return "Parquet Viewer"
         case .currencyConverter:
             return "Currency Converter"
+        case .textCompare:
+            return "Text Compare"
         }
     }
     
@@ -137,6 +140,8 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
             return "doc.text.magnifyingglass"
         case .currencyConverter:
             return "dollarsign.circle"
+        case .textCompare:
+            return "doc.on.doc"
         }
     }
 }

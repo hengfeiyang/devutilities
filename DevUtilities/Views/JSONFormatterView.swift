@@ -59,24 +59,10 @@ struct JSONFormatterView: View {
                     CodeDiffEditor.json(leftContent: $jsonInput, rightContent: $jsonInput2, readOnly: false)
                         .frame(maxHeight: .infinity)
                         .onChange(of: jsonInput) { _, _ in
-                            // let's check if the left and right are the same
-                            if jsonInput == jsonInput2 {
-                                isValid = true
-                                validationMessage = "✅ Both JSONs are the same"
-                            } else {
-                                isValid = false
-                                validationMessage = "❌ Both JSONs are different"
-                            }
+                            updateComparisonStatus()
                         }
                         .onChange(of: jsonInput2) { _, _ in
-                            // let's check if the left and right are the same
-                            if jsonInput == jsonInput2 {
-                                isValid = true
-                                validationMessage = "✅ Both JSONs are the same"
-                            } else {
-                                isValid = false
-                                validationMessage = "❌ Both JSONs are different"
-                            }
+                            updateComparisonStatus()
                         }
                     
                     HStack {
@@ -606,14 +592,27 @@ struct JSONFormatterView: View {
         jsonOutput = defaults.string(forKey: "JSONFormatter.jsonOutput") ?? ""
         validationMessage = defaults.string(forKey: "JSONFormatter.validationMessage") ?? ""
         isValid = defaults.bool(forKey: "JSONFormatter.isValid")
-        
+
         if let modeTitle = defaults.string(forKey: "JSONFormatter.selectedMode") {
             selectedMode = JSONMode.allCases.first { $0.title == modeTitle } ?? .format
         }
-        
+
         // If we have input, trigger processing
         if !jsonInput.isEmpty || !jsonInput2.isEmpty {
             processJSON()
+        }
+    }
+
+    private func updateComparisonStatus() {
+        if jsonInput.isEmpty && jsonInput2.isEmpty {
+            validationMessage = ""
+            isValid = true
+        } else if jsonInput == jsonInput2 {
+            isValid = true
+            validationMessage = "✅ Both JSONs are the same"
+        } else {
+            isValid = false
+            validationMessage = "❌ Both JSONs are different"
         }
     }
 }

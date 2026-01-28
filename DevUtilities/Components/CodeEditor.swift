@@ -288,4 +288,40 @@ extension CodeDiffEditor {
             readOnly: readOnly
         )
     }
+
+    // For HTML diff with syntax highlighting
+    static func html(leftContent: Binding<String>, rightContent: Binding<String>, readOnly: Bool = false) -> CodeDiffEditor {
+        CodeDiffEditor(
+            leftContent: leftContent,
+            rightContent: rightContent,
+            mode: CodeMode.html.mode(),
+            theme: .devutilitiesNight,
+            fontSize: 12,
+            readOnly: readOnly
+        )
+    }
+
+    // For SQL diff with syntax highlighting
+    static func sql(leftContent: Binding<String>, rightContent: Binding<String>, readOnly: Bool = false) -> CodeDiffEditor {
+        CodeDiffEditor(
+            leftContent: leftContent,
+            rightContent: rightContent,
+            mode: CodeMode.sql.mode(),
+            theme: .devutilitiesNight,
+            fontSize: 12,
+            readOnly: readOnly
+        )
+    }
+
+    // For plain text diff
+    static func plain(leftContent: Binding<String>, rightContent: Binding<String>, readOnly: Bool = false) -> CodeDiffEditor {
+        CodeDiffEditor(
+            leftContent: leftContent,
+            rightContent: rightContent,
+            mode: CodeMode.text.mode(),
+            theme: .devutilitiesNight,
+            fontSize: 12,
+            readOnly: readOnly
+        )
+    }
 }

@@ -398,6 +398,7 @@ extension ToolType {
         case .parquetViewer: return "parquet_viewer"
         case .cryptoTools: return "crypto_tools"
         case .currencyConverter: return "currency_converter"
+        case .textCompare: return "text_compare"
         }
     }
 }

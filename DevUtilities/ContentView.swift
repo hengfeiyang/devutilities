@@ -146,6 +146,8 @@ struct ContentView: View {
                     ParquetViewerView()
                 case .currencyConverter:
                     CurrencyConverterView()
+                case .textCompare:
+                    TextCompareView()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

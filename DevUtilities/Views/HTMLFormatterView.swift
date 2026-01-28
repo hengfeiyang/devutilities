@@ -20,6 +20,7 @@ struct HTMLFormatterView: View {
     let screenName = "HTML Formatter"
     let module = "html_formatter"
     @State private var htmlInput: String = ""
+    @State private var htmlInput2: String = ""
     @State private var htmlOutput: String = ""
     @State private var selectedMode: HTMLMode = .format
     @State private var validationMessage: String = ""
@@ -38,9 +39,58 @@ struct HTMLFormatterView: View {
             .onChange(of: selectedMode) { _, _ in
                 processHTML()
             }
-            
-            // Two-column Layout
-            HStack(alignment: .top, spacing: 20) {
+
+            if selectedMode == .diff {
+                // Diff Mode Layout - Single visual diff editor
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        Text("HTML Diff Comparison")
+                            .font(.headline)
+                        Spacer()
+                        Button("Clear") {
+                            htmlInput = ""
+                            htmlInput2 = ""
+                            htmlOutput = ""
+                            validationMessage = ""
+                        }
+                        .buttonStyle(.borderless)
+                    }
+
+                    CodeDiffEditor.html(leftContent: $htmlInput, rightContent: $htmlInput2, readOnly: false)
+                        .frame(maxHeight: .infinity)
+                        .onChange(of: htmlInput) { _, _ in
+                            updateComparisonStatus()
+                        }
+                        .onChange(of: htmlInput2) { _, _ in
+                            updateComparisonStatus()
+                        }
+
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("HTML 1 (Left): \(htmlInput.count) characters, \(htmlInput.components(separatedBy: .newlines).count) lines")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+
+                        Spacer()
+
+                        VStack(alignment: .trailing, spacing: 2) {
+                            Text("HTML 2 (Right): \(htmlInput2.count) characters, \(htmlInput2.components(separatedBy: .newlines).count) lines")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+
+                    if !validationMessage.isEmpty {
+                        Text(validationMessage)
+                            .font(.caption)
+                            .foregroundColor(isValid ? .green : .red)
+                    }
+                }
+                .padding(.horizontal, 0)
+            } else {
+                // Standard Mode Layout - Two columns
+                HStack(alignment: .top, spacing: 20) {
                 // Input Section
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
@@ -103,13 +153,19 @@ struct HTMLFormatterView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
+                }
+                .padding(.horizontal, 0)
             }
-            .padding(.horizontal, 0)
-            
+
             // Action Buttons
             HStack(spacing: 20) {
                 Button("Sample") {
-                    htmlInput = sampleHTML
+                    if selectedMode == .diff {
+                        htmlInput = sampleHTML1
+                        htmlInput2 = sampleHTML2
+                    } else {
+                        htmlInput = sampleHTML
+                    }
                     processHTML()
                 }
                 .buttonStyle(.bordered)
@@ -134,6 +190,12 @@ struct HTMLFormatterView: View {
                 
                 Button("Extract Text") {
                     selectedMode = .extractText
+                    processHTML()
+                }
+                .buttonStyle(.bordered)
+
+                Button("Diff") {
+                    selectedMode = .diff
                     processHTML()
                 }
                 .buttonStyle(.bordered)
@@ -176,6 +238,8 @@ struct HTMLFormatterView: View {
             validateHTML()
         case .extractText:
             extractText()
+        case .diff:
+            diffHTML()
         }
     }
     
@@ -212,6 +276,37 @@ struct HTMLFormatterView: View {
         htmlOutput = text
         isValid = true
         validationMessage = "✅ Text extracted"
+    }
+
+    private func diffHTML() {
+        // Handle empty inputs
+        guard !htmlInput.isEmpty || !htmlInput2.isEmpty else {
+            validationMessage = "Enter HTML in both fields to compare"
+            isValid = false
+            return
+        }
+
+        if htmlInput.isEmpty {
+            validationMessage = "HTML 1 is empty"
+            isValid = false
+            return
+        }
+
+        if htmlInput2.isEmpty {
+            validationMessage = "HTML 2 is empty"
+            isValid = false
+            return
+        }
+
+        // Format both HTML inputs for better diff visualization
+        let formatted1 = formatHTMLString(htmlInput)
+        let formatted2 = formatHTMLString(htmlInput2)
+
+        htmlInput = formatted1
+        htmlInput2 = formatted2
+
+        validationMessage = "✅ Both HTMLs formatted - differences shown in diff view"
+        isValid = true
     }
     
     private func formatHTMLString(_ html: String) -> String {
@@ -464,6 +559,7 @@ struct HTMLFormatterView: View {
     private func saveState() {
         let defaults = UserDefaults.standard
         defaults.set(htmlInput, forKey: "HTMLFormatter.htmlInput")
+        defaults.set(htmlInput2, forKey: "HTMLFormatter.htmlInput2")
         defaults.set(htmlOutput, forKey: "HTMLFormatter.htmlOutput")
         defaults.set(selectedMode.title, forKey: "HTMLFormatter.selectedMode")
         defaults.set(validationMessage, forKey: "HTMLFormatter.validationMessage")
@@ -473,30 +569,45 @@ struct HTMLFormatterView: View {
     private func loadState() {
         let defaults = UserDefaults.standard
         htmlInput = defaults.string(forKey: "HTMLFormatter.htmlInput") ?? ""
+        htmlInput2 = defaults.string(forKey: "HTMLFormatter.htmlInput2") ?? ""
         htmlOutput = defaults.string(forKey: "HTMLFormatter.htmlOutput") ?? ""
         validationMessage = defaults.string(forKey: "HTMLFormatter.validationMessage") ?? ""
         isValid = defaults.bool(forKey: "HTMLFormatter.isValid")
-        
+
         if let modeTitle = defaults.string(forKey: "HTMLFormatter.selectedMode") {
             selectedMode = HTMLMode.allCases.first { $0.title == modeTitle } ?? .format
         }
-        
+
         // If we have input, trigger processing
-        if !htmlInput.isEmpty {
+        if !htmlInput.isEmpty || !htmlInput2.isEmpty {
             processHTML()
+        }
+    }
+
+    private func updateComparisonStatus() {
+        if htmlInput.isEmpty && htmlInput2.isEmpty {
+            validationMessage = ""
+            isValid = true
+        } else if htmlInput == htmlInput2 {
+            isValid = true
+            validationMessage = "✅ Both HTMLs are the same"
+        } else {
+            isValid = false
+            validationMessage = "❌ HTMLs are different"
         }
     }
 }
 
 enum HTMLMode: CaseIterable {
-    case format, minify, validate, extractText
-    
+    case format, minify, validate, extractText, diff
+
     var title: String {
         switch self {
         case .format: return "Format"
         case .minify: return "Minify"
         case .validate: return "Validate"
         case .extractText: return "Extract Text"
+        case .diff: return "Diff"
         }
     }
 }
@@ -536,6 +647,53 @@ body { font-family: Arial, sans-serif; margin: 20px; }
 </div>
 <div class="footer">
 <p>&copy; 2026 Sample Website. All rights reserved.</p>
+</div>
+</div>
+</body>
+</html>
+"""
+
+private let sampleHTML1 = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Product Page</title>
+</head>
+<body>
+<div class="container">
+<h1>Product Catalog</h1>
+<p>Browse our selection of products.</p>
+<ul>
+<li>Electronics</li>
+<li>Books</li>
+<li>Clothing</li>
+</ul>
+</div>
+</body>
+</html>
+"""
+
+private let sampleHTML2 = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Updated Product Page</title>
+</head>
+<body>
+<div class="container">
+<h1>Product Catalog</h1>
+<p>Browse our updated selection of products.</p>
+<ul>
+<li>Electronics</li>
+<li>Books</li>
+<li>Clothing</li>
+<li>Home & Garden</li>
+</ul>
+<div class="featured">
+<h2>Featured Items</h2>
+<p>Check out our featured products on sale.</p>
 </div>
 </div>
 </body>

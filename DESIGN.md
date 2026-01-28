@@ -1,7 +1,7 @@
 # DevUtilities - Design Document
 
 ## Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 22 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+DevUtilities is a native macOS application built with SwiftUI that provides 23 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
 
 ## Architecture
 
@@ -23,35 +23,36 @@ DevUtilities/
 │   │   ├── RandomStringConfig.swift    # Random string configuration (v2.9.0)
 │   │   ├── Currency.swift              # NEW: 38 currency definitions with flags (v2.10.0)
 │   │   └── ExchangeRateData.swift      # NEW: API response & cache models (v2.10.0)
-│   ├── Views/                      # All 22 tool implementations
+│   ├── Views/                      # All 23 tool implementations
 │   │   ├── TimestampConverterView.swift
 │   │   ├── UnitConverterView.swift
 │   │   ├── BaseConverterView.swift
 │   │   ├── ColorPickerView.swift
-│   │   ├── JSONFormatterView.swift
+│   │   ├── TextCompareView.swift        # NEW: Text comparison tool (v2.11.0)
+│   │   ├── JSONFormatterView.swift     # Enhanced with diff mode (v2.11.0)
 │   │   ├── Base64View.swift
 │   │   ├── HexStringConverterView.swift
 │   │   ├── RegexTestView.swift
 │   │   ├── UUIDGeneratorView.swift
-│   │   ├── RandomStringView.swift       # NEW: Random string generator (v2.9.0)
+│   │   ├── RandomStringView.swift       # Random string generator (v2.9.0)
 │   │   ├── URLToolsView.swift
 │   │   ├── IPQueryView.swift
 │   │   ├── HTTPRequestView.swift
 │   │   ├── QRCodeView.swift
-│   │   ├── SQLFormatterView.swift
-│   │   ├── HTMLFormatterView.swift
+│   │   ├── SQLFormatterView.swift      # Enhanced with diff mode (v2.11.0)
+│   │   ├── HTMLFormatterView.swift     # Enhanced with diff mode (v2.11.0)
 │   │   ├── JWTView.swift
 │   │   ├── ParquetViewerView.swift
 │   │   ├── CryptoToolsView.swift
 │   │   ├── AIChatView.swift
 │   │   ├── AITranslateView.swift       # AI translation interface
-│   │   ├── CurrencyConverterView.swift # NEW: Currency converter (v2.10.0)
+│   │   ├── CurrencyConverterView.swift # Currency converter (v2.10.0)
 │   │   └── FeatureSettingsView.swift   # Feature management interface
 │   ├── Components/                 # Shared UI components
-│   │   ├── CodeEditor.swift        # CodeMirror integration & diff editor
+│   │   ├── CodeEditor.swift        # CodeMirror integration & diff editor (enhanced v2.11.0)
 │   │   ├── TextEditor.swift        # Custom text editor with IME support
-│   │   ├── SpeakerButton.swift     # NEW: TTS playback button (v2.8.2)
-│   │   └── SpeakerMotionView.swift # NEW: Animated speaker icon (v2.8.2)
+│   │   ├── SpeakerButton.swift     # TTS playback button (v2.8.2)
+│   │   └── SpeakerMotionView.swift # Animated speaker icon (v2.8.2)
 │   ├── Services/                   # Application services
 │   │   ├── ChatManager.swift       # AI chat session management
 │   │   ├── ProviderManager.swift   # API provider configuration

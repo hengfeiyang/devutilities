@@ -20,6 +20,7 @@ struct SQLFormatterView: View {
     let screenName = "SQL Formatter"
     let module = "sql_formatter"
     @State private var sqlInput: String = ""
+    @State private var sqlInput2: String = ""
     @State private var sqlOutput: String = ""
     @State private var selectedMode: SQLMode = .format
     @State private var validationMessage: String = ""
@@ -38,9 +39,58 @@ struct SQLFormatterView: View {
             .onChange(of: selectedMode) { _, _ in
                 processSQL()
             }
-            
-            // Two-column Layout
-            HStack(alignment: .top, spacing: 20) {
+
+            if selectedMode == .diff {
+                // Diff Mode Layout - Single visual diff editor
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        Text("SQL Diff Comparison")
+                            .font(.headline)
+                        Spacer()
+                        Button("Clear") {
+                            sqlInput = ""
+                            sqlInput2 = ""
+                            sqlOutput = ""
+                            validationMessage = ""
+                        }
+                        .buttonStyle(.borderless)
+                    }
+
+                    CodeDiffEditor.sql(leftContent: $sqlInput, rightContent: $sqlInput2, readOnly: false)
+                        .frame(maxHeight: .infinity)
+                        .onChange(of: sqlInput) { _, _ in
+                            updateComparisonStatus()
+                        }
+                        .onChange(of: sqlInput2) { _, _ in
+                            updateComparisonStatus()
+                        }
+
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("SQL 1 (Left): \(sqlInput.count) characters, \(sqlInput.components(separatedBy: .newlines).count) lines")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+
+                        Spacer()
+
+                        VStack(alignment: .trailing, spacing: 2) {
+                            Text("SQL 2 (Right): \(sqlInput2.count) characters, \(sqlInput2.components(separatedBy: .newlines).count) lines")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+
+                    if !validationMessage.isEmpty {
+                        Text(validationMessage)
+                            .font(.caption)
+                            .foregroundColor(isValid ? .green : .red)
+                    }
+                }
+                .padding(.horizontal, 0)
+            } else {
+                // Standard Mode Layout - Two columns
+                HStack(alignment: .top, spacing: 20) {
                 // Input Section
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
@@ -103,13 +153,19 @@ struct SQLFormatterView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
+                }
+                .padding(.horizontal, 0)
             }
-            .padding(.horizontal, 0)
-            
+
             // Action Buttons
             HStack(spacing: 20) {
                 Button("Sample") {
-                    sqlInput = sampleSQL
+                    if selectedMode == .diff {
+                        sqlInput = sampleSQL1
+                        sqlInput2 = sampleSQL2
+                    } else {
+                        sqlInput = sampleSQL
+                    }
                     processSQL()
                 }
                 .buttonStyle(.bordered)
@@ -134,6 +190,12 @@ struct SQLFormatterView: View {
                 
                 Button("Analyze") {
                     selectedMode = .analyze
+                    processSQL()
+                }
+                .buttonStyle(.bordered)
+
+                Button("Diff") {
+                    selectedMode = .diff
                     processSQL()
                 }
                 .buttonStyle(.bordered)
@@ -176,6 +238,8 @@ struct SQLFormatterView: View {
             validateSQL()
         case .analyze:
             analyzeSQL()
+        case .diff:
+            diffSQL()
         }
     }
     
@@ -212,6 +276,37 @@ struct SQLFormatterView: View {
         sqlOutput = analysis
         isValid = true
         validationMessage = "✅ SQL analyzed"
+    }
+
+    private func diffSQL() {
+        // Handle empty inputs
+        guard !sqlInput.isEmpty || !sqlInput2.isEmpty else {
+            validationMessage = "Enter SQL in both fields to compare"
+            isValid = false
+            return
+        }
+
+        if sqlInput.isEmpty {
+            validationMessage = "SQL 1 is empty"
+            isValid = false
+            return
+        }
+
+        if sqlInput2.isEmpty {
+            validationMessage = "SQL 2 is empty"
+            isValid = false
+            return
+        }
+
+        // Format both SQL inputs for better diff visualization
+        let formatted1 = formatSQLString(sqlInput)
+        let formatted2 = formatSQLString(sqlInput2)
+
+        sqlInput = formatted1
+        sqlInput2 = formatted2
+
+        validationMessage = "✅ Both SQLs formatted - differences shown in diff view"
+        isValid = true
     }
     
     private func formatSQLString(_ sql: String) -> String {
@@ -432,6 +527,7 @@ struct SQLFormatterView: View {
     private func saveState() {
         let defaults = UserDefaults.standard
         defaults.set(sqlInput, forKey: "SQLFormatter.sqlInput")
+        defaults.set(sqlInput2, forKey: "SQLFormatter.sqlInput2")
         defaults.set(sqlOutput, forKey: "SQLFormatter.sqlOutput")
         defaults.set(selectedMode.title, forKey: "SQLFormatter.selectedMode")
         defaults.set(validationMessage, forKey: "SQLFormatter.validationMessage")
@@ -441,36 +537,59 @@ struct SQLFormatterView: View {
     private func loadState() {
         let defaults = UserDefaults.standard
         sqlInput = defaults.string(forKey: "SQLFormatter.sqlInput") ?? ""
+        sqlInput2 = defaults.string(forKey: "SQLFormatter.sqlInput2") ?? ""
         sqlOutput = defaults.string(forKey: "SQLFormatter.sqlOutput") ?? ""
         validationMessage = defaults.string(forKey: "SQLFormatter.validationMessage") ?? ""
         isValid = defaults.bool(forKey: "SQLFormatter.isValid")
-        
+
         if let modeTitle = defaults.string(forKey: "SQLFormatter.selectedMode") {
             selectedMode = SQLMode.allCases.first { $0.title == modeTitle } ?? .format
         }
-        
+
         // If we have input, trigger processing
-        if !sqlInput.isEmpty {
+        if !sqlInput.isEmpty || !sqlInput2.isEmpty {
             processSQL()
+        }
+    }
+
+    private func updateComparisonStatus() {
+        if sqlInput.isEmpty && sqlInput2.isEmpty {
+            validationMessage = ""
+            isValid = true
+        } else if sqlInput == sqlInput2 {
+            isValid = true
+            validationMessage = "✅ Both SQLs are the same"
+        } else {
+            isValid = false
+            validationMessage = "❌ SQLs are different"
         }
     }
 }
 
 enum SQLMode: CaseIterable {
-    case format, minify, validate, analyze
-    
+    case format, minify, validate, analyze, diff
+
     var title: String {
         switch self {
         case .format: return "Format"
         case .minify: return "Minify"
         case .validate: return "Validate"
         case .analyze: return "Analyze"
+        case .diff: return "Diff"
         }
     }
 }
 
 private let sampleSQL = """
 SELECT u.id, u.name, u.email, p.title as project_title, COUNT(t.id) as task_count FROM users u INNER JOIN projects p ON u.id = p.user_id LEFT JOIN tasks t ON p.id = t.project_id WHERE u.active = 1 AND p.status = 'active' AND t.completed = 0 GROUP BY u.id, p.id HAVING COUNT(t.id) > 0 ORDER BY u.name, task_count DESC LIMIT 10;
+"""
+
+private let sampleSQL1 = """
+SELECT id, name, email FROM users WHERE active = 1 ORDER BY name LIMIT 10;
+"""
+
+private let sampleSQL2 = """
+SELECT id, name, email, created_at FROM users WHERE active = 1 AND verified = 1 ORDER BY name, created_at DESC LIMIT 20;
 """
 
 #Preview {
