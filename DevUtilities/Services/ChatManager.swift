@@ -191,14 +191,23 @@ class ChatManager {
                 }
             },
             onError: { error in
+                let isCancelled = error is CancellationError || (error as? URLError)?.code == .cancelled
                 Task { @MainActor in
                     if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
                        streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
-                        self.chatSessions[sessionIdx].messages.remove(at: streamingMessageIndex)
+                        if isCancelled && !self.chatSessions[sessionIdx].messages[streamingMessageIndex].content.isEmpty {
+                            self.chatSessions[sessionIdx].messages[streamingMessageIndex].isStreaming = false
+                            self.chatSessions[sessionIdx].updatedAt = Date()
+                            self.storage.saveChatSession(self.chatSessions[sessionIdx])
+                        } else {
+                            self.chatSessions[sessionIdx].messages.remove(at: streamingMessageIndex)
+                        }
                     }
                 }
-                
-                errorMessage.wrappedValue = "Failed to send message: \(error.localizedDescription)"
+
+                if !isCancelled {
+                    errorMessage.wrappedValue = "Failed to send message: \(error.localizedDescription)"
+                }
                 isLoading.wrappedValue = false
             },
             onReasoning: { [weak self] reasoning in
@@ -279,13 +288,22 @@ class ChatManager {
                 }
             },
             onError: { error in
+                let isCancelled = error is CancellationError || (error as? URLError)?.code == .cancelled
                 Task { @MainActor in
                     if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
-                        self.chatSessions[sessionIndex].messages.remove(at: streamingMessageIndex)
+                        if isCancelled && !self.chatSessions[sessionIndex].messages[streamingMessageIndex].content.isEmpty {
+                            self.chatSessions[sessionIndex].messages[streamingMessageIndex].isStreaming = false
+                            self.chatSessions[sessionIndex].updatedAt = Date()
+                            self.storage.saveChatSession(self.chatSessions[sessionIndex])
+                        } else {
+                            self.chatSessions[sessionIndex].messages.remove(at: streamingMessageIndex)
+                        }
                     }
                 }
-                
-                errorMessage.wrappedValue = "Failed to send vision message: \(error.localizedDescription)"
+
+                if !isCancelled {
+                    errorMessage.wrappedValue = "Failed to send vision message: \(error.localizedDescription)"
+                }
                 isLoading.wrappedValue = false
             },
             onReasoning: { [weak self] reasoning in
