@@ -139,6 +139,7 @@ struct ModelCapabilities: Codable, Hashable {
     var supportsWeb: Bool
     var maxTokens: Int
     var contextWindow: Int
+    var useResponsesAPI: Bool
 
     init(
         supportsStreaming: Bool = true,
@@ -147,7 +148,8 @@ struct ModelCapabilities: Codable, Hashable {
         supportsImages: Bool = false,
         supportsWeb: Bool = false,
         maxTokens: Int = 4096,
-        contextWindow: Int = 4096
+        contextWindow: Int = 4096,
+        useResponsesAPI: Bool = false
     ) {
         self.supportsStreaming = supportsStreaming
         self.supportsReasoning = supportsReasoning
@@ -156,6 +158,24 @@ struct ModelCapabilities: Codable, Hashable {
         self.supportsWeb = supportsWeb
         self.maxTokens = maxTokens
         self.contextWindow = contextWindow
+        self.useResponsesAPI = useResponsesAPI
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case supportsStreaming, supportsReasoning, supportsFunctionCalls
+        case supportsImages, supportsWeb, maxTokens, contextWindow, useResponsesAPI
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        supportsStreaming = try c.decode(Bool.self, forKey: .supportsStreaming)
+        supportsReasoning = try c.decode(Bool.self, forKey: .supportsReasoning)
+        supportsFunctionCalls = try c.decode(Bool.self, forKey: .supportsFunctionCalls)
+        supportsImages = try c.decode(Bool.self, forKey: .supportsImages)
+        supportsWeb = try c.decode(Bool.self, forKey: .supportsWeb)
+        maxTokens = try c.decode(Int.self, forKey: .maxTokens)
+        contextWindow = try c.decode(Int.self, forKey: .contextWindow)
+        useResponsesAPI = try c.decodeIfPresent(Bool.self, forKey: .useResponsesAPI) ?? false
     }
 
     var capabilityIcons: [String] {
@@ -241,8 +261,23 @@ extension AIProvider {
             providerId: provider.id
         )
 
+        let gpt5Pro = AIModelV2(
+            name: "GPT-5.2 Pro",
+            modelId: "gpt-5.2-pro",
+            capabilities: ModelCapabilities(
+                supportsStreaming: true,
+                supportsFunctionCalls: true,
+                supportsImages: true,
+                maxTokens: 128000,
+                contextWindow: 400000,
+                useResponsesAPI: true
+            ),
+            isBuiltIn: true,
+            providerId: provider.id
+        )
+
         var providerWithModels = provider
-        providerWithModels.models = [gpt5, gpt5Mini, gpt5Nano]
+        providerWithModels.models = [gpt5, gpt5Pro, gpt5Mini, gpt5Nano]
         return providerWithModels
     }
 

@@ -54,6 +54,29 @@ struct ChatSession: Identifiable, Codable, Hashable {
         updatedAt = Date()
     }
 
+    // Helper to get the current AIModelV2 object
+    @MainActor func getCurrentModel() -> AIModelV2? {
+        if let providerId = selectedProviderModelId,
+           let modelId = selectedModelId,
+           let provider = ProviderManager.shared.getProviderById(providerId),
+           let model = provider.models.first(where: { $0.id == modelId }) {
+            return model
+        }
+        if let defaultModelKey = AIUISettings.shared.selectedDefaultModelKey {
+            let components = defaultModelKey.split(separator: "|")
+            if components.count == 2,
+               let providerIdStr = components.first,
+               let modelIdStr = components.last,
+               let providerId = UUID(uuidString: String(providerIdStr)),
+               let modelId = UUID(uuidString: String(modelIdStr)),
+               let provider = ProviderManager.shared.getProviderById(providerId),
+               let model = provider.models.first(where: { $0.id == modelId }) {
+                return model
+            }
+        }
+        return ProviderManager.shared.getAllActiveModels().first?.model
+    }
+
     // Helper to get the current model ID for API calls
     @MainActor func getCurrentModelId() -> String? {
         // If we have a selected model, get its modelId from the provider system

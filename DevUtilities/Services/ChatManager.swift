@@ -31,6 +31,7 @@ class ChatManager {
         currentTask?.cancel()
         currentTask = nil
         chatAPI.cancelCurrentRequest()
+        responsesAPI.cancelCurrentRequest()
     }
     
     // MARK: - Session Management
@@ -146,6 +147,7 @@ class ChatManager {
         errorMessage.wrappedValue = nil
 
         let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-5.2"
+        let useResponsesAPI = chatSessions[sessionIndex].getCurrentModel()?.capabilities.useResponsesAPI ?? false
         print("  - Resolved Model ID: \(modelId)")
 
         guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
@@ -161,6 +163,58 @@ class ChatManager {
 
         let streamingMessageIndex = chatSessions[sessionIndex].messages.count - 1
 
+        let onToken: @Sendable (String) -> Void = { [weak self] token in
+            guard let self = self else { return }
+            Task { @MainActor in
+                if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
+                   streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
+                    self.chatSessions[sessionIdx].messages[streamingMessageIndex].content += token
+                }
+            }
+        }
+        let onComplete: @Sendable () -> Void = { [weak self] in
+            guard let self = self else { return }
+            Task { @MainActor in
+                if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
+                   streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
+                    self.chatSessions[sessionIdx].messages[streamingMessageIndex].isStreaming = false
+                    self.chatSessions[sessionIdx].updatedAt = Date()
+                    self.storage.saveChatSession(self.chatSessions[sessionIdx])
+                }
+                isLoading.wrappedValue = false
+            }
+        }
+        let onError: @Sendable (Error) -> Void = { error in
+            let isCancelled = error is CancellationError || (error as? URLError)?.code == .cancelled
+            Task { @MainActor in
+                if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
+                   streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
+                    if isCancelled && !self.chatSessions[sessionIdx].messages[streamingMessageIndex].content.isEmpty {
+                        self.chatSessions[sessionIdx].messages[streamingMessageIndex].isStreaming = false
+                        self.chatSessions[sessionIdx].updatedAt = Date()
+                        self.storage.saveChatSession(self.chatSessions[sessionIdx])
+                    } else {
+                        self.chatSessions[sessionIdx].messages.remove(at: streamingMessageIndex)
+                    }
+                }
+            }
+            if !isCancelled {
+                errorMessage.wrappedValue = "Failed to send message: \(error.localizedDescription)"
+            }
+            isLoading.wrappedValue = false
+        }
+
+        if useResponsesAPI {
+            await responsesAPI.sendChatMessage(
+                messages: currentMessages,
+                modelId: modelId,
+                apiKey: providerInfo.apiKey,
+                baseURL: providerInfo.baseURL,
+                onToken: onToken,
+                onComplete: onComplete,
+                onError: onError
+            )
+        } else {
         await chatAPI.sendMessage(
             messages: currentMessages,
             modelId: modelId,
@@ -222,10 +276,11 @@ class ChatManager {
             }
         )
         }
-        
+        } // end Task
+
         await currentTask?.value
     }
-    
+
     func sendMessageWithImages(
         _ content: String,
         images: [ChatMessageImage],
@@ -246,6 +301,7 @@ class ChatManager {
         errorMessage.wrappedValue = nil
 
         let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-5.2"
+        let useResponsesAPI = chatSessions[sessionIndex].getCurrentModel()?.capabilities.useResponsesAPI ?? false
 
         guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
             errorMessage.wrappedValue = "No API key configured for the selected provider. Please configure your provider in settings."
@@ -259,63 +315,74 @@ class ChatManager {
         chatSessions[sessionIndex].messages.append(streamingMessage)
 
         let streamingMessageIndex = chatSessions[sessionIndex].messages.count - 1
-        
-        await chatAPI.sendMessage(
-            messages: currentMessages,
-            modelId: modelId,
-            apiKey: providerInfo.apiKey,
-            baseURL: providerInfo.baseURL,
-            onToken: { [weak self] token in
-                guard let self = self else { return }
 
-                Task { @MainActor in
-                    if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
-                        self.chatSessions[sessionIndex].messages[streamingMessageIndex].content += token
-                    }
+        let onToken: @Sendable (String) -> Void = { [weak self] token in
+            guard let self = self else { return }
+            Task { @MainActor in
+                if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
+                    self.chatSessions[sessionIndex].messages[streamingMessageIndex].content += token
                 }
-            },
-            onComplete: { [weak self] in
-                guard let self = self else { return }
-
-                Task { @MainActor in
-                    if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
+            }
+        }
+        let onComplete: @Sendable () -> Void = { [weak self] in
+            guard let self = self else { return }
+            Task { @MainActor in
+                if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
+                    self.chatSessions[sessionIndex].messages[streamingMessageIndex].isStreaming = false
+                    self.chatSessions[sessionIndex].updatedAt = Date()
+                    self.storage.saveChatSession(self.chatSessions[sessionIndex])
+                }
+                isLoading.wrappedValue = false
+            }
+        }
+        let onError: @Sendable (Error) -> Void = { error in
+            let isCancelled = error is CancellationError || (error as? URLError)?.code == .cancelled
+            Task { @MainActor in
+                if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
+                    if isCancelled && !self.chatSessions[sessionIndex].messages[streamingMessageIndex].content.isEmpty {
                         self.chatSessions[sessionIndex].messages[streamingMessageIndex].isStreaming = false
                         self.chatSessions[sessionIndex].updatedAt = Date()
                         self.storage.saveChatSession(self.chatSessions[sessionIndex])
-                    }
-
-                    isLoading.wrappedValue = false
-                }
-            },
-            onError: { error in
-                let isCancelled = error is CancellationError || (error as? URLError)?.code == .cancelled
-                Task { @MainActor in
-                    if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
-                        if isCancelled && !self.chatSessions[sessionIndex].messages[streamingMessageIndex].content.isEmpty {
-                            self.chatSessions[sessionIndex].messages[streamingMessageIndex].isStreaming = false
-                            self.chatSessions[sessionIndex].updatedAt = Date()
-                            self.storage.saveChatSession(self.chatSessions[sessionIndex])
-                        } else {
-                            self.chatSessions[sessionIndex].messages.remove(at: streamingMessageIndex)
-                        }
-                    }
-                }
-
-                if !isCancelled {
-                    errorMessage.wrappedValue = "Failed to send vision message: \(error.localizedDescription)"
-                }
-                isLoading.wrappedValue = false
-            },
-            onReasoning: { [weak self] reasoning in
-                guard let self = self else { return }
-
-                Task { @MainActor in
-                    if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
-                        self.chatSessions[sessionIndex].messages[streamingMessageIndex].reasoningContent = (self.chatSessions[sessionIndex].messages[streamingMessageIndex].reasoningContent ?? "") + reasoning
+                    } else {
+                        self.chatSessions[sessionIndex].messages.remove(at: streamingMessageIndex)
                     }
                 }
             }
-        )
+            if !isCancelled {
+                errorMessage.wrappedValue = "Failed to send vision message: \(error.localizedDescription)"
+            }
+            isLoading.wrappedValue = false
+        }
+
+        if useResponsesAPI {
+            await responsesAPI.sendChatMessage(
+                messages: currentMessages,
+                modelId: modelId,
+                apiKey: providerInfo.apiKey,
+                baseURL: providerInfo.baseURL,
+                onToken: onToken,
+                onComplete: onComplete,
+                onError: onError
+            )
+        } else {
+            await chatAPI.sendMessage(
+                messages: currentMessages,
+                modelId: modelId,
+                apiKey: providerInfo.apiKey,
+                baseURL: providerInfo.baseURL,
+                onToken: onToken,
+                onComplete: onComplete,
+                onError: onError,
+                onReasoning: { [weak self] reasoning in
+                    guard let self = self else { return }
+                    Task { @MainActor in
+                        if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
+                            self.chatSessions[sessionIndex].messages[streamingMessageIndex].reasoningContent = (self.chatSessions[sessionIndex].messages[streamingMessageIndex].reasoningContent ?? "") + reasoning
+                        }
+                    }
+                }
+            )
+        }
     }
     
     func sendMessageWithTool(
@@ -853,7 +920,14 @@ final class ChatCompletionsAPI: @unchecked Sendable {
             
             guard 200...299 ~= httpResponse.statusCode else {
                 let errorData = try await data.reduce(into: Data()) { $0.append($1) }
-                let errorMessage = String(data: errorData, encoding: .utf8) ?? "Unknown error"
+                let errorMessage: String
+                if let json = try? JSONSerialization.jsonObject(with: errorData) as? [String: Any],
+                   let errorObj = json["error"] as? [String: Any],
+                   let message = errorObj["message"] as? String {
+                    errorMessage = message
+                } else {
+                    errorMessage = String(data: errorData, encoding: .utf8) ?? "Unknown error"
+                }
                 await MainActor.run { onError(APIError.httpError(httpResponse.statusCode, errorMessage)) }
                 return
             }
@@ -897,6 +971,113 @@ final class ChatCompletionsAPI: @unchecked Sendable {
 
 final class ResponsesAPI: @unchecked Sendable {
     private let session = URLSession.shared
+    private var currentDataTask: URLSessionDataTask? = nil
+
+    func cancelCurrentRequest() {
+        currentDataTask?.cancel()
+        currentDataTask = nil
+    }
+
+    func sendChatMessage(
+        messages: [ChatMessage],
+        modelId: String,
+        apiKey: String,
+        baseURL: String,
+        onToken: @escaping @Sendable (String) -> Void,
+        onComplete: @escaping @Sendable () -> Void,
+        onError: @escaping @Sendable (Error) -> Void
+    ) async {
+        do {
+            let url = URL(string: "\(baseURL)/responses")!
+
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+            let inputMessages = messages.map { message -> [String: Any] in
+                if message.hasImages {
+                    var content: [[String: Any]] = []
+                    if !message.content.isEmpty {
+                        content.append(["type": "input_text", "text": message.content])
+                    }
+                    for image in message.images {
+                        if let imageURL = image.base64ImageURL {
+                            content.append(["type": "input_image", "image_url": imageURL])
+                        }
+                    }
+                    if message.images.isEmpty, let legacyURL = message.base64ImageURL {
+                        content.append(["type": "input_image", "image_url": legacyURL])
+                    }
+                    return ["role": message.role.rawValue, "content": content]
+                } else {
+                    return ["role": message.role.rawValue, "content": message.content]
+                }
+            }
+
+            let requestBody: [String: Any] = [
+                "model": modelId,
+                "input": inputMessages,
+                "stream": true
+            ]
+
+            request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
+
+            let (data, response) = try await session.bytes(for: request)
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                await MainActor.run { onError(APIError.invalidResponse) }
+                return
+            }
+
+            guard 200...299 ~= httpResponse.statusCode else {
+                let errorData = try await data.reduce(into: Data()) { $0.append($1) }
+                let errorMessage: String
+                if let json = try? JSONSerialization.jsonObject(with: errorData) as? [String: Any],
+                   let errorObj = json["error"] as? [String: Any],
+                   let message = errorObj["message"] as? String {
+                    errorMessage = message
+                } else {
+                    errorMessage = String(data: errorData, encoding: .utf8) ?? "Unknown error"
+                }
+                await MainActor.run { onError(APIError.httpError(httpResponse.statusCode, errorMessage)) }
+                return
+            }
+
+            var currentEventType: String? = nil
+            for try await line in data.lines {
+                if line.hasPrefix("event: ") {
+                    currentEventType = String(line.dropFirst(7))
+                    if currentEventType == "response.completed" {
+                        await MainActor.run { onComplete() }
+                        break
+                    }
+                } else if line.hasPrefix("data: ") {
+                    let jsonString = String(line.dropFirst(6))
+                    guard let jsonData = jsonString.data(using: .utf8),
+                          let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
+                        continue
+                    }
+                    let type = json["type"] as? String ?? ""
+                    if type == "response.output_text.delta", let delta = json["delta"] as? String {
+                        await MainActor.run { onToken(delta) }
+                    } else if type == "response.completed" {
+                        await MainActor.run { onComplete() }
+                        break
+                    } else if type == "error" {
+                        let message = (json["error"] as? [String: Any])?["message"] as? String ?? "Unknown error"
+                        await MainActor.run { onError(APIError.httpError(0, message)) }
+                        return
+                    }
+                } else if line.isEmpty {
+                    currentEventType = nil
+                }
+            }
+
+        } catch {
+            await MainActor.run { onError(error) }
+        }
+    }
 
     func generateImage(
         prompt: String,

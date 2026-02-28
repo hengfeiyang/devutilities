@@ -44,6 +44,12 @@ struct AddModelView: View {
                 Toggle("Supports Function Calls", isOn: $capabilities.supportsFunctionCalls)
                 Toggle("Supports Images", isOn: $capabilities.supportsImages)
                 Toggle("Supports Web Browsing", isOn: $capabilities.supportsWeb)
+                Toggle("Use Responses API", isOn: $capabilities.useResponsesAPI)
+                if capabilities.useResponsesAPI {
+                    Text("Routes chat through /responses instead of /chat/completions")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
             }
 
             Section("Limits") {
@@ -134,6 +140,12 @@ struct EditModelView: View {
                 Toggle("Supports Function Calls", isOn: $capabilities.supportsFunctionCalls)
                 Toggle("Supports Images", isOn: $capabilities.supportsImages)
                 Toggle("Supports Web Browsing", isOn: $capabilities.supportsWeb)
+                Toggle("Use Responses API", isOn: $capabilities.useResponsesAPI)
+                if capabilities.useResponsesAPI {
+                    Text("Routes chat through /responses instead of /chat/completions")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
             }
 
             Section("Limits") {
