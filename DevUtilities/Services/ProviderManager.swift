@@ -223,6 +223,48 @@ class ProviderManager {
 
             saveProviders()
         }
+
+        // Sync built-in model lists with current defaults (adds new models, removes removed ones)
+        syncBuiltInModels()
+    }
+
+    private func syncBuiltInModels() {
+        let defaults: [String: AIProvider] = [
+            "OpenAI": .createBuiltInOpenAI(),
+            "DeepSeek": .createBuiltInDeepSeek()
+        ]
+
+        var changed = false
+
+        for i in providers.indices where providers[i].isBuiltIn {
+            guard let defaultProvider = defaults[providers[i].name] else { continue }
+            let defaultModelIds = Set(defaultProvider.models.map { $0.modelId })
+            let currentBuiltInModelIds = Set(providers[i].models.filter { $0.isBuiltIn }.map { $0.modelId })
+
+            guard currentBuiltInModelIds != defaultModelIds else { continue }
+
+            // Rebuild built-in models from defaults, preserving isActive state
+            let updatedBuiltIns = defaultProvider.models.map { defaultModel -> AIModelV2 in
+                let isActive = providers[i].models.first(where: { $0.modelId == defaultModel.modelId })?.isActive ?? defaultModel.isActive
+                return AIModelV2(
+                    name: defaultModel.name,
+                    modelId: defaultModel.modelId,
+                    capabilities: defaultModel.capabilities,
+                    isActive: isActive,
+                    isBuiltIn: true,
+                    providerId: providers[i].id
+                )
+            }
+
+            // Keep user-added custom models
+            let customModels = providers[i].models.filter { !$0.isBuiltIn }
+            providers[i].models = updatedBuiltIns + customModels
+            changed = true
+        }
+
+        if changed {
+            saveProviders()
+        }
     }
 
 }
