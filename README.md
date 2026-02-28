@@ -45,7 +45,12 @@ A native macOS application for developers, containing 23 essential tools commonl
 
 ## Version
 
-Current version: 2.11.0
+Current version: 2.11.1
+
+## What's New in v2.11.1
+
+- **AI Chat Stop Fix**: Clicking stop now preserves partial output already received instead of clearing it
+- **Model List Sync**: Built-in model list automatically syncs on startup, removing deprecated models (e.g. gpt-4.1) added in previous versions
 
 ## What's New in v2.11.0
 
