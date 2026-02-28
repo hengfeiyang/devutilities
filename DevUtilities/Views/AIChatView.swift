@@ -691,8 +691,6 @@ struct ChatMessagesView: View {
     let sessionId: UUID
     let isLoading: Bool
     @State private var showScrollToBottom = false
-    @State private var scrollViewHeight: CGFloat = 0
-    @State private var contentHeight: CGFloat = 0
     @State private var isAtBottom = false
     
     private var currentSession: ChatSession? {
@@ -882,7 +880,7 @@ struct ChatMessageView: View {
             }
         }
     }
-    
+
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
             
@@ -1141,7 +1139,6 @@ struct ChatMessageView: View {
                                             if isReasoningExpanded {
                                                 StructuredText(markdown: reasoning)
                                                     .textual.structuredTextStyle(.chatStyle)
-                                                    .textual.textSelection(.enabled)
                                                     .frame(maxWidth: .infinity, alignment: .leading)
                                                     .transition(.opacity.combined(with: .slide))
                                             }
@@ -1155,7 +1152,6 @@ struct ChatMessageView: View {
                                     // Show final response
                                     StructuredText(markdown: message.content)
                                         .textual.structuredTextStyle(.chatStyle)
-                                        .textual.textSelection(.enabled)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .lineSpacing(4)
