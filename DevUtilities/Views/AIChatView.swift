@@ -17,7 +17,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 import Foundation
 import AppKit
-import MarkdownUI
+import Textual
 
 struct AIChatView: View {
     @Binding var shouldCreateNewChat: Bool
@@ -1104,7 +1104,7 @@ struct ChatMessageView: View {
                                 .background(Color(NSColor.controlBackgroundColor))
                                 .clipShape(RoundedRectangle(cornerRadius: 18))
                             } else {
-                                // Text message with MarkdownUI library
+                                // Text message with Textual library
                                 VStack(alignment: .leading, spacing: 12) {
                                     // Show reasoning content if available (DeepSeek reasoner)
                                     if let reasoning = message.reasoningContent, !reasoning.isEmpty {
@@ -1139,20 +1139,9 @@ struct ChatMessageView: View {
                                             
                                             // Collapsible content
                                             if isReasoningExpanded {
-                                                Markdown(reasoning)
-                                                    //.markdownTheme(.gitHub)
-                                                    .textSelection(.enabled)
-                                                    .markdownBlockStyle(\.codeBlock) { configuration in
-                                                        configuration.label
-                                                            .padding(12)
-                                                            .background(Color.secondary.opacity(0.08))
-                                                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                                                            .markdownTextStyle {
-                                                                FontSize(12)
-                                                            }
-                                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                                            .fixedSize(horizontal: false, vertical: true)
-                                                    }
+                                                StructuredText(markdown: reasoning)
+                                                    .textual.structuredTextStyle(.chatStyle)
+                                                    .textual.textSelection(.enabled)
                                                     .frame(maxWidth: .infinity, alignment: .leading)
                                                     .transition(.opacity.combined(with: .slide))
                                             }
@@ -1164,9 +1153,9 @@ struct ChatMessageView: View {
                                     }
                                     
                                     // Show final response
-                                    Markdown(message.content)
-                                        .markdownTheme(.devPalette)
-                                        .textSelection(.enabled)
+                                    StructuredText(markdown: message.content)
+                                        .textual.structuredTextStyle(.chatStyle)
+                                        .textual.textSelection(.enabled)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .lineSpacing(4)

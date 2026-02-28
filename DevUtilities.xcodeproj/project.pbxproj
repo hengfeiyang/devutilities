@@ -28,7 +28,7 @@
 		9332C0392E589984009E68BE /* CodeMirror-SwiftUI in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 9332C0372E589984009E68BE /* CodeMirror-SwiftUI */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		934569062E5FFCD600491835 /* UpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934569042E5FFCD600491835 /* UpdateChecker.swift */; };
 		934569072E5FFCD600491835 /* VersionComparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934569052E5FFCD600491835 /* VersionComparator.swift */; };
-		9394F25B2E6290750069D7B9 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9394F25A2E6290750069D7B9 /* MarkdownUI */; };
+		9394F25B2E6290750069D7B9 /* Textual in Frameworks */ = {isa = PBXBuildFile; productRef = 9394F25A2E6290750069D7B9 /* Textual */; };
 		93A6A9212E588B98006A2798 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A6A9202E588B98006A2798 /* Constants.swift */; };
 		93B179242E6EF63C00A6B491 /* MarkdownTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B179232E6EF62A00A6B491 /* MarkdownTheme.swift */; };
 		93B500A02E5D81D500F38E50 /* ParquetViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B5009E2E5D81D500F38E50 /* ParquetViewer.swift */; };
@@ -170,7 +170,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9394F25B2E6290750069D7B9 /* MarkdownUI in Frameworks */,
+				9394F25B2E6290750069D7B9 /* Textual in Frameworks */,
 				9332C0382E589984009E68BE /* CodeMirror-SwiftUI in Frameworks */,
 				93B500A12E5D81D500F38E50 /* libparquet_viewer.dylib in Frameworks */,
 			);
@@ -365,7 +365,7 @@
 			mainGroup = D5F4E7E72C5A1B2E00123456;
 			packageReferences = (
 				9332C0332E5897DC009E68BE /* XCRemoteSwiftPackageReference "CodeMirror-SwiftUI" */,
-				9394F2592E6290750069D7B9 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+				9394F2592E6290750069D7B9 /* XCRemoteSwiftPackageReference "textual" */,
 			);
 			productRefGroup = D5F4E7F12C5A1B2E00123456 /* Products */;
 			projectDirPath = "";
@@ -516,7 +516,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -577,7 +577,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -610,7 +610,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_CFBundleName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_LSMinimumSystemVersion = 14.0;
+					INFOPLIST_KEY_LSMinimumSystemVersion = 15.0;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Hengfei Yang. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -652,7 +652,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_CFBundleName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_LSMinimumSystemVersion = 14.0;
+					INFOPLIST_KEY_LSMinimumSystemVersion = 15.0;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Hengfei Yang. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -703,9 +703,9 @@
 				kind = branch;
 			};
 		};
-		9394F2592E6290750069D7B9 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+		9394F2592E6290750069D7B9 /* XCRemoteSwiftPackageReference "textual" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			repositoryURL = "https://github.com/gonzalezreal/textual";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -719,10 +719,10 @@
 			package = 9332C0332E5897DC009E68BE /* XCRemoteSwiftPackageReference "CodeMirror-SwiftUI" */;
 			productName = "CodeMirror-SwiftUI";
 		};
-		9394F25A2E6290750069D7B9 /* MarkdownUI */ = {
+		9394F25A2E6290750069D7B9 /* Textual */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9394F2592E6290750069D7B9 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
-			productName = MarkdownUI;
+			package = 9394F2592E6290750069D7B9 /* XCRemoteSwiftPackageReference "textual" */;
+			productName = Textual;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
