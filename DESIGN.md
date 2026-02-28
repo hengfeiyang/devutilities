@@ -621,11 +621,11 @@ Each tool follows a consistent pattern:
 
 **Features**:
 - **Enhanced UI/UX**: Refined user interface with improved model selection and navigation
-- **Multi-Model Support**: GPT-5, GPT-4.1, GPT-5 variants, O3/O4 Deep Research, Gemini 2.5 models, DeepSeek integration
+- **Multi-Model Support**: GPT-5, GPT-5 variants, O3/O4 Deep Research, Gemini 2.5 models, DeepSeek integration
 - **Model Selection Fix**: Fixed model selector display to properly update when selecting different models
 - **Duplicate Icon Fix**: Removed duplicate chevron icons in dropdown menus for cleaner interface
 - **Intelligent Assistant**: AI-powered chat interface for development questions and guidance
-- **Image Generation**: Automatic GPT-5/GPT-4.1 image generation with OpenAI Responses API
+- **Image Generation**: Automatic GPT-5 image generation with OpenAI Responses API
 - **Multi-Turn Image Generation**: Context-aware image refinement using previous_response_id
 - **Tool Selection Interface**: Floating toolbar with Chat, Web Search, and Image Generation modes
 - **Session Management**: Multiple chat sessions with independent tool selection persistence
@@ -652,7 +652,7 @@ Each tool follows a consistent pattern:
 **Implementation Details**:
 - **Model Architecture**: AIModel enum with chat/image model types and capabilities
 - **Session Management**: ChatSession model with selectedTool persistence via JSON storage
-- **Responses API Integration**: GPT-5/GPT-4.1 image generation with previous_response_id support
+- **Responses API Integration**: GPT-5 image generation with previous_response_id support
 - **Multi-Turn Logic**: Automatic detection and chaining of image refinement requests
 - **Image Storage**: Local caching of generated images with base64 processing
 - **SwiftUI Reactivity**: Observable ChatManager with computed property tool access

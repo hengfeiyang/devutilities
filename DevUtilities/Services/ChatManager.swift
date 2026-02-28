@@ -145,7 +145,7 @@ class ChatManager {
         isLoading.wrappedValue = true
         errorMessage.wrappedValue = nil
 
-        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-4.1"
+        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-5.2"
         print("  - Resolved Model ID: \(modelId)")
 
         guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
@@ -236,7 +236,7 @@ class ChatManager {
         isLoading.wrappedValue = true
         errorMessage.wrappedValue = nil
 
-        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-4.1"
+        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-5.2"
 
         guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
             errorMessage.wrappedValue = "No API key configured for the selected provider. Please configure your provider in settings."
@@ -365,7 +365,7 @@ class ChatManager {
             errorMessage.wrappedValue = nil
         }
         
-        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-4.1"
+        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-5.2"
         
         guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
             await MainActor.run {
@@ -441,7 +441,7 @@ class ChatManager {
             errorMessage.wrappedValue = nil
         }
         
-        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-4.1"
+        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-5.2"
         
         guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
             await MainActor.run {
@@ -554,7 +554,7 @@ class ChatManager {
             errorMessage.wrappedValue = nil
         }
         
-        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-4.1"
+        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-5.2"
         
         guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
             await MainActor.run {

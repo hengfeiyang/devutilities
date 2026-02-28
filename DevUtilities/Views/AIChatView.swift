@@ -188,9 +188,9 @@ struct AIChatView: View {
 
         // If no provider/model selection found, return nil to use default
 
-        // Default to OpenAI GPT-4.1 if available, otherwise first available model
-        if let gpt41Model = availableModels.first(where: { $0.provider.name == "OpenAI" && $0.model.modelId == "gpt-4.1" }) {
-            return gpt41Model
+        // Default to OpenAI GPT-5 if available, otherwise first available model
+        if let gpt5Model = availableModels.first(where: { $0.provider.name == "OpenAI" && $0.model.modelId == "gpt-5.2" }) {
+            return gpt5Model
         }
         return availableModels.first
     }

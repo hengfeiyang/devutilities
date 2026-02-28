@@ -207,8 +207,8 @@ extension AIProvider {
                 supportsStreaming: true,
                 supportsFunctionCalls: true,
                 supportsImages: true,
-                maxTokens: 8192,
-                contextWindow: 200000
+                maxTokens: 128000,
+                contextWindow: 400000
             ),
             isBuiltIn: true,
             providerId: provider.id
@@ -221,8 +221,8 @@ extension AIProvider {
                 supportsStreaming: true,
                 supportsFunctionCalls: true,
                 supportsImages: true,
-                maxTokens: 16384,
-                contextWindow: 128000
+                maxTokens: 128000,
+                contextWindow: 400000
             ),
             isBuiltIn: true,
             providerId: provider.id
@@ -234,59 +234,15 @@ extension AIProvider {
             capabilities: ModelCapabilities(
                 supportsStreaming: true,
                 supportsFunctionCalls: true,
-                maxTokens: 8192,
-                contextWindow: 64000
-            ),
-            isBuiltIn: true,
-            providerId: provider.id
-        )
-
-        // GPT-4.1 Series
-        let gpt41 = AIModelV2(
-            name: "GPT-4.1",
-            modelId: "gpt-4.1",
-            capabilities: ModelCapabilities(
-                supportsStreaming: true,
-                supportsFunctionCalls: true,
-                supportsImages: true,
-                maxTokens: 4096,
-                contextWindow: 128000
-            ),
-            isBuiltIn: true,
-            providerId: provider.id
-        )
-
-        let gpt41Mini = AIModelV2(
-            name: "GPT-4.1 Mini",
-            modelId: "gpt-4.1-mini",
-            capabilities: ModelCapabilities(
-                supportsStreaming: true,
-                supportsFunctionCalls: true,
-                maxTokens: 16384,
-                contextWindow: 128000
-            ),
-            isBuiltIn: true,
-            providerId: provider.id
-        )
-
-        let gpt41Nano = AIModelV2(
-            name: "GPT-4.1 Nano",
-            modelId: "gpt-4.1-nano",
-            capabilities: ModelCapabilities(
-                supportsStreaming: true,
-                supportsFunctionCalls: true,
-                maxTokens: 8192,
-                contextWindow: 64000
+                maxTokens: 128000,
+                contextWindow: 400000
             ),
             isBuiltIn: true,
             providerId: provider.id
         )
 
         var providerWithModels = provider
-        providerWithModels.models = [
-            gpt5, gpt5Mini, gpt5Nano,
-            gpt41, gpt41Mini, gpt41Nano
-        ]
+        providerWithModels.models = [gpt5, gpt5Mini, gpt5Nano]
         return providerWithModels
     }
 
@@ -305,7 +261,7 @@ extension AIProvider {
                 supportsStreaming: true,
                 supportsReasoning: false,
                 maxTokens: 8192,
-                contextWindow: 64000
+                contextWindow: 128000
             ),
             isBuiltIn: true,
             providerId: provider.id
@@ -317,8 +273,8 @@ extension AIProvider {
             capabilities: ModelCapabilities(
                 supportsStreaming: true,
                 supportsReasoning: true,
-                maxTokens: 8192,
-                contextWindow: 64000
+                maxTokens: 32768,
+                contextWindow: 128000
             ),
             isBuiltIn: true,
             providerId: provider.id
