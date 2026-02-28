@@ -746,8 +746,9 @@ struct ChatMessagesView: View {
                 }
                 .onChange(of: currentSession?.messages.last?.content) { _, _ in
                     // Auto-scroll during streaming updates to follow the conversation
+                    // Defer to next run loop to coalesce rapid per-frame token updates
                     if let lastMessage = currentSession?.messages.last, lastMessage.isStreaming {
-                        withAnimation(.easeOut(duration: 0.1)) {
+                        DispatchQueue.main.async {
                             proxy.scrollTo(lastMessage.id, anchor: .bottom)
                         }
                     }
