@@ -51,6 +51,10 @@ xcodebuild -project DevUtilities.xcodeproj -scheme DevUtilities build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
+## Recent Updates (v2.11.1)
+- **AI Chat Stop Fix**: Stop button now preserves partial streamed output instead of discarding it; `onError` handler detects `CancellationError` and keeps message with `isStreaming = false`
+- **Model List Sync**: `ProviderManager.syncBuiltInModels()` runs on startup to reconcile stored built-in models with current code defaults — removes deprecated models (e.g. gpt-4.1), adds new ones, preserves user's `isActive` state and custom models
+
 ## Recent Updates (v2.11.0)
 - **Text Compare Tool**: NEW dedicated tool for side-by-side text comparison with visual diff highlighting
 - **Enhanced Diff Modes**: Added diff functionality to JSON, HTML, and SQL formatters

@@ -54,8 +54,8 @@ DevUtilities/
 │   │   ├── SpeakerButton.swift     # TTS playback button (v2.8.2)
 │   │   └── SpeakerMotionView.swift # Animated speaker icon (v2.8.2)
 │   ├── Services/                   # Application services
-│   │   ├── ChatManager.swift       # AI chat session management
-│   │   ├── ProviderManager.swift   # API provider configuration
+│   │   ├── ChatManager.swift       # AI chat session management (stop preserves partial output v2.11.1)
+│   │   ├── ProviderManager.swift   # API provider configuration (built-in model sync v2.11.1)
 │   │   ├── EventManager.swift      # Analytics and telemetry
 │   │   ├── AVSpeechService.swift   # Text-to-speech engine
 │   │   ├── RandomStringGenerator.swift # Secure random generation (v2.9.0)
