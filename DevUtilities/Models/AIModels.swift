@@ -493,5 +493,29 @@ class AIUISettings {
         set { userDefaults.set(newValue, forKey: "ai_ui_max_retries") }
     }
 
+    // TTS Settings
+    var ttsMode: String {
+        get { userDefaults.string(forKey: "ai_tts_mode") ?? "auto" }
+        set { userDefaults.set(newValue, forKey: "ai_tts_mode") }
+    }
+
+    var openAITTSModel: String {
+        get { userDefaults.string(forKey: "ai_tts_openai_model") ?? "gpt-4o-mini-tts" }
+        set { userDefaults.set(newValue, forKey: "ai_tts_openai_model") }
+    }
+
+    var openAITTSVoice: String {
+        get { userDefaults.string(forKey: "ai_tts_openai_voice") ?? "alloy" }
+        set { userDefaults.set(newValue, forKey: "ai_tts_openai_voice") }
+    }
+
+    var macOSTTSVoiceID: String? {
+        get { userDefaults.string(forKey: "ai_tts_macos_voice_id") }
+        set {
+            if let id = newValue { userDefaults.set(id, forKey: "ai_tts_macos_voice_id") }
+            else { userDefaults.removeObject(forKey: "ai_tts_macos_voice_id") }
+        }
+    }
+
     private init() {}
 }

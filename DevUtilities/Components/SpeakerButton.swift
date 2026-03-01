@@ -55,7 +55,35 @@ struct SpeakerButton: View {
 class SpeakerViewModel: ObservableObject {
     @Published var isSpeaking = false
 
-    private let speechService = AVSpeechService.shared
+    private let avService = AVSpeechService.shared
+    private let openAIService = OpenAITTSService.shared
+
+    private enum ActiveEngine {
+        case av, openai
+    }
+    private var activeEngine: ActiveEngine = .av
+
+    private enum TTSEngine {
+        case openai(baseURL: String, apiKey: String, model: String, voice: String)
+        case macos(voiceID: String?)
+    }
+
+    private func resolveEngine() -> TTSEngine {
+        let settings = AIUISettings.shared
+        let mode = settings.ttsMode
+
+        if mode == "openai" || mode == "auto" {
+            if let info = ProviderManager.shared.getActiveOpenAIForTTS() {
+                return .openai(
+                    baseURL: info.baseURL,
+                    apiKey: info.apiKey,
+                    model: settings.openAITTSModel,
+                    voice: settings.openAITTSVoice
+                )
+            }
+        }
+        return .macos(voiceID: settings.macOSTTSVoiceID)
+    }
 
     func speak(text: String, language: String, rate: Float, volume: Float) {
         let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -64,26 +92,50 @@ class SpeakerViewModel: ObservableObject {
             return
         }
 
-        speechService.speak(
-            text: trimmedText,
-            language: language,
-            rate: rate,
-            volume: volume,
-            onStart: {
-                Task { @MainActor in
-                    self.isSpeaking = true
+        switch resolveEngine() {
+        case .openai(let baseURL, let apiKey, let model, let voice):
+            activeEngine = .openai
+            openAIService.speak(
+                text: trimmedText,
+                model: model,
+                voice: voice,
+                apiKey: apiKey,
+                baseURL: baseURL,
+                onStart: { [weak self] in
+                    Task { @MainActor in self?.isSpeaking = true }
+                },
+                onFinish: { [weak self] in
+                    Task { @MainActor in self?.isSpeaking = false }
                 }
-            },
-            onFinish: {
-                Task { @MainActor in
-                    self.isSpeaking = false
+            )
+            // Set speaking immediately so the UI reflects it while the request is in flight
+            isSpeaking = true
+
+        case .macos(let voiceID):
+            activeEngine = .av
+            avService.speak(
+                text: trimmedText,
+                language: language,
+                rate: rate,
+                volume: volume,
+                voiceIdentifier: voiceID,
+                onStart: { [weak self] in
+                    Task { @MainActor in self?.isSpeaking = true }
+                },
+                onFinish: { [weak self] in
+                    Task { @MainActor in self?.isSpeaking = false }
                 }
-            }
-        )
+            )
+        }
     }
 
     func stopSpeaking() {
-        speechService.stop()
+        switch activeEngine {
+        case .openai:
+            openAIService.stop()
+        case .av:
+            avService.stop()
+        }
         isSpeaking = false
     }
 }

@@ -35,6 +35,7 @@ final class AVSpeechService: NSObject, AVSpeechSynthesizerDelegate, @unchecked S
         language: String,
         rate: Float = 0.5,
         volume: Float = 1.0,
+        voiceIdentifier: String? = nil,
         onStart: (() -> Void)? = nil,
         onFinish: (() -> Void)? = nil
     ) {
@@ -53,8 +54,14 @@ final class AVSpeechService: NSObject, AVSpeechSynthesizerDelegate, @unchecked S
         // stopSpeaking is safe to call even when not speaking
         synthesizer.stopSpeaking(at: .immediate)
 
-        // Check if voice is available for the language
-        guard let voice = AVSpeechSynthesisVoice(language: language) else {
+        // Check if voice is available
+        let voice: AVSpeechSynthesisVoice?
+        if let voiceID = voiceIdentifier {
+            voice = AVSpeechSynthesisVoice(identifier: voiceID) ?? AVSpeechSynthesisVoice(language: language)
+        } else {
+            voice = AVSpeechSynthesisVoice(language: language)
+        }
+        guard let voice = voice else {
             print("AVSpeechService: No voice available for language: \(language)")
             onFinish?()
             return

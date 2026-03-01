@@ -15,6 +15,7 @@
 
 import SwiftUI
 import Foundation
+import AVFoundation
 
 // MARK: - Settings Navigation Item
 
@@ -189,6 +190,16 @@ struct AIGeneralSettingsView: View {
     let providerManager: ProviderManager
     @State private var uiSettings = AIUISettings.shared
     @State private var selectedModelKey: String?
+    @State private var availableMacOSVoices: [AVSpeechSynthesisVoice] = []
+
+    // @AppStorage directly observes UserDefaults and triggers re-renders immediately,
+    // which is required for the conditional sections to appear/disappear in real time.
+    // AIUISettings reads from the same keys, so both stay in sync automatically.
+    @AppStorage("ai_tts_mode") private var ttsMode: String = "auto"
+    @AppStorage("ai_tts_openai_voice") private var openAITTSVoice: String = "alloy"
+    @AppStorage("ai_tts_macos_voice_id") private var macOSTTSVoiceID: String = ""
+
+    private let openAIVoices = ["alloy", "ash", "ballad", "cedar", "coral", "echo", "fable", "marin", "nova", "onyx", "sage", "shimmer", "verse"]
 
     var body: some View {
         Form {
@@ -214,11 +225,42 @@ struct AIGeneralSettingsView: View {
                 Toggle("Auto-scroll messages", isOn: $uiSettings.autoScroll)
                 Toggle("Save conversation history", isOn: $uiSettings.saveHistory)
             }
+
+            Section("Text-to-Speech") {
+                Picker("Mode", selection: $ttsMode) {
+                    Text("Auto").tag("auto")
+                    Text("OpenAI").tag("openai")
+                    Text("macOS").tag("macos")
+                }
+                .pickerStyle(MenuPickerStyle())
+                .help("Auto uses OpenAI TTS when available, falls back to macOS")
+
+                if ttsMode == "openai" || ttsMode == "auto" {
+                    Picker("OpenAI Voice", selection: $openAITTSVoice) {
+                        ForEach(openAIVoices, id: \.self) { voice in
+                            Text(voice.capitalized).tag(voice)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                }
+
+                if ttsMode == "macos" || ttsMode == "auto" {
+                    Picker("macOS Voice", selection: $macOSTTSVoiceID) {
+                        Text("System Default (by language)").tag("")
+                        ForEach(availableMacOSVoices, id: \.identifier) { voice in
+                            Text("\(voice.name) (\(voice.language))")
+                                .tag(voice.identifier)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                }
+            }
         }
         .formStyle(GroupedFormStyle())
         .navigationTitle("General Settings")
         .onAppear {
             loadSettings()
+            loadMacOSVoices()
         }
     }
 
@@ -248,6 +290,13 @@ struct AIGeneralSettingsView: View {
                 }
             }
         }
+    }
+
+    private func loadMacOSVoices() {
+        let allVoices = AVSpeechSynthesisVoice.speechVoices()
+        // Prefer premium/enhanced quality voices; fall back to all voices if none available
+        let premium = allVoices.filter { $0.quality == .enhanced || $0.quality == .premium }
+        availableMacOSVoices = premium.isEmpty ? allVoices : premium
     }
 }
 

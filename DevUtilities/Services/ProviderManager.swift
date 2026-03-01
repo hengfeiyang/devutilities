@@ -139,6 +139,14 @@ class ProviderManager {
         return keychain.getAPIKey(for: providerId)
     }
 
+    /// Returns (baseURL, apiKey) for the active OpenAI provider if configured
+    func getActiveOpenAIForTTS() -> (baseURL: String, apiKey: String)? {
+        guard let provider = providers.first(where: { $0.name == "OpenAI" && $0.isBuiltIn && $0.isActive }),
+              let apiKey = keychain.getAPIKey(for: provider.id),
+              !apiKey.isEmpty else { return nil }
+        return (provider.baseURL, apiKey)
+    }
+
     // MARK: - Connection Testing
 
     func testProviderConnection(_ provider: AIProvider) async -> (success: Bool, message: String?) {
