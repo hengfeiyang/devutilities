@@ -204,6 +204,16 @@ class ChatManager {
             isLoading.wrappedValue = false
         }
 
+        let onReasoning: @Sendable (String) -> Void = { [weak self] reasoning in
+            guard let self = self else { return }
+            Task { @MainActor in
+                if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
+                   streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
+                    self.chatSessions[sessionIdx].messages[streamingMessageIndex].reasoningContent = (self.chatSessions[sessionIdx].messages[streamingMessageIndex].reasoningContent ?? "") + reasoning
+                }
+            }
+        }
+
         if useResponsesAPI {
             await responsesAPI.sendChatMessage(
                 messages: currentMessages,
@@ -212,69 +222,20 @@ class ChatManager {
                 baseURL: providerInfo.baseURL,
                 onToken: onToken,
                 onComplete: onComplete,
-                onError: onError
+                onError: onError,
+                onReasoning: onReasoning
             )
         } else {
-        await chatAPI.sendMessage(
-            messages: currentMessages,
-            modelId: modelId,
-            apiKey: providerInfo.apiKey,
-            baseURL: providerInfo.baseURL,
-            onToken: { [weak self] token in
-                guard let self = self else { return }
-
-                Task { @MainActor in
-                    if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
-                       streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
-                        self.chatSessions[sessionIdx].messages[streamingMessageIndex].content += token
-                    }
-                }
-            },
-            onComplete: { [weak self] in
-                guard let self = self else { return }
-
-                Task { @MainActor in
-                    if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
-                       streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
-                        self.chatSessions[sessionIdx].messages[streamingMessageIndex].isStreaming = false
-                        self.chatSessions[sessionIdx].updatedAt = Date()
-                        self.storage.saveChatSession(self.chatSessions[sessionIdx])
-                    }
-
-                    isLoading.wrappedValue = false
-                }
-            },
-            onError: { error in
-                let isCancelled = error is CancellationError || (error as? URLError)?.code == .cancelled
-                Task { @MainActor in
-                    if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
-                       streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
-                        if isCancelled && !self.chatSessions[sessionIdx].messages[streamingMessageIndex].content.isEmpty {
-                            self.chatSessions[sessionIdx].messages[streamingMessageIndex].isStreaming = false
-                            self.chatSessions[sessionIdx].updatedAt = Date()
-                            self.storage.saveChatSession(self.chatSessions[sessionIdx])
-                        } else {
-                            self.chatSessions[sessionIdx].messages.remove(at: streamingMessageIndex)
-                        }
-                    }
-                }
-
-                if !isCancelled {
-                    errorMessage.wrappedValue = "Failed to send message: \(error.localizedDescription)"
-                }
-                isLoading.wrappedValue = false
-            },
-            onReasoning: { [weak self] reasoning in
-                guard let self = self else { return }
-
-                Task { @MainActor in
-                    if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
-                       streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
-                        self.chatSessions[sessionIdx].messages[streamingMessageIndex].reasoningContent = (self.chatSessions[sessionIdx].messages[streamingMessageIndex].reasoningContent ?? "") + reasoning
-                    }
-                }
-            }
-        )
+            await chatAPI.sendMessage(
+                messages: currentMessages,
+                modelId: modelId,
+                apiKey: providerInfo.apiKey,
+                baseURL: providerInfo.baseURL,
+                onToken: onToken,
+                onComplete: onComplete,
+                onError: onError,
+                onReasoning: onReasoning
+            )
         }
         } // end Task
 
@@ -354,6 +315,15 @@ class ChatManager {
             isLoading.wrappedValue = false
         }
 
+        let onReasoning: @Sendable (String) -> Void = { [weak self] reasoning in
+            guard let self = self else { return }
+            Task { @MainActor in
+                if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
+                    self.chatSessions[sessionIndex].messages[streamingMessageIndex].reasoningContent = (self.chatSessions[sessionIndex].messages[streamingMessageIndex].reasoningContent ?? "") + reasoning
+                }
+            }
+        }
+
         if useResponsesAPI {
             await responsesAPI.sendChatMessage(
                 messages: currentMessages,
@@ -362,7 +332,8 @@ class ChatManager {
                 baseURL: providerInfo.baseURL,
                 onToken: onToken,
                 onComplete: onComplete,
-                onError: onError
+                onError: onError,
+                onReasoning: onReasoning
             )
         } else {
             await chatAPI.sendMessage(
@@ -373,18 +344,11 @@ class ChatManager {
                 onToken: onToken,
                 onComplete: onComplete,
                 onError: onError,
-                onReasoning: { [weak self] reasoning in
-                    guard let self = self else { return }
-                    Task { @MainActor in
-                        if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
-                            self.chatSessions[sessionIndex].messages[streamingMessageIndex].reasoningContent = (self.chatSessions[sessionIndex].messages[streamingMessageIndex].reasoningContent ?? "") + reasoning
-                        }
-                    }
-                }
+                onReasoning: onReasoning
             )
         }
     }
-    
+
     func sendMessageWithTool(
         _ content: String,
         tool: ChatToolMode,
@@ -985,7 +949,8 @@ final class ResponsesAPI: @unchecked Sendable {
         baseURL: String,
         onToken: @escaping @Sendable (String) -> Void,
         onComplete: @escaping @Sendable () -> Void,
-        onError: @escaping @Sendable (Error) -> Void
+        onError: @escaping @Sendable (Error) -> Void,
+        onReasoning: @escaping @Sendable (String) -> Void = { _ in }
     ) async {
         do {
             let url = URL(string: "\(baseURL)/responses")!
@@ -1061,6 +1026,9 @@ final class ResponsesAPI: @unchecked Sendable {
                     let type = json["type"] as? String ?? ""
                     if type == "response.output_text.delta", let delta = json["delta"] as? String {
                         await MainActor.run { onToken(delta) }
+                    } else if type == "response.reasoning_summary_text.delta" || type == "response.reasoning_text.delta",
+                              let delta = json["delta"] as? String {
+                        await MainActor.run { onReasoning(delta) }
                     } else if type == "response.completed" {
                         await MainActor.run { onComplete() }
                         break
@@ -1143,10 +1111,10 @@ final class ResponsesAPI: @unchecked Sendable {
                 return (imageURL: imageURL, responseId: responseId)
             }
         }
-        
+
         throw NSError(domain: "OpenAIError", code: 0, userInfo: [NSLocalizedDescriptionKey: "No image generation result found in response"])
     }
-    
+
     func generateImageWithReferenceImages(
         prompt: String,
         referenceImages: [ChatMessageImage],
