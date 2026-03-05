@@ -51,15 +51,17 @@ DevUtilities/
 │   ├── Components/                 # Shared UI components
 │   │   ├── CodeEditor.swift        # CodeMirror integration & diff editor (enhanced v2.11.0)
 │   │   ├── TextEditor.swift        # Custom text editor with IME support
-│   │   ├── SpeakerButton.swift     # TTS playback button (v2.8.2)
+│   │   ├── SpeakerButton.swift     # TTS playback button — routes OpenAI/macOS TTS (v2.12.0)
 │   │   └── SpeakerMotionView.swift # Animated speaker icon (v2.8.2)
 │   ├── Services/                   # Application services
 │   │   ├── ChatManager.swift       # AI chat session management (stop preserves partial output v2.11.1)
 │   │   ├── ProviderManager.swift   # API provider configuration (built-in model sync v2.11.1)
+│   │   ├── ResponsesAPI.swift      # NEW: OpenAI Responses API with SSE streaming (v2.12.0)
+│   │   ├── OpenAITTSService.swift  # NEW: OpenAI TTS real-time PCM streaming (v2.12.0)
 │   │   ├── EventManager.swift      # Analytics and telemetry
-│   │   ├── AVSpeechService.swift   # Text-to-speech engine
+│   │   ├── AVSpeechService.swift   # macOS native text-to-speech engine
 │   │   ├── RandomStringGenerator.swift # Secure random generation (v2.9.0)
-│   │   └── CurrencyService.swift   # NEW: Currency API & caching (v2.10.0)
+│   │   └── CurrencyService.swift   # Currency API & caching (v2.10.0)
 │   ├── Assets.xcassets/            # App icons and assets
 │   ├── Preview Content/            # SwiftUI preview assets
 │   └── DevUtilities.entitlements      # App sandbox permissions
@@ -619,45 +621,30 @@ Each tool follows a consistent pattern:
 ### 19. AI Chat
 **File**: `AIChatView.swift`
 
-**Features**:
-- **Enhanced UI/UX**: Refined user interface with improved model selection and navigation
-- **Multi-Model Support**: GPT-5, GPT-5 variants, O3/O4 Deep Research, Gemini 2.5 models, DeepSeek integration
-- **Model Selection Fix**: Fixed model selector display to properly update when selecting different models
-- **Duplicate Icon Fix**: Removed duplicate chevron icons in dropdown menus for cleaner interface
-- **Intelligent Assistant**: AI-powered chat interface for development questions and guidance
-- **Image Generation**: Automatic GPT-5 image generation with OpenAI Responses API
-- **Multi-Turn Image Generation**: Context-aware image refinement using previous_response_id
-- **Tool Selection Interface**: Floating toolbar with Chat, Web Search, and Image Generation modes
-- **Session Management**: Multiple chat sessions with independent tool selection persistence
-- **Vision Support**: Image upload and analysis capabilities
-- **Real-time Chat**: Streaming responses with proper message history
-- **Code Review**: Context-aware code analysis and suggestions
-- **Technical Guidance**: Expert-level responses for programming challenges and best practices
+**Features** (v2.12.0):
+- **Textual Markdown Rendering**: Migrated from MarkdownUI to Textual for richer output — code syntax highlighting, tables, nested lists, inline formatting
+- **Copy Code Snippets**: One-click Copy button on every code block; no text selection needed
+- **OpenAI Responses API**: `useResponsesAPI` flag in `ModelCapabilities` routes messages through `ResponsesAPI.sendChatMessage`; supports SSE streaming and reasoning/thinking output
+- **Reasoning Support**: `response.reasoning_summary_text.delta` and `response.reasoning_text.delta` events routed to collapsible thinking section (same path as DeepSeek reasoner)
+- **Multi-Model Support**: GPT-5, GPT-5 variants, DeepSeek chat/reasoner, Gemini, and any custom OpenAI-compatible endpoint
+- **Session Management**: Multiple chat sessions with independent model and tool selection
+- **Vision Support**: Image upload and analysis
+- **Image Generation**: GPT-5 image generation with Responses API and multi-turn refinement
+- **Streaming**: Real-time token-by-token output with smooth layout updates (deferred scroll via `DispatchQueue.main.async`)
 
 **UI Components**:
 - **Session Sidebar**: Chat history with session selection and search
-- **Message Interface**: Scrollable conversation view with user and assistant messages
-- **Floating Toolbar**: Overlay tool selection (➕ Upload, 🌐 Web Search, 📷 Image Generation)
-- **Text Input**: Auto-expanding input area with toolbar and send button overlays
-- **Image Preview**: Drag-and-drop image upload with preview thumbnails
-- **Tool Indicators**: Visual feedback for active tool selection (blue highlighting)
-
-**Tool Selection System**:
-- **Chat Mode (default)**: Regular conversation interface
-- **Web Search Mode**: Enable web search capabilities (placeholder for future implementation)
-- **Image Generation Mode**: Force image generation regardless of keywords
-- **Session Persistence**: Each chat session remembers its last selected tool
-- **Visual Feedback**: Immediate UI updates with blue highlighting for active tools
+- **Message Bubbles**: Textual-rendered Markdown with copy-code buttons on code blocks
+- **Thinking Section**: Collapsible reasoning/chain-of-thought view with brain icon
+- **Floating Toolbar**: Upload, Web Search, Image Generation mode toggles
+- **Text Input**: Auto-expanding with send button and IME support
 
 **Implementation Details**:
-- **Model Architecture**: AIModel enum with chat/image model types and capabilities
-- **Session Management**: ChatSession model with selectedTool persistence via JSON storage
-- **Responses API Integration**: GPT-5 image generation with previous_response_id support
-- **Multi-Turn Logic**: Automatic detection and chaining of image refinement requests
-- **Image Storage**: Local caching of generated images with base64 processing
-- **SwiftUI Reactivity**: Observable ChatManager with computed property tool access
-- **Tool State Management**: Session-specific tool selection with immediate visual updates
-- **API Configuration**: 60-second timeout for complex image generation requests
+- **Markdown**: Textual library replaces MarkdownUI; renders during streaming without layout flicker
+- **Responses API**: `ResponsesAPI.swift` handles `response.output_text.delta` and `response.completed` SSE events; `cancelCurrentRequest()` for stop support
+- **Model Routing**: `sendMessage` checks `model.capabilities.useResponsesAPI`; falls back to Chat Completions API
+- **Model Sync**: `ProviderManager.syncBuiltInModels()` on startup reconciles built-in defaults with stored list
+- **API Configuration**: 60-second timeout; `useResponsesAPI` toggle in AddModelView/EditModelView
 
 ## UI Design Principles
 

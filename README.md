@@ -26,8 +26,8 @@ A native macOS application for developers, containing 23 essential tools commonl
 - **JWT Encoder/Decoder** - Complete JWT support with HMAC and RSA algorithms using CryptoKit security
 - **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading with schema inspection
 - **Crypto Tools** - Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA-1/256/384/512), symmetric encryption (AES-GCM-256), and asymmetric encryption (RSA-2048/4096)
-- **AI Chat** - Intelligent AI assistant with custom model support, DeepSeek reasoning models, flexible API configuration, and enhanced user experience
-- **AI Translate** - Professional translation tool with 3 modes (Translate, Polishing, Summarize), 19 language support, text-to-speech playback, special word mode, and real-time streaming
+- **AI Chat** - Intelligent AI assistant with enhanced Markdown rendering, one-click copy for code snippets, OpenAI Responses API support, DeepSeek reasoning models, and custom model configuration
+- **AI Translate** - Professional translation tool with 3 modes (Translate, Polishing, Summarize), 19 language support, OpenAI TTS with 13 voices, and special word mode
 - **Currency Converter** - **NEW** Real-time currency conversion with 38 currencies, 24-hour caching, 30-day price history, 24-hour trend indicators, and flexible number input formats
 
 ## Key Features
@@ -37,11 +37,19 @@ A native macOS application for developers, containing 23 essential tools commonl
 - **Selectable Results** - Copy results directly from the output areas
 - **Modern UI** - Clean, intuitive interface designed for macOS
 - **Real-time Conversion** - Instant results as you type
-- **Text-to-Speech** - **NEW** Native macOS TTS for AI Translate with multi-language voice support
+- **Text-to-Speech** - OpenAI TTS (13 voices) and native macOS TTS for AI Translate
 
 ## Version
 
-Current version: 2.11.1
+Current version: 2.12.0
+
+## What's New in v2.12.0
+
+- **AI Chat — Enhanced Markdown Rendering**: Migrated to Textual rendering engine with improved code syntax highlighting, tables, and nested lists
+- **AI Chat — Copy Code Snippets**: One-click Copy button on every code block — grab code without selecting text
+- **AI Chat — OpenAI Responses API**: Support for the new Responses API with streaming, reasoning, and GPT-5.2-pro compatibility
+- **AI Translate — OpenAI TTS**: Real-time PCM streaming TTS with 13 voices (alloy, nova, shimmer, etc.)
+- **TTS Settings**: Configure TTS mode (Auto/OpenAI/macOS), voice selection, and macOS premium voice in Settings → AI
 
 ## What's New in v2.11.1
 

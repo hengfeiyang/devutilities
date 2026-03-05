@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 23 essential developer utilities. Version 2.11.0 with Text Compare and enhanced diff modes.
+DevUtilities is a native macOS application built with SwiftUI that provides 23 essential developer utilities. Version 2.12.0 with enhanced AI Chat (Textual Markdown, copy code, Responses API) and OpenAI TTS for AI Translate.
 
 ## Key Tools & Status
 
@@ -28,8 +28,8 @@ All 23 tools are ✅ **Complete**:
 18. **JWT Encoder/Decoder** - **HMAC and RSA algorithms** with CryptoKit security
 19. **Parquet Viewer** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
 20. **Crypto Tools** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
-21. **AI Chat** - **Enhanced AI assistant** with custom model support, DeepSeek reasoning models, and flexible API configuration
-22. **AI Translate** - Professional translation with 3 modes, 19 languages, text-to-speech support, and word mode
+21. **AI Chat** - **Enhanced** Textual Markdown rendering, one-click copy code snippets, OpenAI Responses API, DeepSeek reasoning, and custom model support
+22. **AI Translate** - Professional translation with 3 modes, 19 languages, **OpenAI TTS** (13 voices), macOS TTS, and word mode
 23. **Currency Converter** - Real-time currency conversion with 38 currencies, 24-hour caching, 30-day price history, and trend indicators
 
 ## Architecture & Technical Stack
@@ -37,7 +37,7 @@ All 23 tools are ✅ **Complete**:
 - **Navigation**: NavigationSplitView with sidebar search
 - **Dependencies**: CodeMirror-SwiftUI via SPM, ParquetViewer (Rust FFI)
 - **Security**: CryptoKit for JWT HMAC operations, Security framework for RSA operations
-- **TTS**: AVFoundation for native macOS text-to-speech
+- **TTS**: OpenAI TTS (real-time PCM streaming via AVAudioPlayerNode) + AVFoundation for native macOS TTS
 
 ## Build Commands
 ```bash
@@ -50,6 +50,13 @@ xcodebuild -project DevUtilities.xcodeproj -scheme DevUtilities build
 # Using MCP tools
 mcp__XcodeBuildMCP__build_run_macos
 ```
+
+## Recent Updates (v2.12.0)
+- **AI Chat — Textual Markdown Rendering**: Migrated from MarkdownUI to Textual; better code highlighting, tables, nested lists, smoother streaming
+- **AI Chat — Copy Code Snippets**: One-click Copy button on every code block in chat responses
+- **AI Chat — OpenAI Responses API**: `useResponsesAPI` flag on `ModelCapabilities`; routes through `ResponsesAPI.sendChatMessage` with SSE streaming and reasoning support
+- **AI Translate — OpenAI TTS**: `OpenAITTSService` streams raw PCM from `/audio/speech` into `AVAudioPlayerNode`; playback starts ~200ms; 13 voice options
+- **TTS Settings**: `AIUISettings` stores `ttsMode`/`openAITTSVoice`/`macOSTTSVoiceID`; configurable in Settings → AI → Text-to-Speech
 
 ## Recent Updates (v2.11.1)
 - **AI Chat Stop Fix**: Stop button now preserves partial streamed output instead of discarding it; `onError` handler detects `CancellationError` and keeps message with `isStreaming = false`
