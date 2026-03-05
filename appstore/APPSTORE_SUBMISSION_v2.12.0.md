@@ -102,7 +102,7 @@ Quality Improvements:
 (max 100 characters)
 
 ```
-base64,decode,encode,jwt,regex,parquet,sql,html,formatter,unix,timestamp,color,crypto,qr,ip,hex,toolkit
+base64,decode,encode,jwt,regex,parquet,sql,html,formatter,unix,timestamp,color,crypto,qr,ip,hex
 ```
 
 **Character count:** 95 / 100
