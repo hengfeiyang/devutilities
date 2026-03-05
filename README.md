@@ -10,8 +10,8 @@ A native macOS application for developers, containing 23 essential tools commonl
 
 ## Features
 
-- **AI Chat** - Intelligent AI assistant with custom model support, flexible API configuration, and enhanced user experience for development questions
-- **AI Translate** - **NEW TTS** Professional translation tool with 3 modes, 19 language support, text-to-speech playback, and special word mode with detailed explanations
+- **AI Chat** - Intelligent AI assistant with enhanced Markdown rendering, one-click copy for code snippets, OpenAI Responses API support, and custom model configuration
+- **AI Translate** - Professional translation with 3 modes, 19 languages, OpenAI TTS (13 voices), and special word mode
 - **Timestamp Converter** - Convert between timestamps and human-readable dates with multiple format support
 - **Unit Converter** - Convert between different units (Data, Time, Length, Weight, Temperature, Area, Volume)
 - **Base Converter** - Mutual conversion between binary, octal, decimal, hexadecimal, and Base62 number systems with real-time validation
@@ -41,11 +41,19 @@ A native macOS application for developers, containing 23 essential tools commonl
 - **Selectable Results** - Copy results directly from the output areas
 - **Modern UI** - Clean, intuitive interface designed for macOS
 - **Real-time Conversion** - Instant results as you type
-- **Text-to-Speech** - **NEW** Native macOS TTS for AI Translate with multi-language voice support
+- **Text-to-Speech** - OpenAI TTS (13 voices) and native macOS TTS for AI Translate
 
 ## Version
 
-Current version: 2.11.1
+Current version: 2.12.0
+
+## What's New in v2.12.0
+
+- **AI Chat — Enhanced Markdown Rendering**: Migrated to Textual engine with better code highlighting, tables, and nested lists
+- **AI Chat — Copy Code Snippets**: One-click Copy button on every code block
+- **AI Chat — OpenAI Responses API**: Support for Responses API with streaming, reasoning, and GPT-5.2-pro
+- **AI Translate — OpenAI TTS**: Real-time PCM streaming TTS, 13 voices
+- **TTS Settings**: Configure mode (Auto/OpenAI/macOS), voice, and premium macOS voice in Settings → AI
 
 ## What's New in v2.11.1
 

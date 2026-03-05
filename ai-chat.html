@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Chat Assistant - Developer AI Helper | DevUtilities</title>
-    <meta name="description" content="Advanced AI chat assistant for developers. Get instant help with code review, debugging, and technical questions. Support for custom AI models, DeepSeek reasoning models, and flexible API configuration. Part of DevUtilities - 18 essential developer tools for macOS.">
-    <meta name="keywords" content="AI chat, AI assistant, developer AI, code review AI, AI programming help, custom AI models, DeepSeek AI, AI debugging, coding assistant, AI development tool">
+    <meta name="description" content="Advanced AI chat assistant for developers with beautiful Markdown rendering, one-click copy code snippets, OpenAI Responses API support, DeepSeek reasoning, and custom model configuration. Part of DevUtilities - 23 essential developer tools for macOS.">
+    <meta name="keywords" content="AI chat, AI assistant, developer AI, code review AI, Markdown rendering, copy code, OpenAI Responses API, DeepSeek reasoning, custom AI models, coding assistant, AI development tool">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="">
     <meta property="og:title" content="AI Chat Assistant - Developer AI Helper | DevUtilities">
-    <meta property="og:description" content="Advanced AI assistant for developers with custom model support, code review capabilities, and real-time reasoning process visualization.">
+    <meta property="og:description" content="Advanced AI assistant with beautiful Markdown rendering, one-click copy code, OpenAI Responses API, and DeepSeek reasoning — built for developers.">
     <meta property="og:image" content="images/screenshots/aichat.png">
 
     <!-- Twitter -->
@@ -84,20 +84,20 @@
                         <span class="hero-subtitle">Intelligent Developer Companion</span>
                     </h1>
                     <p class="hero-description">
-                        Advanced AI assistant designed specifically for developers. Get instant help with code review, debugging, architecture decisions, and technical questions. Features custom model support, DeepSeek reasoning models with transparent thinking process, web search capabilities, image generation, and comprehensive tool integration for enhanced development workflows.
+                        Advanced AI assistant designed specifically for developers. Beautiful Markdown rendering with syntax-highlighted code blocks and one-click copy. Supports the OpenAI Responses API for the latest GPT models, DeepSeek reasoning with transparent chain-of-thought, and any custom OpenAI-compatible endpoint.
                     </p>
                     <div class="hero-features">
                         <div class="hero-feature">
-                            <span class="hero-feature-icon">🤖</span>
-                            <span>Custom AI Models</span>
+                            <span class="hero-feature-icon">📋</span>
+                            <span>Copy Code Snippets</span>
                         </div>
                         <div class="hero-feature">
                             <span class="hero-feature-icon">🧠</span>
-                            <span>DeepSeek Reasoning</span>
+                            <span>Reasoning Models</span>
                         </div>
                         <div class="hero-feature">
-                            <span class="hero-feature-icon">🛠️</span>
-                            <span>Tools & Web Search</span>
+                            <span class="hero-feature-icon">⚡</span>
+                            <span>Responses API</span>
                         </div>
                     </div>
                     <div class="hero-actions">
@@ -130,69 +130,57 @@
 
             <div class="features-grid">
                 <div class="feature-card featured">
-                    <div class="feature-icon">🤖</div>
-                    <h3 class="feature-title">Custom Model Support</h3>
-                    <p class="feature-description">Configure custom AI models with flexible API settings, custom endpoints, headers, and authentication methods. Add your preferred models for specialized development assistance.</p>
+                    <div class="feature-icon">✍️</div>
+                    <h3 class="feature-title">Enhanced Markdown Rendering</h3>
+                    <p class="feature-description">Migrated to the Textual rendering engine for richer, more accurate Markdown output. Code blocks have syntax highlighting across all languages. Tables, nested lists, and inline formatting render correctly. Streaming updates are smooth with no layout flicker.</p>
+                </div>
+
+                <div class="feature-card featured">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">One-Click Copy Code Snippets</h3>
+                    <p class="feature-description">Every code block in AI Chat responses shows a Copy button. Grab any snippet instantly — no text selection needed. Perfect for commands, configuration files, and code examples the AI generates for you.</p>
+                </div>
+
+                <div class="feature-card featured">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">OpenAI Responses API</h3>
+                    <p class="feature-description">Full support for the OpenAI Responses API with SSE streaming. Compatible with GPT-5.2-pro and future models that require the new API. Reasoning/thinking output streams in real-time. Enable per-model via "Use Responses API" in model settings.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">🧠</div>
                     <h3 class="feature-title">DeepSeek Reasoning Models</h3>
-                    <p class="feature-description">Access deepseek-chat and deepseek-reasoner models with transparent "deepthink" Chain of Thought reasoning process, showing the AI's internal problem-solving approach.</p>
+                    <p class="feature-description">Access deepseek-chat and deepseek-reasoner models with transparent "deepthink" Chain of Thought reasoning. The AI's internal problem-solving process streams in a collapsible section before the final answer.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">💭</div>
                     <h3 class="feature-title">Collapsible Thinking Process</h3>
-                    <p class="feature-description">View AI's reasoning process in expandable/collapsible sections with brain icon and smooth animations. Understand how the AI approaches complex problems.</p>
+                    <p class="feature-description">View AI reasoning in expandable/collapsible sections with a brain icon. Works for both DeepSeek reasoning models and OpenAI Responses API models that support thinking output.</p>
                 </div>
 
                 <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Real-time Streaming</h3>
-                    <p class="feature-description">See responses as they're generated with real-time streaming. Watch reasoning unfold and get instant feedback during AI conversations.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🛑</div>
-                    <h3 class="feature-title">Advanced Stop Control</h3>
-                    <p class="feature-description">Improved stop button with immediate cancellation of streaming responses for all models. Proper URLSessionDataTask and Swift Task cancellation architecture.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">Developer-Focused Context</h3>
-                    <p class="feature-description">Specialized AI knowledge for software development workflows, code review, debugging, architecture decisions, and technical problem-solving.</p>
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">Custom Model Support</h3>
+                    <p class="feature-description">Configure any OpenAI-compatible model with custom API endpoints, headers, and authentication. Add GPT-5, Claude, DeepSeek, or your own self-hosted model. Built-in model list auto-syncs on startup.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">💬</div>
                     <h3 class="feature-title">Persistent Conversations</h3>
-                    <p class="feature-description">Maintain conversation history across sessions with context-aware responses and conversation management for ongoing development projects.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🛠️</div>
-                    <h3 class="feature-title">Comprehensive Tool Integration</h3>
-                    <p class="feature-description">Access to various tools and utilities for enhanced AI capabilities, including code analysis, file processing, and development workflow automation.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3 class="feature-title">Web Search Capabilities</h3>
-                    <p class="feature-description">Real-time web search integration allows the AI to access current information, latest documentation, and up-to-date technical resources for accurate answers.</p>
+                    <p class="feature-description">Multiple chat sessions with independent model selection and conversation history. Context carries across sessions for ongoing development projects.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">🎨</div>
                     <h3 class="feature-title">Image Generation</h3>
-                    <p class="feature-description">Generate images, diagrams, and visual content to support development documentation, UI mockups, and technical illustrations for your projects.</p>
+                    <p class="feature-description">Generate images and diagrams via the OpenAI Responses API. Multi-turn image refinement using conversation context for iterative visual content creation.</p>
                 </div>
 
                 <div class="feature-card">
-                    <div class="feature-icon">🔧</div>
-                    <h3 class="feature-title">Enhanced Model Selection</h3>
-                    <p class="feature-description">Improved model selector UI with better organization of built-in and custom models, easy configuration management, and reliable preference persistence.</p>
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">Web Search</h3>
+                    <p class="feature-description">Real-time web search lets the AI access the latest documentation, current best practices, and up-to-date technical resources for accurate answers.</p>
                 </div>
             </div>
         </div>
@@ -223,14 +211,14 @@
 
                 <div class="step-card">
                     <div class="step-number">3</div>
-                    <h3>Watch AI Reasoning</h3>
-                    <p>For DeepSeek models, expand the thinking process to see how the AI analyzes your problem and develops solutions step-by-step.</p>
+                    <h3>Copy Code Instantly</h3>
+                    <p>Click the Copy button on any code block to grab the snippet directly — no text selection needed. Use it in your editor immediately.</p>
                 </div>
 
                 <div class="step-card">
                     <div class="step-number">4</div>
                     <h3>Apply Solutions</h3>
-                    <p>Use the AI's recommendations, code suggestions, and technical guidance to improve your development workflow and solve problems.</p>
+                    <p>Use the AI's recommendations, code suggestions, and technical guidance. Expand the reasoning section to see how the AI arrived at its answer.</p>
                 </div>
             </div>
         </div>
@@ -304,43 +292,43 @@
 
             <div class="faq-grid">
                 <div class="faq-item">
+                    <h3>What's new in v2.12.0?</h3>
+                    <p>Three major AI Chat improvements: (1) Markdown rendering migrated to Textual with better code highlighting and no streaming flicker; (2) one-click Copy button on every code block; (3) OpenAI Responses API support for GPT-5.2-pro and compatible models with reasoning output.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How does copy code work?</h3>
+                    <p>Every code block in chat responses displays a Copy button in the top-right corner. Click it to copy the entire code snippet to your clipboard instantly — no need to select text manually.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What is the OpenAI Responses API?</h3>
+                    <p>The Responses API is OpenAI's newer API that supports models like GPT-5.2-pro and enables features like reasoning output. Enable it per-model via the "Use Responses API" toggle when adding or editing a model in Settings → AI.</p>
+                </div>
+
+                <div class="faq-item">
                     <h3>What AI models are supported?</h3>
-                    <p>DevUtilities includes built-in models like DeepSeek (deepseek-chat and deepseek-reasoner) and supports custom model configuration with flexible API endpoints, authentication, and parameters.</p>
+                    <p>Built-in models include GPT-5, DeepSeek chat and reasoner, and GPT-5.2-pro (via Responses API). You can also add any OpenAI-compatible model with a custom endpoint and API key.</p>
                 </div>
 
                 <div class="faq-item">
                     <h3>How does the DeepSeek reasoning process work?</h3>
-                    <p>DeepSeek reasoner models show their internal "deepthink" Chain of Thought reasoning in collapsible sections, allowing you to see how the AI analyzes problems and develops solutions step-by-step.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I add my own AI models?</h3>
-                    <p>Yes! DevUtilities supports custom model configuration with flexible API settings, custom endpoints, headers, authentication methods, and parameter configuration for your preferred AI services.</p>
+                    <p>DeepSeek reasoner models stream their internal "deepthink" chain-of-thought in a collapsible section before the final answer — so you can see exactly how the AI approaches your problem.</p>
                 </div>
 
                 <div class="faq-item">
                     <h3>Is conversation history saved?</h3>
-                    <p>Yes, DevUtilities maintains persistent chat sessions with conversation management, allowing you to continue discussions across app sessions and maintain context for ongoing projects.</p>
+                    <p>Yes. DevUtilities maintains multiple persistent chat sessions, each with its own model selection and conversation history. Continue any discussion across app launches.</p>
                 </div>
 
                 <div class="faq-item">
                     <h3>How do I stop a streaming response?</h3>
-                    <p>DevUtilities includes an improved stop button that immediately cancels streaming responses with proper URLSessionDataTask and Swift Task cancellation for all supported models.</p>
+                    <p>Click the stop button to cancel immediately. The partial response is preserved — not discarded — so you keep whatever the AI had already generated.</p>
                 </div>
 
                 <div class="faq-item">
-                    <h3>What makes this AI assistant developer-focused?</h3>
-                    <p>The AI assistant is specifically trained and optimized for software development contexts, with specialized knowledge of programming languages, frameworks, development workflows, and technical problem-solving.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What tools and capabilities are integrated?</h3>
-                    <p>DevUtilities's AI includes web search for accessing current documentation, image generation for creating diagrams and mockups, and various development tools for code analysis, file processing, and workflow automation.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How does the web search feature work?</h3>
-                    <p>The AI can perform real-time web searches to access the latest documentation, find current best practices, and get up-to-date information about technologies, frameworks, and development trends to provide accurate, current answers.</p>
+                    <h3>Can I add my own AI model?</h3>
+                    <p>Yes. Go to Settings → AI → Models → Add Model. Enter your API endpoint, key, and model name. Any OpenAI-compatible API works, including self-hosted models.</p>
                 </div>
             </div>
         </div>
@@ -399,7 +387,7 @@
                     </a>
                     <div class="cta-info">
                         <span>✓ macOS 14.0+</span>
-                        <span>✓ 19 Developer Tools</span>
+                        <span>✓ 23 Developer Tools</span>
                     </div>
                 </div>
             </div>
