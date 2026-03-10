@@ -246,10 +246,23 @@ struct UUIDGeneratorView: View {
         let cleanedInput = input.trimmingCharacters(in: .whitespacesAndNewlines)
         
         // Remove braces if present
-        let uuidString = cleanedInput.hasPrefix("{") && cleanedInput.hasSuffix("}") 
+        var uuidString = cleanedInput.hasPrefix("{") && cleanedInput.hasSuffix("}")
             ? String(cleanedInput.dropFirst().dropLast())
             : cleanedInput
-        
+
+        // If input is 32 hex characters without hyphens, insert hyphens
+        if uuidString.count == 32 && !uuidString.contains("-") {
+            let hex = uuidString
+            let isValidHex = hex.allSatisfy { $0.isHexDigit }
+            if isValidHex {
+                let i = hex.index(hex.startIndex, offsetBy: 8)
+                let j = hex.index(i, offsetBy: 4)
+                let k = hex.index(j, offsetBy: 4)
+                let l = hex.index(k, offsetBy: 4)
+                uuidString = "\(hex[hex.startIndex..<i])-\(hex[i..<j])-\(hex[j..<k])-\(hex[k..<l])-\(hex[l..<hex.endIndex])"
+            }
+        }
+
         // Check if it's a valid UUID format
         if let _ = UUID(uuidString: uuidString) {
             var result = """
