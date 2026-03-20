@@ -44,44 +44,57 @@ struct ChatCodeBlockStyle: StructuredText.CodeBlockStyle {
   }
 }
 
+/// Disables the local text selection overlay inside Overflow while still
+/// registering the area as an exclusion rect for the parent overlay.
+private struct NoTextSelection: TextSelectability {
+  static let allowsSelection = false
+}
+
 private struct ChatCodeBlockContainer: View {
   let configuration: StructuredText.CodeBlockStyleConfiguration
   @State private var isCopied = false
 
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
-      HStack(spacing: 8) {
-        if let language = normalizedLanguageHint {
-          Text(language)
-            .font(.caption2.monospaced())
-            .foregroundColor(.secondary)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
+      // Header in Overflow so it registers as an exclusion rect for text selection.
+      // Text selection is disabled inside so the local overlay doesn't capture button clicks.
+      Overflow { state in
+        HStack(spacing: 8) {
+          if let language = normalizedLanguageHint {
+            Text(language)
+              .font(.caption2.monospaced())
+              .foregroundColor(.secondary)
+              .padding(.horizontal, 8)
+              .padding(.vertical, 4)
+              .background(Color.secondary.opacity(0.12))
+              .clipShape(RoundedRectangle(cornerRadius: 6))
+          }
+
+          Spacer()
+
+          Button(action: copyCode) {
+            ZStack {
+              Image(systemName: "doc.on.doc")
+                .opacity(isCopied ? 0 : 1)
+              Image(systemName: "checkmark")
+                .opacity(isCopied ? 1 : 0)
+            }
+            .font(.system(size: 12, weight: .medium))
+            .frame(width: 14, height: 14)
+            .foregroundColor(isCopied ? .green : .secondary)
+            .padding(6)
             .background(Color.secondary.opacity(0.12))
             .clipShape(RoundedRectangle(cornerRadius: 6))
-        }
-
-        Spacer()
-
-        Button(action: copyCode) {
-          ZStack {
-            Image(systemName: "doc.on.doc")
-              .opacity(isCopied ? 0 : 1)
-            Image(systemName: "checkmark")
-              .opacity(isCopied ? 1 : 0)
           }
-          .font(.system(size: 12, weight: .medium))
-          .frame(width: 14, height: 14)
-          .foregroundColor(isCopied ? .green : .secondary)
-          .padding(6)
-          .background(Color.secondary.opacity(0.12))
-          .clipShape(RoundedRectangle(cornerRadius: 6))
+          .buttonStyle(.plain)
+          .help(isCopied ? "Copied" : "Copy code")
         }
-        .buttonStyle(.plain)
-        .help(isCopied ? "Copied" : "Copy code")
+        .frame(width: state.containerWidth)
       }
+      .textual.textSelection(NoTextSelection())
 
-      ScrollView(.horizontal, showsIndicators: false) {
+      // Code content in Overflow for proper text selection exclusion and horizontal scrolling
+      Overflow {
         configuration.label
           .textual.lineSpacing(.fontScaled(0.225))
           .textual.fontScale(0.85)
@@ -89,7 +102,6 @@ private struct ChatCodeBlockContainer: View {
           .monospaced()
           .padding(12)
       }
-      .frame(maxWidth: .infinity, alignment: .leading)
     }
     .padding(10)
     .background(Color.secondary.opacity(0.08))

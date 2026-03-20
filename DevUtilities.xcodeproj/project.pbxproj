@@ -11,7 +11,6 @@
 		813459522E8A95EA003222BC /* FeatureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813459512E8A95EA003222BC /* FeatureManager.swift */; };
 		813459542E8A95FA003222BC /* FeatureSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813459532E8A95FA003222BC /* FeatureSettingsView.swift */; };
 		816683E92EADF7E70050027B /* AVSpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816683E82EADF7E70050027B /* AVSpeechService.swift */; };
-		AC1FB7ADC76A4164BFDED09B /* OpenAITTSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D61346D87B4A55B5F702D8 /* OpenAITTSService.swift */; };
 		816683EC2EADF7FC0050027B /* SpeakerMotionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816683EB2EADF7FC0050027B /* SpeakerMotionView.swift */; };
 		816683ED2EADF7FC0050027B /* SpeakerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816683EA2EADF7FC0050027B /* SpeakerButton.swift */; };
 		818449F62E90D8E200398FEC /* DevUtilitiesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818449F52E90D8E200398FEC /* DevUtilitiesApp.swift */; };
@@ -53,6 +52,7 @@
 		93DE0EB02E7ABA1900731598 /* AIProviderSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EAE2E7ABA1900731598 /* AIProviderSettingsView.swift */; };
 		93DE0EB12E7ABA1900731598 /* AddModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EAB2E7ABA1900731598 /* AddModelView.swift */; };
 		93DE0EB22E7ABA1900731598 /* AddProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EAC2E7ABA1900731598 /* AddProviderView.swift */; };
+		AC1FB7ADC76A4164BFDED09B /* OpenAITTSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D61346D87B4A55B5F702D8 /* OpenAITTSService.swift */; };
 		B41BCA88D09D488EA2A4ABAC /* CryptoToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41BCA88D09D488EA2A4ABAB /* CryptoToolsView.swift */; };
 		B8ED45ECE89552CE6769C282 /* TextCompareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9128D604EF103C7A961E03 /* TextCompareView.swift */; };
 		D5475F403A461C2C5A1B3000123456 /* RandomStringGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50B1BC668DF802C5A1B3000123456 /* RandomStringGenerator.swift */; };
@@ -99,7 +99,6 @@
 		813459512E8A95EA003222BC /* FeatureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManager.swift; sourceTree = "<group>"; };
 		813459532E8A95FA003222BC /* FeatureSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureSettingsView.swift; sourceTree = "<group>"; };
 		816683E82EADF7E70050027B /* AVSpeechService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVSpeechService.swift; sourceTree = "<group>"; };
-		E5D61346D87B4A55B5F702D8 /* OpenAITTSService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAITTSService.swift; sourceTree = "<group>"; };
 		816683EA2EADF7FC0050027B /* SpeakerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerButton.swift; sourceTree = "<group>"; };
 		816683EB2EADF7FC0050027B /* SpeakerMotionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerMotionView.swift; sourceTree = "<group>"; };
 		818449F42E90D8E200398FEC /* DevUtilities.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevUtilities.entitlements; sourceTree = "<group>"; };
@@ -158,6 +157,7 @@
 		D5F4E80F2C5A1B3000123456 /* URLToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLToolsView.swift; sourceTree = "<group>"; };
 		D5F4E8112C5A1B3000123456 /* ToolType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolType.swift; sourceTree = "<group>"; };
 		D5F4E8172C5A1B3000123456 /* TextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditor.swift; sourceTree = "<group>"; };
+		E5D61346D87B4A55B5F702D8 /* OpenAITTSService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAITTSService.swift; sourceTree = "<group>"; };
 		HTML8E8082C5A1B3000123456 /* HTMLFormatterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLFormatterView.swift; sourceTree = "<group>"; };
 		HTTP4E7F2C5A1B3000654322 /* HTTPRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPRequestView.swift; sourceTree = "<group>"; };
 		JWT4E8112C5A1B3000765432 /* JWTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTView.swift; sourceTree = "<group>"; };
@@ -600,7 +600,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 73;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -624,7 +624,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 2.12.0;
+				MARKETING_VERSION = 2.12.1;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.devutilities;
 				PRODUCT_NAME = DevUtilities;
@@ -642,7 +642,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 73;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -666,7 +666,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 2.12.0;
+				MARKETING_VERSION = 2.12.1;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.devutilities;
 				PRODUCT_NAME = DevUtilities;

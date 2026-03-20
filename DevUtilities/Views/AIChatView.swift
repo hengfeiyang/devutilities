@@ -1155,6 +1155,7 @@ struct ChatMessageView: View {
                                         .textual.structuredTextStyle(.chatStyle)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 }
+                                .textual.textSelection(.enabled)
                                 .lineSpacing(4)
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 12)
