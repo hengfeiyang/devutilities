@@ -41,6 +41,27 @@ class ProviderManager {
             newProvider.apiKey = ""
         }
 
+        // Auto-populate built-in models when provider name matches a known provider
+        if newProvider.models.isEmpty {
+            let knownProviders: [String: () -> AIProvider] = [
+                "openai": AIProvider.createBuiltInOpenAI,
+                "deepseek": AIProvider.createBuiltInDeepSeek
+            ]
+            if let factory = knownProviders[newProvider.name.lowercased()] {
+                let template = factory()
+                newProvider.models = template.models.map { model in
+                    AIModelV2(
+                        name: model.name,
+                        modelId: model.modelId,
+                        capabilities: model.capabilities,
+                        isActive: model.isActive,
+                        isBuiltIn: false,
+                        providerId: newProvider.id
+                    )
+                }
+            }
+        }
+
         providers.append(newProvider)
         saveProviders()
     }
@@ -113,7 +134,7 @@ class ProviderManager {
     func getAllActiveModels() -> [ProviderModelItem] {
         var items: [ProviderModelItem] = []
 
-        for provider in providers where provider.isActive {
+        for provider in providers where provider.isActive && !provider.isBuiltIn {
             for model in provider.models where model.isActive {
                 items.append(ProviderModelItem(provider: provider, model: model))
             }
@@ -141,7 +162,7 @@ class ProviderManager {
 
     /// Returns (baseURL, apiKey) for the active OpenAI provider if configured
     func getActiveOpenAIForTTS() -> (baseURL: String, apiKey: String)? {
-        guard let provider = providers.first(where: { $0.name == "OpenAI" && $0.isBuiltIn && $0.isActive }),
+        guard let provider = providers.first(where: { $0.name.lowercased() == "openai" && $0.isActive }),
               let apiKey = keychain.getAPIKey(for: provider.id),
               !apiKey.isEmpty else { return nil }
         return (provider.baseURL, apiKey)

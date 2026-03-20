@@ -130,7 +130,7 @@ struct AISettingsSidebar: View {
             }
 
             Section {
-                ForEach(providerManager.providers) { provider in
+                ForEach(providerManager.providers.filter { !$0.isBuiltIn }) { provider in
                     HStack {
                         Label {
                             Text(provider.name)
