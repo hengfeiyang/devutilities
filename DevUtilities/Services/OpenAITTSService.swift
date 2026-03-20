@@ -105,10 +105,7 @@ final class OpenAITTSService: NSObject {
                     if pending.count >= bytesPerBuffer {
                         let usable = pending.count & ~1   // round down to even bytes
                         if let buf = makePCMBuffer(from: pending, count: usable) {
-                            // Use the sync (completion-handler) overload so we return immediately
-                            // and keep filling the player queue while audio plays.
-                            // The async overload would stall here until the buffer finishes.
-                            node.scheduleBuffer(buf, completionHandler: nil)
+                            Self.enqueueBuffer(buf, on: node)
                             if !onStartFired { onStartFired = true; onStart?() }
                         }
                         pending.removeFirst(usable)
@@ -120,7 +117,7 @@ final class OpenAITTSService: NSObject {
                 // Flush remaining bytes (must be even: complete Int16 frames)
                 let usable = pending.count & ~1
                 if usable > 0, let buf = makePCMBuffer(from: pending, count: usable) {
-                    node.scheduleBuffer(buf, completionHandler: nil)
+                    Self.enqueueBuffer(buf, on: node)
                     if !onStartFired { onStart?() }
                 }
 
@@ -202,6 +199,14 @@ final class OpenAITTSService: NSObject {
         buffer.frameLength = frames
         // AVAudioPCMBuffer is zero-initialised (silence) by default
         return buffer
+    }
+
+    /// Schedules a buffer on the player node using the synchronous overload.
+    /// Marked nonisolated static so the compiler doesn't suggest the async alternative.
+    private nonisolated static func enqueueBuffer(
+        _ buffer: AVAudioPCMBuffer, on node: AVAudioPlayerNode
+    ) {
+        node.scheduleBuffer(buffer, completionHandler: nil)
     }
 
     private func buildURL(baseURL: String) throws -> URL {
