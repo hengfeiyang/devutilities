@@ -221,8 +221,8 @@ extension AIProvider {
 
         // GPT-5 Series
         let gpt5 = AIModelV2(
-            name: "GPT-5.2",
-            modelId: "gpt-5.2",
+            name: "GPT-5.4",
+            modelId: "gpt-5.4",
             capabilities: ModelCapabilities(
                 supportsStreaming: true,
                 supportsFunctionCalls: true,
@@ -235,8 +235,8 @@ extension AIProvider {
         )
 
         let gpt5Mini = AIModelV2(
-            name: "GPT-5 Mini",
-            modelId: "gpt-5-mini",
+            name: "GPT-5.4 Mini",
+            modelId: "gpt-5.4-mini",
             capabilities: ModelCapabilities(
                 supportsStreaming: true,
                 supportsFunctionCalls: true,
@@ -249,8 +249,8 @@ extension AIProvider {
         )
 
         let gpt5Nano = AIModelV2(
-            name: "GPT-5 Nano",
-            modelId: "gpt-5-nano",
+            name: "GPT-5.4 Nano",
+            modelId: "gpt-5.4-nano",
             capabilities: ModelCapabilities(
                 supportsStreaming: true,
                 supportsFunctionCalls: true,
@@ -261,23 +261,8 @@ extension AIProvider {
             providerId: provider.id
         )
 
-        let gpt5Pro = AIModelV2(
-            name: "GPT-5.2 Pro",
-            modelId: "gpt-5.2-pro",
-            capabilities: ModelCapabilities(
-                supportsStreaming: true,
-                supportsFunctionCalls: true,
-                supportsImages: true,
-                maxTokens: 128000,
-                contextWindow: 400000,
-                useResponsesAPI: true
-            ),
-            isBuiltIn: true,
-            providerId: provider.id
-        )
-
         var providerWithModels = provider
-        providerWithModels.models = [gpt5, gpt5Pro, gpt5Mini, gpt5Nano]
+        providerWithModels.models = [gpt5, gpt5Mini, gpt5Nano]
         return providerWithModels
     }
 

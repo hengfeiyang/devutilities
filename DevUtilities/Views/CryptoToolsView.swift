@@ -17,6 +17,7 @@ import SwiftUI
 import CryptoKit
 import Foundation
 import Compression
+import CommonCrypto
 
 enum CryptoTab: String, CaseIterable {
     case hash = "hash"
@@ -51,9 +52,18 @@ enum HashAlgorithm: String, CaseIterable {
 enum SymmetricAlgorithm: String, CaseIterable {
     case aesGcm256 = "AES-GCM-256"
     case aesCbc256 = "AES-CBC-256"
-    
+    case aesSiv256 = "AES-SIV-256"
+
     var title: String {
         return self.rawValue
+    }
+
+    /// Key size in bytes
+    var keySize: Int {
+        switch self {
+        case .aesGcm256, .aesCbc256: return 32
+        case .aesSiv256: return 64
+        }
     }
 }
 
@@ -339,7 +349,7 @@ struct SymmetricEncryptionView: View {
                                 processText()
                             }
                         
-                        Text("Key should be 32 bytes (64 hex characters) for AES-256")
+                        Text("Key should be \(selectedAlgorithm.keySize) bytes (\(selectedAlgorithm.keySize * 2) hex characters) for \(selectedAlgorithm.title)")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -428,30 +438,37 @@ struct SymmetricEncryptionView: View {
     }
     
     private func encryptText() {
-        guard let keyData = Data(hexString: secretKey), keyData.count == 32 else {
-            errorMessage = "Invalid key format. Please provide a 64-character hex string."
+        let expectedKeySize = selectedAlgorithm.keySize
+        guard let keyData = Data(hexString: secretKey), keyData.count == expectedKeySize else {
+            errorMessage = "Invalid key format. Please provide a \(expectedKeySize * 2)-character hex string."
             result = ""
             return
         }
-        
+
         guard let inputData = inputText.data(using: .utf8) else {
             errorMessage = "Could not convert input to data"
             result = ""
             return
         }
-        
-        let key = SymmetricKey(data: keyData)
-        
+
         do {
             switch selectedAlgorithm {
             case .aesGcm256:
+                let key = SymmetricKey(data: keyData)
                 let sealedBox = try AES.GCM.seal(inputData, using: key)
                 result = sealedBox.combined?.base64EncodedString() ?? ""
             case .aesCbc256:
-                // For CBC, we need to handle IV manually
+                let key = SymmetricKey(data: keyData)
                 let iv = AES.GCM.Nonce()
                 let encrypted = try AES.GCM.seal(inputData, using: key, nonce: iv)
                 result = encrypted.combined?.base64EncodedString() ?? ""
+            case .aesSiv256:
+                guard let encrypted = AESSIV.encrypt(key: keyData, plaintext: inputData) else {
+                    errorMessage = "AES-SIV encryption failed"
+                    result = ""
+                    return
+                }
+                result = encrypted.base64EncodedString()
             }
         } catch {
             errorMessage = "Encryption failed: \(error.localizedDescription)"
@@ -460,29 +477,37 @@ struct SymmetricEncryptionView: View {
     }
     
     private func decryptText() {
-        guard let keyData = Data(hexString: secretKey), keyData.count == 32 else {
-            errorMessage = "Invalid key format. Please provide a 64-character hex string."
+        let expectedKeySize = selectedAlgorithm.keySize
+        guard let keyData = Data(hexString: secretKey), keyData.count == expectedKeySize else {
+            errorMessage = "Invalid key format. Please provide a \(expectedKeySize * 2)-character hex string."
             result = ""
             return
         }
-        
+
         guard let cipherData = Data(base64Encoded: inputText) else {
             errorMessage = "Invalid ciphertext format. Expected base64-encoded data."
             result = ""
             return
         }
-        
-        let key = SymmetricKey(data: keyData)
-        
+
         do {
             switch selectedAlgorithm {
             case .aesGcm256:
+                let key = SymmetricKey(data: keyData)
                 let sealedBox = try AES.GCM.SealedBox(combined: cipherData)
                 let decryptedData = try AES.GCM.open(sealedBox, using: key)
                 result = String(data: decryptedData, encoding: .utf8) ?? "Could not decode decrypted data"
             case .aesCbc256:
+                let key = SymmetricKey(data: keyData)
                 let sealedBox = try AES.GCM.SealedBox(combined: cipherData)
                 let decryptedData = try AES.GCM.open(sealedBox, using: key)
+                result = String(data: decryptedData, encoding: .utf8) ?? "Could not decode decrypted data"
+            case .aesSiv256:
+                guard let decryptedData = AESSIV.decrypt(key: keyData, combined: cipherData) else {
+                    errorMessage = "AES-SIV decryption failed. Invalid ciphertext or key."
+                    result = ""
+                    return
+                }
                 result = String(data: decryptedData, encoding: .utf8) ?? "Could not decode decrypted data"
             }
         } catch {
@@ -492,7 +517,7 @@ struct SymmetricEncryptionView: View {
     }
     
     private func generateRandomKey() {
-        let keyData = SymmetricKey(size: .bits256)
+        let keyData = SymmetricKey(size: .init(bitCount: selectedAlgorithm.keySize * 8))
         secretKey = keyData.withUnsafeBytes { Data($0) }.hexEncodedString()
         processText()
     }
@@ -808,6 +833,204 @@ struct AsymmetricEncryptionView: View {
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
         pasteboard.setString(text, forType: .string)
+    }
+}
+
+// MARK: - AES-256-SIV Implementation (RFC 5297)
+
+struct AESSIV {
+
+    /// Encrypt plaintext using AES-256-SIV.
+    /// Key: 64 bytes (K_mac || K_enc, each 32 bytes).
+    /// Returns: SIV (16 bytes) || ciphertext.
+    static func encrypt(key: Data, plaintext: Data) -> Data? {
+        guard key.count == 64 else { return nil }
+
+        let macKey = Data(key.prefix(32))
+        let encKey = Data(key.suffix(32))
+
+        guard let siv = s2v(key: macKey, plaintext: plaintext) else { return nil }
+
+        // Prepare CTR counter: clear bits 31 and 63
+        var counter = [UInt8](siv)
+        counter[8] &= 0x7F
+        counter[12] &= 0x7F
+
+        guard let ciphertext = aesCTR(key: encKey, iv: Data(counter), data: plaintext) else { return nil }
+
+        return siv + ciphertext
+    }
+
+    /// Decrypt ciphertext using AES-256-SIV.
+    /// Key: 64 bytes. Combined: SIV (16 bytes) || ciphertext.
+    /// Returns plaintext on success, nil on authentication failure.
+    static func decrypt(key: Data, combined: Data) -> Data? {
+        guard key.count == 64, combined.count >= 16 else { return nil }
+
+        let macKey = Data(key.prefix(32))
+        let encKey = Data(key.suffix(32))
+
+        let siv = Data(combined.prefix(16))
+        let ciphertext = Data(combined.suffix(from: 16))
+
+        var counter = [UInt8](siv)
+        counter[8] &= 0x7F
+        counter[12] &= 0x7F
+
+        guard let plaintext = aesCTR(key: encKey, iv: Data(counter), data: ciphertext) else { return nil }
+
+        // Verify authenticity
+        guard let expectedSIV = s2v(key: macKey, plaintext: plaintext) else { return nil }
+        guard siv == expectedSIV else { return nil }
+
+        return plaintext
+    }
+
+    // MARK: - S2V (RFC 5297 Section 2.4)
+
+    private static func s2v(key: Data, plaintext: Data) -> Data? {
+        let zero = Data(count: 16)
+        guard let d = cmac(key: key, message: zero) else { return nil }
+
+        if plaintext.count >= 16 {
+            // xor_end: XOR d into the last 16 bytes of plaintext
+            let prefixPart = plaintext.prefix(plaintext.count - 16)
+            let suffixPart = Data(plaintext.suffix(16))
+            let t = prefixPart + xorBlocks(suffixPart, d)
+            return cmac(key: key, message: t)
+        } else {
+            let doubled = dbl(d)
+            var padded = plaintext
+            padded.append(0x80)
+            while padded.count < 16 { padded.append(0x00) }
+            return cmac(key: key, message: xorBlocks(doubled, padded))
+        }
+    }
+
+    // MARK: - AES-CMAC (RFC 4493)
+
+    private static func cmac(key: Data, message: Data) -> Data? {
+        let blockSize = 16
+        guard let (k1, k2) = generateSubkeys(key: key) else { return nil }
+
+        let n = message.isEmpty ? 1 : (message.count + blockSize - 1) / blockSize
+        let lastBlockComplete = !message.isEmpty && message.count % blockSize == 0
+
+        var lastBlock: Data
+        if lastBlockComplete {
+            let start = (n - 1) * blockSize
+            lastBlock = xorBlocks(Data(message[start..<message.count]), k1)
+        } else {
+            let start = (n - 1) * blockSize
+            var block = Data(message[start..<message.count])
+            block.append(0x80)
+            while block.count < blockSize { block.append(0x00) }
+            lastBlock = xorBlocks(block, k2)
+        }
+
+        var x = Data(count: blockSize)
+        for i in 0..<(n - 1) {
+            let start = i * blockSize
+            let block = Data(message[start..<(start + blockSize)])
+            x = aesEncryptBlock(key: key, data: xorBlocks(x, block))
+            guard x.count == blockSize else { return nil }
+        }
+
+        let result = aesEncryptBlock(key: key, data: xorBlocks(x, lastBlock))
+        return result.count == blockSize ? result : nil
+    }
+
+    private static func generateSubkeys(key: Data) -> (Data, Data)? {
+        let zero = Data(count: 16)
+        let l = aesEncryptBlock(key: key, data: zero)
+        guard l.count == 16 else { return nil }
+        let k1 = dbl(l)
+        let k2 = dbl(k1)
+        return (k1, k2)
+    }
+
+    // MARK: - AES-CTR
+
+    private static func aesCTR(key: Data, iv: Data, data: Data) -> Data? {
+        let blockSize = 16
+        guard iv.count == blockSize else { return nil }
+        if data.isEmpty { return Data() }
+
+        var counter = [UInt8](iv)
+        var result = Data()
+        let blocks = (data.count + blockSize - 1) / blockSize
+
+        for i in 0..<blocks {
+            let keystream = aesEncryptBlock(key: key, data: Data(counter))
+            guard keystream.count == blockSize else { return nil }
+
+            let start = i * blockSize
+            let end = min(start + blockSize, data.count)
+            for j in 0..<(end - start) {
+                result.append(data[start + j] ^ keystream[j])
+            }
+
+            // Increment counter as big-endian 128-bit integer
+            for k in stride(from: blockSize - 1, through: 0, by: -1) {
+                counter[k] &+= 1
+                if counter[k] != 0 { break }
+            }
+        }
+
+        return result
+    }
+
+    // MARK: - Helpers
+
+    /// Single-block AES-ECB encrypt via CommonCrypto
+    private static func aesEncryptBlock(key: Data, data: Data) -> Data {
+        var outData = [UInt8](repeating: 0, count: data.count + kCCBlockSizeAES128)
+        var outLength = 0
+
+        let status = key.withUnsafeBytes { keyPtr in
+            data.withUnsafeBytes { dataPtr in
+                CCCrypt(
+                    CCOperation(kCCEncrypt),
+                    CCAlgorithm(kCCAlgorithmAES),
+                    CCOptions(kCCOptionECBMode),
+                    keyPtr.baseAddress, key.count,
+                    nil,
+                    dataPtr.baseAddress, data.count,
+                    &outData, outData.count,
+                    &outLength
+                )
+            }
+        }
+
+        guard status == kCCSuccess else { return Data() }
+        return Data(outData.prefix(outLength))
+    }
+
+    /// Doubling in GF(2^128) with polynomial x^128 + x^7 + x^2 + x + 1
+    private static func dbl(_ data: Data) -> Data {
+        var result = [UInt8](repeating: 0, count: data.count)
+        var carry: UInt8 = 0
+
+        for i in stride(from: data.count - 1, through: 0, by: -1) {
+            result[i] = (data[i] << 1) | carry
+            carry = (data[i] & 0x80) != 0 ? 1 : 0
+        }
+
+        if (data[0] & 0x80) != 0 {
+            result[data.count - 1] ^= 0x87
+        }
+
+        return Data(result)
+    }
+
+    private static func xorBlocks(_ a: Data, _ b: Data) -> Data {
+        let aBytes = [UInt8](a)
+        let bBytes = [UInt8](b)
+        var result = [UInt8](repeating: 0, count: min(aBytes.count, bBytes.count))
+        for i in 0..<result.count {
+            result[i] = aBytes[i] ^ bBytes[i]
+        }
+        return Data(result)
     }
 }
 
