@@ -100,57 +100,60 @@ struct ContentView: View {
             }
             .navigationSplitViewColumnWidth(min: 220, ideal: 220, max: 220)
         } detail: {
-            Group {
-                switch selectedTool {
-                case .aiChat:
-                    AIChatView(shouldCreateNewChat: $shouldCreateNewChat)
-                case .aiTranslate:
-                    AITranslateView()
-                case .timestampConverter:
-                    TimestampConverterView()
-                case .unitConverter:
-                    UnitConverterView()
-                case .baseConverter:
-                    BaseConverterView()
-                case .colorPicker:
-                    ColorPickerView()
-                case .jsonFormatter:
-                    JSONFormatterView()
-                case .sqlFormatter:
-                    SQLFormatterView()
-                case .htmlFormatter:
-                    HTMLFormatterView()
-                case .base64:
-                    Base64View()
-                case .hexString:
-                    HexStringConverterView()
-                case .jwt:
-                    JWTView()
-                case .regexTest:
-                    RegexTestView()
-                case .uuidGenerator:
-                    UUIDGeneratorView()
-                case .randomString:
-                    RandomStringView()
-                case .cryptoTools:
-                    CryptoToolsView()
-                case .urlTools:
-                    URLToolsView()
-                case .httpRequest:
-                    HTTPRequestView()
-                case .ipQuery:
-                    IPQueryView()
-                case .qrCode:
-                    QRCodeView()
-                case .parquetViewer:
-                    ParquetViewerView()
-                case .currencyConverter:
-                    CurrencyConverterView()
-                case .textCompare:
-                    TextCompareView()
+            VStack(spacing: 0) {
+                Color(NSColor.separatorColor).frame(height: 0.3)
+                Group {
+                    switch selectedTool {
+                    case .aiChat:
+                        AIChatView(shouldCreateNewChat: $shouldCreateNewChat)
+                    case .aiTranslate:
+                        AITranslateView()
+                    case .timestampConverter:
+                        TimestampConverterView()
+                    case .unitConverter:
+                        UnitConverterView()
+                    case .baseConverter:
+                        BaseConverterView()
+                    case .colorPicker:
+                        ColorPickerView()
+                    case .jsonFormatter:
+                        JSONFormatterView()
+                    case .sqlFormatter:
+                        SQLFormatterView()
+                    case .htmlFormatter:
+                        HTMLFormatterView()
+                    case .base64:
+                        Base64View()
+                    case .hexString:
+                        HexStringConverterView()
+                    case .jwt:
+                        JWTView()
+                    case .regexTest:
+                        RegexTestView()
+                    case .uuidGenerator:
+                        UUIDGeneratorView()
+                    case .randomString:
+                        RandomStringView()
+                    case .cryptoTools:
+                        CryptoToolsView()
+                    case .urlTools:
+                        URLToolsView()
+                    case .httpRequest:
+                        HTTPRequestView()
+                    case .ipQuery:
+                        IPQueryView()
+                    case .qrCode:
+                        QRCodeView()
+                    case .parquetViewer:
+                        ParquetViewerView()
+                    case .currencyConverter:
+                        CurrencyConverterView()
+                    case .textCompare:
+                        TextCompareView()
+                    }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(minWidth: 1024, minHeight: 650)
         .alert("Update Available", isPresented: $updateChecker.showUpdateAlert) {
