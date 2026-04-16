@@ -349,7 +349,7 @@ struct SymmetricEncryptionView: View {
                                 processText()
                             }
                         
-                        Text("Key should be \(selectedAlgorithm.keySize) bytes (\(selectedAlgorithm.keySize * 2) hex characters) for \(selectedAlgorithm.title)")
+                        Text("Key: \(selectedAlgorithm.keySize) bytes — \(selectedAlgorithm.keySize * 2) hex chars or Base64 encoded")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -437,10 +437,24 @@ struct SymmetricEncryptionView: View {
         }
     }
     
-    private func encryptText() {
+    private func parseKey() -> Data? {
         let expectedKeySize = selectedAlgorithm.keySize
-        guard let keyData = Data(hexString: secretKey), keyData.count == expectedKeySize else {
-            errorMessage = "Invalid key format. Please provide a \(expectedKeySize * 2)-character hex string."
+        let trimmed = secretKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        // Try hex first
+        if let keyData = Data(hexString: trimmed), keyData.count == expectedKeySize {
+            return keyData
+        }
+        // Try base64
+        if let keyData = Data(base64Encoded: trimmed), keyData.count == expectedKeySize {
+            return keyData
+        }
+        return nil
+    }
+
+    private func encryptText() {
+        guard let keyData = parseKey() else {
+            let expectedKeySize = selectedAlgorithm.keySize
+            errorMessage = "Invalid key. Provide \(expectedKeySize * 2) hex chars or Base64 encoded \(expectedKeySize)-byte key."
             result = ""
             return
         }
@@ -477,9 +491,9 @@ struct SymmetricEncryptionView: View {
     }
     
     private func decryptText() {
-        let expectedKeySize = selectedAlgorithm.keySize
-        guard let keyData = Data(hexString: secretKey), keyData.count == expectedKeySize else {
-            errorMessage = "Invalid key format. Please provide a \(expectedKeySize * 2)-character hex string."
+        guard let keyData = parseKey() else {
+            let expectedKeySize = selectedAlgorithm.keySize
+            errorMessage = "Invalid key. Provide \(expectedKeySize * 2) hex chars or Base64 encoded \(expectedKeySize)-byte key."
             result = ""
             return
         }
