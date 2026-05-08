@@ -718,6 +718,11 @@ struct ChatMessagesView: View {
                                     }
                                 }
                         }
+
+                        if let total = currentSession?.totalTokenUsage {
+                            SessionTokenTotalView(usage: total)
+                                .padding(.top, 4)
+                        }
                     }
                     .padding(16)
                 }
@@ -782,6 +787,35 @@ struct ChatMessagesView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(NSColor.textBackgroundColor))
         }
+    }
+}
+
+struct SessionTokenTotalView: View {
+    let usage: TokenUsage
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Text("Session total")
+                .font(.system(size: 11, weight: .medium))
+                .foregroundColor(.secondary)
+
+            HStack(spacing: 1) {
+                Image(systemName: "arrow.up")
+                Text("\(usage.promptTokens)")
+            }
+            HStack(spacing: 1) {
+                Image(systemName: "arrow.down")
+                Text("\(usage.completionTokens)")
+            }
+            Text("· \(usage.totalTokens) total")
+        }
+        .font(.system(size: 11))
+        .foregroundColor(.secondary)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(Color.secondary.opacity(0.08))
+        .clipShape(Capsule())
+        .help("Cumulative input and output tokens for this conversation")
     }
 }
 
@@ -1105,7 +1139,7 @@ struct ChatMessageView: View {
                             } else {
                                 // Text message with Textual library
                                 VStack(alignment: .leading, spacing: 12) {
-                                    // Show reasoning content if available (DeepSeek reasoner)
+                                    // Show reasoning content if available (DeepSeek)
                                     if let reasoning = message.reasoningContent, !reasoning.isEmpty {
                                         VStack(alignment: .leading, spacing: 8) {
                                             // Collapsible header
@@ -1176,7 +1210,23 @@ struct ChatMessageView: View {
                                 Text(timeStamp)
                                     .font(.system(size: 11))
                                     .foregroundColor(.secondary)
-                                
+
+                                if let usage = message.tokenUsage {
+                                    HStack(spacing: 6) {
+                                        HStack(spacing: 1) {
+                                            Image(systemName: "arrow.up")
+                                            Text("\(usage.promptTokens)")
+                                        }
+                                        HStack(spacing: 1) {
+                                            Image(systemName: "arrow.down")
+                                            Text("\(usage.completionTokens)")
+                                        }
+                                    }
+                                    .font(.system(size: 11))
+                                    .foregroundColor(.secondary)
+                                    .help("Input: \(usage.promptTokens) · Output: \(usage.completionTokens) · Total: \(usage.totalTokens) tokens")
+                                }
+
                                 Button(action: copyMessageContent) {
                                     if showCopiedFeedback {
                                         HStack(spacing: 4) {

@@ -274,25 +274,12 @@ extension AIProvider {
             isActive: true
         )
 
-        let deepSeekChat = AIModelV2(
-            name: "Chat",
+        let deepSeekV4Flash = AIModelV2(
+            name: "V4-Flash",
             modelId: "deepseek-v4-flash",
             capabilities: ModelCapabilities(
                 supportsStreaming: true,
                 supportsReasoning: false,
-                maxTokens: 8192,
-                contextWindow: 128000
-            ),
-            isBuiltIn: true,
-            providerId: provider.id
-        )
-
-        let deepSeekReasoner = AIModelV2(
-            name: "Reasoner",
-            modelId: "deepseek-v4-pro",
-            capabilities: ModelCapabilities(
-                supportsStreaming: true,
-                supportsReasoning: true,
                 maxTokens: 32768,
                 contextWindow: 128000
             ),
@@ -300,8 +287,21 @@ extension AIProvider {
             providerId: provider.id
         )
 
+        let deepSeekV4Pro = AIModelV2(
+            name: "V4-Pro",
+            modelId: "deepseek-v4-pro",
+            capabilities: ModelCapabilities(
+                supportsStreaming: true,
+                supportsReasoning: true,
+                maxTokens: 512000,
+                contextWindow: 128000
+            ),
+            isBuiltIn: true,
+            providerId: provider.id
+        )
+
         var providerWithModels = provider
-        providerWithModels.models = [deepSeekChat, deepSeekReasoner]
+        providerWithModels.models = [deepSeekV4Flash, deepSeekV4Pro]
         return providerWithModels
     }
 

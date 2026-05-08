@@ -214,6 +214,16 @@ class ChatManager {
             }
         }
 
+        let onUsage: @Sendable (TokenUsage) -> Void = { [weak self] usage in
+            guard let self = self else { return }
+            Task { @MainActor in
+                if let sessionIdx = self.chatSessions.firstIndex(where: { $0.id == sessionId }),
+                   streamingMessageIndex < self.chatSessions[sessionIdx].messages.count {
+                    self.chatSessions[sessionIdx].messages[streamingMessageIndex].tokenUsage = usage
+                }
+            }
+        }
+
         if useResponsesAPI {
             await responsesAPI.sendChatMessage(
                 messages: currentMessages,
@@ -223,7 +233,8 @@ class ChatManager {
                 onToken: onToken,
                 onComplete: onComplete,
                 onError: onError,
-                onReasoning: onReasoning
+                onReasoning: onReasoning,
+                onUsage: onUsage
             )
         } else {
             await chatAPI.sendMessage(
@@ -234,7 +245,8 @@ class ChatManager {
                 onToken: onToken,
                 onComplete: onComplete,
                 onError: onError,
-                onReasoning: onReasoning
+                onReasoning: onReasoning,
+                onUsage: onUsage
             )
         }
         } // end Task
@@ -324,6 +336,15 @@ class ChatManager {
             }
         }
 
+        let onUsage: @Sendable (TokenUsage) -> Void = { [weak self] usage in
+            guard let self = self else { return }
+            Task { @MainActor in
+                if streamingMessageIndex < self.chatSessions[sessionIndex].messages.count {
+                    self.chatSessions[sessionIndex].messages[streamingMessageIndex].tokenUsage = usage
+                }
+            }
+        }
+
         if useResponsesAPI {
             await responsesAPI.sendChatMessage(
                 messages: currentMessages,
@@ -333,7 +354,8 @@ class ChatManager {
                 onToken: onToken,
                 onComplete: onComplete,
                 onError: onError,
-                onReasoning: onReasoning
+                onReasoning: onReasoning,
+                onUsage: onUsage
             )
         } else {
             await chatAPI.sendMessage(
@@ -344,7 +366,8 @@ class ChatManager {
                 onToken: onToken,
                 onComplete: onComplete,
                 onError: onError,
-                onReasoning: onReasoning
+                onReasoning: onReasoning,
+                onUsage: onUsage
             )
         }
     }
@@ -813,11 +836,12 @@ final class ChatCompletionsAPI: @unchecked Sendable {
         onToken: @escaping @Sendable (String) -> Void,
         onComplete: @escaping @Sendable () -> Void,
         onError: @escaping @Sendable (Error) -> Void,
-        onReasoning: @escaping @Sendable (String) -> Void = { _ in }
+        onReasoning: @escaping @Sendable (String) -> Void = { _ in },
+        onUsage: @escaping @Sendable (TokenUsage) -> Void = { _ in }
     ) async {
         do {
             let url = URL(string: "\(baseURL)/chat/completions")!
-            
+
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
             request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
@@ -870,7 +894,8 @@ final class ChatCompletionsAPI: @unchecked Sendable {
             let requestBody: [String: Any] = [
                 "model": modelId,
                 "messages": openAIMessages,
-                "stream": true
+                "stream": true,
+                "stream_options": ["include_usage": true]
             ]
             
             request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
@@ -905,20 +930,32 @@ final class ChatCompletionsAPI: @unchecked Sendable {
                     await MainActor.run { onComplete() }
                     break
                 }
-                
+
                 guard let jsonData = jsonString.data(using: .utf8),
-                      let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any],
-                      let choices = json["choices"] as? [[String: Any]],
+                      let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
+                    continue
+                }
+
+                // Usage chunk (sent as final frame when include_usage is true; choices is empty)
+                if let usage = json["usage"] as? [String: Any] {
+                    let prompt = (usage["prompt_tokens"] as? Int) ?? 0
+                    let completion = (usage["completion_tokens"] as? Int) ?? 0
+                    let total = (usage["total_tokens"] as? Int) ?? (prompt + completion)
+                    let tokenUsage = TokenUsage(promptTokens: prompt, completionTokens: completion, totalTokens: total)
+                    await MainActor.run { onUsage(tokenUsage) }
+                }
+
+                guard let choices = json["choices"] as? [[String: Any]],
                       let firstChoice = choices.first,
                       let delta = firstChoice["delta"] as? [String: Any] else {
                     continue
                 }
-                
-                // Handle reasoning content (DeepSeek reasoner model)
+
+                // Handle reasoning content (DeepSeek model)
                 if let reasoningContent = delta["reasoning_content"] as? String {
                     await MainActor.run { onReasoning(reasoningContent) }
                 }
-                
+
                 // Handle regular content
                 if let content = delta["content"] as? String {
                     await MainActor.run { onToken(content) }
@@ -950,7 +987,8 @@ final class ResponsesAPI: @unchecked Sendable {
         onToken: @escaping @Sendable (String) -> Void,
         onComplete: @escaping @Sendable () -> Void,
         onError: @escaping @Sendable (Error) -> Void,
-        onReasoning: @escaping @Sendable (String) -> Void = { _ in }
+        onReasoning: @escaping @Sendable (String) -> Void = { _ in },
+        onUsage: @escaping @Sendable (TokenUsage) -> Void = { _ in }
     ) async {
         do {
             let url = URL(string: "\(baseURL)/responses")!
@@ -1009,15 +1047,8 @@ final class ResponsesAPI: @unchecked Sendable {
                 return
             }
 
-            var currentEventType: String? = nil
             for try await line in data.lines {
-                if line.hasPrefix("event: ") {
-                    currentEventType = String(line.dropFirst(7))
-                    if currentEventType == "response.completed" {
-                        await MainActor.run { onComplete() }
-                        break
-                    }
-                } else if line.hasPrefix("data: ") {
+                if line.hasPrefix("data: ") {
                     let jsonString = String(line.dropFirst(6))
                     guard let jsonData = jsonString.data(using: .utf8),
                           let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
@@ -1030,6 +1061,14 @@ final class ResponsesAPI: @unchecked Sendable {
                               let delta = json["delta"] as? String {
                         await MainActor.run { onReasoning(delta) }
                     } else if type == "response.completed" {
+                        if let response = json["response"] as? [String: Any],
+                           let usage = response["usage"] as? [String: Any] {
+                            let prompt = (usage["input_tokens"] as? Int) ?? 0
+                            let completion = (usage["output_tokens"] as? Int) ?? 0
+                            let total = (usage["total_tokens"] as? Int) ?? (prompt + completion)
+                            let tokenUsage = TokenUsage(promptTokens: prompt, completionTokens: completion, totalTokens: total)
+                            await MainActor.run { onUsage(tokenUsage) }
+                        }
                         await MainActor.run { onComplete() }
                         break
                     } else if type == "error" {
@@ -1037,8 +1076,6 @@ final class ResponsesAPI: @unchecked Sendable {
                         await MainActor.run { onError(APIError.httpError(0, message)) }
                         return
                     }
-                } else if line.isEmpty {
-                    currentEventType = nil
                 }
             }
 

@@ -629,8 +629,8 @@ Each tool follows a consistent pattern:
 - **Textual Markdown Rendering**: Migrated from MarkdownUI to Textual for richer output — code syntax highlighting, tables, nested lists, inline formatting
 - **Copy Code Snippets**: One-click Copy button on every code block; no text selection needed
 - **OpenAI Responses API**: `useResponsesAPI` flag in `ModelCapabilities` routes messages through `ResponsesAPI.sendChatMessage`; supports SSE streaming and reasoning/thinking output
-- **Reasoning Support**: `response.reasoning_summary_text.delta` and `response.reasoning_text.delta` events routed to collapsible thinking section (same path as DeepSeek reasoner)
-- **Multi-Model Support**: GPT-5, GPT-5 variants, DeepSeek chat/reasoner, Gemini, and any custom OpenAI-compatible endpoint
+- **Reasoning Support**: `response.reasoning_summary_text.delta` and `response.reasoning_text.delta` events routed to collapsible thinking section (same path as DeepSeek)
+- **Multi-Model Support**: GPT-5, GPT-5 variants, DeepSeek, Gemini, and any custom OpenAI-compatible endpoint
 - **Session Management**: Multiple chat sessions with independent model and tool selection
 - **Vision Support**: Image upload and analysis
 - **Image Generation**: GPT-5 image generation with Responses API and multi-turn refinement

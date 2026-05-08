@@ -54,6 +54,12 @@ struct ChatSession: Identifiable, Codable, Hashable {
         updatedAt = Date()
     }
 
+    var totalTokenUsage: TokenUsage? {
+        let usages = messages.compactMap { $0.tokenUsage }
+        guard !usages.isEmpty else { return nil }
+        return usages.reduce(TokenUsage(), +)
+    }
+
     // Helper to get the current AIModelV2 object
     @MainActor func getCurrentModel() -> AIModelV2? {
         if let providerId = selectedProviderModelId,
@@ -148,6 +154,26 @@ enum MessageContentType: String, Codable, CaseIterable {
     case image = "image"
 }
 
+struct TokenUsage: Codable, Hashable {
+    var promptTokens: Int
+    var completionTokens: Int
+    var totalTokens: Int
+
+    init(promptTokens: Int = 0, completionTokens: Int = 0, totalTokens: Int = 0) {
+        self.promptTokens = promptTokens
+        self.completionTokens = completionTokens
+        self.totalTokens = totalTokens > 0 ? totalTokens : (promptTokens + completionTokens)
+    }
+
+    static func + (lhs: TokenUsage, rhs: TokenUsage) -> TokenUsage {
+        TokenUsage(
+            promptTokens: lhs.promptTokens + rhs.promptTokens,
+            completionTokens: lhs.completionTokens + rhs.completionTokens,
+            totalTokens: lhs.totalTokens + rhs.totalTokens
+        )
+    }
+}
+
 enum AttachmentType: String, Codable, CaseIterable {
     case image
     
@@ -228,8 +254,10 @@ struct ChatMessage: Identifiable, Codable, Hashable {
     var responseId: String? = nil
     // DeepSeek reasoning content (deepthink)
     var reasoningContent: String? = nil
-    
-    init(role: MessageRole, content: String, isStreaming: Bool = false, contentType: MessageContentType = .text, imageURL: String? = nil, localImagePath: String? = nil, imagePrompt: String? = nil, images: [ChatMessageImage] = [], responseId: String? = nil, reasoningContent: String? = nil) {
+    // Token usage reported by the API for assistant messages
+    var tokenUsage: TokenUsage? = nil
+
+    init(role: MessageRole, content: String, isStreaming: Bool = false, contentType: MessageContentType = .text, imageURL: String? = nil, localImagePath: String? = nil, imagePrompt: String? = nil, images: [ChatMessageImage] = [], responseId: String? = nil, reasoningContent: String? = nil, tokenUsage: TokenUsage? = nil) {
         self.id = UUID()
         self.role = role
         self.content = content
@@ -242,6 +270,7 @@ struct ChatMessage: Identifiable, Codable, Hashable {
         self.images = images
         self.responseId = responseId
         self.reasoningContent = reasoningContent
+        self.tokenUsage = tokenUsage
     }
     
     // Legacy compatibility - returns first image if available

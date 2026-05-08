@@ -52,13 +52,13 @@
 		93DE0EB02E7ABA1900731598 /* AIProviderSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EAE2E7ABA1900731598 /* AIProviderSettingsView.swift */; };
 		93DE0EB12E7ABA1900731598 /* AddModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EAB2E7ABA1900731598 /* AddModelView.swift */; };
 		93DE0EB22E7ABA1900731598 /* AddProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EAC2E7ABA1900731598 /* AddProviderView.swift */; };
-		AC1FB7ADC76A4164BFDED09B /* OpenAITTSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D61346D87B4A55B5F702D8 /* OpenAITTSService.swift */; };
-		B41BCA88D09D488EA2A4ABAC /* CryptoToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41BCA88D09D488EA2A4ABAB /* CryptoToolsView.swift */; };
-		B8ED45ECE89552CE6769C282 /* TextCompareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9128D604EF103C7A961E03 /* TextCompareView.swift */; };
 		A1B2C3D4E5F60001A2B3C402 /* StructIR.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60001A2B3C401 /* StructIR.swift */; };
 		A1B2C3D4E5F60002A2B3C402 /* StructConverterParsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60002A2B3C401 /* StructConverterParsers.swift */; };
 		A1B2C3D4E5F60003A2B3C402 /* StructConverterGenerators.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60003A2B3C401 /* StructConverterGenerators.swift */; };
 		A1B2C3D4E5F60004A2B3C402 /* StructConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60004A2B3C401 /* StructConverterView.swift */; };
+		AC1FB7ADC76A4164BFDED09B /* OpenAITTSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D61346D87B4A55B5F702D8 /* OpenAITTSService.swift */; };
+		B41BCA88D09D488EA2A4ABAC /* CryptoToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41BCA88D09D488EA2A4ABAB /* CryptoToolsView.swift */; };
+		B8ED45ECE89552CE6769C282 /* TextCompareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9128D604EF103C7A961E03 /* TextCompareView.swift */; };
 		D5475F403A461C2C5A1B3000123456 /* RandomStringGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50B1BC668DF802C5A1B3000123456 /* RandomStringGenerator.swift */; };
 		D55EA880013AC12C5A1B3000123456 /* RandomStringConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C36719A405D2C5A1B3000123456 /* RandomStringConfig.swift */; };
 		D5D7233B349D652C5A1B3000123456 /* RandomStringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59F4A10B6E7B92C5A1B3000123456 /* RandomStringView.swift */; };
@@ -100,10 +100,6 @@
 
 /* Begin PBXFileReference section */
 		3E9128D604EF103C7A961E03 /* TextCompareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCompareView.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F60001A2B3C401 /* StructIR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructIR.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F60002A2B3C401 /* StructConverterParsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructConverterParsers.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F60003A2B3C401 /* StructConverterGenerators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructConverterGenerators.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F60004A2B3C401 /* StructConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructConverterView.swift; sourceTree = "<group>"; };
 		813459512E8A95EA003222BC /* FeatureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManager.swift; sourceTree = "<group>"; };
 		813459532E8A95FA003222BC /* FeatureSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureSettingsView.swift; sourceTree = "<group>"; };
 		816683E82EADF7E70050027B /* AVSpeechService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVSpeechService.swift; sourceTree = "<group>"; };
@@ -145,6 +141,10 @@
 		93DE0EAC2E7ABA1900731598 /* AddProviderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProviderView.swift; sourceTree = "<group>"; };
 		93DE0EAD2E7ABA1900731598 /* AIProviderDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProviderDetailView.swift; sourceTree = "<group>"; };
 		93DE0EAE2E7ABA1900731598 /* AIProviderSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProviderSettingsView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60001A2B3C401 /* StructIR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructIR.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60002A2B3C401 /* StructConverterParsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructConverterParsers.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60003A2B3C401 /* StructConverterGenerators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructConverterGenerators.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60004A2B3C401 /* StructConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructConverterView.swift; sourceTree = "<group>"; };
 		B41BCA88D09D488EA2A4ABAB /* CryptoToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoToolsView.swift; sourceTree = "<group>"; };
 		B822A4CAC32A426BA9E4E438123457 /* IPQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPQueryView.swift; sourceTree = "<group>"; };
 		BB51B2D620B842BA9AEC226E /* BaseConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseConverterView.swift; sourceTree = "<group>"; };
@@ -616,7 +616,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 75;
+				CURRENT_PROJECT_VERSION = 76;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -658,7 +658,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 75;
+				CURRENT_PROJECT_VERSION = 76;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;

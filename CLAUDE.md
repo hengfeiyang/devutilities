@@ -211,7 +211,7 @@ mcp__XcodeBuildMCP__build_run_macos
 
 ## Previous Updates (v1.13.2)
 - **DeepSeek Integration**: Added deepseek-v4-flash and deepseek-v4-pro models with OpenAI API compatibility
-- **Reasoning Process**: DeepSeek reasoner shows transparent "deepthink" Chain of Thought reasoning
+- **Reasoning Process**: DeepSeek shows transparent "deepthink" Chain of Thought reasoning
 - **Collapsible Thinking**: Expandable/collapsible thinking process section with brain icon and smooth animations
 - **Stop Functionality**: Improved stop button that immediately cancels streaming responses for all models
 - **Task Cancellation**: Proper URLSessionDataTask and Swift Task cancellation architecture
