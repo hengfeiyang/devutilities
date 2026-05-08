@@ -399,6 +399,7 @@ extension ToolType {
         case .cryptoTools: return "crypto_tools"
         case .currencyConverter: return "currency_converter"
         case .textCompare: return "text_compare"
+        case .structConverter: return "struct_converter"
         }
     }
 }

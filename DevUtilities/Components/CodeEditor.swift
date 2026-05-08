@@ -214,6 +214,72 @@ extension CodeEditor {
             readOnly: readOnly
         )
     }
+
+    // For TOML config
+    static func toml(text: Binding<String>, readOnly: Bool = false) -> CodeEditor {
+        CodeEditor(
+            text: text,
+            mode: CodeMode.toml.mode(),
+            theme: .devutilitiesNight,
+            fontSize: 12,
+            readOnly: readOnly
+        )
+    }
+
+    // For Go code
+    static func go(text: Binding<String>, readOnly: Bool = false) -> CodeEditor {
+        CodeEditor(
+            text: text,
+            mode: CodeMode.go.mode(),
+            theme: .devutilitiesNight,
+            fontSize: 12,
+            readOnly: readOnly
+        )
+    }
+
+    // For Rust code
+    static func rust(text: Binding<String>, readOnly: Bool = false) -> CodeEditor {
+        CodeEditor(
+            text: text,
+            mode: CodeMode.rust.mode(),
+            theme: .devutilitiesNight,
+            fontSize: 12,
+            readOnly: readOnly
+        )
+    }
+
+    // For TypeScript code
+    static func typescript(text: Binding<String>, readOnly: Bool = false) -> CodeEditor {
+        CodeEditor(
+            text: text,
+            mode: CodeMode.typescript.mode(),
+            theme: .devutilitiesNight,
+            fontSize: 12,
+            readOnly: readOnly
+        )
+    }
+
+    // For Java code
+    static func java(text: Binding<String>, readOnly: Bool = false) -> CodeEditor {
+        CodeEditor(
+            text: text,
+            mode: CodeMode.java.mode(),
+            theme: .devutilitiesNight,
+            fontSize: 12,
+            readOnly: readOnly
+        )
+    }
+
+    // For PHP code
+    static func php(text: Binding<String>, readOnly: Bool = false) -> CodeEditor {
+        CodeEditor(
+            text: text,
+            mode: CodeMode.php.mode(),
+            theme: .devutilitiesNight,
+            fontSize: 12,
+            readOnly: readOnly
+        )
+    }
 }
 
 // Diff Editor for comparing two texts

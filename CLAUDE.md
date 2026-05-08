@@ -3,11 +3,11 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 23 essential developer utilities. Version 2.12.0 with enhanced AI Chat (Textual Markdown, copy code, Responses API) and OpenAI TTS for AI Translate.
+DevUtilities is a native macOS application built with SwiftUI that provides 24 essential developer utilities. Version 2.13.0 with the new Struct Converter tool that turns JSON/TOML/YAML/SQL DDL into TypeScript, Python, Go, Java, Rust, Swift, and PHP types.
 
 ## Key Tools & Status
 
-All 23 tools are ✅ **Complete**:
+All 24 tools are ✅ **Complete**:
 1. **Timestamp Converter** - Bidirectional timestamp conversion with timezone support
 2. **Unit Converter** - 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
 3. **Base Converter** - Mutual conversion between binary, octal, decimal, hexadecimal, and Base62 number systems
@@ -31,6 +31,7 @@ All 23 tools are ✅ **Complete**:
 21. **AI Chat** - **Enhanced** Textual Markdown rendering, one-click copy code snippets, OpenAI Responses API, DeepSeek reasoning, and custom model support
 22. **AI Translate** - Professional translation with 3 modes, 19 languages, **OpenAI TTS** (13 voices), macOS TTS, and word mode
 23. **Currency Converter** - Real-time currency conversion with 38 currencies, 24-hour caching, 30-day price history, and trend indicators
+24. **Struct Converter** - **NEW** Convert JSON/TOML/YAML/SQL DDL into typed code structures for TypeScript, Python, Go, Java, Rust, Swift, and PHP
 
 ## Architecture & Technical Stack
 - **Platform**: macOS 14.0+ SwiftUI
@@ -50,6 +51,16 @@ xcodebuild -project DevUtilities.xcodeproj -scheme DevUtilities build
 # Using MCP tools
 mcp__XcodeBuildMCP__build_run_macos
 ```
+
+## Recent Updates (v2.13.0)
+- **Struct Converter**: NEW tool for converting between data structures and code types (closes GitHub issue #17)
+- **Four Input Formats**: JSON, TOML, YAML, and SQL DDL (CREATE TABLE statements)
+- **Seven Output Languages**: TypeScript (interface), Python (dataclass), Go (struct with JSON tags), Java (POJO with getters/setters), Rust (serde struct), Swift (Codable struct), PHP (typed class)
+- **Type Inference**: Detects strings, integers, doubles, booleans, ISO 8601 dates, arrays, nested objects, and nullable fields automatically from sample data
+- **Nested Struct Generation**: Walks nested objects and arrays-of-objects to emit a sub-type for every level, naming children from the field name (with simple singularization for arrays)
+- **Smart Field Naming**: Per-language conventions — camelCase for TypeScript/Swift/PHP, snake_case for Python/Rust, PascalCase for Go/Java fields — with serde/CodingKeys/JSON tags preserving original keys
+- **SQL DDL Parser**: Parses CREATE TABLE blocks (multi-statement supported), maps SQL column types (INT/VARCHAR/DECIMAL/TIMESTAMP/...) to language-native types, respects NOT NULL for nullability
+- **JSON Format Pattern**: Two-column layout matching the JSON Formatter UX with sample data, real-time conversion, copy button, and persistent state
 
 ## Recent Updates (v2.12.0)
 - **AI Chat — Textual Markdown Rendering**: Migrated from MarkdownUI to Textual; better code highlighting, tables, nested lists, smoother streaming

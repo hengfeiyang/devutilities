@@ -40,6 +40,7 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
     case parquetViewer = "parquet"
     case currencyConverter = "currency"
     case textCompare = "text-compare"
+    case structConverter = "struct-converter"
 
     var id: String { rawValue }
     
@@ -91,9 +92,11 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
             return "Currency Converter"
         case .textCompare:
             return "Text Compare"
+        case .structConverter:
+            return "Struct Converter"
         }
     }
-    
+
     var iconName: String {
         switch self {
         case .aiChat:
@@ -142,6 +145,8 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
             return "dollarsign.circle"
         case .textCompare:
             return "doc.on.doc"
+        case .structConverter:
+            return "curlybraces.square"
         }
     }
 }

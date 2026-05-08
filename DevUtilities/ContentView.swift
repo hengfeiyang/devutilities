@@ -150,6 +150,8 @@ struct ContentView: View {
                         CurrencyConverterView()
                     case .textCompare:
                         TextCompareView()
+                    case .structConverter:
+                        StructConverterView()
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

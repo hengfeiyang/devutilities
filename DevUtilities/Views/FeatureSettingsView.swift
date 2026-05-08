@@ -218,6 +218,7 @@ struct FeatureCard: View {
         case .parquetViewer: return "Parquet"
         case .currencyConverter: return "Currency"
         case .textCompare: return "Diff"
+        case .structConverter: return "Struct"
         }
     }
 

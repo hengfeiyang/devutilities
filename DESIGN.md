@@ -1,7 +1,7 @@
 # DevUtilities - Design Document
 
 ## Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 23 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+DevUtilities is a native macOS application built with SwiftUI that provides 24 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
 
 ## Architecture
 
@@ -21,9 +21,10 @@ DevUtilities/
 │   │   ├── TranslationMode.swift       # 3 translation modes
 │   │   ├── TranslationPrompts.swift    # Prompt generation logic
 │   │   ├── RandomStringConfig.swift    # Random string configuration (v2.9.0)
-│   │   ├── Currency.swift              # NEW: 38 currency definitions with flags (v2.10.0)
-│   │   └── ExchangeRateData.swift      # NEW: API response & cache models (v2.10.0)
-│   ├── Views/                      # All 23 tool implementations
+│   │   ├── Currency.swift              # 38 currency definitions with flags (v2.10.0)
+│   │   ├── ExchangeRateData.swift      # API response & cache models (v2.10.0)
+│   │   └── StructIR.swift              # NEW: Intermediate representation for Struct Converter (v2.13.0)
+│   ├── Views/                      # All 24 tool implementations
 │   │   ├── TimestampConverterView.swift
 │   │   ├── UnitConverterView.swift
 │   │   ├── BaseConverterView.swift
@@ -47,6 +48,7 @@ DevUtilities/
 │   │   ├── AIChatView.swift
 │   │   ├── AITranslateView.swift       # AI translation interface
 │   │   ├── CurrencyConverterView.swift # Currency converter (v2.10.0)
+│   │   ├── StructConverterView.swift   # NEW: Struct Converter (v2.13.0)
 │   │   └── FeatureSettingsView.swift   # Feature management interface
 │   ├── Components/                 # Shared UI components
 │   │   ├── CodeEditor.swift        # CodeMirror integration & diff editor (enhanced v2.11.0)
@@ -61,7 +63,9 @@ DevUtilities/
 │   │   ├── EventManager.swift      # Analytics and telemetry
 │   │   ├── AVSpeechService.swift   # macOS native text-to-speech engine
 │   │   ├── RandomStringGenerator.swift # Secure random generation (v2.9.0)
-│   │   └── CurrencyService.swift   # Currency API & caching (v2.10.0)
+│   │   ├── CurrencyService.swift   # Currency API & caching (v2.10.0)
+│   │   ├── StructConverterParsers.swift    # NEW: JSON/TOML/YAML/SQL DDL → IR (v2.13.0)
+│   │   └── StructConverterGenerators.swift # NEW: IR → Swift/Go/TS/Rust/Python/Java/PHP (v2.13.0)
 │   ├── Assets.xcassets/            # App icons and assets
 │   ├── Preview Content/            # SwiftUI preview assets
 │   └── DevUtilities.entitlements      # App sandbox permissions
@@ -646,6 +650,38 @@ Each tool follows a consistent pattern:
 - **Model Sync**: `ProviderManager.syncBuiltInModels()` on startup reconciles built-in defaults with stored list
 - **API Configuration**: 60-second timeout; `useResponsesAPI` toggle in AddModelView/EditModelView
 
+### 20. Struct Converter
+**Files**: `StructConverterView.swift`, `StructConverterParsers.swift`, `StructConverterGenerators.swift`, `StructIR.swift`
+
+**Features** (v2.13.0):
+- **Four Input Formats**: JSON, TOML, YAML (block style), and SQL DDL (CREATE TABLE statements)
+- **Seven Output Languages**: TypeScript interface, Python dataclass, Go struct (json tags), Java POJO with getters/setters, Rust struct (serde derives), Swift Codable struct, PHP typed class
+- **Type Inference**: Detects strings, integers, doubles, booleans, ISO 8601 dates, arrays, nested objects, and nullable fields from sample data
+- **Nested Structs**: Walks every nested object/array-of-objects and emits a sub-type per level; struct names derive from the field name with naive singularization for arrays
+- **Smart Field Naming**: Per-language conventions — camelCase for TypeScript/Swift/PHP, snake_case for Python/Rust, PascalCase fields for Go/Java — while serde renames, Swift CodingKeys, and Go struct tags preserve the original keys
+- **Deterministic Output**: Fields sorted alphabetically; nested types emitted in dependency order (children before parents)
+
+**Architecture**:
+```
+Input Text ──▶ StructParserFactory ──▶ StructSchema (IR) ──▶ StructGeneratorFactory ──▶ Output Code
+```
+
+- **`StructIR.swift`** — Defines `IRType` (string/integer/double/bool/date/array/object/dictionary/null/anyValue), `StructField`, `StructDef`, `StructSchema`, plus `StructInputFormat` and `StructOutputLanguage` enums and per-format sample inputs.
+- **`StructConverterParsers.swift`** — `JSONStructParser` uses `JSONSerialization` and merges arrays-of-objects to compute optional fields; `TOMLStructParser` is a line-based parser using `NSMutableDictionary` for safe nested mutation, supporting `[table]`, `[[array.of.tables]]`, dotted keys, inline arrays/tables; `YAMLStructParser` is an indentation-tracking block-style parser; `SQLDDLStructParser` parses CREATE TABLE blocks via regex, splits columns at top-level commas, maps SQL types (INT/VARCHAR/DECIMAL/TIMESTAMP/...) to IR types, respects NOT NULL/PRIMARY KEY for non-null fields.
+- **`StructConverterGenerators.swift`** — One generator per language. Each implements `StructCodeGenerator` and emits text for the schema. Output is sorted child-first by traversing the IR (`orderedStructs`).
+
+**UI Components**:
+- Two segmented pickers (Input Format / Output Language) above the editors
+- Root struct name field for renaming the top-level type
+- Two-column layout: input editor (CodeMirror highlighted per format) and read-only output editor (CodeMirror highlighted per language)
+- Sample/Clear buttons on input, Copy button on output, line/character metrics, status with type count
+
+**Implementation Details**:
+- All conversion is synchronous and runs on text changes; sample inputs cover common shapes for each format
+- Optional handling: a field is optional if it's `null` in JSON, not present in every element of an array of objects, or lacks NOT NULL in SQL DDL
+- Date detection: ISO 8601 regex (`YYYY-MM-DD[THH:MM[:SS][.fff][Z|±HHMM]]`) on string-shaped values
+- Array element merging: when parsing arrays of objects, fields present in every element are required; others are optional
+
 ## UI Design Principles
 
 ### Color Scheme
@@ -681,7 +717,7 @@ enum ToolType: String, CaseIterable, Identifiable {
     case timestampConverter, unitConverter, baseConverter, colorPicker, jsonFormatter, base64,
          hexString, regexTest, uuidGenerator, urlTools, ipQuery, httpRequest,
          qrCode, sqlFormatter, htmlFormatter, jwt, parquetViewer,
-         cryptoTools, aiChat, aiTranslate
+         cryptoTools, aiChat, aiTranslate, currencyConverter, textCompare, structConverter
 
     var title: String { /* Display names */ }
     var iconName: String { /* SF Symbols */ }
