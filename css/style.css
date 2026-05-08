@@ -12,8 +12,8 @@
   --paper:     #ffffff;
   --accent:    oklch(60% 0.17 254);
   --accent-2:  oklch(48% 0.16 254);
-  --serif:     "Newsreader", "Cambria", "Iowan Old Style", Georgia, serif;
-  --sans:      "Geist", "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --serif:     "Noto Serif", "Cambria", "Iowan Old Style", Georgia, serif;
+  --sans:      "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
   --mono:      "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --rad: 15px;
   --rad-2: 3.2%;
@@ -24,9 +24,9 @@ html, body { margin: 0; padding: 0; }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--sans);
+  font-family: var(--serif);
   font-size: 17px;
-  line-height: 1.55;
+  line-height: 1.5;
   font-feature-settings: "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -140,7 +140,7 @@ main { position: relative; z-index: 1; }
   font-family: var(--serif);
   font-weight: 400;
   font-size: clamp(48px, 9vw, 116px);
-  line-height: 0.96;
+  line-height: 1.04;
   letter-spacing: -0.025em;
   margin: 0;
   color: var(--ink);
