@@ -51,7 +51,7 @@ Current version: 2.12.0
 
 - **AI Chat — Enhanced Markdown Rendering**: Migrated to Textual engine with better code highlighting, tables, and nested lists
 - **AI Chat — Copy Code Snippets**: One-click Copy button on every code block
-- **AI Chat — OpenAI Responses API**: Support for Responses API with streaming, reasoning, and GPT-5.2-pro
+- **AI Chat — OpenAI Responses API**: Support for Responses API with streaming, reasoning
 - **AI Translate — OpenAI TTS**: Real-time PCM streaming TTS, 13 voices
 - **TTS Settings**: Configure mode (Auto/OpenAI/macOS), voice, and premium macOS voice in Settings → AI
 

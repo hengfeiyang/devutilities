@@ -131,7 +131,7 @@
           <span class="cap-n">iii</span>
           <div class="cap-body">
             <h4>OpenAI Responses API</h4>
-            <p>Full SSE streaming with reasoning output. Compatible with GPT-5.2-pro and any model that requires the new endpoint. Toggled per-model via <code>Use Responses API</code>.</p>
+            <p>Full SSE streaming with reasoning output. Compatible with GPT-5-pro and any model that requires the new endpoint. Toggled per-model via <code>Use Responses API</code>.</p>
           </div>
         </div>
         <div class="cap">
@@ -194,7 +194,7 @@
         <div class="step">
           <span class="step-n"></span>
           <h4>Pick a model</h4>
-          <p>Choose a built-in (GPT-5, DeepSeek, GPT-5.2-pro), or add your own with endpoint, headers and key.</p>
+          <p>Choose a built-in (GPT-5, DeepSeek), or add your own with endpoint, headers and key.</p>
           <div class="step-key">Settings · <b>⌘ ,</b> · AI · Models</div>
         </div>
         <div class="step">
@@ -278,11 +278,11 @@
       <div class="faq">
         <details open>
           <summary>What's new in v2.12?</summary>
-          <p>Three threads. The Markdown renderer migrated to Textual — better code highlighting, no streaming flicker, accurate tables. Every code block carries a copy button. And the OpenAI Responses API is supported for GPT-5.2-pro and reasoning models, with full SSE streaming.</p>
+          <p>Three threads. The Markdown renderer migrated to Textual — better code highlighting, no streaming flicker, accurate tables. Every code block carries a copy button. And the OpenAI Responses API is supported for GPT-5-pro and reasoning models, with full SSE streaming.</p>
         </details>
         <details>
           <summary>Which models are supported?</summary>
-          <p>Built-ins include GPT-5, DeepSeek <code>chat</code> and <code>reasoner</code>, and GPT-5.2-pro via the Responses API. Beyond that — any OpenAI-compatible endpoint. Add a model under <code>Settings → AI → Models → Add Model</code>: endpoint, key, model name, optional custom headers.</p>
+          <p>Built-ins include GPT-5, DeepSeek <code>v4-flash</code> and <code>v4-pro</code>, and GPT-5-pro via the Responses API. Beyond that — any OpenAI-compatible endpoint. Add a model under <code>Settings → AI → Models → Add Model</code>: endpoint, key, model name, optional custom headers.</p>
         </details>
         <details>
           <summary>How does the copy button work?</summary>
@@ -290,11 +290,11 @@
         </details>
         <details>
           <summary>What is the OpenAI Responses API?</summary>
-          <p>OpenAI's newer endpoint, required for GPT-5.2-pro and any model that exposes reasoning output. Toggle it per model with <code>Use Responses API</code> in the model settings — DevUtilities handles the SSE stream, including the thinking section.</p>
+          <p>OpenAI's newer endpoint, required for GPT-5-pro and any model that exposes reasoning output. Toggle it per model with <code>Use Responses API</code> in the model settings — DevUtilities handles the SSE stream, including the thinking section.</p>
         </details>
         <details>
           <summary>How does DeepSeek reasoning surface in the UI?</summary>
-          <p>DeepSeek <code>reasoner</code> streams its chain of thought as a collapsible panel above the final answer. The panel opens by default; collapse it from the brain icon. The same panel is used for any Responses-API model that exposes thinking output.</p>
+          <p>DeepSeek <code>v4-pro</code> streams its chain of thought as a collapsible panel above the final answer. The panel opens by default; collapse it from the brain icon. The same panel is used for any Responses-API model that exposes thinking output.</p>
         </details>
         <details>
           <summary>Is conversation history saved?</summary>

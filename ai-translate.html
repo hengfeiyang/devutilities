@@ -161,7 +161,7 @@
     <div>
       <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
       <div class="faq">
-        <details open><summary>Which model handles the translation?</summary><p>The same model picker AI Chat uses. GPT-5, DeepSeek, GPT-5.2-pro via the Responses API, or any custom OpenAI-compatible model you've added under <code>Settings → AI → Models</code>.</p></details>
+        <details open><summary>Which model handles the translation?</summary><p>The same model picker AI Chat uses. GPT-5, DeepSeek via the Responses API, or any custom OpenAI-compatible model you've added under <code>Settings → AI → Models</code>.</p></details>
         <details><summary>What languages are supported?</summary><p>Auto-detect plus 19 languages: English, Chinese (Simplified &amp; Traditional), Japanese, Korean, Spanish, French, German, Russian, Arabic, Hindi, Portuguese, Italian, Dutch, Turkish, Vietnamese, Thai, Indonesian.</p></details>
         <details><summary>What's word mode?</summary><p>When the input is a single word, AI Translate switches to a dictionary-style output: pronunciation (IPA where applicable), primary and secondary meanings, two example sentences, and brief etymology.</p></details>
         <details><summary>How does the OpenAI TTS streaming work?</summary><p><code>OpenAITTSService</code> hits <code>/audio/speech</code> with raw PCM streaming. Audio is fed directly into <code>AVAudioPlayerNode</code> as it arrives — playback starts within ~200 ms with no sentence pre-splitting.</p></details>
