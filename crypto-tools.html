@@ -1,411 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Tools - Hash, Encrypt & Decrypt Online | DevUtilities</title>
-    <meta name="description" content="Professional cryptographic toolkit for developers. Hash functions (MD5, SHA-1, SHA-256, SHA-384, SHA-512, CRC32), AES-GCM symmetric encryption, and RSA asymmetric encryption. Perfect for API authentication and security workflows. Part of DevUtilities - 18 essential developer tools for macOS.">
-    <meta name="keywords" content="crypto tools, hash functions, MD5, SHA256, SHA512, CRC32, AES encryption, RSA encryption, cryptographic tools, encrypt decrypt, hash generator, symmetric encryption, asymmetric encryption">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="Crypto Tools - Professional Cryptographic Toolkit | DevUtilities">
-    <meta property="og:description" content="Complete cryptographic toolkit with hash functions, AES-GCM symmetric encryption, and RSA asymmetric encryption for secure development workflows.">
-    <meta property="og:image" content="images/screenshots/crypto.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Crypto Tools - Professional Cryptographic Toolkit">
-    <meta property="twitter:description" content="Complete cryptographic toolkit with hash functions, AES-GCM symmetric encryption, and RSA asymmetric encryption.">
-    <meta property="twitter:image" content="images/screenshots/crypto.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities Crypto Tools",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Professional cryptographic toolkit with hash functions and encryption capabilities",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "14"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crypto Tools — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="A complete cryptographic suite — hash functions, AES-GCM-256 symmetric encryption, RSA-2048/4096 asymmetric encryption — all local." />
+  <meta name="keywords" content="crypto tools, hash functions, MD5, SHA, AES-GCM, RSA, encryption, decryption, CryptoKit, Security framework, macOS" />
+  <meta property="og:image" content="images/screenshots/crypto.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Reviews</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>Crypto Tools</span>
-                    </div>
-                    <h1 class="hero-title">
-                        Crypto Tools
-                        <span class="hero-subtitle">Professional Cryptographic Toolkit</span>
-                    </h1>
-                    <p class="hero-description">
-                        Comprehensive cryptographic utility suite for secure development workflows. Features complete hash functions (MD5, CRC32, SHA-1/256/384/512), AES-GCM-256 symmetric encryption with key generation, and RSA-2048/4096 asymmetric encryption. Perfect for API authentication, token generation, and security implementations.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🔐</span>
-                            <span>6 Hash Functions</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🔑</span>
-                            <span>AES-GCM Encryption</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🛡️</span>
-                            <span>RSA Cryptography</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/crypto.png" alt="DevUtilities Crypto Tools Screenshot showing cryptographic operations interface">
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>Crypto Tools</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 23 of 23 · Network &amp; Security</div><h1 class="page-h">Hashes &amp; ciphers, <em>locally.</em></h1></section>
+  <div class="page-sub"><div></div><p>A three-tab cryptographic suite: hash functions (MD5, CRC32, SHA-1/256/384/512), symmetric encryption (AES-GCM-256), and asymmetric encryption (RSA-2048/4096). All powered by Apple's first-party CryptoKit and Security frameworks.</p></div>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Advanced Cryptographic Features</h2>
-                <p class="section-description">
-                    Everything you need for professional cryptographic operations and security implementations.
-                </p>
-            </div>
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Updated</div><div class="tool-meta-value accent">v1.12</div><div class="tool-meta-sub">Suite shipped</div></div>
+    <div><div class="tool-meta-label">Hashes</div><div class="tool-meta-value">MD5 · CRC · SHA</div><div class="tool-meta-sub">SHA-1/256/384/512</div></div>
+    <div><div class="tool-meta-label">Symmetric</div><div class="tool-meta-value">AES-GCM-256</div><div class="tool-meta-sub">Authenticated</div></div>
+    <div><div class="tool-meta-label">Asymmetric</div><div class="tool-meta-value">RSA-2048/4096</div><div class="tool-meta-sub">Security framework</div></div>
+  </div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">🔐</div>
-                    <h3 class="feature-title">Complete Hash Functions</h3>
-                    <p class="feature-description">Six essential hash algorithms - MD5, CRC32, SHA-1, SHA-256, SHA-384, and SHA-512 with real-time computation and hex output for data integrity and authentication.</p>
-                </div>
+  <section class="tool-shot"><figure><img src="images/screenshots/crypto.png" alt="DevUtilities Crypto Tools — three-tab interface with hash, symmetric, asymmetric panels." /></figure><figcaption>Plate xxiii — Crypto Tools with the three-tab layout and the AES key generator.</figcaption></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔑</div>
-                    <h3 class="feature-title">AES-GCM Symmetric Encryption</h3>
-                    <p class="feature-description">Industry-standard AES-GCM-256 encryption with automatic key generation, Base64 encoding, and secure encrypt/decrypt operations for data protection workflows.</p>
-                </div>
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Eight things <span class="muted">it does correctly.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Hash functions</h4><p>MD5, CRC32, SHA-1, SHA-256, SHA-384, SHA-512. Real-time as you type; output in hex or Base64.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>AES-GCM-256</h4><p>Authenticated symmetric encryption / decryption. Keys generated locally; outputs are Base64-encoded for transport.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>RSA-2048 / 4096</h4><p>Public-key encryption / decryption. PEM keys imported via Apple's Security framework.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Three-tab UI</h4><p>One screen per primitive: hash, symmetric, asymmetric. Consistent input/output panels make the muscle memory transfer.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Key generation</h4><p>Generate AES keys with a click. RSA key pairs come from your existing PEM material; the tool doesn't generate keys it can't audit.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>Real-time hashing</h4><p>Type into the input; the hash updates instantly. No "hash" button — the result follows the keystrokes.</p></div></div>
+      <div class="cap"><span class="cap-n">vii</span><div class="cap-body"><h4>Hex or Base64 outputs</h4><p>Toggle for the format your downstream consumer expects.</p></div></div>
+      <div class="cap"><span class="cap-n">viii</span><div class="cap-body"><h4>First-party crypto</h4><p>CryptoKit for hashes and AES; Security framework for RSA. No third-party crypto libraries; all sandbox-friendly.</p></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🛡️</div>
-                    <h3 class="feature-title">RSA Asymmetric Encryption</h3>
-                    <p class="feature-description">RSA-2048 and RSA-4096 encryption using iOS Security framework with public/private key management for secure communication and digital signatures.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>across the suite.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Pick a primitive</h4><p>Hash, symmetric, or asymmetric. Tabs along the top.</p><div class="step-key">Tab</div></div>
+      <div class="step"><span class="step-n"></span><h4>Provide inputs</h4><p>Plaintext, ciphertext, or message. AES needs a key; RSA needs a PEM.</p><div class="step-key">Inputs</div></div>
+      <div class="step"><span class="step-n"></span><h4>Run</h4><p>Encrypt, decrypt, hash. Results appear in the output pane.</p><div class="step-key">Run</div></div>
+      <div class="step"><span class="step-n"></span><h4>Copy</h4><p>Hex or Base64; copy buttons everywhere.</p><div class="step-key">Copy · <b>⌘ C</b></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">Three-Tab Interface</h3>
-                    <p class="feature-description">Intuitive organization with separate tabs for Hash Functions, Symmetric Encryption, and Asymmetric Encryption, each with consistent UX patterns and workflows.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — Auth</span><h4>API signature tokens</h4><p>Generate the SHA-256 / HMAC-SHA-256 signatures third-party APIs require for authentication.</p></div>
+      <div class="use"><span class="use-tag">ii — Verify</span><h4>File integrity</h4><p>Confirm a downloaded file matches its published checksum, in seconds.</p></div>
+      <div class="use"><span class="use-tag">iii — Audit</span><h4>Password derivation</h4><p>Hash candidate passwords against published rules during a security review.</p></div>
+      <div class="use"><span class="use-tag">iv — Transport</span><h4>Envelope encryption</h4><p>Encrypt small payloads with AES-GCM and an ephemeral key for safe transport.</p></div>
+      <div class="use"><span class="use-tag">v — Keys</span><h4>RSA round-trip</h4><p>Encrypt a session key with the recipient's RSA public key; decrypt with the matching private key.</p></div>
+      <div class="use"><span class="use-tag">vi — Test</span><h4>Crypto fixtures</h4><p>Produce known-good ciphertexts and hashes for unit tests.</p></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Real-time Processing</h3>
-                    <p class="feature-description">Instant hash computation, encryption, and decryption operations with live updates as you type. No delays or external API dependencies.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>Which hash algorithms are supported?</summary><p>MD5, CRC32, SHA-1, SHA-256, SHA-384, and SHA-512. MD5 and SHA-1 are kept for legacy verification, not for new security uses.</p></details>
+      <details><summary>What's the symmetric mode?</summary><p>AES-GCM-256 — authenticated, modern, Apple-recommended. Pairs a 256-bit key with the standard 12-byte nonce.</p></details>
+      <details><summary>What about RSA padding?</summary><p>OAEP via the Security framework, with the standard SHA-256 hash. Suitable for current best practice.</p></details>
+      <details><summary>Where are keys stored?</summary><p>Only in your local session. AES keys live in memory; RSA PEMs are pasted directly. Nothing leaves the machine.</p></details>
+      <details><summary>Hex or Base64 output?</summary><p>Both available; toggle per panel. Hex for human reading, Base64 for transport.</p></details>
+      <details><summary>Are the operations local?</summary><p>Yes. CryptoKit and the Security framework run on-device; there are no servers in the loop.</p></details>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔧</div>
-                    <h3 class="feature-title">Key Generation & Management</h3>
-                    <p class="feature-description">Automatic AES key generation, RSA key pair creation, and secure key management with proper entropy and cryptographic best practices.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="jwt-encoder.html"><div class="rel-head"><span>13 · Format</span><span></span></div><h4>JWT</h4><p>HMAC and RSA signing for JSON Web Tokens.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="random-string-generator.html"><div class="rel-head"><span>15 · Generate</span><span>New · 2.9</span></div><h4>Random String</h4><p>Generate cryptographically secure secrets for HMAC keys.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="hex-converter.html"><div class="rel-head"><span>06 · Convert</span><span>New · 2.2</span></div><h4>Hex String Converter</h4><p>Convert hex digests into raw bytes when needed.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="base64-encoder.html"><div class="rel-head"><span>12 · Format</span><span></span></div><h4>Base64</h4><p>Encode and decode the Base64 outputs of AES / RSA round-trips.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="uuid-generator.html"><div class="rel-head"><span>14 · Generate</span><span></span></div><h4>UUID Generator</h4><p>v5 IDs from a namespace + name; deterministic, repeatable.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="ai-chat.html"><div class="rel-head"><span>01 · AI</span><span>Updated · 2.12</span></div><h4>AI Chat</h4><p>Walk through threat models and review choices with the assistant.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3 class="feature-title">API Authentication Ready</h3>
-                    <p class="feature-description">Perfect for generating tokens, API signatures, and authentication credentials for third-party interface calls and secure service integration.</p>
-                </div>
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Hashes, ciphers, signatures — <em>locally.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3 class="feature-title">Easy Copy & Export</h3>
-                    <p class="feature-description">One-click copying of hashes, encrypted data, keys, and cryptographic outputs for seamless integration with development workflows.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Use Section -->
-    <section class="how-to-use">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">How to Use Crypto Tools</h2>
-                <p class="section-description">
-                    Perform cryptographic operations securely in just a few simple steps.
-                </p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Choose Operation Type</h3>
-                    <p>Select from Hash Functions for data integrity, Symmetric Encryption for secure data storage, or Asymmetric Encryption for secure communication.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Input Your Data</h3>
-                    <p>Enter the text or data you want to process. DevUtilities handles various input formats and provides real-time feedback during processing.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>Configure Settings</h3>
-                    <p>Choose hash algorithm, generate encryption keys, or configure RSA key sizes based on your security requirements and use case.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>Copy Results</h3>
-                    <p>Copy the hash, encrypted data, or cryptographic output with one click for use in authentication systems, APIs, or security implementations.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect for These Development Tasks</h2>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔒</div>
-                    <h3>API Authentication</h3>
-                    <p>Generate secure hashes for API signatures, create authentication tokens, and implement HMAC-based authentication systems for service-to-service communication.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🗄️</div>
-                    <h3>Data Protection</h3>
-                    <p>Encrypt sensitive configuration data, secure database fields, and protect user information with AES-GCM encryption for compliance and privacy.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔐</div>
-                    <h3>Password Security</h3>
-                    <p>Generate secure password hashes, implement salt-based hashing, and create robust password verification systems for user authentication.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📜</div>
-                    <h3>Digital Signatures</h3>
-                    <p>Create and verify digital signatures using RSA encryption, implement code signing workflows, and ensure data authenticity in distributed systems.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🌐</div>
-                    <h3>Secure Communication</h3>
-                    <p>Implement end-to-end encryption, secure message transmission, and encrypted data exchange between applications and services.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🛡️</div>
-                    <h3>Security Testing</h3>
-                    <p>Test cryptographic implementations, validate security protocols, and verify encryption/decryption workflows in development and staging environments.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>Which hash algorithms are supported?</h3>
-                    <p>DevUtilities supports six essential hash functions: MD5 (legacy compatibility), CRC32 (checksums), SHA-1 (legacy), SHA-256 (standard), SHA-384 (enhanced), and SHA-512 (maximum security) for various security requirements.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How secure is the AES-GCM encryption?</h3>
-                    <p>DevUtilities uses AES-GCM-256, an industry-standard authenticated encryption algorithm that provides both confidentiality and authenticity. It's the same encryption used by major cloud providers and security systems.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What RSA key sizes are supported?</h3>
-                    <p>DevUtilities supports both RSA-2048 (standard security) and RSA-4096 (enhanced security) key sizes, providing flexibility based on your security requirements and performance considerations.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Are cryptographic operations performed locally?</h3>
-                    <p>Yes! All cryptographic operations are performed locally on your Mac using iOS CryptoKit and Security framework. Your sensitive data never leaves your computer or gets sent to external servers.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I use these tools for production applications?</h3>
-                    <p>Absolutely! DevUtilities uses industry-standard cryptographic libraries and algorithms suitable for production use. However, always follow security best practices and consider professional security audits for critical applications.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How do I generate secure keys?</h3>
-                    <p>DevUtilities includes automatic key generation features that use cryptographically secure random number generators with proper entropy, ensuring generated keys meet security standards for production use.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">Explore other essential tools included in DevUtilities</p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">🎫</div>
-                    <h3>JWT Encoder</h3>
-                    <p>Create and validate JSON Web Tokens with HMAC and RSA algorithms, perfect companion to cryptographic operations.</p>
-                    <a href="jwt-encoder.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🔠</div>
-                    <h3>Base64 Encoder</h3>
-                    <p>Encode and decode Base64 data, often used with cryptographic operations for key and data transmission.</p>
-                    <a href="base64-encoder.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🔣</div>
-                    <h3>Hex String Converter</h3>
-                    <p>Convert between hex and string formats for cryptographic keys, hashes, and encrypted data representation.</p>
-                    <a href="hex-converter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🎲</div>
-                    <h3>Random String Generator</h3>
-                    <p>Generate cryptographically secure passwords, API keys, and tokens with customizable character sets and requirements.</p>
-                    <a href="random-string-generator.html" class="tool-link">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Secure Your Applications?</h2>
-                <p>Join thousands of developers who rely on DevUtilities's crypto tools for secure authentication and data protection workflows.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-primary">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 23 Developer Tools</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div></footer>
 </body>
 </html>

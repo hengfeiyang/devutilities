@@ -1,417 +1,96 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQL Formatter & Beautifier - Format & Compare SQL Queries | DevUtilities</title>
-    <meta name="description" content="Professional SQL formatter and beautifier for developers. Format, beautify, minify, and compare SQL queries with visual diff mode. Advanced syntax highlighting and native sql-parser library integration. Part of DevUtilities - 23 essential developer tools for macOS.">
-    <meta name="keywords" content="SQL formatter, SQL beautifier, format SQL, SQL pretty print, SQL minify, SQL compare, SQL diff, online SQL formatter, SQL syntax highlighting, format SQL query, beautify SQL code">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="SQL Formatter & Beautifier - Format & Compare SQL | DevUtilities">
-    <meta property="og:description" content="Format, beautify, and compare SQL queries with visual diff mode. Advanced syntax highlighting and native library integration for superior performance.">
-    <meta property="og:image" content="images/screenshots/sql.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="SQL Formatter & Beautifier - Format & Compare SQL">
-    <meta property="twitter:description" content="Format, beautify, and compare SQL queries with visual diff mode. Advanced syntax highlighting and native library integration.">
-    <meta property="twitter:image" content="images/screenshots/sql.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities SQL Formatter",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Professional SQL formatter and beautifier with native library integration",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "15"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SQL Formatter — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="SQL Formatter with minimal and beautify modes, side-by-side query diff, and a Rust-based core via the ParquetViewer library." />
+  <meta name="keywords" content="SQL formatter, SQL beautifier, SQL diff, query formatter, ParquetViewer, macOS database tools" />
+  <meta property="og:image" content="images/screenshots/sql.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>SQL Formatter</span>
-                    </div>
-                    <h1 class="hero-title">
-                        SQL Formatter
-                        <span class="hero-subtitle">Professional SQL Beautification Tool</span>
-                    </h1>
-                    <p class="hero-description">
-                        Advanced SQL formatter powered by native sql-parser library integration. Format, beautify, minify, and compare SQL queries with superior performance and reliability. Now includes side-by-side diff mode for comparing SQL queries with visual highlighting. Supports both minimal and beautify formatting modes with comprehensive syntax highlighting.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🚀</span>
-                            <span>Native Library</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🔍</span>
-                            <span>SQL Diff Mode</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">⚡</span>
-                            <span>High Performance</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/sql.png" alt="DevUtilities SQL Formatter Screenshot showing formatted SQL query with syntax highlighting">
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>SQL Formatter</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 10 of 23 · Format</div><h1 class="page-h">Queries that read <em>like prose.</em></h1></section>
+  <div class="page-sub"><div></div><p>Minimal and beautify modes, both backed by a Rust core via the ParquetViewer library — small, fast, robust. v2.11 added side-by-side query diff with auto-format, so meaningful changes show up and reformatting noise stays away.</p></div>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Advanced SQL Formatting Features</h2>
-                <p class="section-description">
-                    Everything you need for professional SQL query formatting and optimization.
-                </p>
-            </div>
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Updated</div><div class="tool-meta-value accent">v2.11</div><div class="tool-meta-sub">Diff added</div></div>
+    <div><div class="tool-meta-label">Modes</div><div class="tool-meta-value">Minimal · Beautify · Diff</div><div class="tool-meta-sub">Pick by intent</div></div>
+    <div><div class="tool-meta-label">Engine</div><div class="tool-meta-value">Rust core</div><div class="tool-meta-sub">Via ParquetViewer</div></div>
+    <div><div class="tool-meta-label">Network</div><div class="tool-meta-value">Offline</div><div class="tool-meta-sub">Pure local</div></div>
+  </div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">🔍</div>
-                    <h3 class="feature-title">SQL Diff Mode</h3>
-                    <p class="feature-description">NEW: Compare SQL queries side-by-side with CodeMirror-powered visual diff highlighting. Automatically formats both queries for optimal comparison with real-time status updates and detailed metrics.</p>
-                </div>
+  <section class="tool-shot"><figure><img src="images/screenshots/sql.png" alt="DevUtilities SQL Formatter — beautify, minify, side-by-side diff." /></figure><figcaption>Plate x — SQL Formatter with the diff editor and the auto-format toggle.</figcaption></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🚀</div>
-                    <h3 class="feature-title">Native Library Integration</h3>
-                    <p class="feature-description">Enhanced with native sql-parser library for superior SQL formatting performance. 95% code reduction while improving reliability and speed over custom tokenization implementations.</p>
-                </div>
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Seven things <span class="muted">it does cleanly.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Beautify mode</h4><p>Multi-line, indented, keyword-cased — the version you'd write if you had time. Subqueries indent; <code>JOIN</code>s line up.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>Minimal mode</h4><p>Single-line normalisation for embedding in code. Whitespace tidy, structure intact.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Side-by-side diff</h4><p>Drop two queries; both auto-format; CodeMirror highlights the meaningful changes.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Rust core</h4><p>Parsing and formatting via the ParquetViewer SQL engine. Small footprint, fast even on long queries.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Real-time</h4><p>Reformats as you type. No "format" button, no spinner — feedback is immediate.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>Character &amp; line metrics</h4><p>Both sides of the diff show character and line counts — useful when comparing query lengths.</p></div></div>
+      <div class="cap"><span class="cap-n">vii</span><div class="cap-body"><h4>State persistence</h4><p>Last query and last diff stick between sessions.</p></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3 class="feature-title">Dual Format Modes</h3>
-                    <p class="feature-description">Choose between minimal formatting for compact queries or beautify mode for enhanced readability with proper indentation and keyword alignment.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>to a readable query.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Paste the SQL</h4><p>From a log, an ORM dump, or a code review. Format mode receives raw input.</p><div class="step-key">Paste · <b>⌘ V</b></div></div>
+      <div class="step"><span class="step-n"></span><h4>Choose a mode</h4><p>Beautify when you're reading; minimal when you're embedding. Toggle anytime.</p><div class="step-key">Mode toggle</div></div>
+      <div class="step"><span class="step-n"></span><h4>Drop into diff</h4><p>Compare two queries. Both auto-format. Real changes light up; cosmetics stay quiet.</p><div class="step-key">Diff mode</div></div>
+      <div class="step"><span class="step-n"></span><h4>Copy</h4><p>One-click copy on either side. Paste straight into a migration, a PR, or a Slack thread.</p><div class="step-key">Copy · <b>⌘ C</b></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">💡</div>
-                    <h3 class="feature-title">Syntax Highlighting</h3>
-                    <p class="feature-description">Color-coded SQL syntax highlighting with support for keywords, functions, operators, strings, and comments for improved code readability.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — Read</span><h4>ORM-generated SQL</h4><p>Beautify the unreadable single-line query the ORM logged at debug level.</p></div>
+      <div class="use"><span class="use-tag">ii — Review</span><h4>Migration diffs</h4><p>Compare two versions of the same migration to spot what actually changed.</p></div>
+      <div class="use"><span class="use-tag">iii — Embed</span><h4>Inline queries</h4><p>Minify before pasting into a string literal. The structure survives; the noise doesn't.</p></div>
+      <div class="use"><span class="use-tag">iv — Teach</span><h4>Showing structure</h4><p>Pretty-print a complex query when explaining it to a colleague.</p></div>
+      <div class="use"><span class="use-tag">v — Audit</span><h4>Drift detection</h4><p>Diff two flavors of "the same" query that are subtly different — and find out where.</p></div>
+      <div class="use"><span class="use-tag">vi — Debug</span><h4>Plan-friendly form</h4><p>Format ad-hoc SQL into the shape your query plan tool expects.</p></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔧</div>
-                    <h3 class="feature-title">Smart Indentation</h3>
-                    <p class="feature-description">Intelligent indentation and alignment of SQL clauses, subqueries, and complex expressions for maximum readability and maintainability.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>Which dialects are supported?</summary><p>The formatter targets standard SQL with leniency around dialect-specific keywords. Postgres, MySQL, SQLite, and DuckDB-flavoured SQL all reformat cleanly.</p></details>
+      <details><summary>What's the difference between beautify and minimal?</summary><p>Beautify produces an indented, multi-line query. Minimal collapses to a single line for embedding while preserving structure.</p></details>
+      <details><summary>How does diff mode handle whitespace differences?</summary><p>Both sides auto-format first. That way only meaningful structural and content differences show up.</p></details>
+      <details><summary>Does this run anything?</summary><p>No. Formatting is parsing-only. There is no execution; nothing reaches a database.</p></details>
+      <details><summary>Why a Rust core?</summary><p>The same Rust engine powers Parquet Viewer; reusing it gives the SQL formatter a small footprint and a fast path for long queries.</p></details>
+      <details><summary>Does this require network access?</summary><p>No. SQL formatting is fully local.</p></details>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">High Performance</h3>
-                    <p class="feature-description">Rust-based backend delivers exceptional performance for large SQL files and complex queries with minimal memory usage and fast processing.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON Formatter</h4><p>Same diff workflow, applied to JSON.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="html-formatter.html"><div class="rel-head"><span>11 · Format</span><span>Updated · 2.11</span></div><h4>HTML Formatter</h4><p>Format and diff HTML alongside the queries.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="parquet-viewer.html"><div class="rel-head"><span>19 · Inspect</span><span></span></div><h4>Parquet Viewer</h4><p>The same Rust engine — read schema and rows from Parquet/Arrow files.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="text-compare.html"><div class="rel-head"><span>17 · Inspect</span><span>New · 2.11</span></div><h4>Text Compare</h4><p>Plain-text diff for the comparisons that aren't SQL-shaped.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="ai-chat.html"><div class="rel-head"><span>01 · AI</span><span>Updated · 2.12</span></div><h4>AI Chat</h4><p>Ask the assistant to optimise a query the formatter made readable.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="regex-tester.html"><div class="rel-head"><span>18 · Inspect</span><span></span></div><h4>Regex Test</h4><p>Pull queries out of unstructured logs with the right pattern.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🛡️</div>
-                    <h3 class="feature-title">Robust Error Handling</h3>
-                    <p class="feature-description">Comprehensive error detection with detailed messages and fallback mechanisms for handling malformed or complex SQL structures.</p>
-                </div>
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Beautify, minify, diff, <em>without leaving the editor.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">Query Analysis</h3>
-                    <p class="feature-description">Character and line count tracking helps analyze query complexity and optimize for performance and readability standards.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🗂️</div>
-                    <h3 class="feature-title">Multi-SQL Support</h3>
-                    <p class="feature-description">Format multiple SQL statements, stored procedures, functions, and complex database scripts with consistent styling and structure.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Use Section -->
-    <section class="how-to-use">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">How to Use SQL Formatter</h2>
-                <p class="section-description">
-                    Format your SQL queries professionally in just a few simple steps.
-                </p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Input Your SQL</h3>
-                    <p>Paste your SQL query or script into the input area. DevUtilities handles everything from simple SELECT statements to complex stored procedures.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Choose Format Style</h3>
-                    <p>Select between minimal formatting for compact output or beautify mode for enhanced readability with proper indentation and spacing.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>View Formatted Result</h3>
-                    <p>See your SQL formatted with syntax highlighting, proper alignment, and improved structure for better code maintainability.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>Copy & Use</h3>
-                    <p>Copy the formatted SQL with one click and paste it into your database client, code editor, or documentation.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect for These Development Tasks</h2>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">🗄️</div>
-                    <h3>Database Development</h3>
-                    <p>Format SQL queries, stored procedures, and database scripts for better readability and team collaboration in database development projects.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📋</div>
-                    <h3>Code Review & Documentation</h3>
-                    <p>Standardize SQL formatting across your team, prepare queries for documentation, and ensure consistent coding standards in database projects.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔍</div>
-                    <h3>Query Optimization</h3>
-                    <p>Analyze complex queries by formatting them for better visibility of joins, subqueries, and performance bottlenecks in database optimization tasks.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📝</div>
-                    <h3>Educational & Training</h3>
-                    <p>Format SQL examples for tutorials, training materials, and educational content with consistent styling and proper structure.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔧</div>
-                    <h3>Legacy Code Maintenance</h3>
-                    <p>Clean up and format legacy SQL code for better maintainability, debugging, and modernization of existing database applications.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📊</div>
-                    <h3>Reporting & Analytics</h3>
-                    <p>Format complex analytical queries, reporting SQL, and data warehouse scripts for better understanding and maintenance.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>What makes DevUtilities's SQL formatter special?</h3>
-                    <p>DevUtilities uses native ParquetViewer library integration for superior performance and reliability. This Rust-based backend provides 95% better efficiency compared to custom implementations while ensuring robust error handling.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What SQL dialects are supported?</h3>
-                    <p>DevUtilities's SQL formatter supports standard SQL syntax and is compatible with major database systems including PostgreSQL, MySQL, SQL Server, Oracle, SQLite, and other SQL-compliant databases.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can it handle large SQL files?</h3>
-                    <p>Yes! The native ParquetViewer integration provides exceptional performance for large SQL files, complex queries, and batch processing with minimal memory usage and fast response times.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What's the difference between minimal and beautify modes?</h3>
-                    <p>Minimal mode provides compact formatting while preserving readability. Beautify mode adds enhanced indentation, keyword alignment, and visual structure for maximum code clarity and maintainability.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Does it preserve SQL comments and structure?</h3>
-                    <p>Yes, DevUtilities preserves SQL comments, maintains logical query structure, and handles complex nested queries, CTEs, and stored procedures while improving overall formatting.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How does error handling work?</h3>
-                    <p>DevUtilities provides robust error detection with detailed messages and fallback mechanisms. If the primary formatter encounters issues, backup systems ensure you still get usable formatted output.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">Explore other essential tools included in DevUtilities</p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">📄</div>
-                    <h3>JSON Formatter</h3>
-                    <p>Format JSON data with the same attention to detail and performance as our SQL formatter, perfect for API development.</p>
-                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">📊</div>
-                    <h3>Parquet Viewer</h3>
-                    <p>View and analyze Parquet files using the same native library that powers our enhanced SQL formatting capabilities.</p>
-                    <a href="parquet-viewer.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🌐</div>
-                    <h3>HTML Formatter</h3>
-                    <p>Format HTML code with similar syntax highlighting and beautification features as our SQL formatter.</p>
-                    <a href="html-formatter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🔄</div>
-                    <h3>Regex Tester</h3>
-                    <p>Test and validate regular expressions for SQL pattern matching and data validation in database applications.</p>
-                    <a href="regex-tester.html" class="tool-link">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Format SQL Like a Pro?</h2>
-                <p>Join thousands of developers who rely on DevUtilities's SQL formatter for clean, readable database code.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-primary">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 23 Developer Tools</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div></footer>
 </body>
 </html>

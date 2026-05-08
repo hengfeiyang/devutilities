@@ -1,471 +1,95 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Tools - URL Encoder, Decoder & Parser Online | DevUtilities</title>
-    <meta name="description" content="Professional URL tools for developers. URL encode/decode, comprehensive URL parsing with component breakdown, validation, and query parameter extraction. Real-time processing with detailed URL analysis. Part of DevUtilities - 18 essential developer tools for macOS.">
-    <meta name="keywords" content="URL encoder, URL decoder, URL parser, URL encode online, URL decode online, URL validation, query parameters, URL components, percent encoding, URL parsing tool">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="URL Tools - URL Encoder, Decoder & Parser | DevUtilities">
-    <meta property="og:description" content="Professional URL tools with encoding/decoding, comprehensive parsing, and component breakdown. Real-time processing for developers.">
-    <meta property="og:image" content="images/screenshots/url.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="URL Tools - URL Encoder, Decoder & Parser">
-    <meta property="twitter:description" content="Professional URL tools with encoding/decoding, comprehensive parsing, and component breakdown. Real-time processing.">
-    <meta property="twitter:image" content="images/screenshots/url.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities URL Tools",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Professional URL tools with encoding/decoding, parsing, and component breakdown for developers",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "10"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>URL Tools — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="Encode, decode, and parse URLs. Component-by-component breakdown; percent-escapes both directions; query string editing." />
+  <meta name="keywords" content="URL tools, URL encoder, URL decoder, URL parser, percent encoding, query string, macOS URL tool" />
+  <meta property="og:image" content="images/screenshots/url.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>URL Tools</span>
-                    </div>
-                    <h1 class="hero-title">
-                        URL Tools
-                        <span class="hero-subtitle">URL Encoder, Decoder & Comprehensive Parser</span>
-                    </h1>
-                    <p class="hero-description">
-                        Professional URL manipulation tools for developers. Encode and decode URLs with percent encoding, parse URLs with comprehensive component breakdown, validate URL format, and extract query parameters. Perfect for web development, API integration, and URL analysis workflows.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🔄</span>
-                            <span>Encode & Decode</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🔍</span>
-                            <span>URL Parsing</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">✅</span>
-                            <span>URL Validation</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/url.png" alt="DevUtilities URL Tools Screenshot showing URL encoding/decoding with component breakdown and validation">
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>URL Tools</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 21 of 23 · Network</div><h1 class="page-h">URLs, <em>broken down.</em></h1></section>
+  <div class="page-sub"><div></div><p>Encode and decode percent-escapes; parse a URL into its components; edit query parameters as a list. The same panel handles both directions; the parser names every piece.</p></div>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Advanced URL Processing Features</h2>
-                <p class="section-description">
-                    Everything you need for professional URL manipulation, parsing, and analysis in development workflows.
-                </p>
-            </div>
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Direction</div><div class="tool-meta-value accent">Encode · decode</div><div class="tool-meta-sub">Same panel</div></div>
+    <div><div class="tool-meta-label">Components</div><div class="tool-meta-value">Scheme · host · path · query</div><div class="tool-meta-sub">Plus user, port, fragment</div></div>
+    <div><div class="tool-meta-label">Query</div><div class="tool-meta-value">List view</div><div class="tool-meta-sub">Add / remove / edit</div></div>
+    <div><div class="tool-meta-label">Network</div><div class="tool-meta-value">Offline</div><div class="tool-meta-sub">Pure local</div></div>
+  </div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">🔄</div>
-                    <h3 class="feature-title">URL Encoding & Decoding</h3>
-                    <p class="feature-description">Comprehensive percent encoding and decoding with support for all special characters. Handles spaces, symbols, Unicode characters, and international domains.</p>
-                </div>
+  <section class="tool-shot"><figure><img src="images/screenshots/url.png" alt="DevUtilities URL Tools — encoder, decoder, parser breakdown, query list." /></figure><figcaption>Plate xxi — URL Tools with the parser breakdown and the query-string editor.</figcaption></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3 class="feature-title">URL Component Parsing</h3>
-                    <p class="feature-description">Break down URLs into individual components: scheme, host, port, path, query parameters, and fragments with detailed analysis and validation.</p>
-                </div>
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Six things <span class="muted">it does well.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Encode &amp; decode</h4><p>Percent-encoding both directions. Pick whether to encode reserved characters; ideal for query values and path segments.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>Parser breakdown</h4><p>Scheme, user, host, port, path, query, fragment — all named, all editable.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Query string editor</h4><p>The query renders as a list of key/value rows. Add, remove, edit; the URL rewrites itself.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>IDN handling</h4><p>Internationalised domain names round-trip cleanly between Unicode and ASCII (Punycode).</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Validation</h4><p>Invalid URLs surface a precise error pointing at the offending component.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>One-click copy</h4><p>Copy the encoded string, the decoded string, or the parsed structure as a list.</p></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">Query Parameter Extraction</h3>
-                    <p class="feature-description">Parse and extract query parameters with key-value pair breakdown. Handle multiple values, encoded parameters, and complex query structures.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>around a URL.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Paste</h4><p>Drop the URL — encoded, decoded, or partial.</p><div class="step-key">Paste · <b>⌘ V</b></div></div>
+      <div class="step"><span class="step-n"></span><h4>Inspect components</h4><p>Scheme, host, path, query — each labelled and editable.</p><div class="step-key">Parser</div></div>
+      <div class="step"><span class="step-n"></span><h4>Tweak the query</h4><p>Add or remove parameters in the list editor; the URL rewrites accordingly.</p><div class="step-key">Query list</div></div>
+      <div class="step"><span class="step-n"></span><h4>Copy result</h4><p>Encoded for the wire, decoded for the eye, structure for the doc.</p><div class="step-key">Copy · <b>⌘ C</b></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">✅</div>
-                    <h3 class="feature-title">URL Validation</h3>
-                    <p class="feature-description">Comprehensive URL format validation with detailed error reporting. Check for valid schemes, domain names, port numbers, and overall URL structure.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — API</span><h4>Building requests</h4><p>Construct a tricky URL with several encoded query values without escape gymnastics.</p></div>
+      <div class="use"><span class="use-tag">ii — Inspect</span><h4>OAuth callbacks</h4><p>Decode the redirect URL to read state, code, and other parameters in plain text.</p></div>
+      <div class="use"><span class="use-tag">iii — Migrate</span><h4>Query rewriting</h4><p>Convert old query parameters to new ones in bulk by editing the list and copying back.</p></div>
+      <div class="use"><span class="use-tag">iv — Debug</span><h4>Internationalised hosts</h4><p>Round-trip Punycode and Unicode domain names to verify what the resolver sees.</p></div>
+      <div class="use"><span class="use-tag">v — Test</span><h4>Edge cases</h4><p>Verify what happens with reserved characters, fragments, multi-value query keys.</p></div>
+      <div class="use"><span class="use-tag">vi — Doc</span><h4>Reproducible URLs</h4><p>Produce a clean, copy-able URL that reads the same way it was meant.</p></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3 class="feature-title">International Domain Support</h3>
-                    <p class="feature-description">Full support for internationalized domain names (IDN), Unicode characters in URLs, and punycode encoding/decoding for global web applications.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>Component or whole-URL encoding?</summary><p>Both. Toggle whether to escape reserved characters; the parser tells you which mode the input was in.</p></details>
+      <details><summary>Multi-value query keys?</summary><p>Supported. The list editor preserves multiple values for the same key; serialisation produces a stable order.</p></details>
+      <details><summary>What about IDN / Punycode?</summary><p>Round-trip handled by Apple's URL stack. Unicode hosts encode to Punycode for the wire; the parser shows both forms.</p></details>
+      <details><summary>Does it normalise paths?</summary><p>It doesn't collapse <code>../</code> by default — that would change the URL semantics. A toggle is available when you do want normalisation.</p></details>
+      <details><summary>Are URLs stored anywhere?</summary><p>Only in your local session. Nothing is uploaded.</p></details>
+      <details><summary>Does this require network access?</summary><p>No. URL handling is fully local.</p></details>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔧</div>
-                    <h3 class="feature-title">URL Construction</h3>
-                    <p class="feature-description">Build URLs from components with automatic encoding and validation. Construct complex URLs with parameters, fragments, and proper formatting.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="http-request.html"><div class="rel-head"><span>20 · Network</span><span></span></div><h4>HTTP Client</h4><p>Send the URL you've just constructed; inspect what comes back.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="ip-query.html"><div class="rel-head"><span>22 · Network</span><span></span></div><h4>IP Query</h4><p>Geolocate the host you parsed.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="base64-encoder.html"><div class="rel-head"><span>12 · Format</span><span></span></div><h4>Base64</h4><p>URL-safe Base64 for the segments that need it.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="qr-code.html"><div class="rel-head"><span>16 · Generate</span><span></span></div><h4>QR Code</h4><p>Encode the cleaned URL into a QR for offline transfer.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="regex-tester.html"><div class="rel-head"><span>18 · Inspect</span><span></span></div><h4>Regex Test</h4><p>Match URL patterns out of unstructured logs.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON Formatter</h4><p>Format JSON payloads that contain URL fields.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3 class="feature-title">Copy & Export Options</h3>
-                    <p class="feature-description">Multiple output formats for different use cases. Copy encoded URLs, decoded text, individual components, or complete analysis results.</p>
-                </div>
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Encode, decode, parse — <em>without escape gymnastics.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Real-time Processing</h3>
-                    <p class="feature-description">Instant URL processing and analysis as you type. No delays or loading times - see encoding, decoding, and parsing results immediately.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- URL Components Section -->
-    <section class="url-components">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">URL Component Breakdown</h2>
-                <p class="section-description">Understanding URL structure and components for better web development</p>
-            </div>
-
-            <div class="url-example">
-                <div class="url-display">
-                    <span class="url-part scheme">https://</span><span class="url-part host">api.example.com</span><span class="url-part port">:8080</span><span class="url-part path">/v1/users</span><span class="url-part query">?id=123&name=john%20doe</span><span class="url-part fragment">#section1</span>
-                </div>
-            </div>
-
-            <div class="components-grid">
-                <div class="component-card">
-                    <div class="component-color scheme-color"></div>
-                    <h3>Scheme (Protocol)</h3>
-                    <div class="component-example">https://</div>
-                    <p>Defines the protocol used to access the resource. Common schemes include http, https, ftp, mailto, and custom protocols.</p>
-                </div>
-
-                <div class="component-card">
-                    <div class="component-color host-color"></div>
-                    <h3>Host (Domain)</h3>
-                    <div class="component-example">api.example.com</div>
-                    <p>The domain name or IP address of the server. Can include subdomains and supports internationalized domain names (IDN).</p>
-                </div>
-
-                <div class="component-card">
-                    <div class="component-color port-color"></div>
-                    <h3>Port</h3>
-                    <div class="component-example">:8080</div>
-                    <p>Optional port number for the connection. Default ports (80 for HTTP, 443 for HTTPS) are usually omitted.</p>
-                </div>
-
-                <div class="component-card">
-                    <div class="component-color path-color"></div>
-                    <h3>Path</h3>
-                    <div class="component-example">/v1/users</div>
-                    <p>The specific resource path on the server. Represents the hierarchical structure of resources and endpoints.</p>
-                </div>
-
-                <div class="component-card">
-                    <div class="component-color query-color"></div>
-                    <h3>Query Parameters</h3>
-                    <div class="component-example">?id=123&name=john%20doe</div>
-                    <p>Key-value pairs for additional parameters. Starts with '?' and separated by '&'. Values are URL-encoded for special characters.</p>
-                </div>
-
-                <div class="component-card">
-                    <div class="component-color fragment-color"></div>
-                    <h3>Fragment (Hash)</h3>
-                    <div class="component-example">#section1</div>
-                    <p>Optional fragment identifier for specific sections within a resource. Commonly used for page anchors and single-page app routing.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Use Section -->
-    <section class="how-to-use">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">How to Use URL Tools</h2>
-                <p class="section-description">
-                    Encode, decode, and parse URLs in just a few simple steps.
-                </p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Input Your URL</h3>
-                    <p>Paste your URL or text that needs encoding/decoding. Can be a complete URL, query string, or any text with special characters.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Choose Operation</h3>
-                    <p>Select from URL encoding, URL decoding, or comprehensive URL parsing depending on your specific needs and use case.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>View Analysis</h3>
-                    <p>See real-time results with component breakdown, validation status, and detailed analysis of your URL structure and parameters.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>Copy Results</h3>
-                    <p>Copy the processed URL, individual components, or complete analysis results for use in your applications and development workflows.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect for These Development Tasks</h2>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">🌐</div>
-                    <h3>Web Development</h3>
-                    <p>Handle form submissions, process query parameters, construct dynamic URLs, and ensure proper URL encoding for special characters in web applications.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔧</div>
-                    <h3>API Development</h3>
-                    <p>Build and parse API endpoints, handle URL parameters, construct RESTful routes, and validate URL formats in API documentation and testing.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📊</div>
-                    <h3>Data Processing</h3>
-                    <p>Extract and analyze URL data from logs, parse query parameters from analytics data, and process URL-encoded form submissions.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔍</div>
-                    <h3>SEO & Analytics</h3>
-                    <p>Analyze URL structure for SEO optimization, decode tracking parameters, process campaign URLs, and validate canonical URL formats.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🛡️</div>
-                    <h3>Security & Validation</h3>
-                    <p>Validate user-provided URLs, sanitize URL inputs, decode suspicious URLs for security analysis, and prevent URL-based attacks.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔗</div>
-                    <h3>URL Management</h3>
-                    <p>Build dynamic redirects, construct URLs with parameters, manage URL shortening services, and handle internationalized domain names.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>What is URL encoding and when do I need it?</h3>
-                    <p>URL encoding (percent encoding) converts special characters to a format safe for URLs. You need it when URLs contain spaces, symbols, or non-ASCII characters that could break URL parsing.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How does the URL parser handle invalid URLs?</h3>
-                    <p>DevUtilities provides detailed validation with specific error messages for invalid URLs. It identifies issues like malformed schemes, invalid characters, or incorrect URL structure with suggestions for fixes.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can it handle international domain names?</h3>
-                    <p>Yes! DevUtilities fully supports internationalized domain names (IDN) with automatic punycode conversion and Unicode character handling for global web applications.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What query parameter formats are supported?</h3>
-                    <p>All standard query parameter formats including multiple values for the same key, encoded values, array notation, and complex nested parameter structures used in modern web frameworks.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I build URLs from individual components?</h3>
-                    <p>Yes, DevUtilities includes URL construction features where you can input individual components (scheme, host, path, parameters) and automatically build properly formatted URLs.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How accurate is the URL validation?</h3>
-                    <p>DevUtilities uses comprehensive URL validation following RFC standards, checking scheme validity, domain name format, port ranges, and overall URL structure for maximum accuracy.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">Explore other essential tools included in DevUtilities</p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">🌍</div>
-                    <h3>HTTP Request</h3>
-                    <p>Test APIs with URLs you've encoded or parsed. Send requests to endpoints with proper URL formatting and parameter handling.</p>
-                    <a href="http-request.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🎯</div>
-                    <h3>Regex Tester</h3>
-                    <p>Create and test regex patterns for URL validation, parameter extraction, and URL pattern matching in applications.</p>
-                    <a href="regex-tester.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🔠</div>
-                    <h3>Base64 Encoder</h3>
-                    <p>Encode URL parameters or decode Base64-encoded data found in URL query parameters and API responses.</p>
-                    <a href="base64-encoder.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">📄</div>
-                    <h3>JSON Formatter</h3>
-                    <p>Format JSON data received from APIs accessed through your parsed and validated URLs with proper structure analysis.</p>
-                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Master URL Processing?</h2>
-                <p>Join thousands of developers who rely on DevUtilities's URL tools for their web development and API integration tasks.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-primary">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 23 Developer Tools</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div></footer>
 </body>
 </html>

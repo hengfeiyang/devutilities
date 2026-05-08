@@ -1,411 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON Formatter & Validator - Format, Validate & Compare JSON Online | DevUtilities</title>
-    <meta name="description" content="Professional JSON formatter and validator for developers. Format, validate, minify, and compare JSON data with visual diff editor. Real-time syntax highlighting and error detection. Part of DevUtilities - 18 essential developer tools for macOS.">
-    <meta name="keywords" content="JSON formatter, JSON validator, JSON pretty print, JSON minify, JSON compare, JSON diff, online JSON tool, JSON syntax checker, format JSON online, validate JSON online, JSON beautifier">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="JSON Formatter & Validator - Professional JSON Tools | DevUtilities">
-    <meta property="og:description" content="Format, validate, and compare JSON data with visual diff editor. Real-time syntax highlighting and error detection for developers.">
-    <meta property="og:image" content="images/screenshots/json.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="JSON Formatter & Validator - Professional JSON Tools">
-    <meta property="twitter:description" content="Format, validate, and compare JSON data with visual diff editor. Real-time syntax highlighting and error detection.">
-    <meta property="twitter:image" content="images/screenshots/json.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities JSON Formatter",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Professional JSON formatter and validator with visual diff editor for developers",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "10"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JSON Formatter — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="JSON Formatter with format, validate, escape/unescape, and a CodeMirror-powered side-by-side diff editor." />
+  <meta name="keywords" content="JSON formatter, JSON diff, JSON validator, JSON escape, CodeMirror JSON, macOS JSON tool" />
+  <meta property="og:image" content="images/screenshots/json.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>JSON Formatter</span>
-                    </div>
-                    <h1 class="hero-title">
-                        JSON Formatter
-                        <span class="hero-subtitle">Professional JSON Tools for Developers</span>
-                    </h1>
-                    <p class="hero-description">
-                        Format, validate, minify, and compare JSON data with our advanced JSON formatter. Features visual CodeMirror diff editor, real-time syntax highlighting, and comprehensive error detection. Perfect for API development, debugging, and data processing workflows.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">⚡</span>
-                            <span>Real-time Validation</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🔍</span>
-                            <span>Visual Diff Editor</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🎨</span>
-                            <span>Syntax Highlighting</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/json.png" alt="DevUtilities JSON Formatter Screenshot showing formatted JSON data with syntax highlighting">
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>JSON Formatter</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 09 of 23 · Format</div><h1 class="page-h">JSON, <em>read like a document.</em></h1></section>
+  <div class="page-sub"><div></div><p>Format, validate, minify, escape, unescape — the daily moves. v2.11 added a CodeMirror diff editor for side-by-side comparison: real-time status, character and line counts, the same gestures as a code review tool.</p></div>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Advanced JSON Processing Features</h2>
-                <p class="section-description">
-                    Everything you need for professional JSON data handling, built into a native macOS application.
-                </p>
-            </div>
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Updated</div><div class="tool-meta-value accent">v2.11</div><div class="tool-meta-sub">Diff mode added</div></div>
+    <div><div class="tool-meta-label">Modes</div><div class="tool-meta-value">Format · Validate · Diff</div><div class="tool-meta-sub">Plus escape / unescape</div></div>
+    <div><div class="tool-meta-label">Editor</div><div class="tool-meta-value">CodeMirror</div><div class="tool-meta-sub">Syntax highlighting</div></div>
+    <div><div class="tool-meta-label">Network</div><div class="tool-meta-value">Offline</div><div class="tool-meta-sub">Pure local</div></div>
+  </div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">🎨</div>
-                    <h3 class="feature-title">Visual Diff Editor</h3>
-                    <p class="feature-description">Compare JSON structures side-by-side with CodeMirror-powered visual diff highlighting. Perfect for API response comparison and data validation workflows.</p>
-                </div>
+  <section class="tool-shot"><figure><img src="images/screenshots/json.png" alt="DevUtilities JSON Formatter — formatted output, diff mode, validation messages." /></figure><figcaption>Plate ix — JSON Formatter with the diff editor and the live status indicator.</figcaption></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">✅</div>
-                    <h3 class="feature-title">Real-time Validation</h3>
-                    <p class="feature-description">Instant JSON syntax validation with detailed error messages and line-by-line highlighting. Catch formatting issues before they cause problems.</p>
-                </div>
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Eight things <span class="muted">it does precisely.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Format with intent</h4><p>Pretty-print with two-space, four-space, or tab indentation. Sort keys when you want a stable diff.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>Validation that points</h4><p>Errors land with a line number and a useful message — not "unexpected token" with a shrug.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Side-by-side diff</h4><p>CodeMirror diff editor. Additions, removals, and changes highlighted; a status strip says "same" or "different".</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Escape / unescape</h4><p>Wrap a JSON document into a string literal, or peel one out of an embedded string. The escape modes round-trip cleanly.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Minify</h4><p>Strip whitespace, preserve precision. The output is a single line, ready to embed.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>Character &amp; line metrics</h4><p>Both sides of the diff display character and line counts — useful when comparing payload sizes.</p></div></div>
+      <div class="cap"><span class="cap-n">vii</span><div class="cap-body"><h4>Auto-format on diff</h4><p>Diff mode automatically formats both sides, so cosmetic differences don't masquerade as real ones.</p></div></div>
+      <div class="cap"><span class="cap-n">viii</span><div class="cap-body"><h4>State persistence</h4><p>The text in both sides survives across sessions. Yesterday's compare is still where you left it.</p></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔧</div>
-                    <h3 class="feature-title">Format & Beautify</h3>
-                    <p class="feature-description">Transform minified JSON into beautifully formatted, readable code with proper indentation and structure. Supports custom indentation preferences.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>from string to structure.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Paste payload</h4><p>From a network panel, a log, or a curl. Format mode receives it raw.</p><div class="step-key">Paste · <b>⌘ V</b></div></div>
+      <div class="step"><span class="step-n"></span><h4>Format or validate</h4><p>Pretty-print to read; validate to confirm. Errors point at the line that broke.</p><div class="step-key">Format · Validate</div></div>
+      <div class="step"><span class="step-n"></span><h4>Switch to diff</h4><p>Compare two payloads. Both sides auto-format; the editor highlights what moved.</p><div class="step-key">Diff mode</div></div>
+      <div class="step"><span class="step-n"></span><h4>Copy or escape</h4><p>Copy the formatted output, or escape it into a string for an embedded fixture.</p><div class="step-key">Copy · Escape</div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📦</div>
-                    <h3 class="feature-title">Minify & Compress</h3>
-                    <p class="feature-description">Compress JSON data by removing unnecessary whitespace and formatting. Ideal for reducing payload sizes in production environments.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — API</span><h4>Response inspection</h4><p>Pretty-print a deeply nested response so the structure is actually legible.</p></div>
+      <div class="use"><span class="use-tag">ii — Diff</span><h4>Drift detection</h4><p>Two responses, ten changes — the diff editor names them. Status flips to "different" the moment they part.</p></div>
+      <div class="use"><span class="use-tag">iii — Fixtures</span><h4>Test data</h4><p>Format your fixture; escape it into a string literal for the test source.</p></div>
+      <div class="use"><span class="use-tag">iv — Config</span><h4>Validation</h4><p>Catch a stray comma in a config file before it crashes the build.</p></div>
+      <div class="use"><span class="use-tag">v — Logs</span><h4>Embedded JSON</h4><p>Unescape the JSON-in-a-string format favoured by some loggers; format the result.</p></div>
+      <div class="use"><span class="use-tag">vi — Review</span><h4>PR-style compare</h4><p>Drop two payloads into the diff editor and discuss the change in chat.</p></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3 class="feature-title">Syntax Highlighting</h3>
-                    <p class="feature-description">Color-coded JSON syntax highlighting makes it easy to identify objects, arrays, strings, numbers, and boolean values at a glance.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>What does diff mode actually compare?</summary><p>Both sides are auto-formatted first — same indentation, sorted keys if you choose — so cosmetic differences don't pollute the result. Then a side-by-side diff highlights real changes.</p></details>
+      <details><summary>Does formatting preserve number precision?</summary><p>Yes. The internal representation handles large integers and high-precision floats. Round-trip is loss-free.</p></details>
+      <details><summary>How does validation report errors?</summary><p>Line and column, with a message that names the problem (unexpected token, missing quote, trailing comma, and so on).</p></details>
+      <details><summary>Can I sort object keys?</summary><p>Yes. A toggle sorts keys alphabetically — useful when stabilising a diff.</p></details>
+      <details><summary>Does escape produce a JSON string literal?</summary><p>Yes. Escape mode wraps a JSON document into a JSON string literal you can embed; unescape reverses the process cleanly.</p></details>
+      <details><summary>Does this require network access?</summary><p>No. Formatting, validation, escaping, and diffing are all local.</p></details>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">Data Analysis</h3>
-                    <p class="feature-description">Character and line count tracking helps you understand data size and structure. Perfect for API payload optimization.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="text-compare.html"><div class="rel-head"><span>17 · Inspect</span><span>New · 2.11</span></div><h4>Text Compare</h4><p>Diff plain text — for the comparisons that aren't JSON-shaped.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="sql-formatter.html"><div class="rel-head"><span>10 · Format</span><span>Updated · 2.11</span></div><h4>SQL Formatter</h4><p>Same diff workflow, applied to queries.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="html-formatter.html"><div class="rel-head"><span>11 · Format</span><span>Updated · 2.11</span></div><h4>HTML Formatter</h4><p>Format and diff HTML alongside the JSON it shipped with.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="http-request.html"><div class="rel-head"><span>20 · Network</span><span></span></div><h4>HTTP Client</h4><p>Hit the API; format the response in one move.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="jwt-encoder.html"><div class="rel-head"><span>13 · Format</span><span></span></div><h4>JWT</h4><p>Decoded JWT claims are JSON; format them right here.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="ai-chat.html"><div class="rel-head"><span>01 · AI</span><span>Updated · 2.12</span></div><h4>AI Chat</h4><p>Hand the AI a JSON payload it can actually read.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3 class="feature-title">Easy Copy & Export</h3>
-                    <p class="feature-description">One-click copying of formatted results. Seamlessly integrate with your development workflow and paste directly into code editors.</p>
-                </div>
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Format, validate, diff, <em>and the daily moves.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔄</div>
-                    <h3 class="feature-title">Escape & Unescape</h3>
-                    <p class="feature-description">Handle JSON string escaping and unescaping for nested JSON structures, API responses, and configuration files.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Use Section -->
-    <section class="how-to-use">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">How to Use JSON Formatter</h2>
-                <p class="section-description">
-                    Get started with professional JSON formatting in just a few simple steps.
-                </p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Input Your JSON</h3>
-                    <p>Paste your JSON data into the input area. DevUtilities accepts both formatted and minified JSON from any source.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Choose Format Option</h3>
-                    <p>Select from formatting options: beautify for readability, minify for compression, or validate for error checking.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>View Results</h3>
-                    <p>See your formatted JSON with syntax highlighting, error detection, and character/line count information.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>Copy & Use</h3>
-                    <p>Copy the formatted result with one click and paste it directly into your code editor or API client.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect for These Development Tasks</h2>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔧</div>
-                    <h3>API Development & Testing</h3>
-                    <p>Format API responses for better readability. Compare request/response payloads to debug API issues and validate data structures.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📝</div>
-                    <h3>Configuration Files</h3>
-                    <p>Format and validate JSON configuration files for applications, ensuring proper syntax and structure before deployment.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔍</div>
-                    <h3>Data Analysis & Processing</h3>
-                    <p>Clean and format JSON data from databases, APIs, or log files. Make complex nested structures easier to understand and analyze.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📊</div>
-                    <h3>Code Review & Documentation</h3>
-                    <p>Format JSON examples for documentation, code reviews, and technical specifications. Ensure consistent formatting across your team.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🐛</div>
-                    <h3>Debugging & Troubleshooting</h3>
-                    <p>Identify JSON syntax errors, missing brackets, and malformed data structures that cause parsing failures in applications.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">⚡</div>
-                    <h3>Performance Optimization</h3>
-                    <p>Minify JSON payloads to reduce bandwidth usage and improve application performance in production environments.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>What makes DevUtilities's JSON formatter different?</h3>
-                    <p>DevUtilities offers a native macOS experience with advanced features like visual diff comparison, real-time validation, and CodeMirror integration. Unlike web-based tools, it works offline and integrates seamlessly with your development workflow.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I format large JSON files?</h3>
-                    <p>Yes! DevUtilities is optimized for handling large JSON files efficiently. The native application architecture provides better performance than browser-based alternatives for processing substantial data sets.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Does it support JSON validation?</h3>
-                    <p>Absolutely. DevUtilities provides comprehensive JSON validation with detailed error messages, line-by-line error highlighting, and suggestions for fixing common syntax issues.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How does the visual diff feature work?</h3>
-                    <p>The visual diff feature uses CodeMirror to highlight differences between two JSON structures side-by-side, making it easy to spot changes, additions, and deletions in API responses or configuration updates.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Is my data secure when using DevUtilities?</h3>
-                    <p>Yes, completely secure. DevUtilities is a native desktop application that processes all data locally on your Mac. Your JSON data never leaves your computer or gets sent to external servers.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What other tools are included with DevUtilities?</h3>
-                    <p>DevUtilities includes 16 other essential developer tools: timestamp converter, unit converter, base64 encoder, hex string converter, regex tester, UUID generator, URL tools, HTTP client, IP query, QR codes, SQL formatter, HTML formatter, JWT encoder, Parquet viewer, crypto tools, and AI chat assistant.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">Explore other essential tools included in DevUtilities</p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">🌍</div>
-                    <h3>HTTP Request</h3>
-                    <p>Test APIs and view JSON responses with our built-in HTTP client. Perfect companion to the JSON formatter.</p>
-                    <a href="http-request.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🎫</div>
-                    <h3>JWT Encoder</h3>
-                    <p>Work with JSON Web Tokens - decode, validate, and create JWTs with HMAC and RSA support.</p>
-                    <a href="jwt-encoder.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🗄️</div>
-                    <h3>SQL Formatter</h3>
-                    <p>Format SQL queries with the same attention to detail and features as our JSON formatter.</p>
-                    <a href="sql-formatter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🌐</div>
-                    <h3>HTML Formatter</h3>
-                    <p>Format and beautify HTML markup with proper indentation - complete your formatting toolkit.</p>
-                    <a href="html-formatter.html" class="tool-link">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Streamline Your JSON Workflow?</h2>
-                <p>Join thousands of developers who rely on DevUtilities's JSON formatter for their daily development tasks.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-primary">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 23 Developer Tools</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div></footer>
 </body>
 </html>

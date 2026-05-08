@@ -1,411 +1,95 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IP Address Lookup & Geolocation - IP Query Tool | DevUtilities</title>
-    <meta name="description" content="Professional IP address lookup and geolocation tool for developers. Detect public IP, query IP information, get location data, ISP details, and network information. Part of DevUtilities - 18 essential developer tools for macOS.">
-    <meta name="keywords" content="IP lookup, IP address query, geolocation, IP information, public IP detector, ISP lookup, network information, IP geolocation tool, IP address finder, online IP tool">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="IP Address Lookup & Geolocation Tool | DevUtilities">
-    <meta property="og:description" content="Detect public IP addresses and query detailed geolocation information. Get ISP details, location data, and network information for any IP address.">
-    <meta property="og:image" content="images/screenshots/ip.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="IP Address Lookup & Geolocation Tool">
-    <meta property="twitter:description" content="Detect public IP addresses and query detailed geolocation information. Get ISP details, location data, and network information.">
-    <meta property="twitter:image" content="images/screenshots/ip.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities IP Query",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Professional IP address lookup and geolocation tool for developers",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "ratingCount": "8"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IP Query — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="Your IP address at a glance. Geolocation lookup for any IPv4 or IPv6 via ipinfo.io and ip.sb. Native macOS, China-friendly." />
+  <meta name="keywords" content="IP query, IP lookup, geolocation, IPv4, IPv6, ipinfo, ip.sb, network tools, macOS" />
+  <meta property="og:image" content="images/screenshots/ip.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>IP Query</span>
-                    </div>
-                    <h1 class="hero-title">
-                        IP Address Lookup
-                        <span class="hero-subtitle">Professional IP Geolocation Tool</span>
-                    </h1>
-                    <p class="hero-description">
-                        Comprehensive IP address lookup and geolocation service for developers. Detect your public IP address, query detailed information for any IP including location, ISP, organization, and network details. Essential for network debugging, security analysis, and geo-targeting applications.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🌍</span>
-                            <span>Dual IP Detection</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">📍</span>
-                            <span>Geolocation Data</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🏢</span>
-                            <span>ISP Information</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/ip.png" alt="DevUtilities IP Query Screenshot showing IP address lookup with geolocation information">
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>IP Query</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 22 of 23 · Network</div><h1 class="page-h">Your address, <em>at a glance.</em></h1></section>
+  <div class="page-sub"><div></div><p>See your public IP — both v4 and v6 when available — alongside geolocation. Look up any IPv4 or IPv6 to see country, region, city, ASN, and timezone. Two providers (<code>ipinfo.io</code> and <code>ip.sb</code>) keep the lookup reliable across regions.</p></div>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Advanced IP Lookup Features</h2>
-                <p class="section-description">
-                    Everything you need for comprehensive IP address analysis and geolocation queries.
-                </p>
-            </div>
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Updated</div><div class="tool-meta-value accent">v2.1</div><div class="tool-meta-sub">China-friendly</div></div>
+    <div><div class="tool-meta-label">Versions</div><div class="tool-meta-value">IPv4 · IPv6</div><div class="tool-meta-sub">Both supported</div></div>
+    <div><div class="tool-meta-label">Providers</div><div class="tool-meta-value">ipinfo · ip.sb</div><div class="tool-meta-sub">Failover available</div></div>
+    <div><div class="tool-meta-label">Data</div><div class="tool-meta-value">Country · region · city · ASN</div><div class="tool-meta-sub">Plus timezone</div></div>
+  </div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">🌍</div>
-                    <h3 class="feature-title">Dual IP Detection</h3>
-                    <p class="feature-description">Automatically detect both IPv4 and IPv6 public addresses. Get comprehensive network information including external IP detection and local network details.</p>
-                </div>
+  <section class="tool-shot"><figure><img src="images/screenshots/ip.png" alt="DevUtilities IP Query — your address, geolocation card, lookup field." /></figure><figcaption>Plate xxii — IP Query with the dual-provider geolocation card.</figcaption></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📍</div>
-                    <h3 class="feature-title">Precise Geolocation</h3>
-                    <p class="feature-description">Get accurate location data including country, region, city, postal code, latitude/longitude coordinates, and timezone information.</p>
-                </div>
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Six things <span class="muted">it does well.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Your IP, both versions</h4><p>IPv4 and IPv6 displayed when reachable. Useful for diagnosing dual-stack reachability.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>Lookup any address</h4><p>Type or paste any v4 / v6 address; the geolocation card fills in.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Two providers</h4><p><code>ipinfo.io</code> is the primary; <code>ip.sb</code> covers regions where <code>ipinfo</code> is rate-limited or blocked. Toggle visibly.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>ASN &amp; org</h4><p>The autonomous-system number and the organisation it belongs to. Useful for hosting checks.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Timezone</h4><p>The IP's local timezone, alongside city. Pair with Timestamp Converter when reproducing user reports.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>One-click copy</h4><p>Copy any field individually; copy the whole card as JSON.</p></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🏢</div>
-                    <h3 class="feature-title">ISP & Organization Details</h3>
-                    <p class="feature-description">Identify Internet Service Provider, organization name, autonomous system number (ASN), and hosting provider information.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>through an IP.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Open the panel</h4><p>Your address shows immediately. Both v4 and v6 if both are reachable.</p><div class="step-key">Self-card</div></div>
+      <div class="step"><span class="step-n"></span><h4>Look up another</h4><p>Type or paste an IP. Geolocation card appears below.</p><div class="step-key">Lookup</div></div>
+      <div class="step"><span class="step-n"></span><h4>Switch provider</h4><p>If one provider is slow or rate-limited, switch — the other often answers immediately.</p><div class="step-key">Provider toggle</div></div>
+      <div class="step"><span class="step-n"></span><h4>Copy</h4><p>Per-field or whole card as JSON, ready to paste into a ticket.</p><div class="step-key">Copy · <b>⌘ C</b></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3 class="feature-title">Network Analysis</h3>
-                    <p class="feature-description">Analyze network properties including connection type, proxy detection, VPN identification, and threat intelligence data.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — Support</span><h4>Reproducing tickets</h4><p>Look up a user's reported IP to confirm region; pair with Timestamp Converter for time-of-day reproduction.</p></div>
+      <div class="use"><span class="use-tag">ii — Hosting</span><h4>ASN identification</h4><p>Spot hosting providers, CDNs, and ISPs by their autonomous-system numbers.</p></div>
+      <div class="use"><span class="use-tag">iii — Security</span><h4>Suspicious traffic</h4><p>Geolocate IPs from access logs to spot outliers in traffic patterns.</p></div>
+      <div class="use"><span class="use-tag">iv — Diag</span><h4>Dual-stack checks</h4><p>Confirm both v4 and v6 reachability from your network.</p></div>
+      <div class="use"><span class="use-tag">v — Travel</span><h4>VPN sanity</h4><p>Check the address you're presenting to the internet matches what you expect.</p></div>
+      <div class="use"><span class="use-tag">vi — Doc</span><h4>Reproducible reports</h4><p>Copy the whole geolocation card as JSON for inclusion in a bug report.</p></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3 class="feature-title">Security Information</h3>
-                    <p class="feature-description">Check IP reputation, identify potential threats, proxy servers, VPN endpoints, and other security-relevant network characteristics.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>Which providers are used?</summary><p><code>ipinfo.io</code> as the primary; <code>ip.sb</code> as the alternative. Both are public APIs.</p></details>
+      <details><summary>Is location accurate?</summary><p>Country and region are reliable; city is best-effort. ASN / org are accurate by definition.</p></details>
+      <details><summary>Does this work in China?</summary><p>Yes — the alternate provider was added specifically to keep lookups reliable across regions where <code>ipinfo.io</code> may be blocked.</p></details>
+      <details><summary>Is my IP logged?</summary><p>Not by us — we have no servers. Whether the upstream provider logs is up to their privacy policy. See the <a href="privacy_policy.html">privacy policy</a> for the full picture.</p></details>
+      <details><summary>IPv6 supported?</summary><p>Yes. Both your own v6 (when reachable) and lookups for any v6 address.</p></details>
+      <details><summary>What's exported?</summary><p>Per-field copy, plus a "copy as JSON" for the whole card.</p></details>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🌏</div>
-                    <h3 class="feature-title">Global Coverage</h3>
-                    <p class="feature-description">Comprehensive database covering all regions including optimized support for China and international IP ranges with accurate geolocation data.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="http-request.html"><div class="rel-head"><span>20 · Network</span><span></span></div><h4>HTTP Client</h4><p>Hit the IP directly to verify reachability or auth flow.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="url-tools.html"><div class="rel-head"><span>21 · Network</span><span></span></div><h4>URL Tools</h4><p>Encode and decode URLs that resolve to those addresses.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="timestamp-converter.html"><div class="rel-head"><span>03 · Convert</span><span>Updated · 2.1</span></div><h4>Timestamp Converter</h4><p>Pair geolocation with the IP's local timezone when reproducing reports.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON Formatter</h4><p>Format the IP card you exported as JSON.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="regex-tester.html"><div class="rel-head"><span>18 · Inspect</span><span></span></div><h4>Regex Test</h4><p>Pattern-match IPs out of unstructured logs.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="ai-chat.html"><div class="rel-head"><span>01 · AI</span><span>Updated · 2.12</span></div><h4>AI Chat</h4><p>Ask the assistant about the ASN, the org, the routing.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
 
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Real-time Queries</h3>
-                    <p class="feature-description">Instant IP lookup results with fast response times. Query multiple IP addresses efficiently for batch analysis and network mapping.</p>
-                </div>
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Your address; everyone else's, <em>too.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3 class="feature-title">Easy Export</h3>
-                    <p class="feature-description">Copy results with one click or export detailed IP information for documentation, reports, and integration with other network tools.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Use Section -->
-    <section class="how-to-use">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">How to Use IP Query Tool</h2>
-                <p class="section-description">
-                    Get comprehensive IP information in just a few simple steps.
-                </p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Detect Your IP</h3>
-                    <p>Click "Detect My IP" to automatically discover your public IPv4 and IPv6 addresses with detailed network information.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Query Any IP</h3>
-                    <p>Enter any IP address in the search field to get comprehensive geolocation, ISP, and network details for that address.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>View Results</h3>
-                    <p>Review detailed information including location, ISP, organization, security flags, and network characteristics.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>Export Data</h3>
-                    <p>Copy individual fields or export complete IP information for use in documentation, security analysis, or network mapping.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect for These Development Tasks</h2>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔒</div>
-                    <h3>Security Analysis</h3>
-                    <p>Identify suspicious IP addresses, detect proxy servers, VPNs, and analyze network threats for security monitoring and incident response.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🌐</div>
-                    <h3>Network Debugging</h3>
-                    <p>Troubleshoot network connectivity issues, verify routing paths, and analyze network topology for infrastructure management.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📍</div>
-                    <h3>Geo-targeting Applications</h3>
-                    <p>Implement location-based services, content delivery optimization, and regional access controls based on IP geolocation data.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📊</div>
-                    <h3>Analytics & Logging</h3>
-                    <p>Enrich web analytics data with geolocation information, analyze visitor patterns, and generate detailed access reports.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🛡️</div>
-                    <h3>Fraud Prevention</h3>
-                    <p>Detect fraudulent activities by analyzing IP patterns, identifying high-risk locations, and verifying user locations.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">⚖️</div>
-                    <h3>Compliance & Regulations</h3>
-                    <p>Ensure compliance with regional regulations like GDPR by accurately identifying visitor locations and data jurisdiction requirements.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>How accurate is the IP geolocation data?</h3>
-                    <p>DevUtilities uses premium IP geolocation databases with high accuracy rates. Country-level accuracy is typically 95-99%, while city-level accuracy varies by region, generally ranging from 70-85% depending on the IP provider and location.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I query multiple IP addresses at once?</h3>
-                    <p>Currently, DevUtilities's IP Query tool processes one IP address at a time for detailed analysis. For bulk IP processing, you can use the tool repeatedly or integrate with the underlying API services.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Does it support both IPv4 and IPv6?</h3>
-                    <p>Yes! DevUtilities fully supports both IPv4 and IPv6 address lookup with comprehensive geolocation data for both protocol versions.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What information is included in IP queries?</h3>
-                    <p>IP queries provide location data (country, region, city, coordinates), ISP information, organization details, autonomous system numbers, timezone, security flags, and network characteristics.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Is my IP query data private and secure?</h3>
-                    <p>Yes, DevUtilities processes all IP queries locally when possible and uses secure connections for external lookups. Your query history and IP information are not stored or shared with third parties.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Does it work in China and other restricted regions?</h3>
-                    <p>Yes, DevUtilities includes optimized IP databases and lookup services that work globally, including China and other regions with specific network requirements.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">Explore other essential tools included in DevUtilities</p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">🌍</div>
-                    <h3>HTTP Request</h3>
-                    <p>Test APIs and web services from different IP locations. Perfect companion to IP geolocation analysis.</p>
-                    <a href="http-request.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🔗</div>
-                    <h3>URL Tools</h3>
-                    <p>Parse and encode URLs with IP addresses, domain names, and network resource identifiers.</p>
-                    <a href="url-tools.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">📱</div>
-                    <h3>QR Code Generator</h3>
-                    <p>Generate QR codes with IP addresses and network information for easy sharing and documentation.</p>
-                    <a href="qr-code.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🎯</div>
-                    <h3>Regex Tester</h3>
-                    <p>Test regex patterns for IP address validation, extraction, and network data processing.</p>
-                    <a href="regex-tester.html" class="tool-link">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Enhance Your Network Analysis?</h2>
-                <p>Join thousands of developers who rely on DevUtilities's IP query tool for network debugging and security analysis.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-primary">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 23 Developer Tools</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div></footer>
 </body>
 </html>

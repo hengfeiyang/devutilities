@@ -1,411 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JWT Encoder & Decoder - JSON Web Token Tools | DevUtilities</title>
-    <meta name="description" content="Professional JWT encoder and decoder for developers. Create, decode, and validate JSON Web Tokens with HMAC (HS256, HS384, HS512) and RSA (RS256, RS384, RS512) algorithms. CryptoKit security integration. Part of DevUtilities - 18 essential developer tools for macOS.">
-    <meta name="keywords" content="JWT encoder, JWT decoder, JSON Web Token, JWT generator, JWT validator, HMAC JWT, RSA JWT, HS256, HS384, HS512, RS256, RS384, RS512, JWT tools">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="JWT Encoder & Decoder - Professional JSON Web Token Tools | DevUtilities">
-    <meta property="og:description" content="Create, decode, and validate JSON Web Tokens with HMAC and RSA algorithms. Complete JWT toolkit with CryptoKit security integration.">
-    <meta property="og:image" content="images/screenshots/jwt.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="JWT Encoder & Decoder - Professional JWT Tools">
-    <meta property="twitter:description" content="Create, decode, and validate JSON Web Tokens with HMAC and RSA algorithms. Complete JWT toolkit with security integration.">
-    <meta property="twitter:image" content="images/screenshots/jwt.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities JWT Encoder",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Professional JWT encoder and decoder with HMAC and RSA algorithm support",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "13"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JWT — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="JWT Encoder/Decoder with HMAC and RSA support — built on CryptoKit and the Security framework." />
+  <meta name="keywords" content="JWT, JSON Web Token, HMAC, RSA, RS256, HS256, JWT decoder, JWT encoder, signature verification, macOS" />
+  <meta property="og:image" content="images/screenshots/jwt.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>JWT Encoder</span>
-                    </div>
-                    <h1 class="hero-title">
-                        JWT Encoder & Decoder
-                        <span class="hero-subtitle">Professional JSON Web Token Tools</span>
-                    </h1>
-                    <p class="hero-description">
-                        Complete JSON Web Token toolkit with advanced security features. Create, decode, and validate JWTs using HMAC (HS256, HS384, HS512) and RSA (RS256, RS384, RS512) algorithms. Built with CryptoKit and Security framework integration for enterprise-grade token management and authentication workflows.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🔐</span>
-                            <span>HMAC & RSA Algorithms</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🛡️</span>
-                            <span>CryptoKit Security</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">⚡</span>
-                            <span>Real-time Validation</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/jwt.png" alt="DevUtilities JWT Encoder Screenshot showing JWT creation and validation interface">
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>JWT</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 13 of 23 · Format</div><h1 class="page-h">Tokens, <em>signed and seen.</em></h1></section>
+  <div class="page-sub"><div></div><p>Encode and decode JSON Web Tokens with HMAC (HS256/384/512) and RSA (RS256/384/512) signatures. CryptoKit handles HMAC; the Security framework handles RSA. The interface adapts to the algorithm — secret key for HMAC, PEM key for RSA.</p></div>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Advanced JWT Security Features</h2>
-                <p class="section-description">
-                    Everything you need for professional JSON Web Token management and authentication.
-                </p>
-            </div>
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Algorithms</div><div class="tool-meta-value accent">HS · RS</div><div class="tool-meta-sub">HMAC and RSA, 256/384/512</div></div>
+    <div><div class="tool-meta-label">Crypto</div><div class="tool-meta-value">CryptoKit · Security</div><div class="tool-meta-sub">First-party Apple frameworks</div></div>
+    <div><div class="tool-meta-label">Direction</div><div class="tool-meta-value">Encode · decode</div><div class="tool-meta-sub">Verify on decode</div></div>
+    <div><div class="tool-meta-label">Network</div><div class="tool-meta-value">Offline</div><div class="tool-meta-sub">Pure local</div></div>
+  </div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">🔐</div>
-                    <h3 class="feature-title">Dual Algorithm Support</h3>
-                    <p class="feature-description">Complete support for both HMAC (HS256, HS384, HS512) and RSA (RS256, RS384, RS512) algorithms with dynamic UI adaptation and algorithm-specific field management.</p>
-                </div>
+  <section class="tool-shot"><figure><img src="images/screenshots/jwt.png" alt="DevUtilities JWT — header / payload / signature panes, algorithm picker, key field." /></figure><figcaption>Plate xiii — JWT with the algorithm picker driving the key UI.</figcaption></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🛡️</div>
-                    <h3 class="feature-title">CryptoKit Integration</h3>
-                    <p class="feature-description">Built with iOS CryptoKit and Security framework for enterprise-grade cryptographic operations, secure key management, and reliable digital signature verification.</p>
-                </div>
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Seven things <span class="muted">it does carefully.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>HMAC algorithms</h4><p>HS256, HS384, HS512 — backed by CryptoKit. Sign and verify with a shared secret.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>RSA algorithms</h4><p>RS256, RS384, RS512 — backed by the Security framework. PEM-formatted keys, sign with private, verify with public.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Adaptive UI</h4><p>The interface morphs based on algorithm — secret-key field for HMAC, public/private key fields for RSA.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Auto-detect on decode</h4><p>Paste a token; the algorithm is read from the header and the right inputs appear.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Header / payload / signature</h4><p>Three panes, each clearly labelled. Edit any of them; encode rebuilds the token.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>Sample keys</h4><p>Paste a token without a key and the sample RSA pair fills in — useful for sanity-checking decoding.</p></div></div>
+      <div class="cap"><span class="cap-n">vii</span><div class="cap-body"><h4>Verify status</h4><p>Decoded tokens show a clear "verified" / "invalid signature" badge; valid tokens get a green tick.</p></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔑</div>
-                    <h3 class="feature-title">RSA Key Management</h3>
-                    <p class="feature-description">Support for PEM-formatted RSA keys with sample key auto-population, private/public key handling, and secure cryptographic operations using the Security framework.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>around a JWT.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Pick algorithm</h4><p>HMAC for shared-secret tokens, RSA for asymmetric. Or paste a token and let the header tell us.</p><div class="step-key">Algo picker</div></div>
+      <div class="step"><span class="step-n"></span><h4>Provide a key</h4><p>HMAC: a secret string. RSA: a PEM-formatted key. The fields adapt as the algorithm changes.</p><div class="step-key">Key input</div></div>
+      <div class="step"><span class="step-n"></span><h4>Encode or decode</h4><p>Edit the header / payload to encode; paste a token to decode.</p><div class="step-key">Both</div></div>
+      <div class="step"><span class="step-n"></span><h4>Read the verdict</h4><p>"Verified" or "Invalid signature" — clearly displayed. Copy the token or the claims.</p><div class="step-key">Status badge</div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Real-time Detection</h3>
-                    <p class="feature-description">Automatic algorithm detection from existing JWTs with real-time validation, signature verification, and dynamic interface updates based on token content.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — Auth</span><h4>Inspecting tokens</h4><p>Decode a JWT from a request header and read the claims without trusting an online tool with your secret.</p></div>
+      <div class="use"><span class="use-tag">ii — Issue</span><h4>Token generation</h4><p>Sign a fresh token with a known key for testing flows that require specific claims.</p></div>
+      <div class="use"><span class="use-tag">iii — Audit</span><h4>Verification</h4><p>Confirm a token was issued by the expected key. Mismatches are flagged immediately.</p></div>
+      <div class="use"><span class="use-tag">iv — Debug</span><h4>Header inspection</h4><p>Read <code>kid</code>, <code>typ</code>, and <code>alg</code> headers when integrating with multiple identity providers.</p></div>
+      <div class="use"><span class="use-tag">v — Migrate</span><h4>HMAC ↔ RSA</h4><p>Re-issue a token under a different algorithm when migrating signing infrastructure.</p></div>
+      <div class="use"><span class="use-tag">vi — Test</span><h4>Fixture tokens</h4><p>Generate canonical tokens for unit and integration tests, with controlled expiration claims.</p></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">Smart UI Adaptation</h3>
-                    <p class="feature-description">Interface intelligently adapts to show appropriate fields - secret keys for HMAC algorithms, RSA key pairs for RSA algorithms, ensuring optimal user experience.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>Which algorithms are supported?</summary><p>HS256, HS384, HS512 (HMAC); RS256, RS384, RS512 (RSA). Six in total, covering the bulk of real-world JWT usage.</p></details>
+      <details><summary>How are RSA keys provided?</summary><p>As PEM-formatted public and private keys. The tool ships with a sample pair; replace them with your own when signing real tokens.</p></details>
+      <details><summary>Where does the cryptography come from?</summary><p>Apple's first-party frameworks. CryptoKit handles HMAC; the Security framework handles RSA key import and signing.</p></details>
+      <details><summary>Is the secret key stored?</summary><p>Only in your local session, so the panel restores after relaunch. Keys never leave your machine; the tool makes no network calls.</p></details>
+      <details><summary>Does it verify expiration claims?</summary><p>The tool decodes <code>exp</code>, <code>iat</code>, and <code>nbf</code> as readable timestamps. Whether the token is currently valid is up to your context.</p></details>
+      <details><summary>What happens when the signature is wrong?</summary><p>The status badge shows "Invalid signature"; the decoded claims are still visible so you can see what was attempted.</p></details>
+      <details><summary>Does this require network access?</summary><p>No. JWT encode/decode is fully local.</p></details>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">Token Analysis</h3>
-                    <p class="feature-description">Comprehensive JWT analysis including header inspection, payload decoding, signature validation, expiration checking, and claim verification.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="crypto-tools.html"><div class="rel-head"><span>23 · Network</span><span>New · 1.12</span></div><h4>Crypto Tools</h4><p>Hashes and ciphers — the rest of the security toolkit.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="base64-encoder.html"><div class="rel-head"><span>12 · Format</span><span></span></div><h4>Base64</h4><p>JWT segments are URL-safe Base64; decode them piece by piece.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON Formatter</h4><p>Format the decoded claims; diff two payloads side by side.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="random-string-generator.html"><div class="rel-head"><span>15 · Generate</span><span>New · 2.9</span></div><h4>Random String</h4><p>Generate cryptographically secure secrets for HMAC keys.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="http-request.html"><div class="rel-head"><span>20 · Network</span><span></span></div><h4>HTTP Client</h4><p>Send the token in an <code>Authorization</code> header and watch what comes back.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="ai-chat.html"><div class="rel-head"><span>01 · AI</span><span>Updated · 2.12</span></div><h4>AI Chat</h4><p>Ask the assistant to walk you through claim semantics and edge cases.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3 class="feature-title">Payload Validation</h3>
-                    <p class="feature-description">JSON payload validation with syntax highlighting, standard claims verification (iss, sub, aud, exp, nbf, iat), and custom claims support.</p>
-                </div>
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Encode, decode, verify — <em>locally.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3 class="feature-title">Easy Token Management</h3>
-                    <p class="feature-description">One-click token copying, sample token generation, and seamless integration with authentication workflows and API testing environments.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Use Section -->
-    <section class="how-to-use">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">How to Use JWT Tools</h2>
-                <p class="section-description">
-                    Create and manage JSON Web Tokens securely in just a few simple steps.
-                </p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Choose Algorithm</h3>
-                    <p>Select your preferred algorithm - HMAC for shared secrets (HS256/384/512) or RSA for public/private key pairs (RS256/384/512).</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Configure Payload</h3>
-                    <p>Enter your JWT payload with custom claims, standard fields (iss, sub, aud, exp), and any additional data needed for your application.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>Provide Keys</h3>
-                    <p>Input secret key for HMAC algorithms or RSA private/public keys for RSA algorithms. Use sample keys for testing or your own production keys.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>Generate & Validate</h3>
-                    <p>Create JWT tokens or decode existing ones with automatic signature verification and payload validation for secure authentication workflows.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect for These Development Tasks</h2>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔒</div>
-                    <h3>API Authentication</h3>
-                    <p>Generate and validate JWT tokens for API authentication, microservices communication, and secure service-to-service authentication workflows.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">👤</div>
-                    <h3>User Session Management</h3>
-                    <p>Create user session tokens with custom claims, expiration times, and role-based access control for web and mobile application authentication.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🌐</div>
-                    <h3>Single Sign-On (SSO)</h3>
-                    <p>Implement SSO solutions with standardized JWT tokens for enterprise authentication, identity federation, and cross-domain user verification.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔧</div>
-                    <h3>Testing & Development</h3>
-                    <p>Create test tokens for development environments, debug authentication issues, and validate JWT implementations in applications and services.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📱</div>
-                    <h3>Mobile App Security</h3>
-                    <p>Generate secure tokens for mobile app authentication, offline validation, and seamless user experience across different app sessions.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">⚖️</div>
-                    <h3>OAuth & OpenID Connect</h3>
-                    <p>Create and validate tokens for OAuth 2.0 and OpenID Connect implementations, ensuring compliance with industry authentication standards.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>What's the difference between HMAC and RSA algorithms?</h3>
-                    <p>HMAC algorithms (HS256, HS384, HS512) use symmetric keys - the same secret key signs and verifies tokens. RSA algorithms (RS256, RS384, RS512) use asymmetric keys - private key signs, public key verifies, enabling distributed verification.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How secure are the cryptographic operations?</h3>
-                    <p>DevUtilities uses iOS CryptoKit and Security framework for all cryptographic operations, providing enterprise-grade security with hardware-accelerated encryption and secure key management on supported devices.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I use my own RSA keys?</h3>
-                    <p>Yes! DevUtilities supports PEM-formatted RSA keys. You can import your own private and public keys or use the provided sample keys for testing and development purposes.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Does it automatically detect JWT algorithms?</h3>
-                    <p>Absolutely! When you paste an existing JWT token, DevUtilities automatically detects the algorithm from the header and dynamically updates the interface to show appropriate fields for validation.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Are standard JWT claims supported?</h3>
-                    <p>Yes, DevUtilities supports all standard JWT claims including iss (issuer), sub (subject), aud (audience), exp (expiration), nbf (not before), and iat (issued at), plus custom claims.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I validate token expiration and timing claims?</h3>
-                    <p>Yes! DevUtilities automatically validates timing-related claims like exp, nbf, and iat against the current time, providing clear feedback about token validity and expiration status.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">Explore other essential tools included in DevUtilities</p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">🔐</div>
-                    <h3>Crypto Tools</h3>
-                    <p>Complete cryptographic toolkit with hash functions, symmetric and asymmetric encryption for comprehensive security workflows.</p>
-                    <a href="crypto-tools.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🔠</div>
-                    <h3>Base64 Encoder</h3>
-                    <p>Encode and decode Base64 data often used in JWT payloads for binary content and key material transmission.</p>
-                    <a href="base64-encoder.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🌍</div>
-                    <h3>HTTP Request</h3>
-                    <p>Test APIs with JWT authentication, send bearer tokens, and validate JWT-protected endpoints in your applications.</p>
-                    <a href="http-request.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">📄</div>
-                    <h3>JSON Formatter</h3>
-                    <p>Format and validate JSON payloads within JWT tokens for better readability and payload analysis.</p>
-                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Secure Your Applications with JWT?</h2>
-                <p>Join thousands of developers who rely on DevUtilities's JWT tools for secure authentication and authorization workflows.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-primary">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 23 Developer Tools</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div></footer>
 </body>
 </html>

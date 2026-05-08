@@ -1,462 +1,139 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hex String Converter - Hex to String & String to Hex Online | DevUtilities</title>
-    <meta name="description" content="Professional hex string converter for developers. Convert hexadecimal to string and string to hex with UTF-8, UTF-16, ASCII encoding support. Real-time bidirectional conversion with error handling. Part of DevUtilities - 18 essential developer tools for macOS.">
-    <meta name="keywords" content="hex to string, string to hex, hex converter, hexadecimal converter, hex to text, text to hex, hex decoder, hex encoder, UTF-8 hex, ASCII hex converter">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hex String Converter — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="Bidirectional hex-to-string conversion with UTF-8, UTF-16, and ASCII handling. A native macOS tool for binary debugging and protocol work." />
+  <meta name="keywords" content="hex string converter, hex to text, text to hex, UTF-8, UTF-16, ASCII, hex encoder, binary tools, macOS" />
+  <meta property="og:image" content="images/screenshots/hex.png" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="Hex String Converter - Hex to String & String to Hex | DevUtilities">
-    <meta property="og:description" content="Professional hex string converter with UTF-8, UTF-16, ASCII encoding support. Bidirectional conversion with error handling for developers.">
-    <meta property="og:image" content="images/screenshots/hex.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Hex String Converter - Hex to String & String to Hex">
-    <meta property="twitter:description" content="Professional hex string converter with UTF-8, UTF-16, ASCII encoding support. Bidirectional conversion with error handling.">
-    <meta property="twitter:image" content="images/screenshots/hex.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities Hex String Converter",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Professional hex string converter with UTF-8, UTF-16, ASCII encoding support and bidirectional conversion",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "10"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <header class="nav nav-static">
+    <div class="nav-inner">
+      <a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a>
+      <nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav>
+      <div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div>
+    </div>
+    <div class="nav-progress"></div>
+  </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>Hex String Converter</span>
-                    </div>
-                    <h1 class="hero-title">
-                        Hex String Converter
-                        <span class="hero-subtitle">Bidirectional Hexadecimal to String Conversion</span>
-                    </h1>
-                    <p class="hero-description">
-                        Convert between hexadecimal and string formats with comprehensive encoding support. Features UTF-8, UTF-16, and ASCII encoding options, real-time bidirectional conversion, and robust error handling for invalid hex data. Essential for binary data processing, debugging, and protocol analysis.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🔄</span>
-                            <span>Bidirectional Conversion</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🔤</span>
-                            <span>Multiple Encodings</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">⚡</span>
-                            <span>Real-time Processing</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/hex.png" alt="DevUtilities Hex String Converter Screenshot showing bidirectional conversion with encoding options and error handling">
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>Hex String Converter</strong></nav>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Advanced Hex Conversion Features</h2>
-                <p class="section-description">
-                    Everything you need for professional hexadecimal data processing and string conversion workflows.
-                </p>
-            </div>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 06 of 23 · Convert</div><h1 class="page-h">Hex to text, <em>and back.</em></h1></section>
+  <div class="page-sub"><div></div><p>Bidirectional hex ↔ string conversion with full encoding control. UTF-8, UTF-16, and ASCII supported; non-printable bytes preserved; clear errors when the input drifts off-format.</p></div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">🔄</div>
-                    <h3 class="feature-title">Bidirectional Conversion</h3>
-                    <p class="feature-description">Convert text to hexadecimal and hex back to readable text seamlessly. Supports both directions with automatic format detection and intelligent processing.</p>
-                </div>
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Version</div><div class="tool-meta-value accent">v2.2</div><div class="tool-meta-sub">First shipped</div></div>
+    <div><div class="tool-meta-label">Encodings</div><div class="tool-meta-value">UTF-8 · UTF-16 · ASCII</div><div class="tool-meta-sub">Switchable per session</div></div>
+    <div><div class="tool-meta-label">Direction</div><div class="tool-meta-value">Bidirectional</div><div class="tool-meta-sub">Auto-routed</div></div>
+    <div><div class="tool-meta-label">Network</div><div class="tool-meta-value">Offline</div><div class="tool-meta-sub">Pure local</div></div>
+  </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔤</div>
-                    <h3 class="feature-title">Multiple Encoding Support</h3>
-                    <p class="feature-description">Choose from UTF-8, UTF-16, and ASCII encoding formats. Each encoding handles different character sets and use cases for maximum compatibility.</p>
-                </div>
+  <section class="tool-shot"><figure><img src="images/screenshots/hex.png" alt="DevUtilities Hex String Converter — paired hex/text panels with encoding picker." /></figure><figcaption>Plate vi — Hex String Converter with the encoding picker live.</figcaption></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🛡️</div>
-                    <h3 class="feature-title">Error Handling</h3>
-                    <p class="feature-description">Robust validation for invalid hex data with clear error messages and suggestions. Handles malformed input gracefully with detailed feedback.</p>
-                </div>
+  <main>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div>
+    <div>
+      <h2 class="tool-block-h">Six things <span class="muted">it does well.</span></h2>
+      <div class="caps">
+        <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Hex to string</h4><p>Paste raw hex bytes, see the decoded text in your chosen encoding. Spaces and dashes between bytes ignored.</p></div></div>
+        <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>String to hex</h4><p>Type or paste text; get the hex byte sequence in the encoding you specified.</p></div></div>
+        <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>UTF-8 / UTF-16 / ASCII</h4><p>Pick the encoding that matches your data. Non-ASCII characters round-trip cleanly under the right encoding.</p></div></div>
+        <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Real-time conversion</h4><p>Type, see results instantly. Both panels update as you key.</p></div></div>
+        <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Tolerant input</h4><p>Hex input accepts spaces, dashes, mixed case, and the <code>0x</code> prefix. Whitespace is silent; everything else surfaces an error.</p></div></div>
+        <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>One-click copy</h4><p>Copy buttons on both panels. Hex without spaces, or text alone — your call.</p></div></div>
+      </div>
+    </div>
+  </section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Real-time Processing</h3>
-                    <p class="feature-description">Instant conversion as you type with live validation. See results immediately without delays or processing buttons for efficient workflow.</p>
-                </div>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div>
+    <div>
+      <h2 class="tool-block-h">Four moves <em>between bytes and text.</em></h2>
+      <div class="steps">
+        <div class="step"><span class="step-n"></span><h4>Pick the encoding</h4><p>UTF-8 by default. Switch to UTF-16 for Windows-flavoured payloads or ASCII for old wire protocols.</p><div class="step-key">Encoding picker</div></div>
+        <div class="step"><span class="step-n"></span><h4>Paste hex or text</h4><p>Drop bytes from a hex dump or plain text. Both panels are bidirectional.</p><div class="step-key">Either field</div></div>
+        <div class="step"><span class="step-n"></span><h4>Read the conversion</h4><p>Live update on the opposite side. Errors surface inline if the hex is malformed.</p><div class="step-key">Live</div></div>
+        <div class="step"><span class="step-n"></span><h4>Copy</h4><p>One-click copy for the side you wanted.</p><div class="step-key">Copy · <b>⌘ C</b></div></div>
+      </div>
+    </div>
+  </section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3 class="feature-title">Unicode Support</h3>
-                    <p class="feature-description">Full Unicode character support with proper UTF-8 and UTF-16 encoding handling. Works with international characters and special symbols.</p>
-                </div>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div>
+    <div>
+      <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+      <div class="uses">
+        <div class="use"><span class="use-tag">i — Debug</span><h4>Hex dumps</h4><p>Decode strings buried in <code>xxd</code> output without leaving the editor.</p></div>
+        <div class="use"><span class="use-tag">ii — Protocols</span><h4>Wire-level inspection</h4><p>Translate ASCII control sequences and binary frames between text and bytes.</p></div>
+        <div class="use"><span class="use-tag">iii — Security</span><h4>Payload analysis</h4><p>Inspect the strings hidden inside hex-encoded blobs from logs, samples, or packet captures.</p></div>
+        <div class="use"><span class="use-tag">iv — Encoding</span><h4>UTF-8 vs UTF-16</h4><p>Compare how the same text serialises under different encodings — visible byte-by-byte.</p></div>
+        <div class="use"><span class="use-tag">v — Test</span><h4>Fixture generation</h4><p>Produce hex test inputs from a clean string spec, exact and reproducible.</p></div>
+        <div class="use"><span class="use-tag">vi — Forensics</span><h4>Reverse engineering</h4><p>Recover printable strings from binary blobs without writing a script.</p></div>
+      </div>
+    </div>
+  </section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">Data Analysis</h3>
-                    <p class="feature-description">Character and byte count tracking with encoding overhead analysis. Understand data size changes during hex conversion processes.</p>
-                </div>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div>
+    <div>
+      <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+      <div class="faq">
+        <details open><summary>Which encodings are supported?</summary><p>UTF-8, UTF-16, and ASCII. The encoding is switchable per session and persists between launches.</p></details>
+        <details><summary>Does it accept spaces or prefixes in the hex?</summary><p>Yes — spaces, dashes, mixed case, and a leading <code>0x</code> are all tolerated. Other non-hex characters surface an inline error.</p></details>
+        <details><summary>How are non-printable bytes shown?</summary><p>The hex side preserves them; the text side renders them via standard escape sequences for the chosen encoding.</p></details>
+        <details><summary>Does this require network access?</summary><p>No. Hex conversion is fully local; nothing leaves your machine.</p></details>
+        <details><summary>What's the difference between UTF-8 and UTF-16 hex?</summary><p>The same string produces different byte sequences in each. UTF-8 is byte-by-byte; UTF-16 uses two bytes per code unit (and surrogate pairs beyond <code>U+FFFF</code>).</p></details>
+        <details><summary>Can I copy bytes without spaces?</summary><p>Yes. The copy button outputs compact hex without delimiters, ready to paste into code.</p></details>
+      </div>
+    </div>
+  </section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3 class="feature-title">Easy Copy & Export</h3>
-                    <p class="feature-description">One-click copying of conversion results with multiple format options. Integrate seamlessly with development tools and workflows.</p>
-                </div>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div>
+    <div>
+      <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+      <div class="related-grid">
+        <a class="rel" href="base-converter.html"><div class="rel-head"><span>05 · Convert</span><span>Updated · 2.8</span></div><h4>Base Converter</h4><p>Numbers across bases — bin, oct, dec, hex, base62.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="base64-encoder.html"><div class="rel-head"><span>12 · Format</span><span></span></div><h4>Base64</h4><p>Encode and decode with URL-safe variants.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="crypto-tools.html"><div class="rel-head"><span>23 · Network</span><span>New · 1.12</span></div><h4>Crypto Tools</h4><p>Hashes return hex digests; this is where you decode them.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="url-tools.html"><div class="rel-head"><span>21 · Network</span><span></span></div><h4>URL Tools</h4><p>Encode and decode percent-escapes for non-ASCII URL parts.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="regex-tester.html"><div class="rel-head"><span>18 · Inspect</span><span></span></div><h4>Regex Test</h4><p>Pattern-match the hex strings you're decoding.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON Formatter</h4><p>Format the JSON whose hex strings you're translating.</p><span class="rel-arrow">Open →</span></a>
+      </div>
+    </div>
+  </section>
+  </main>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3 class="feature-title">Format Detection</h3>
-                    <p class="feature-description">Automatic detection of input format with intelligent parsing. Recognizes hex patterns and text content for appropriate conversion direction.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <section class="tool-cta">
+    <div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div>
+    <h2 class="tool-cta-h">Bytes to text, text to bytes, <em>without a script.</em></h2>
+    <div class="tool-cta-actions">
+      <a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a>
+      <a href="release-notes.html" class="btn-ghost lg">Changelog</a>
+    </div>
+  </section>
 
-    <!-- Encoding Types Section -->
-    <section class="encoding-types">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Supported Encoding Formats</h2>
-                <p class="section-description">Understanding different character encoding schemes for hex conversion</p>
-            </div>
-
-            <div class="encoding-grid">
-                <div class="encoding-card featured">
-                    <div class="encoding-badge utf8">UTF-8</div>
-                    <h3>UTF-8 Encoding</h3>
-                    <div class="encoding-example">
-                        <div class="encoding-text">"Hello 世界"</div>
-                        <div class="encoding-arrow">↕</div>
-                        <div class="encoding-hex">48656c6c6f20e4b896e7958c</div>
-                    </div>
-                    <p><strong>Use for:</strong> Most common encoding, web content, international text, modern applications</p>
-                    <p><strong>Characters:</strong> Variable-length encoding (1-4 bytes per character)</p>
-                    <p><strong>Best for:</strong> General purpose, multilingual content, file storage</p>
-                </div>
-
-                <div class="encoding-card">
-                    <div class="encoding-badge utf16">UTF-16</div>
-                    <h3>UTF-16 Encoding</h3>
-                    <div class="encoding-example">
-                        <div class="encoding-text">"Hello"</div>
-                        <div class="encoding-arrow">↕</div>
-                        <div class="encoding-hex">480065006c006c006f00</div>
-                    </div>
-                    <p><strong>Use for:</strong> Windows systems, Java strings, .NET applications, some databases</p>
-                    <p><strong>Characters:</strong> Fixed 2-byte encoding (with surrogate pairs for extended characters)</p>
-                    <p><strong>Best for:</strong> Windows development, legacy systems, specific platform requirements</p>
-                </div>
-
-                <div class="encoding-card">
-                    <div class="encoding-badge ascii">ASCII</div>
-                    <h3>ASCII Encoding</h3>
-                    <div class="encoding-example">
-                        <div class="encoding-text">"Hello"</div>
-                        <div class="encoding-arrow">↕</div>
-                        <div class="encoding-hex">48656c6c6f</div>
-                    </div>
-                    <p><strong>Use for:</strong> Legacy systems, protocol headers, simple English text, embedded systems</p>
-                    <p><strong>Characters:</strong> 7-bit encoding (0-127), English alphabet and basic symbols only</p>
-                    <p><strong>Best for:</strong> Simple text, protocol data, debugging, compatibility with old systems</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Use Section -->
-    <section class="how-to-use">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">How to Use Hex String Converter</h2>
-                <p class="section-description">
-                    Convert between hex and string formats in just a few simple steps.
-                </p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Input Your Data</h3>
-                    <p>Enter either hexadecimal data (like 48656c6c6f) or regular text that you want to convert to hex format.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Choose Encoding</h3>
-                    <p>Select the appropriate character encoding: UTF-8 for general use, UTF-16 for Windows/Java, or ASCII for simple text.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>See Conversion</h3>
-                    <p>View the instant conversion results with automatic format detection and error handling for invalid input data.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>Copy Results</h3>
-                    <p>Copy the converted output with one click and use it in your applications, debugging sessions, or data processing workflows.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect for These Development Tasks</h2>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">🐛</div>
-                    <h3>Debugging & Analysis</h3>
-                    <p>Debug binary data, analyze network packets, decode protocol messages, and inspect hex dumps from debugging tools and logs.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔐</div>
-                    <h3>Cryptography & Security</h3>
-                    <p>Work with cryptographic keys, hash values, digital signatures, and encrypted data that are commonly represented in hexadecimal format.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📡</div>
-                    <h3>Network Protocol Analysis</h3>
-                    <p>Analyze network packets, decode protocol headers, inspect binary messages, and understand communication between systems.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">💾</div>
-                    <h3>File Format Processing</h3>
-                    <p>Examine binary file headers, extract metadata from files, analyze file signatures, and work with custom binary formats.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">⚙️</div>
-                    <h3>Embedded Systems</h3>
-                    <p>Program microcontrollers, debug firmware, analyze sensor data, and work with hardware communication protocols in embedded development.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔧</div>
-                    <h3>Data Recovery & Forensics</h3>
-                    <p>Recover corrupted data, analyze disk sectors, examine memory dumps, and investigate digital evidence in forensic analysis.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>What's the difference between UTF-8, UTF-16, and ASCII?</h3>
-                    <p>UTF-8 is variable-length (1-4 bytes) and supports all Unicode characters. UTF-16 uses 2 bytes per character and is common in Windows/Java. ASCII uses 1 byte and only supports basic English characters (0-127).</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How do I know which encoding to use?</h3>
-                    <p>Use UTF-8 for most modern applications and international text. Choose UTF-16 for Windows/Java environments or when working with systems that specifically use it. ASCII is for simple English text or legacy systems.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What happens with invalid hex data?</h3>
-                    <p>DevUtilities provides clear error messages for invalid hex input, such as odd-length strings, non-hex characters, or malformed data, with suggestions for fixing the issues.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can it handle large hex strings?</h3>
-                    <p>Yes, DevUtilities efficiently processes large hex strings and binary data. The tool is optimized for performance while maintaining accuracy in conversion and validation.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Does it support Unicode characters?</h3>
-                    <p>Absolutely! When using UTF-8 or UTF-16 encoding, DevUtilities fully supports Unicode characters including emojis, international scripts, and special symbols.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Is this the same as Base64 encoding?</h3>
-                    <p>No, hex encoding and Base64 are different. Hex uses 0-9 and A-F characters to represent binary data, while Base64 uses a larger character set. Hex is more readable for debugging binary data.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">Explore other essential tools included in DevUtilities</p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">🔢</div>
-                    <h3>Base Converter</h3>
-                    <p>Convert between binary, octal, decimal, hexadecimal, and Base62 - complementary number system conversion tool.</p>
-                    <a href="base-converter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🔠</div>
-                    <h3>Base64 Encoder</h3>
-                    <p>Encode and decode Base64 data - another essential binary data encoding format for developers and data transmission.</p>
-                    <a href="base64-encoder.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🔐</div>
-                    <h3>Crypto Tools</h3>
-                    <p>Generate hashes and work with cryptographic functions that often output results in hexadecimal format.</p>
-                    <a href="crypto-tools.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🎨</div>
-                    <h3>Color Picker</h3>
-                    <p>Work with HEX color codes and convert between color formats - hex notation is essential for web design.</p>
-                    <a href="color-picker.html" class="tool-link">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Streamline Your Hex Conversion Workflow?</h2>
-                <p>Join thousands of developers who rely on DevUtilities's hex string converter for their binary data processing tasks.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-primary">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 23 Developer Tools</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <footer class="foot">
+    <div class="foot-inner">
+      <div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div>
+      <div class="foot-cols">
+        <div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div>
+        <div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div>
+        <div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div>
+      </div>
+    </div>
+    <div class="foot-rule"></div>
+    <div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div>
+  </footer>
 </body>
 </html>

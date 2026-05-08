@@ -1,411 +1,98 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Picker - Professional Color Format Converter | DevUtilities</title>
-    <meta name="description" content="Professional color format converter for designers and developers. Convert between HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK color formats with real-time conversion and color history. Part of DevUtilities - 20 essential developer tools for macOS.">
-    <meta name="keywords" content="color picker, color converter, hex to rgb, rgb to hsl, cmyk converter, color format converter, hsl to rgb, color tool, design tool, macOS color picker">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="Color Picker - Professional Color Format Converter | DevUtilities">
-    <meta property="og:description" content="Convert between HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK color formats with real-time conversion and color history tracking.">
-    <meta property="og:image" content="images/screenshots/color-picker.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Color Picker - Professional Color Format Converter">
-    <meta property="twitter:description" content="Convert between 7 color formats with real-time conversion and color history tracking for designers and developers.">
-    <meta property="twitter:image" content="images/screenshots/color-picker.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities Color Picker",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Professional color format converter with support for 7 color formats and color history tracking",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "10"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Color Picker — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="A professional color format converter — HEX, RGB(A), HSL(A), HSB, CMYK — with the system color panel and 22-slot history." />
+  <meta name="keywords" content="color picker, color converter, HEX, RGB, HSL, HSB, CMYK, color history, macOS color tool" />
+  <meta property="og:image" content="images/screenshots/color-picker.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>Color Picker</span>
-                    </div>
-                    <h1 class="hero-title">
-                        Color Picker
-                        <span class="hero-subtitle">Professional Color Format Converter</span>
-                    </h1>
-                    <p class="hero-description">
-                        Convert between HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK color formats with our professional color picker. Features real-time conversion, visual color preview, and color history tracking. Perfect for designers, web developers, and anyone working with colors.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🎨</span>
-                            <span>7 Color Formats</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">⚡</span>
-                            <span>Real-time Conversion</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🕐</span>
-                            <span>Color History</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/color-picker.png" alt="DevUtilities Color Picker Screenshot showing color format conversion">
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>Color Picker</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 08 of 23 · Convert</div><h1 class="page-h">Every format, <em>round-tripped.</em></h1></section>
+  <div class="page-sub"><div></div><p>HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK — all seven formats stay in lockstep as you edit any one of them. The system color panel is one click away, the last twenty-two colors hold their slot, and every value is one click from the clipboard.</p></div>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Comprehensive Color Conversion Features</h2>
-                <p class="section-description">
-                    Everything you need for professional color format conversion, built into a native macOS application.
-                </p>
-            </div>
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Formats</div><div class="tool-meta-value accent">Seven</div><div class="tool-meta-sub">HEX · RGB(A) · HSL(A) · HSB · CMYK</div></div>
+    <div><div class="tool-meta-label">History</div><div class="tool-meta-value">22 swatches</div><div class="tool-meta-sub">Persists across sessions</div></div>
+    <div><div class="tool-meta-label">Updated</div><div class="tool-meta-value">v2.8</div><div class="tool-meta-sub">First shipped</div></div>
+    <div><div class="tool-meta-label">System integration</div><div class="tool-meta-value">macOS picker</div><div class="tool-meta-sub">One-click open</div></div>
+  </div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">🎨</div>
-                    <h3 class="feature-title">7 Color Format Support</h3>
-                    <p class="feature-description">Convert between HEX (#RRGGBB/#RRGGBBAA), RGB, RGBA, HSL, HSLA, HSB (HSV), and CMYK color formats. All formats update in real-time as you edit any value.</p>
-                </div>
+  <section class="tool-shot"><figure><img src="images/screenshots/color-picker.png" alt="DevUtilities Color Picker — preview swatch, seven format inputs, history strip." /></figure><figcaption>Plate viii — Color Picker with the macOS color panel handoff.</figcaption></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Real-time Conversion</h3>
-                    <p class="feature-description">Edit any color format field and watch all other formats update instantly. Custom color space conversion algorithms ensure accurate color representation across all formats.</p>
-                </div>
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Eight things, <span class="muted">all visible.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Seven color formats</h4><p>HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK. All present, all editable.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>Live round-trip</h4><p>Edit any field; the other six update instantly. Rounding is sane and visible.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Visual preview</h4><p>A large swatch dominates the panel. Subtle borders ensure the color reads on light and dark backgrounds.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>System color panel</h4><p>One click hands off to the native macOS picker — eyedropper, sliders, palettes — and pulls the result back in every format.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Color history</h4><p>The last 22 colors stay as visual swatches. Click a swatch to restore it across all seven formats.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>Per-format copy</h4><p>Every format has its own copy button. Grab the HEX or the HSL alone — no surrounding label.</p></div></div>
+      <div class="cap"><span class="cap-n">vii</span><div class="cap-body"><h4>Alpha-aware</h4><p>RGBA and HSLA preserve transparency. The preview swatch shows the alpha channel against a checker.</p></div></div>
+      <div class="cap"><span class="cap-n">viii</span><div class="cap-body"><h4>State persistence</h4><p>Current color and history persist between sessions. Re-open and your palette is intact.</p></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🖼️</div>
-                    <h3 class="feature-title">Visual Color Preview</h3>
-                    <p class="feature-description">Large 80x80pt color preview box with rounded corners. Integrates with macOS system color panel for precise color selection using native color picker tools.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>between formats.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Pick or paste</h4><p>Open the system picker, or paste a HEX string from a design doc.</p><div class="step-key">Picker · paste</div></div>
+      <div class="step"><span class="step-n"></span><h4>Read the others</h4><p>RGB, HSL, HSB, CMYK — all displayed in their canonical syntax.</p><div class="step-key">Live</div></div>
+      <div class="step"><span class="step-n"></span><h4>Edit any field</h4><p>Tweak the H of HSL; watch HEX, RGB, and HSB follow.</p><div class="step-key">Type</div></div>
+      <div class="step"><span class="step-n"></span><h4>Copy or save</h4><p>One-click copy on the format you want; the color saves itself to history.</p><div class="step-key">Copy · history</div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🕐</div>
-                    <h3 class="feature-title">Color History</h3>
-                    <p class="feature-description">Automatically tracks up to 22 previously selected colors with visual 20x20pt swatches. Click any history color to instantly load it into the picker.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — Design</span><h4>Spec to code</h4><p>Translate the HEX in a Figma file into HSL or RGB for SwiftUI / CSS / iOS.</p></div>
+      <div class="use"><span class="use-tag">ii — Brand</span><h4>System builds</h4><p>Maintain consistent palettes across product surfaces by snapshotting brand swatches.</p></div>
+      <div class="use"><span class="use-tag">iii — Print</span><h4>Web vs. print</h4><p>Convert to CMYK for an export-to-PDF workflow without losing the source RGB.</p></div>
+      <div class="use"><span class="use-tag">iv — A11y</span><h4>Contrast checks</h4><p>HSL's lightness component is great for tweaking until the contrast ratio passes.</p></div>
+      <div class="use"><span class="use-tag">v — Eyedrop</span><h4>Pixel sampling</h4><p>Use the system eyedropper through the macOS picker; the captured color appears in every format.</p></div>
+      <div class="use"><span class="use-tag">vi — Theme</span><h4>Building palettes</h4><p>Keep 22 swatches at hand for an ongoing theme exercise — restoring any with one click.</p></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">✏️</div>
-                    <h3 class="feature-title">Editable Format Fields</h3>
-                    <p class="feature-description">Direct editing of any color format with regex-based validation. Supports various input patterns like rgb(r,g,b), #RRGGBB, hsl(h,s%,l%), and more.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>Which formats are supported?</summary><p>HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK — seven in total.</p></details>
+      <details><summary>How does the round-trip stay accurate?</summary><p>Internally, the color is stored in a high-precision floating-point space. Each format is rendered from that source on demand, so editing any one is loss-free for the others.</p></details>
+      <details><summary>Does it work with the macOS color picker?</summary><p>Yes. One click hands off to the system picker (eyedropper, palettes, sliders) and pulls the chosen color back in every format.</p></details>
+      <details><summary>How big is the history?</summary><p>22 most recent colors. Click any swatch to restore it.</p></details>
+      <details><summary>Is alpha supported?</summary><p>RGBA and HSLA preserve and display the alpha channel; the preview shows it against a checkerboard.</p></details>
+      <details><summary>Does this require network access?</summary><p>No. Color conversion is fully local.</p></details>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3 class="feature-title">Copy to Clipboard</h3>
-                    <p class="feature-description">One-click copy button next to each color format value. Quickly copy HEX codes, RGB values, or any other format to use in your design tools or code.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="hex-converter.html"><div class="rel-head"><span>06 · Convert</span><span>New · 2.2</span></div><h4>Hex String Converter</h4><p>Bytes ↔ string when colors aren't the only hex you're juggling.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="base-converter.html"><div class="rel-head"><span>05 · Convert</span><span>Updated · 2.8</span></div><h4>Base Converter</h4><p>Five bases, one number — handy for color encoding tricks.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="random-string-generator.html"><div class="rel-head"><span>15 · Generate</span><span>New · 2.9</span></div><h4>Random String</h4><p>Generate random hex strings — sometimes you do want random colors.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON Formatter</h4><p>Format the design tokens that hold those colors.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="qr-code.html"><div class="rel-head"><span>16 · Generate</span><span></span></div><h4>QR Code</h4><p>Encode a colored brand link, decode one from a sample.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="ai-translate.html"><div class="rel-head"><span>02 · AI</span><span>Updated · 2.12</span></div><h4>AI Translate</h4><p>Localise the design copy that goes with the palette.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
 
-                <div class="feature-card">
-                    <div class="feature-icon">💾</div>
-                    <h3 class="feature-title">State Persistence</h3>
-                    <p class="feature-description">Automatically saves your last selected color and entire color history between sessions using UserDefaults. Pick up right where you left off.</p>
-                </div>
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Seven formats, one swatch, <em>one quiet panel.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">Accurate Conversions</h3>
-                    <p class="feature-description">Custom color space conversion algorithms for RGB↔HSL, RGB↔HSB, and RGB↔CMYK ensure accurate color representation across all formats with proper edge case handling.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Use Section -->
-    <section class="how-to-use">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">How to Use Color Picker</h2>
-                <p class="section-description">
-                    Get started with professional color format conversion in just a few simple steps.
-                </p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Select Your Color</h3>
-                    <p>Click the "Select Color" button to open macOS system color panel, or click any color from your history to reuse a previous selection.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>View All Formats</h3>
-                    <p>Instantly see your selected color represented in all 7 formats: HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK with accurate conversion.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>Edit Any Format</h3>
-                    <p>Type directly into any format field to update the color. All other formats will automatically update to reflect your changes in real-time.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>Copy & Use</h3>
-                    <p>Click the copy button next to any format to copy it to your clipboard, then paste it directly into your design tools, CSS, or code editor.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect for These Design & Development Tasks</h2>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">🎨</div>
-                    <h3>Web Development</h3>
-                    <p>Convert colors between CSS formats (HEX, RGB, RGBA, HSL, HSLA). Perfect for building websites and web applications with consistent color schemes.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🖼️</div>
-                    <h3>UI/UX Design</h3>
-                    <p>Work with design tools that require different color formats. Convert between HEX for Figma, RGB for Photoshop, or HSL for CSS with ease.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📱</div>
-                    <h3>Mobile App Development</h3>
-                    <p>Convert colors for iOS (RGB/HSB), Android (HEX/ARGB), or cross-platform frameworks. Ensure consistent branding across all platforms.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🖨️</div>
-                    <h3>Print Design</h3>
-                    <p>Convert between screen colors (RGB/HEX) and print colors (CMYK) for materials that need to look great both digitally and in print.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🎭</div>
-                    <h3>Brand Guidelines</h3>
-                    <p>Document brand colors in multiple formats for different use cases. Provide HEX for web, RGB for digital, and CMYK for print materials.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔧</div>
-                    <h3>Color Accessibility</h3>
-                    <p>Adjust HSL lightness/saturation or HSB brightness values to create accessible color variations that meet WCAG contrast requirements.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>What color formats are supported?</h3>
-                    <p>DevUtilities Color Picker supports 7 professional color formats: HEX (#RRGGBB and #RRGGBBAA with alpha), RGB (0-255 range), RGBA (with alpha 0-1), HSL (hue, saturation, lightness), HSLA (with alpha), HSB/HSV (hue, saturation, brightness), and CMYK (for print design).</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How does the color history work?</h3>
-                    <p>The Color Picker automatically saves up to 22 of your most recently selected colors. Each color is displayed as a small visual swatch that you can click to quickly reload that color. The history persists between app sessions.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I edit color values directly?</h3>
-                    <p>Yes! You can type directly into any color format field. The Color Picker uses regex-based validation to parse your input and instantly updates all other format fields to reflect your changes. This is perfect for quickly adjusting specific color values.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What's the difference between HSL and HSB?</h3>
-                    <p>HSL (Hue, Saturation, Lightness) and HSB/HSV (Hue, Saturation, Brightness/Value) are two different color space representations. HSL uses lightness (0% = black, 50% = pure color, 100% = white), while HSB uses brightness (0% = black, 100% = pure color). Both are useful for different color manipulation tasks.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Is the CMYK conversion accurate for print?</h3>
-                    <p>The CMYK conversion uses standard color space algorithms to convert from RGB. While suitable for most design work, professional print production may require ICC color profile conversions for exact color matching on specific printers and paper types.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What other tools are included with DevUtilities?</h3>
-                    <p>DevUtilities includes 19 other essential developer tools: AI Chat, AI Translate, Timestamp Converter, Unit Converter, Base Converter, JSON Formatter, Base64 Encoder, Hex String Converter, Regex Tester, UUID Generator, URL Tools, HTTP Client, IP Query, QR Code Generator, SQL Formatter, HTML Formatter, JWT Encoder, Parquet Viewer, and Crypto Tools.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">Explore other essential tools included in DevUtilities</p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">🔢</div>
-                    <h3>Base Converter</h3>
-                    <p>Convert between binary, octal, decimal, and hexadecimal number systems with real-time validation.</p>
-                    <a href="base-converter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🔢</div>
-                    <h3>Hex String Converter</h3>
-                    <p>Convert between hexadecimal and string representations with UTF-8, UTF-16, and ASCII encoding support.</p>
-                    <a href="hex-converter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🌐</div>
-                    <h3>HTML Formatter</h3>
-                    <p>Format and minify HTML code with proper tag indentation for cleaner markup.</p>
-                    <a href="html-formatter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">📱</div>
-                    <h3>QR Code Generator</h3>
-                    <p>Generate QR codes with color customization options - perfect for branded QR codes and visual design.</p>
-                    <a href="qr-code.html" class="tool-link">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Streamline Your Color Workflow?</h2>
-                <p>Join thousands of designers and developers who rely on DevUtilities's Color Picker for their daily color conversion tasks.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-primary">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 20 Developer Tools</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div></footer>
 </body>
 </html>

@@ -1,439 +1,421 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Chat Assistant - Developer AI Helper | DevUtilities</title>
-    <meta name="description" content="Advanced AI chat assistant for developers with beautiful Markdown rendering, one-click copy code snippets, OpenAI Responses API support, DeepSeek reasoning, and custom model configuration. Part of DevUtilities - 23 essential developer tools for macOS.">
-    <meta name="keywords" content="AI chat, AI assistant, developer AI, code review AI, Markdown rendering, copy code, OpenAI Responses API, DeepSeek reasoning, custom AI models, coding assistant, AI development tool">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Chat — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="AI Chat in DevUtilities — Markdown rendering, syntax-highlighted code, one-click copy, OpenAI Responses API, and DeepSeek reasoning. A calm developer assistant in a single native macOS window." />
+  <meta name="keywords" content="AI chat, AI assistant, developer AI, Markdown rendering, copy code, OpenAI Responses API, DeepSeek reasoning, custom AI models, coding assistant, macOS AI" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="AI Chat Assistant - Developer AI Helper | DevUtilities">
-    <meta property="og:description" content="Advanced AI assistant with beautiful Markdown rendering, one-click copy code, OpenAI Responses API, and DeepSeek reasoning — built for developers.">
-    <meta property="og:image" content="images/screenshots/aichat.png">
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="AI Chat — DevUtilities" />
+  <meta property="og:description" content="An assistant that lives in the same window as your formatters and converters. Markdown that breathes, code blocks you can copy in one click." />
+  <meta property="og:image" content="images/screenshots/aichat.png" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="AI Chat Assistant - Developer AI Helper">
-    <meta property="twitter:description" content="Advanced AI assistant for developers with custom model support and real-time reasoning process visualization.">
-    <meta property="twitter:image" content="images/screenshots/aichat.png">
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="AI Chat — DevUtilities" />
+  <meta property="twitter:description" content="Markdown rendering, copy code, Responses API, DeepSeek reasoning. Built into a native macOS window." />
+  <meta property="twitter:image" content="images/screenshots/aichat.png" />
 
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities AI Chat",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Advanced AI chat assistant for developers with custom model support",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "ratingCount": "16"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <!-- ─── Nav ─────────────────────────────────────────────────────────── -->
+  <header class="nav nav-static">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="DevUtilities home">
+        <img src="images/icon.png" alt="" width="26" height="26" class="logo-img" />
+        <span>DevUtilities</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary"><a href="index.html">Index</a><a href="index.html#tools">Tools</a>
+        <a href="index.html#feature">Spotlight</a>
+        <a href="index.html#voices">Voices</a>
+        <a href="release-notes.html">Changelog</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="index.html#download" class="nav-pill">
+          <span>Download</span>
+          <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="nav-progress"></div>
+  </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>AI Chat</span>
-                    </div>
-                    <h1 class="hero-title">
-                        AI Chat Assistant
-                        <span class="hero-subtitle">Intelligent Developer Companion</span>
-                    </h1>
-                    <p class="hero-description">
-                        Advanced AI assistant designed specifically for developers. Beautiful Markdown rendering with syntax-highlighted code blocks and one-click copy. Supports the OpenAI Responses API for the latest GPT models, DeepSeek reasoning with transparent chain-of-thought, and any custom OpenAI-compatible endpoint.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">📋</span>
-                            <span>Copy Code Snippets</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🧠</span>
-                            <span>Reasoning Models</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">⚡</span>
-                            <span>Responses API</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/aichat.png" alt="DevUtilities AI Chat Screenshot showing intelligent conversation interface with reasoning process">
-                </div>
-            </div>
+  <!-- ─── Crumbs ──────────────────────────────────────────────────────── -->
+  <nav class="tool-crumbs" aria-label="Breadcrumb">
+    <a href="index.html">DevUtilities</a>
+    <span class="sep">/</span>
+    <a href="index.html#tools">Tools</a>
+    <span class="sep">/</span>
+    <strong>AI Chat</strong>
+  </nav>
+
+  <!-- ─── Page head ───────────────────────────────────────────────────── -->
+  <section class="page-head">
+    <div class="page-eyebrow">§ Tool 01 of 23 · AI</div>
+    <h1 class="page-h">AI Chat, rewritten <em>for builders.</em></h1>
+  </section>
+  <div class="page-sub">
+    <div></div>
+    <p>An assistant that lives inside the same window as your formatters and converters. Markdown that breathes, code blocks you can copy in one click, the OpenAI Responses API for the latest models, and DeepSeek reasoning streamed as it thinks. Bring your own key, point it at any compatible endpoint, keep your conversation on disk.</p>
+  </div>
+
+  <!-- ─── Meta strip ──────────────────────────────────────────────────── -->
+  <div class="tool-meta">
+    <div></div>
+    <div>
+      <div class="tool-meta-label">Version</div>
+      <div class="tool-meta-value accent">v2.12</div>
+      <div class="tool-meta-sub">May 2026 — current</div>
+    </div>
+    <div>
+      <div class="tool-meta-label">Models</div>
+      <div class="tool-meta-value">GPT-5 · DeepSeek · custom</div>
+      <div class="tool-meta-sub">Any OpenAI-compatible endpoint</div>
+    </div>
+    <div>
+      <div class="tool-meta-label">Shortcut</div>
+      <div class="tool-meta-value">⌘ N</div>
+      <div class="tool-meta-sub">From anywhere in the app</div>
+    </div>
+    <div>
+      <div class="tool-meta-label">Network</div>
+      <div class="tool-meta-value">Your endpoint only</div>
+      <div class="tool-meta-sub">No proxy, no telemetry, no logs</div>
+    </div>
+  </div>
+
+  <!-- ─── Hero shot ───────────────────────────────────────────────────── -->
+  <section class="tool-shot">
+    <figure>
+      <img src="images/screenshots/aichat.png" alt="DevUtilities AI Chat — Markdown rendering with syntax-highlighted code, copy buttons, and conversation history." />
+    </figure>
+    <figcaption>Plate i — AI Chat with Markdown rendering, syntax-highlighted code, and the v2.12 copy affordance on every fence.</figcaption>
+  </section>
+
+  <main>
+  <!-- ─── § 01 Capabilities ───────────────────────────────────────────── -->
+  <section class="tool-block">
+    <div class="tool-block-meta">
+      <span class="tool-block-num">§ 01</span>
+      <span>Capabilities</span>
+    </div>
+    <div>
+      <h2 class="tool-block-h">
+        Nine quiet things<br />
+        <span class="muted">it does well.</span>
+      </h2>
+      <div class="caps">
+        <div class="cap">
+          <span class="cap-n">i</span>
+          <div class="cap-body">
+            <h4>Markdown that breathes</h4>
+            <p>Rebuilt on the Textual rendering engine. Headings, tables, nested lists and blockquotes are typeset, not just displayed. Streaming updates land without layout flicker.</p>
+          </div>
         </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Advanced AI Assistant Features</h2>
-                <p class="section-description">
-                    Everything you need for intelligent development assistance and technical guidance.
-                </p>
-            </div>
-
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">✍️</div>
-                    <h3 class="feature-title">Enhanced Markdown Rendering</h3>
-                    <p class="feature-description">Migrated to the Textual rendering engine for richer, more accurate Markdown output. Code blocks have syntax highlighting across all languages. Tables, nested lists, and inline formatting render correctly. Streaming updates are smooth with no layout flicker.</p>
-                </div>
-
-                <div class="feature-card featured">
-                    <div class="feature-icon">📋</div>
-                    <h3 class="feature-title">One-Click Copy Code Snippets</h3>
-                    <p class="feature-description">Every code block in AI Chat responses shows a Copy button. Grab any snippet instantly — no text selection needed. Perfect for commands, configuration files, and code examples the AI generates for you.</p>
-                </div>
-
-                <div class="feature-card featured">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">OpenAI Responses API</h3>
-                    <p class="feature-description">Full support for the OpenAI Responses API with SSE streaming. Compatible with GPT-5.2-pro and future models that require the new API. Reasoning/thinking output streams in real-time. Enable per-model via "Use Responses API" in model settings.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🧠</div>
-                    <h3 class="feature-title">DeepSeek Reasoning Models</h3>
-                    <p class="feature-description">Access deepseek-chat and deepseek-reasoner models with transparent "deepthink" Chain of Thought reasoning. The AI's internal problem-solving process streams in a collapsible section before the final answer.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">💭</div>
-                    <h3 class="feature-title">Collapsible Thinking Process</h3>
-                    <p class="feature-description">View AI reasoning in expandable/collapsible sections with a brain icon. Works for both DeepSeek reasoning models and OpenAI Responses API models that support thinking output.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🤖</div>
-                    <h3 class="feature-title">Custom Model Support</h3>
-                    <p class="feature-description">Configure any OpenAI-compatible model with custom API endpoints, headers, and authentication. Add GPT-5, Claude, DeepSeek, or your own self-hosted model. Built-in model list auto-syncs on startup.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">💬</div>
-                    <h3 class="feature-title">Persistent Conversations</h3>
-                    <p class="feature-description">Multiple chat sessions with independent model selection and conversation history. Context carries across sessions for ongoing development projects.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3 class="feature-title">Image Generation</h3>
-                    <p class="feature-description">Generate images and diagrams via the OpenAI Responses API. Multi-turn image refinement using conversation context for iterative visual content creation.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3 class="feature-title">Web Search</h3>
-                    <p class="feature-description">Real-time web search lets the AI access the latest documentation, current best practices, and up-to-date technical resources for accurate answers.</p>
-                </div>
-            </div>
+        <div class="cap">
+          <span class="cap-n">ii</span>
+          <div class="cap-body">
+            <h4>One-click code copy</h4>
+            <p>Every fenced block carries its own clipboard button. Grab a command, a config, or a snippet without touching your prompt history.</p>
+          </div>
         </div>
-    </section>
-
-    <!-- How to Use Section -->
-    <section class="how-to-use">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">How to Use AI Chat Assistant</h2>
-                <p class="section-description">
-                    Get intelligent development assistance in just a few simple steps.
-                </p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Choose Your Model</h3>
-                    <p>Select from built-in models or configure custom AI models with your preferred API settings, endpoints, and authentication methods.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Ask Your Question</h3>
-                    <p>Type your development question, paste code for review, or describe the technical problem you're trying to solve.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>Copy Code Instantly</h3>
-                    <p>Click the Copy button on any code block to grab the snippet directly — no text selection needed. Use it in your editor immediately.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>Apply Solutions</h3>
-                    <p>Use the AI's recommendations, code suggestions, and technical guidance. Expand the reasoning section to see how the AI arrived at its answer.</p>
-                </div>
-            </div>
+        <div class="cap">
+          <span class="cap-n">iii</span>
+          <div class="cap-body">
+            <h4>OpenAI Responses API</h4>
+            <p>Full SSE streaming with reasoning output. Compatible with GPT-5.2-pro and any model that requires the new endpoint. Toggled per-model via <code>Use Responses API</code>.</p>
+          </div>
         </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect for These Development Tasks</h2>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">👀</div>
-                    <h3>Code Review & Analysis</h3>
-                    <p>Get AI-powered code reviews, identify potential bugs, suggest improvements, and ensure best practices in your codebase.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🐛</div>
-                    <h3>Debugging Assistance</h3>
-                    <p>Describe error messages and unexpected behavior to get targeted debugging suggestions and step-by-step troubleshooting guidance.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🏗️</div>
-                    <h3>Architecture Decisions</h3>
-                    <p>Discuss technical architecture, design patterns, technology choices, and system design decisions with expert AI guidance.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📚</div>
-                    <h3>Learning & Explanations</h3>
-                    <p>Get detailed explanations of complex concepts, understand new technologies, and accelerate learning with AI-powered technical education.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">⚡</div>
-                    <h3>Performance Optimization</h3>
-                    <p>Analyze code performance, identify bottlenecks, and get specific suggestions for optimizing application speed and resource usage.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔐</div>
-                    <h3>Security Best Practices</h3>
-                    <p>Review code for security vulnerabilities, get guidance on secure coding practices, and implement robust security measures.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🌐</div>
-                    <h3>Research & Documentation</h3>
-                    <p>Access latest documentation, search for current best practices, and generate visual diagrams for technical documentation with web search and image generation.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🛠️</div>
-                    <h3>Tool-Enhanced Development</h3>
-                    <p>Leverage integrated tools for code analysis, file processing, and workflow automation to streamline development tasks with AI assistance.</p>
-                </div>
-            </div>
+        <div class="cap">
+          <span class="cap-n">iv</span>
+          <div class="cap-body">
+            <h4>DeepSeek deepthink</h4>
+            <p>Reasoner models stream their chain of thought into a collapsible section above the answer. Read it, ignore it, fold it away — your call.</p>
+          </div>
         </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>What's new in v2.12.0?</h3>
-                    <p>Three major AI Chat improvements: (1) Markdown rendering migrated to Textual with better code highlighting and no streaming flicker; (2) one-click Copy button on every code block; (3) OpenAI Responses API support for GPT-5.2-pro and compatible models with reasoning output.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How does copy code work?</h3>
-                    <p>Every code block in chat responses displays a Copy button in the top-right corner. Click it to copy the entire code snippet to your clipboard instantly — no need to select text manually.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What is the OpenAI Responses API?</h3>
-                    <p>The Responses API is OpenAI's newer API that supports models like GPT-5.2-pro and enables features like reasoning output. Enable it per-model via the "Use Responses API" toggle when adding or editing a model in Settings → AI.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What AI models are supported?</h3>
-                    <p>Built-in models include GPT-5, DeepSeek chat and reasoner, and GPT-5.2-pro (via Responses API). You can also add any OpenAI-compatible model with a custom endpoint and API key.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How does the DeepSeek reasoning process work?</h3>
-                    <p>DeepSeek reasoner models stream their internal "deepthink" chain-of-thought in a collapsible section before the final answer — so you can see exactly how the AI approaches your problem.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Is conversation history saved?</h3>
-                    <p>Yes. DevUtilities maintains multiple persistent chat sessions, each with its own model selection and conversation history. Continue any discussion across app launches.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How do I stop a streaming response?</h3>
-                    <p>Click the stop button to cancel immediately. The partial response is preserved — not discarded — so you keep whatever the AI had already generated.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I add my own AI model?</h3>
-                    <p>Yes. Go to Settings → AI → Models → Add Model. Enter your API endpoint, key, and model name. Any OpenAI-compatible API works, including self-hosted models.</p>
-                </div>
-            </div>
+        <div class="cap">
+          <span class="cap-n">v</span>
+          <div class="cap-body">
+            <h4>Bring your own model</h4>
+            <p>Any OpenAI-compatible endpoint. Custom headers, custom auth, self-hosted URLs. Built-in list reconciles with current defaults each launch.</p>
+          </div>
         </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">Explore other essential tools included in DevUtilities</p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">🤖</div>
-                    <h3>AI Translate</h3>
-                    <p>Companion AI tool for professional translation with 19 languages, text polishing, and summarization capabilities.</p>
-                    <a href="ai-translate.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">📄</div>
-                    <h3>JSON Formatter</h3>
-                    <p>Format JSON API responses and data structures that the AI can help you analyze and understand better.</p>
-                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🌍</div>
-                    <h3>HTTP Request</h3>
-                    <p>Test APIs and web services with AI-powered debugging assistance for request/response analysis.</p>
-                    <a href="http-request.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🎲</div>
-                    <h3>Random String Generator</h3>
-                    <p>Generate cryptographically secure test data, API keys, and passwords for development testing with AI guidance.</p>
-                    <a href="random-string-generator.html" class="tool-link">Learn More →</a>
-                </div>
-            </div>
+        <div class="cap">
+          <span class="cap-n">vi</span>
+          <div class="cap-body">
+            <h4>Persistent sessions</h4>
+            <p>Multiple chats, each with its own model and history. Pick up the conversation that was interrupted last Tuesday, not a fresh prompt every time.</p>
+          </div>
         </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Accelerate Your Development with AI?</h2>
-                <p>Join thousands of developers who rely on DevUtilities's AI assistant for intelligent code review and technical guidance.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-primary">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 23 Developer Tools</span>
-                    </div>
-                </div>
-            </div>
+        <div class="cap">
+          <span class="cap-n">vii</span>
+          <div class="cap-body">
+            <h4>Stop, without loss</h4>
+            <p>Hit <code>⎋</code> mid-stream and the partial response is preserved exactly as it landed. The streaming indicator goes away; your context doesn't.</p>
+          </div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
+        <div class="cap">
+          <span class="cap-n">viii</span>
+          <div class="cap-body">
+            <h4>Image generation</h4>
+            <p>Generate diagrams and visual references through the Responses API, refined turn by turn — the conversation context comes with you.</p>
+          </div>
         </div>
-    </footer>
+        <div class="cap">
+          <span class="cap-n">ix</span>
+          <div class="cap-body">
+            <h4>Web search, when asked</h4>
+            <p>Optional real-time search for fresh documentation and current best practice. Off by default; opt in per session, never silently.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <!-- ─── § 02 Typical session ────────────────────────────────────────── -->
+  <section class="tool-block">
+    <div class="tool-block-meta">
+      <span class="tool-block-num">§ 02</span>
+      <span>A typical session</span>
+    </div>
+    <div>
+      <h2 class="tool-block-h">
+        Four moves <em>from prompt to paste.</em>
+      </h2>
+      <div class="steps">
+        <div class="step">
+          <span class="step-n"></span>
+          <h4>Pick a model</h4>
+          <p>Choose a built-in (GPT-5, DeepSeek, GPT-5.2-pro), or add your own with endpoint, headers and key.</p>
+          <div class="step-key">Settings · <b>⌘ ,</b> · AI · Models</div>
+        </div>
+        <div class="step">
+          <span class="step-n"></span>
+          <h4>Ask the question</h4>
+          <p>Type, paste a stack trace, or drop in a code block. Reasoning models stream their thinking first, in a panel you can fold.</p>
+          <div class="step-key">Send · <b>↩</b></div>
+        </div>
+        <div class="step">
+          <span class="step-n"></span>
+          <h4>Take the code</h4>
+          <p>Every fenced block has its own copy button. The last block is one shortcut away — no selection, no scroll-back.</p>
+          <div class="step-key">Last block · <b>⌘ ⇧ C</b></div>
+        </div>
+        <div class="step">
+          <span class="step-n"></span>
+          <h4>Keep going</h4>
+          <p>The thread persists across launches with its model and history intact. Start a new session for a new line of work; the old one is still on disk.</p>
+          <div class="step-key">New chat · <b>⌘ N</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── § 03 Made for these tasks ───────────────────────────────────── -->
+  <section class="tool-block">
+    <div class="tool-block-meta">
+      <span class="tool-block-num">§ 03</span>
+      <span>Made for these tasks</span>
+    </div>
+    <div>
+      <h2 class="tool-block-h">
+        The work it actually <em>does.</em><br />
+        <span class="muted">Not generic chat — developer chat.</span>
+      </h2>
+      <div class="uses">
+        <div class="use">
+          <span class="use-tag">i — Review</span>
+          <h4>Code reads &amp; second opinions</h4>
+          <p>Paste a function, ask for a critique. The Markdown renderer keeps diffs, lists, and fenced suggestions intact instead of mashing them into prose.</p>
+        </div>
+        <div class="use">
+          <span class="use-tag">ii — Debug</span>
+          <h4>Stack traces, line by line</h4>
+          <p>Drop the error, attach the relevant block, walk the cause. Reasoning models surface their hypothesis path before the fix lands.</p>
+        </div>
+        <div class="use">
+          <span class="use-tag">iii — Architecture</span>
+          <h4>Design conversations</h4>
+          <p>Trade-offs, patterns, the boring questions that decide a system. Persistent sessions mean tomorrow's thread can pick up today's context.</p>
+        </div>
+        <div class="use">
+          <span class="use-tag">iv — Learn</span>
+          <h4>Concept explanations</h4>
+          <p>From a half-understood paper to working examples. Fold the deepthink panel away once the answer clicks; reopen it later if you need to retrace.</p>
+        </div>
+        <div class="use">
+          <span class="use-tag">v — Optimise</span>
+          <h4>Profile-shaped questions</h4>
+          <p>Bring numbers, get specific suggestions. The assistant doesn't guess at hot paths it can't see — it asks for the data, then proposes.</p>
+        </div>
+        <div class="use">
+          <span class="use-tag">vi — Secure</span>
+          <h4>Threat models &amp; review</h4>
+          <p>Walk an auth flow, audit a snippet, reason about a CVE. Web search is opt-in for when documentation needs to be current, not stale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── § 04 FAQ ────────────────────────────────────────────────────── -->
+  <section class="tool-block">
+    <div class="tool-block-meta">
+      <span class="tool-block-num">§ 04</span>
+      <span>Questions, answered</span>
+    </div>
+    <div>
+      <h2 class="tool-block-h">
+        Things people ask <em>before they download.</em>
+      </h2>
+      <div class="faq">
+        <details open>
+          <summary>What's new in v2.12?</summary>
+          <p>Three threads. The Markdown renderer migrated to Textual — better code highlighting, no streaming flicker, accurate tables. Every code block carries a copy button. And the OpenAI Responses API is supported for GPT-5.2-pro and reasoning models, with full SSE streaming.</p>
+        </details>
+        <details>
+          <summary>Which models are supported?</summary>
+          <p>Built-ins include GPT-5, DeepSeek <code>chat</code> and <code>reasoner</code>, and GPT-5.2-pro via the Responses API. Beyond that — any OpenAI-compatible endpoint. Add a model under <code>Settings → AI → Models → Add Model</code>: endpoint, key, model name, optional custom headers.</p>
+        </details>
+        <details>
+          <summary>How does the copy button work?</summary>
+          <p>Every fenced code block in the response renders with a copy button in its top-right corner. Click it; the entire snippet is on your clipboard. <code>⌘ ⇧ C</code> grabs the most recent block from anywhere in the chat.</p>
+        </details>
+        <details>
+          <summary>What is the OpenAI Responses API?</summary>
+          <p>OpenAI's newer endpoint, required for GPT-5.2-pro and any model that exposes reasoning output. Toggle it per model with <code>Use Responses API</code> in the model settings — DevUtilities handles the SSE stream, including the thinking section.</p>
+        </details>
+        <details>
+          <summary>How does DeepSeek reasoning surface in the UI?</summary>
+          <p>DeepSeek <code>reasoner</code> streams its chain of thought as a collapsible panel above the final answer. The panel opens by default; collapse it from the brain icon. The same panel is used for any Responses-API model that exposes thinking output.</p>
+        </details>
+        <details>
+          <summary>Is conversation history saved?</summary>
+          <p>Yes. Each chat session is persisted on disk, with its own model selection and history. Sessions survive launches, updates, and the rest. Delete a session and its history goes with it.</p>
+        </details>
+        <details>
+          <summary>How do I stop a streaming response?</summary>
+          <p>The stop button cancels the request immediately. Anything the model has already produced is preserved as-is — the streaming indicator is removed and the partial response stays in the thread.</p>
+        </details>
+        <details>
+          <summary>Where do my API keys live?</summary>
+          <p>In macOS UserDefaults on your machine. Keys never reach our servers — there are no servers. The chat goes directly from DevUtilities to the endpoint you configured. See the <a href="privacy_policy.html">privacy policy</a> for the full picture.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── § 05 Companion tools ────────────────────────────────────────── -->
+  <section class="tool-block">
+    <div class="tool-block-meta">
+      <span class="tool-block-num">§ 05</span>
+      <span>Companion tools</span>
+    </div>
+    <div>
+      <h2 class="tool-block-h">
+        Better with the rest <em>of the shelf.</em>
+      </h2>
+      <div class="related-grid">
+        <a class="rel" href="ai-translate.html">
+          <div class="rel-head"><span>02 · AI</span><span>Updated · 2.12</span></div>
+          <h4>AI Translate</h4>
+          <p>Three modes, nineteen languages, real-time TTS streaming. Word mode adds phonetics, meanings, examples, etymology.</p>
+          <span class="rel-arrow">Open →</span>
+        </a>
+        <a class="rel" href="json-formatter.html">
+          <div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div>
+          <h4>JSON Formatter</h4>
+          <p>Format, validate, diff. Hand the AI a payload it can actually read; paste its corrections back without losing your cursor.</p>
+          <span class="rel-arrow">Open →</span>
+        </a>
+        <a class="rel" href="http-request.html">
+          <div class="rel-head"><span>20 · Network</span><span></span></div>
+          <h4>HTTP Client</h4>
+          <p>Methods, headers, auth, streaming. Reproduce the request the AI proposes; paste the response back into the next turn.</p>
+          <span class="rel-arrow">Open →</span>
+        </a>
+        <a class="rel" href="text-compare.html">
+          <div class="rel-head"><span>17 · Inspect</span><span>New · 2.11</span></div>
+          <h4>Text Compare</h4>
+          <p>Side-by-side diff with character and line metrics. Compare an AI rewrite against the original; keep what survives.</p>
+          <span class="rel-arrow">Open →</span>
+        </a>
+        <a class="rel" href="jwt-encoder.html">
+          <div class="rel-head"><span>13 · Format</span><span></span></div>
+          <h4>JWT</h4>
+          <p>Encode and decode JSON Web Tokens. Hand the AI a decoded claim set; paste it back as a fresh signed token.</p>
+          <span class="rel-arrow">Open →</span>
+        </a>
+        <a class="rel" href="random-string-generator.html">
+          <div class="rel-head"><span>15 · Generate</span><span>New · 2.9</span></div>
+          <h4>Random String</h4>
+          <p>Cryptographically secure presets — passwords, API keys, tokens, IDs, slugs. The test data the AI keeps asking for.</p>
+          <span class="rel-arrow">Open →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <!-- ─── CTA ─────────────────────────────────────────────────────────── -->
+  <section class="tool-cta">
+    <div>
+      <div class="page-eyebrow" style="padding-bottom:0;">§ Download</div>
+    </div>
+    <h2 class="tool-cta-h">
+      One assistant, twenty-three tools, <em>one quiet window.</em>
+    </h2>
+    <div class="tool-cta-actions">
+      <a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+          <path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" />
+        </svg>
+        Download — Mac App Store
+      </a>
+      <a href="release-notes.html" class="btn-ghost lg">Changelog</a>
+    </div>
+  </section>
+
+  <!-- ─── Footer ──────────────────────────────────────────────────────── -->
+  <footer class="foot">
+    <div class="foot-inner">
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <img src="images/icon.png" alt="" width="26" height="26" class="logo-img" />
+          <span>DevUtilities</span>
+        </a>
+        <p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p>
+      </div>
+      <div class="foot-cols">
+        <div>
+          <h5>Product</h5>
+          <a href="index.html#tools">Tools</a>
+          <a href="index.html#feature">Spotlight</a>
+          <a href="index.html#download">Download</a>
+        </div>
+        <div>
+          <h5>Resources</h5>
+          <a href="release-notes.html">Changelog</a>
+          <a href="https://github.com/hengfeiyang/devutilities/issues">Support</a>
+        </div>
+        <div>
+          <h5>Legal</h5>
+          <a href="privacy_policy.html">Privacy policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-rule"></div>
+    <div class="foot-bottom">
+      <span>© 2026 DevUtilities</span>
+      <span>v2.12.2</span>
+    </div>
+  </footer>
 </body>
 </html>

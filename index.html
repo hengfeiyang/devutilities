@@ -1,759 +1,432 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevUtilities - 23 Essential Developer Tools for macOS</title>
-    <meta name="description" content="DevUtilities is a native macOS application containing 23 essential developer tools including text compare, currency converter, random string generator, color picker, AI translate, AI chat, base converter, timestamp converter, JSON formatter with diff, hex string converter, regex test, HTTP client, and more.">
-    <parameter name="keywords" content="developer tools, macOS app, color picker, AI translate, base converter, JSON formatter, timestamp converter, hex string converter, regex test, HTTP client, Base64, UUID generator">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="DevUtilities - 23 Essential Developer Tools for macOS">
-    <meta property="og:description" content="Native macOS app with text compare, currency converter, random string generator, color picker, AI translate, AI chat, base converter, timestamp converter, JSON formatter with diff, hex string converter, regex test, HTTP client, and more developer utilities.">
-    <meta property="og:image" content="images/devutilities-og.png">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DevUtilities — twenty-three developer tools, one quiet macOS app</title>
+  <meta name="description" content="DevUtilities is a single, native macOS window that gathers twenty-three small developer utilities — from JSON diff to AI chat — into a calm, keyboard-driven workspace. $29.99 on the Mac App Store." />
+  <meta name="keywords" content="developer tools, macOS app, JSON formatter, timestamp converter, AI chat, AI translate, regex test, base converter, JWT, hex string converter, HTTP client, Base64, UUID generator, SQL formatter, crypto tools" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="DevUtilities - 23 Essential Developer Tools for macOS">
-    <meta property="twitter:description" content="Native macOS app with 23 essential developer utilities in one clean interface.">
-    <meta property="twitter:image" content="images/devutilities-og.png">
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+  <meta property="og:title" content="DevUtilities — twenty-three developer tools, one quiet macOS app" />
+  <meta property="og:description" content="A single, native macOS window with 23 developer utilities — JSON diff, AI chat, regex, timestamps, crypto. $29.99 on the App Store." />
+  <meta property="og:image" content="images/devhelper-og.png" />
 
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities",
-        "description": "DevUtilities is a native macOS application containing 23 essential developer tools including text compare, currency converter, random string generator, color picker, AI translate, AI chat, base converter, timestamp converter, JSON formatter with diff, hex string converter, regex test, HTTP client, and more.",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "softwareVersion": "2.12.0",
-        "datePublished": "2025-01-01",
-        "dateModified": "2026-03-05",
-        "author": {
-            "@type": "Person",
-            "name": "DevUtilities Team"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "DevUtilities"
-        },
-        "offers": {
-            "@type": "Offer",
-            "priceCurrency": "USD",
-            "availability": "https://schema.org/InStock"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "10",
-            "bestRating": "5",
-            "worstRating": "1"
-        },
-        "screenshot": [
-            "images/screenshots/aichat.png",
-            "images/screenshots/json.png",
-            "images/screenshots/timestamp.png",
-            "images/screenshots/crypto.png"
-        ],
-        "featureList": [
-            "AI Translate with 19 languages, 3 modes, and OpenAI TTS with 13 voices",
-            "AI Chat with Markdown rendering, copy code snippets, and Responses API support",
-            "Timestamp Converter with timezone support",
-            "Unit Converter for 7 categories",
-            "Base Converter for binary, octal, decimal, hexadecimal, and Base62",
-            "Color Picker with 7 color format support and history",
-            "Text Compare with side-by-side diff highlighting",
-            "JSON Formatter with visual diff editor",
-            "SQL Formatter with diff mode and syntax validation",
-            "HTML Formatter with diff mode and minifier",
-            "Base64 Encode/Decode",
-            "Hex String Converter",
-            "JWT Encoder/Decoder with HMAC and RSA",
-            "Regex Test with pattern matching",
-            "UUID Generator (v1, v4, v5, v7)",
-            "Random String Generator with 5 presets",
-            "Currency Converter with 38 currencies and price history",
-            "URL Tools for encoding and parsing",
-            "HTTP Request client with JSON tree view",
-            "IP Query with geolocation",
-            "QR Code generator and scanner",
-            "Parquet Viewer for data files",
-            "Crypto Tools with hash functions and encryption"
-        ],
-        "requirements": "macOS 14.0 or later",
-        "downloadUrl": "https://apps.apple.com/app/devutilities/id6753612551",
-        "applicationSubCategory": "Developer Tools",
-        "keywords": "developer tools, macOS app, JSON formatter, timestamp converter, hex string converter, regex test, HTTP client, Base64, UUID generator, SQL formatter, crypto tools",
-        "isAccessibleForFree": false,
-        "inLanguage": "en-US"
-    }
-    </script>
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="DevUtilities — twenty-three developer tools for macOS" />
+  <meta property="twitter:description" content="Native macOS app with 23 essential developer utilities in one quiet window." />
+  <meta property="twitter:image" content="images/devhelper-og.png" />
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "DevUtilities",
+    "description": "DevUtilities is a native macOS application containing 23 essential developer tools including text compare, currency converter, random string generator, color picker, AI translate, AI chat, base converter, timestamp converter, JSON formatter with diff, hex string converter, regex test, HTTP client, and more.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "macOS",
+    "softwareVersion": "2.12.2",
+    "datePublished": "2025-01-01",
+    "dateModified": "2026-05-08",
+    "author": { "@type": "Person", "name": "Hengfei Yang" },
+    "publisher": { "@type": "Organization", "name": "DevUtilities" },
+    "offers": {
+      "@type": "Offer",
+      "price": "29.99",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "10",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "downloadUrl": "https://apps.apple.com/app/devutilities/id6753612551",
+    "requirements": "macOS 14.0 or later",
+    "applicationSubCategory": "Developer Tools",
+    "isAccessibleForFree": false,
+    "inLanguage": "en-US"
+  }
+  </script>
+
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+  <!-- ─── Nav ─────────────────────────────────────────────────────────── -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="DevUtilities home">
+        <img src="images/icon.png" alt="" width="26" height="26" class="logo-img" />
+        <span>DevUtilities</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#top">Index</a>
+        <a href="#tools">Tools</a>
+        <a href="#feature">Spotlight</a>
+        <a href="#voices">Voices</a>
+        <a href="release-notes.html">Changelog</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="#download" class="nav-pill">
+          <span>Download</span>
+          <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="nav-progress"></div>
+  </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title">
-                        23 essential developer tools
-                        <span class="hero-subtitle">in One Native macOS App</span>
-                    </h1>
-                    <p class="hero-description">
-                        DevUtilities combines the most commonly used developer utilities into a single, beautiful macOS application. Now with enhanced AI Chat (beautiful Markdown rendering, copy code snippets, Responses API), OpenAI TTS for AI Translate, text compare, diff modes for JSON/HTML/SQL, and more.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">Lightning Fast</div>
-                        <div class="hero-feature">23 Useful Tools</div>
-                        <div class="hero-feature">Native macOS Design</div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download for macOS
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            Explore Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <div class="hero-slider">
-                        <div class="slide active">
-                            <img src="images/screenshots/aichat.png" alt="AI Chat Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/aitranslate.png" alt="AI Translate Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/timestamp.png" alt="Timestamp Converter Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/unit.png" alt="Unit Converter Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/base-converter.png" alt="Base Converter Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/color-picker.png" alt="Color Picker Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/text-compare.png" alt="Text Compare Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/json.png" alt="JSON Formatter Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/sql.png" alt="SQL Formatter Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/html.png" alt="HTML Formatter Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/base64.png" alt="Base64 Encode/Decode Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/hex.png" alt="Hex String Converter Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/jwt.png" alt="JWT Encoder/Decoder Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/url.png" alt="URL Tools Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/regex.png" alt="Regex Test Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/uuid.png" alt="UUID Generator Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/random-string.png" alt="Random String Generator Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/http.png" alt="HTTP Request Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/ip.png" alt="IP Query Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/qrcode.png" alt="QR Code Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/parquet.png" alt="Parquet Viewer Screenshot">
-                        </div>
-                        <div class="slide">
-                            <img src="images/screenshots/crypto.png" alt="Crypto Tools Screenshot">
-                        </div>
-                        
-                        <div class="slider-controls">
-                            <button class="slider-btn prev-btn" aria-label="Previous screenshot">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                            <button class="slider-btn next-btn" aria-label="Next screenshot">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                        </div>
-                        
-                        <div class="slider-indicators">
-                            <div class="indicator active" data-slide="0"></div>
-                            <div class="indicator" data-slide="1"></div>
-                            <div class="indicator" data-slide="2"></div>
-                            <div class="indicator" data-slide="3"></div>
-                            <div class="indicator" data-slide="4"></div>
-                            <div class="indicator" data-slide="5"></div>
-                            <div class="indicator" data-slide="6"></div>
-                            <div class="indicator" data-slide="7"></div>
-                            <div class="indicator" data-slide="8"></div>
-                            <div class="indicator" data-slide="9"></div>
-                            <div class="indicator" data-slide="10"></div>
-                            <div class="indicator" data-slide="11"></div>
-                            <div class="indicator" data-slide="12"></div>
-                            <div class="indicator" data-slide="13"></div>
-                            <div class="indicator" data-slide="14"></div>
-                            <div class="indicator" data-slide="15"></div>
-                            <div class="indicator" data-slide="16"></div>
-                            <div class="indicator" data-slide="17"></div>
-                            <div class="indicator" data-slide="18"></div>
-                            <div class="indicator" data-slide="19"></div>
-                            <div class="indicator" data-slide="20"></div>
-                        </div>
-                        
-                        <div class="slider-progress">
-                            <div class="progress-bar"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <main>
+    <!-- ─── Hero ──────────────────────────────────────────────────────── -->
+    <section class="hero" id="top">
+      <div class="hero-meta">
+        <span class="meta-dot"></span>
+        <span>Version 2.12 — released this week</span>
+      </div>
+      <h1 class="hero-h">
+        Twenty-three<br />
+        developer tools,<br />
+        <em>one quiet</em> macOS app.
+      </h1>
+      <div class="hero-sub">
+        <p>
+          The small, daily things — formatting, decoding, comparing, generating —
+          gathered into a single native window. No tabs, no spinners, no telemetry.
+          Just the utility you needed, already open.
+        </p>
+        <div class="hero-rot" aria-live="polite">
+          <span class="rot-label">Currently most-used:</span>
+          <span class="rot-value">JSON.</span>
         </div>
+      </div>
+      <div class="hero-actions">
+        <a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary">
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+            <path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" />
+          </svg>
+          Download for macOS
+        </a>
+        <a href="#tools" class="btn-ghost">
+          See every tool
+          <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+      <div class="hero-foot">
+        <div><span class="foot-num">23</span><span class="foot-lbl">tools, one window</span></div>
+        <div><span class="foot-num">~55&thinsp;mb</span><span class="foot-lbl">app footprint</span></div>
+        <div><span class="foot-num">macOS 14+</span><span class="foot-lbl">Apple silicon &amp; Intel</span></div>
+        <div><span class="foot-num">$29.99</span><span class="foot-lbl">one-time, on the App Store</span></div>
+      </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">All the Tools You Need</h2>
-                <p class="section-description">
-                    Every utility has been carefully designed to offer real-time processing, intuitive interfaces, and exceptional usability.
-                </p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        ✨
-                    </div>
-                    <h3 class="feature-title"><a href="ai-chat.html">AI Chat</a></h3>
-                    <p class="feature-description">Beautiful Markdown rendering with syntax-highlighted code blocks and one-click copy. Supports OpenAI Responses API (GPT-5.2-pro), DeepSeek reasoning, and any custom OpenAI-compatible model.</p>
-                    <span class="feature-badge new">Updated in v2.12.0</span>
-                    <a href="ai-chat.html" class="feature-link">Learn More →</a>
-                </div>
+    <!-- ─── Tool index ────────────────────────────────────────────────── -->
+    <section class="tools" id="tools">
+      <div class="section-head">
+        <div class="section-eyebrow">§ 01 — The index</div>
+        <h2 class="section-h">
+          Every tool, listed plainly.<br />
+          <span class="muted">Search the whole shelf, or browse by trade.</span>
+        </h2>
+      </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        🌐
-                    </div>
-                    <h3 class="feature-title"><a href="ai-translate.html">AI Translate</a></h3>
-                    <p class="feature-description">Professional translation with 3 modes and 19 languages. Now with OpenAI TTS — real-time audio streaming, 13 voices, playback starts in realtime. Special word mode with phonetic notation, meanings, examples, and etymology.</p>
-                    <span class="feature-badge new">Updated in v2.12.0</span>
-                    <a href="ai-translate.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        🕐
-                    </div>
-                    <h3 class="feature-title"><a href="timestamp-converter.html">Timestamp Converter</a></h3>
-                    <p class="feature-description">Convert between Unix timestamps and human-readable dates with timezone support and multiple format options.</p>
-                    <span class="feature-badge">Updated in v2.1.0</span>
-                    <a href="timestamp-converter.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        📏
-                    </div>
-                    <h3 class="feature-title"><a href="unit-converter.html">Unit Converter</a></h3>
-                    <p class="feature-description">Convert between different units across 7 categories: Data, Time, Length, Weight, Temperature, Area, and Volume.</p>
-                    <a href="unit-converter.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        🔢
-                    </div>
-                    <h3 class="feature-title"><a href="base-converter.html">Base Converter</a></h3>
-                    <p class="feature-description">Mutual conversion between binary, octal, decimal, hexadecimal, and Base62 number systems with real-time validation and clear error messages. Essential tool for low-level programming and debugging.</p>
-                    <span class="feature-badge">Updated in v2.8.1</span>
-                    <a href="base-converter.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        🎨
-                    </div>
-                    <h3 class="feature-title"><a href="color-picker.html">Color Picker</a></h3>
-                    <p class="feature-description">Professional color format converter with real-time conversion between HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK formats. Includes color history tracking and system color panel integration for precise color selection.</p>
-                    <span class="feature-badge">New in v2.8.0</span>
-                    <a href="color-picker.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        🔍
-                    </div>
-                    <h3 class="feature-title"><a href="text-compare.html">Text Compare</a></h3>
-                    <p class="feature-description">Side-by-side text comparison with visual diff highlighting and real-time status updates. Compare any two text documents with character and line metrics, instant feedback, and CodeMirror-powered diff editor.</p>
-                    <span class="feature-badge new">New in v2.11.0</span>
-                    <a href="text-compare.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        📄
-                    </div>
-                    <h3 class="feature-title"><a href="json-formatter.html">JSON Formatter</a></h3>
-                    <p class="feature-description">Format, validate, and compare JSON data with visual CodeMirror diff editor and syntax highlighting. Now includes dedicated diff mode for side-by-side JSON comparison.</p>
-                    <span class="feature-badge new">Updated in v2.11.0</span>
-                    <a href="json-formatter.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        🗄️
-                    </div>
-                    <h3 class="feature-title"><a href="sql-formatter.html">SQL Formatter</a></h3>
-                    <p class="feature-description">Enhanced SQL formatting with minimal and beautify modes for optimal readability and performance. Now includes diff mode for side-by-side SQL query comparison.</p>
-                    <span class="feature-badge new">Updated in v2.11.0</span>
-                    <a href="sql-formatter.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        🌐
-                    </div>
-                    <h3 class="feature-title"><a href="html-formatter.html">HTML Formatter</a></h3>
-                    <p class="feature-description">Format and minify HTML with proper tag indentation and structure validation. Now includes diff mode for side-by-side HTML comparison.</p>
-                    <span class="feature-badge new">Updated in v2.11.0</span>
-                    <a href="html-formatter.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        🔠
-                    </div>
-                    <h3 class="feature-title"><a href="base64-encoder.html">Base64 Encode/Decode</a></h3>
-                    <p class="feature-description">Encode and decode Base64 strings with support for URL-safe variants and automatic detection.</p>
-                    <a href="base64-encoder.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        🔢
-                    </div>
-                    <h3 class="feature-title"><a href="hex-converter.html">Hex String Converter</a></h3>
-                    <p class="feature-description">Bidirectional hex-to-string conversion with UTF-8, UTF-16, and ASCII encoding support. Real-time processing with error handling for invalid hex data.</p>
-                    <span class="feature-badge">New in v2.2.0</span>
-                    <a href="hex-converter.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        🎫
-                    </div>
-                    <h3 class="feature-title"><a href="jwt-encoder.html">JWT Encoder/Decoder</a></h3>
-                    <p class="feature-description">Encode and decode JSON Web Tokens with HMAC and RSA signature support using CryptoKit security.</p>
-                    <a href="jwt-encoder.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        🎯
-                    </div>
-                    <h3 class="feature-title"><a href="regex-tester.html">Regex Test</a></h3>
-                    <p class="feature-description">Test regular expressions with pattern matching, capture groups, and common pattern templates.</p>
-                    <a href="regex-tester.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        🆔
-                    </div>
-                    <h3 class="feature-title"><a href="uuid-generator.html">UUID Generator</a></h3>
-                    <p class="feature-description">Generate UUIDs in various formats (v1, v4, v5, v7) with bulk generation and timestamp extraction.</p>
-                    <a href="uuid-generator.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        🎲
-                    </div>
-                    <h3 class="feature-title"><a href="random-string-generator.html">Random String Generator</a></h3>
-                    <p class="feature-description">Generate cryptographically secure random strings with 5 presets for passwords, API keys, tokens, and more.</p>
-                    <span class="feature-badge">New in v2.9.0</span>
-                    <a href="random-string-generator.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        💱
-                    </div>
-                    <h3 class="feature-title"><a href="currency-converter.html">Currency Converter</a></h3>
-                    <p class="feature-description">Real-time currency conversion with 38 fiat currencies including USD, EUR, KRW, INR. Features 24-hour smart caching, 30-day price history, and 24-hour trend indicators with visual up/down arrows.</p>
-                    <span class="feature-badge">New in v2.10.0</span>
-                    <a href="currency-converter.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        🔗
-                    </div>
-                    <h3 class="feature-title"><a href="url-tools.html">URL Tools</a></h3>
-                    <p class="feature-description">URL encoding/decoding and comprehensive URL parsing with component breakdown and validation.</p>
-                    <a href="url-tools.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        🌍
-                    </div>
-                    <h3 class="feature-title"><a href="http-request.html">HTTP Request</a></h3>
-                    <p class="feature-description">Full-featured HTTP client with method selection, headers, auth, response handling, and JSON tree view.</p>
-                    <a href="http-request.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        📍
-                    </div>
-                    <h3 class="feature-title"><a href="ip-query.html">IP Query</a></h3>
-                    <p class="feature-description">Discover your IP address and query geolocation data for any IP with detailed location information.</p>
-                    <a href="ip-query.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        📱
-                    </div>
-                    <h3 class="feature-title"><a href="qr-code.html">QR Code</a></h3>
-                    <p class="feature-description">Generate QR codes with multiple sizes and error correction levels, scan QR codes from images.</p>
-                    <a href="qr-code.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        📊
-                    </div>
-                    <h3 class="feature-title"><a href="parquet-viewer.html">Parquet Viewer</a></h3>
-                    <p class="feature-description">Read and explore Parquet/Arrow files with schema inspection, data export, and unified Rust-based API.</p>
-                    <a href="parquet-viewer.html" class="feature-link">Learn More →</a>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        🔐
-                    </div>
-                    <h3 class="feature-title"><a href="crypto-tools.html">Crypto Tools</a></h3>
-                    <p class="feature-description">Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA-1/256/384/512), symmetric encryption (AES-GCM-256), and asymmetric encryption (RSA-2048/4096). Perfect for API authentication token generation.</p>
-                    <span class="feature-badge">New in v1.12.0</span>
-                    <a href="crypto-tools.html" class="feature-link">Learn More →</a>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        ⚙️
-                    </div>
-                    <h3 class="feature-title">Feature Management</h3>
-                    <p class="feature-description">Customize your DevUtilities experience with the new feature management system. Enable/disable tools, organize with drag-and-drop, and reduce sidebar clutter by showing only the tools you need.</p>
-                </div>
-            </div>
+      <div class="tools-controls">
+        <div class="search">
+          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+            <circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.4" />
+            <path d="M11 11l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+          </svg>
+          <input id="tools-search" type="text" placeholder='Search 23 tools — try "diff", "regex", "base"…' />
+          <button id="tools-search-clear" class="search-clear" aria-label="Clear">✕</button>
         </div>
+        <div class="cats" id="tools-cats"></div>
+      </div>
+
+      <div class="tools-grid" id="tools-grid"></div>
     </section>
 
-    <!-- Customer Reviews Section -->
-    <section id="reviews" class="reviews">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Trusted by Thousands of Developers</h2>
-                <p class="section-description">
-                    Join the growing community of developers who rely on DevUtilities to streamline their daily workflows.
-                </p>
+    <!-- ─── Spotlight ─────────────────────────────────────────────────── -->
+    <section class="spotlight" id="feature">
+      <div class="section-head">
+        <div class="section-eyebrow">§ 02 — Spotlight</div>
+        <h2 class="section-h">
+          AI Chat, rewritten <em>for builders</em>.<br />
+          <span class="muted">v2.12 — Markdown rendering, code copy, Responses API.</span>
+        </h2>
+      </div>
+      <div class="spotlight-grid">
+        <figure class="screen-shot">
+          <a href="ai-chat.html">
+            <img src="images/screenshots/aichat-hl.png" alt="DevUtilities AI Chat — Markdown rendering with syntax-highlighted code, copy buttons, and conversation history." loading="lazy" />
+          </a>
+        </figure>
+        <div class="spotlight-notes">
+          <div class="note">
+            <span class="note-mark">i</span>
+            <div class="note-body">
+              <h4>Markdown that breathes</h4>
+              <p>Headings, lists, tables, blockquotes — typeset, not just rendered. Code blocks adopt your editor theme.</p>
             </div>
-            
-            <div class="reviews-stats">
-                <div class="stat-card">
-                    <div class="stat-icon">⭐</div>
-                    <div class="stat-number">5.0</div>
-                    <div class="stat-label">Average Rating</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">👥</div>
-                    <div class="stat-number">1000+</div>
-                    <div class="stat-label">Active Users</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">💼</div>
-                    <div class="stat-number">10+</div>
-                    <div class="stat-label">Companies</div>
-                </div>
+          </div>
+          <div class="note">
+            <span class="note-mark">ii</span>
+            <div class="note-body">
+              <h4>One-click code copy</h4>
+              <p>Every fence is its own clipboard. Copy a block without smashing the prompt history.</p>
             </div>
-            
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <div class="review-rating">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                    </div>
-                    <p class="review-text">
-                        "DevUtilities has become an essential part of my development toolkit. The JSON formatter with diff view is a game-changer for API debugging. Clean interface, lightning fast."
-                    </p>
-                    <div class="review-author">
-                        <div class="author-avatar">SJ</div>
-                        <div class="author-info">
-                            <div class="author-name">Sarah Johnson</div>
-                            <div class="author-role">Senior Full Stack Developer</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="review-card">
-                    <div class="review-rating">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                    </div>
-                    <p class="review-text">
-                        "The crypto tools are incredibly comprehensive. Having MD5, SHA variants, AES, and RSA all in one place saves me so much time. Perfect for security-focused development."
-                    </p>
-                    <div class="review-author">
-                        <div class="author-avatar">MR</div>
-                        <div class="author-info">
-                            <div class="author-name">Michael Rodriguez</div>
-                            <div class="author-role">Security Engineer</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="review-card">
-                    <div class="review-rating">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                    </div>
-                    <p class="review-text">
-                        "As a mobile developer, I use the timestamp converter and UUID generator daily. The AI chat feature is brilliant for quick coding questions. Couldn't work without it!"
-                    </p>
-                    <div class="review-author">
-                        <div class="author-avatar">EW</div>
-                        <div class="author-info">
-                            <div class="author-name">Emily Wong</div>
-                            <div class="author-role">iOS Developer</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="review-card">
-                    <div class="review-rating">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                    </div>
-                    <p class="review-text">
-                        "The HTTP client with SSE support and JSON tree view is fantastic. Built-in request history makes API testing so much more efficient. Native macOS feel is perfect."
-                    </p>
-                    <div class="review-author">
-                        <div class="author-avatar">DL</div>
-                        <div class="author-info">
-                            <div class="author-name">David Lee</div>
-                            <div class="author-role">Backend Engineer</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="review-card">
-                    <div class="review-rating">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                    </div>
-                    <p class="review-text">
-                        "Love the Parquet viewer for data analysis work. Being able to inspect schema and export data seamlessly has streamlined our data pipeline debugging process."
-                    </p>
-                    <div class="review-author">
-                        <div class="author-avatar">AK</div>
-                        <div class="author-info">
-                            <div class="author-name">Alex Kim</div>
-                            <div class="author-role">Data Engineer</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="review-card">
-                    <div class="review-rating">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                    </div>
-                    <p class="review-text">
-                        "RegEx testing with live pattern matching and the QR code generator are my go-to tools. Everything works instantly, no loading times. Exactly what a developer needs."
-                    </p>
-                    <div class="review-author">
-                        <div class="author-avatar">JM</div>
-                        <div class="author-info">
-                            <div class="author-name">Jessica Martinez</div>
-                            <div class="author-role">Frontend Developer</div>
-                        </div>
-                    </div>
-                </div>
+          </div>
+          <div class="note">
+            <span class="note-mark">iii</span>
+            <div class="note-body">
+              <h4>Bring your own model</h4>
+              <p>Responses API, DeepSeek reasoning, or any OpenAI-compatible endpoint. Local URL, your key, your bill.</p>
             </div>
+          </div>
+          <div class="note">
+            <span class="note-mark">iv</span>
+            <div class="note-body">
+              <h4>Keyboard, top to bottom</h4>
+              <p>⌘N opens; ↩ sends; ⌘⇧C copies the last code block. Mouse is optional.</p>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- Download Section -->
-    <section id="download" class="download">
-        <div class="container">
-            <div class="download-content">
-                <div class="download-text">
-                    <h2 class="download-title">Ready to Boost Your Productivity?</h2>
-                    <p class="download-description">
-                        Join developers who have streamlined their workflow with DevUtilities's comprehensive toolkit.
-                    </p>
-                    <div class="download-requirements">
-                        <h4>System Requirements</h4>
-                        <ul>
-                            <li>macOS 14.0 or later</li>
-                            <li>Apple Silicon or Intel processor</li>
-                            <li>50 MB free disk space</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="download-actions">
-                    <div class="download-buttons">
-                        <a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn btn-download" target="_blank" rel="noopener">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" height="30"></span>
-                            <div class="btn-content">
-                                <span class="btn-title">Download on the App Store</span>
-                                <span class="btn-subtitle">Version 2.12.0</span>
-                            </div>
-                        </a>
-
-                        <a href="https://github.com/hengfeiyang/devutilities" class="btn btn-github" target="_blank" rel="noopener">
-                            <span class="btn-icon">⭐</span>
-                            <div class="btn-content">
-                                <span class="btn-title">Support on GitHub</span>
-                                <span class="btn-subtitle">Check issues</span>
-                            </div>
-                        </a>
-                    </div>
-                    
-                    <div class="download-stats">
-                        <div class="stat">
-                            <span class="stat-number">23</span>
-                            <span class="stat-label">Developer Tools</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">2.12.0</span>
-                            <span class="stat-label">Latest Version</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">100%</span>
-                            <span class="stat-label">Claude Code Built</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- ─── Voices ────────────────────────────────────────────────────── -->
+    <section class="voices" id="voices">
+      <div class="section-head">
+        <div class="section-eyebrow">§ 03 — Voices</div>
+        <h2 class="section-h">
+          What developers say<br />
+          <span class="muted">when the App Store stops listening.</span>
+        </h2>
+      </div>
+      <div class="voices-grid">
+        <figure class="voice">
+          <div class="voice-stars" aria-label="5 out of 5">
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+          </div>
+          <blockquote>The JSON diff has saved me from at least a dozen late-night API pages. It feels like the tool the Mac always wanted.</blockquote>
+          <figcaption>
+            <span class="voice-who">Sarah J.</span>
+            <span class="voice-role">Senior Full-Stack Engineer</span>
+          </figcaption>
+        </figure>
+        <figure class="voice">
+          <div class="voice-stars" aria-label="5 out of 5">
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+          </div>
+          <blockquote>Crypto, JWT, base64 — the things you reach for at 2am, all in one place. Native enough that I forget it isn't built in.</blockquote>
+          <figcaption>
+            <span class="voice-who">Michael R.</span>
+            <span class="voice-role">Security Engineer</span>
+          </figcaption>
+        </figure>
+        <figure class="voice">
+          <div class="voice-stars" aria-label="5 out of 5">
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+          </div>
+          <blockquote>The timestamp converter and UUID generator are part of my muscle memory. I'd pay for the AI translate alone.</blockquote>
+          <figcaption>
+            <span class="voice-who">Emily W.</span>
+            <span class="voice-role">iOS Developer</span>
+          </figcaption>
+        </figure>
+        <figure class="voice">
+          <div class="voice-stars" aria-label="5 out of 5">
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+          </div>
+          <blockquote>HTTP client with streaming, JSON tree, history. It is what every team's scratch app should grow up to be.</blockquote>
+          <figcaption>
+            <span class="voice-who">David L.</span>
+            <span class="voice-role">Backend Engineer</span>
+          </figcaption>
+        </figure>
+        <figure class="voice">
+          <div class="voice-stars" aria-label="5 out of 5">
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+          </div>
+          <blockquote>Parquet viewer is the unsung hero. Schema, rows, export — the entire debugging loop without leaving the dock.</blockquote>
+          <figcaption>
+            <span class="voice-who">Alex K.</span>
+            <span class="voice-role">Data Engineer</span>
+          </figcaption>
+        </figure>
+        <figure class="voice">
+          <div class="voice-stars" aria-label="5 out of 5">
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+          </div>
+          <blockquote>Regex tester with live capture groups; QR codes from clipboard. Tiny tools, but the polish is the point.</blockquote>
+          <figcaption>
+            <span class="voice-who">Jessica M.</span>
+            <span class="voice-role">Frontend Developer</span>
+          </figcaption>
+        </figure>
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-                
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
+    <!-- ─── Changelog (condensed) ─────────────────────────────────────── -->
+    <section class="changelog" id="changelog">
+      <div class="section-head">
+        <div class="section-eyebrow">§ 04 — Changelog</div>
+        <h2 class="section-h">
+          Released, in the open.<br />
+          <span class="muted">Recent versions, in the order they shipped.</span>
+        </h2>
+      </div>
+      <ol class="changes">
+        <li>
+          <span class="ver">2.12</span>
+          <div>
+            <h4>AI Chat, redrawn</h4>
+            <p>Markdown rendering with syntax-highlighted code blocks. One-click copy on every fence. OpenAI Responses API and DeepSeek reasoning. AI Translate adds OpenAI TTS — 13 voices, real-time streaming.</p>
+            <span class="when">May 2026</span>
+          </div>
+        </li>
+        <li>
+          <span class="ver">2.11</span>
+          <div>
+            <h4>Diff, everywhere it makes sense</h4>
+            <p>Text Compare arrives as a dedicated tool. JSON, SQL, and HTML each pick up a side-by-side diff mode. Powered by CodeMirror.</p>
+            <span class="when">Apr 2026</span>
+          </div>
+        </li>
+        <li>
+          <span class="ver">2.10</span>
+          <div>
+            <h4>Currency, with memory</h4>
+            <p>38 fiat currencies. 24-hour smart caching. 30-day price history with quiet trend arrows.</p>
+            <span class="when">Mar 2026</span>
+          </div>
+        </li>
+        <li>
+          <span class="ver">2.9</span>
+          <div>
+            <h4>Random String</h4>
+            <p>Five presets — passwords, API keys, tokens, IDs, slugs — backed by SecRandomCopyBytes.</p>
+            <span class="when">Feb 2026</span>
+          </div>
+        </li>
+      </ol>
+    </section>
 
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
+    <!-- ─── Download ──────────────────────────────────────────────────── -->
+    <section class="download" id="download">
+      <div class="dl-card">
+        <div class="dl-left">
+          <div class="section-eyebrow">§ 05 — Download</div>
+          <h2 class="dl-h">
+            Twenty-three tools.<br />
+            One small Mac app.
+          </h2>
+          <p class="dl-p">
+            Native, offline-capable, $29.99 on the Mac App Store. Ships with feature management,
+            drag-and-drop sidebar organization, and full keyboard navigation. No account, no subscription.
+          </p>
+          <div class="dl-actions">
+            <a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" />
+              </svg>
+              Download — Mac App Store
+            </a>
+            <a href="https://github.com/hengfeiyang/devutilities/issues" class="btn-ghost lg">
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 1.4a5.6 5.6 0 0 1 5.6 5.6c0 .4 0 .8-.1 1.2-.4-.6-1.4-1.4-2.5-1.4-1.5 0-1.6 1-3 1-1.4 0-2-1-3.2-1-1 0-2 .8-2.4 1.4A5.6 5.6 0 0 1 8 2.4z" fill="currentColor" />
+              </svg>
+              Support on GitHub
+            </a>
+          </div>
         </div>
-    </footer>
+        <aside class="dl-right">
+          <div class="dl-spec">
+            <span class="spec-k">Version</span><span class="spec-v">2.12.2 — May 2026</span>
+            <span class="spec-k">Requires</span><span class="spec-v">macOS 14 Sonoma or later</span>
+            <span class="spec-k">Architectures</span><span class="spec-v">Apple silicon · Intel</span>
+            <span class="spec-k">Footprint</span><span class="spec-v">≈ 55 MB on disk</span>
+            <span class="spec-k">Price</span><span class="spec-v">$29.99 — one-time, App Store</span>
+            <span class="spec-k">Telemetry</span><span class="spec-v">Anonymous only</span>
+          </div>
+          <div class="dl-built">
+            <span>Built with</span>
+            <strong>Claude Code</strong>
+            <span>and Swift</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
 
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <!-- ─── Footer ──────────────────────────────────────────────────────── -->
+  <footer class="foot">
+    <div class="foot-inner">
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <img src="images/icon.png" alt="" width="26" height="26" class="logo-img" />
+          <span>DevUtilities</span>
+        </a>
+        <p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p>
+      </div>
+      <div class="foot-cols">
+        <div>
+          <h5>Product</h5>
+          <a href="#tools">Tools</a>
+          <a href="#feature">Spotlight</a>
+          <a href="#download">Download</a>
+        </div>
+        <div>
+          <h5>Resources</h5>
+          <a href="release-notes.html">Changelog</a>
+          <a href="https://github.com/hengfeiyang/devutilities/issues">Support</a>
+        </div>
+        <div>
+          <h5>Legal</h5>
+          <a href="privacy_policy.html">Privacy policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-rule"></div>
+    <div class="foot-bottom">
+      <span>© 2026 DevUtilities</span>
+      <span>v2.12.2</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
 </body>
 </html>

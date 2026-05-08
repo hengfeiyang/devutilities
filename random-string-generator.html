@@ -1,448 +1,96 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random String Generator - Secure Password & API Key Generator | DevUtilities</title>
-    <meta name="description" content="Cryptographically secure random string generator for developers. Generate strong passwords, API keys, tokens, and custom random strings with advanced character set controls. Part of DevUtilities - 21 essential developer tools for macOS.">
-    <meta name="keywords" content="random string generator, password generator, api key generator, secure random string, cryptographic random, token generator, random password online">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="Random String Generator - Secure Password & API Key Generator | DevUtilities">
-    <meta property="og:description" content="Cryptographically secure random string generator with customizable character sets, presets, and advanced requirements for passwords, API keys, and tokens.">
-    <meta property="og:image" content="images/screenshots/random-string.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Random String Generator - Secure Password & API Key Generator">
-    <meta property="twitter:description" content="Cryptographically secure random string generator with customizable character sets and advanced security requirements.">
-    <meta property="twitter:image" content="images/screenshots/random-string.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities Random String Generator",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Cryptographically secure random string generator with customizable character sets and advanced requirements",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "10"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Random String Generator — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="Cryptographically secure random string generation. Five presets — passwords, API keys, hex strings, PIN codes, readable codes — backed by SecRandomCopyBytes." />
+  <meta name="keywords" content="random string, password generator, API key, hex string, secure random, SecRandomCopyBytes, macOS" />
+  <meta property="og:image" content="images/screenshots/random-string.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>Random String Generator</span>
-                    </div>
-                    <h1 class="hero-title">
-                        Random String Generator
-                        <span class="hero-subtitle">Cryptographically Secure String Generation</span>
-                    </h1>
-                    <p class="hero-description">
-                        Generate cryptographically secure random strings for passwords, API keys, tokens, and test data. Features customizable character sets, 5 preset templates, advanced security requirements, and bulk generation capabilities. Perfect for authentication systems, API development, and security-critical applications.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🔐</span>
-                            <span>Cryptographically Secure</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🎨</span>
-                            <span>5 Preset Templates</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">⚙️</span>
-                            <span>Advanced Requirements</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/random-string.png" alt="DevUtilities Random String Generator Screenshot showing password generation with security options">
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>Random String</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 15 of 23 · Generate</div><h1 class="page-h">Random, <em>but secure.</em></h1></section>
+  <div class="page-sub"><div></div><p>Cryptographically secure random strings via <code>SecRandomCopyBytes</code> with rejection sampling — no modulo bias, no off-by-one. Five presets cover the daily cases; advanced rules enforce per-class minimums for strict policies.</p></div>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Advanced Random String Generation Features</h2>
-                <p class="section-description">
-                    Everything you need for secure random string generation in professional development workflows.
-                </p>
-            </div>
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Updated</div><div class="tool-meta-value accent">v2.9</div><div class="tool-meta-sub">First shipped</div></div>
+    <div><div class="tool-meta-label">Presets</div><div class="tool-meta-value">Five</div><div class="tool-meta-sub">Password · API key · hex · PIN · readable</div></div>
+    <div><div class="tool-meta-label">Source</div><div class="tool-meta-value">SecRandomCopyBytes</div><div class="tool-meta-sub">Rejection sampling</div></div>
+    <div><div class="tool-meta-label">Bulk</div><div class="tool-meta-value">Up to 20</div><div class="tool-meta-sub">Per generation</div></div>
+  </div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">🔐</div>
-                    <h3 class="feature-title">Cryptographically Secure</h3>
-                    <p class="feature-description">Uses SecRandomCopyBytes for true cryptographic randomness with rejection sampling to eliminate bias. Safe for generating passwords, tokens, and security-critical identifiers.</p>
-                </div>
+  <section class="tool-shot"><figure><img src="images/screenshots/random-string.png" alt="DevUtilities Random String Generator — preset picker, character classes, requirements, output list." /></figure><figcaption>Plate xv — Random String with the preset picker and the per-class minimum rules.</figcaption></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3 class="feature-title">5 Built-in Presets</h3>
-                    <p class="feature-description">Quick templates for common use cases: Strong Password (16 chars), API Key (32 chars), Hex String (64 chars), PIN Code (6 digits), and Readable Code (12 chars).</p>
-                </div>
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Seven things <span class="muted">it does carefully.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Five presets</h4><p>Strong Password (16), API Key (32), Hex String (64), PIN Code (6 digits), Readable Code (no ambiguous characters). Pick and go.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>Customisable charset</h4><p>Toggle uppercase, lowercase, digits, symbols. Compose your own pool when the presets don't fit.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Length 1 – 100</h4><p>From 4-digit PIN to a 100-character secret. Set the length once; the generator obeys.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Per-class minimums</h4><p>Enforce "at least 2 digits" or "at least 1 symbol" — the kind of rule strict password policies still require.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Bulk generation</h4><p>Up to 20 strings per click. Output as a list, copy individually or all at once.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>Rejection sampling</h4><p>Drawing from <code>SecRandomCopyBytes</code> with rejection sampling eliminates modulo bias — every character has equal probability.</p></div></div>
+      <div class="cap"><span class="cap-n">vii</span><div class="cap-body"><h4>State persistence</h4><p>Length, charset, and rule preferences stick across sessions.</p></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">⚙️</div>
-                    <h3 class="feature-title">Customizable Character Sets</h3>
-                    <p class="feature-description">Choose from uppercase letters, lowercase letters, numbers, symbols, or define your own custom character set for specialized requirements.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>to a fresh secret.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Pick a preset</h4><p>Or choose "custom" and toggle character classes by hand.</p><div class="step-key">Preset</div></div>
+      <div class="step"><span class="step-n"></span><h4>Set length and rules</h4><p>Length, plus minimum counts per class if you need them.</p><div class="step-key">Length · rules</div></div>
+      <div class="step"><span class="step-n"></span><h4>Generate</h4><p>One string or twenty. Sub-second, even at 100 characters × 20.</p><div class="step-key">Generate</div></div>
+      <div class="step"><span class="step-n"></span><h4>Copy</h4><p>One-click copy on each, or "copy all" for the whole list.</p><div class="step-key">Copy · <b>⌘ C</b></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">✅</div>
-                    <h3 class="feature-title">Advanced Requirements</h3>
-                    <p class="feature-description">Enforce minimum requirements for uppercase letters, numbers, or special characters to meet strict password policies and security standards.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — Auth</span><h4>Strong passwords</h4><p>Generate one for the user account you're creating; remember to store it somewhere.</p></div>
+      <div class="use"><span class="use-tag">ii — API</span><h4>Secret keys</h4><p>Mint API keys, service tokens, and webhook secrets with the right entropy.</p></div>
+      <div class="use"><span class="use-tag">iii — DB</span><h4>Test fixtures</h4><p>Bulk-generate IDs, slugs, and tokens for seed scripts.</p></div>
+      <div class="use"><span class="use-tag">iv — Identity</span><h4>OAuth state</h4><p>Generate <code>state</code> and <code>nonce</code> values for OAuth flows.</p></div>
+      <div class="use"><span class="use-tag">v — Read</span><h4>Readable codes</h4><p>The Readable preset omits ambiguous characters — useful when humans will read or type the result.</p></div>
+      <div class="use"><span class="use-tag">vi — Crypto</span><h4>HMAC keys</h4><p>Generate hex strings of the right length for HMAC-256/384/512 secrets.</p></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">Bulk Generation</h3>
-                    <p class="feature-description">Generate up to 20 random strings simultaneously for batch operations, test data creation, or provisioning multiple API keys at once.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>Where does the randomness come from?</summary><p>From <code>SecRandomCopyBytes</code>, the macOS CSPRNG. Suitable for passwords, API keys, and security tokens.</p></details>
+      <details><summary>Is there modulo bias?</summary><p>No. The generator uses rejection sampling — drawing more bytes than strictly needed and discarding values that would skew the distribution.</p></details>
+      <details><summary>What's in each preset?</summary><p><strong>Strong Password</strong>: 16 chars, all classes. <strong>API Key</strong>: 32 chars, alphanumeric. <strong>Hex String</strong>: 64 hex chars. <strong>PIN</strong>: 6 digits. <strong>Readable</strong>: no <code>0/O</code>, <code>1/l/I</code>, etc.</p></details>
+      <details><summary>Can I enforce minimums per class?</summary><p>Yes. Toggle "at least N digits / uppercase / symbols" — the generator re-rolls until the constraint is met (or warns if the constraint is impossible for the chosen length).</p></details>
+      <details><summary>How many at once?</summary><p>Up to 20 per generation. The whole list copies in one click.</p></details>
+      <details><summary>Are generated strings stored?</summary><p>Only in your local session, until you regenerate. Nothing leaves your machine.</p></details>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📏</div>
-                    <h3 class="feature-title">Flexible Length Control</h3>
-                    <p class="feature-description">Configure string length from 1 to 100 characters with an intuitive slider. Perfect for everything from short PINs to long API tokens.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="uuid-generator.html"><div class="rel-head"><span>14 · Generate</span><span></span></div><h4>UUID Generator</h4><p>v1, v4, v5, v7 — when an ID, not just a string, is what you need.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="crypto-tools.html"><div class="rel-head"><span>23 · Network</span><span>New · 1.12</span></div><h4>Crypto Tools</h4><p>Hash and encrypt the secrets you generated.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="jwt-encoder.html"><div class="rel-head"><span>13 · Format</span><span></span></div><h4>JWT</h4><p>Use a fresh HMAC secret to sign tokens here.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="qr-code.html"><div class="rel-head"><span>16 · Generate</span><span></span></div><h4>QR Code</h4><p>Encode a fresh token as a QR for an offline transfer.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="base64-encoder.html"><div class="rel-head"><span>12 · Format</span><span></span></div><h4>Base64</h4><p>Encode a binary secret into Base64 for transport.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="hex-converter.html"><div class="rel-head"><span>06 · Convert</span><span>New · 2.2</span></div><h4>Hex String Converter</h4><p>Round-trip hex strings into raw bytes when needed.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3 class="feature-title">Easy Copy & Export</h3>
-                    <p class="feature-description">One-click copying for individual strings or bulk copy all generated strings at once. Seamlessly integrate with your development workflow.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Cryptographically secure, <em>preset-friendly.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
 
-    <!-- Presets Information Section -->
-    <section class="base64-info">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Built-in Preset Templates</h2>
-                <p class="section-description">Quick-start templates optimized for common use cases</p>
-            </div>
-
-            <div class="info-grid">
-                <div class="info-card">
-                    <div class="info-icon">🔒</div>
-                    <h3>Strong Password</h3>
-                    <p>16-character password with mixed case letters, numbers, and symbols. Enforces at least one uppercase, one number, and one symbol for maximum security.</p>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-icon">🔑</div>
-                    <h3>API Key</h3>
-                    <p>32-character alphanumeric string. Perfect for API authentication tokens and service identifiers.</p>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-icon">🔢</div>
-                    <h3>Hex String</h3>
-                    <p>64-character hexadecimal string (0-9, A-F only). Ideal for hash-like identifiers, session tokens, and cryptographic key representations.</p>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-icon">📱</div>
-                    <h3>PIN Code</h3>
-                    <p>6-digit numeric code for simple authentication. Numbers only (0-9) for easy manual entry on keypads and mobile devices.</p>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-icon">👀</div>
-                    <h3>Readable Code</h3>
-                    <p>12-character alphanumeric code. Great for activation codes and invite codes users need to type.</p>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-icon">🎯</div>
-                    <h3>Custom</h3>
-                    <p>Full control over character sets, length, quantity, and requirements. Define your own rules for specialized security requirements.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Use Section -->
-    <section class="how-to-use">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">How to Generate Random Strings</h2>
-                <p class="section-description">
-                    Create secure random strings in just a few simple steps.
-                </p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Choose a Preset</h3>
-                    <p>Select from 5 built-in presets (Strong Password, API Key, Hex String, PIN Code, Readable Code) or start with Custom settings.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Configure Options</h3>
-                    <p>Adjust length (1-100), quantity (1-20), character sets, and security requirements like enforcing uppercase, numbers, or symbols.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>Generate Strings</h3>
-                    <p>Click Generate to create cryptographically secure random strings. Results appear instantly with statistics showing total characters.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>Copy & Use</h3>
-                    <p>Copy individual strings or use "Copy All" for bulk operations. Strings are ready to use in your applications, APIs, or databases.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect for These Development Tasks</h2>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔐</div>
-                    <h3>Password Generation</h3>
-                    <p>Generate strong, secure passwords for user accounts, admin panels, and service credentials with enforced complexity requirements.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔑</div>
-                    <h3>API Key Creation</h3>
-                    <p>Create unique API keys, access tokens, and service identifiers for authentication systems and third-party integrations.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🎫</div>
-                    <h3>Session Tokens</h3>
-                    <p>Generate session IDs, CSRF tokens, and temporary authentication tokens for web applications and mobile apps.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🧪</div>
-                    <h3>Test Data Generation</h3>
-                    <p>Create random test data for unit tests, integration tests, and database seeding with consistent character patterns.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🎟️</div>
-                    <h3>Activation Codes</h3>
-                    <p>Generate license keys, activation codes, invite codes, and promo codes for software licensing and marketing campaigns.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🆔</div>
-                    <h3>Unique Identifiers</h3>
-                    <p>Create unique IDs for database records, file names, temporary folders, and resource identifiers in distributed systems.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>How secure are the generated random strings?</h3>
-                    <p>Very secure! DevUtilities uses SecRandomCopyBytes, Apple's cryptographically secure random number generator, with rejection sampling to eliminate modulo bias. This is suitable for security-critical applications including password generation and cryptographic keys.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What's the difference between presets and custom mode?</h3>
-                    <p>Presets are optimized templates for common use cases (passwords, API keys, etc.) with pre-configured settings. Custom mode gives you full control over all parameters including character sets, length, and requirements.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What do the requirement options do?</h3>
-                    <p>Requirements enforce that generated strings must contain at least one character from specified sets (uppercase, number, symbol). This helps meet strict password policies and ensures strings have sufficient complexity for security.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I generate the same random string twice?</h3>
-                    <p>No, the tool generates truly random strings each time. With cryptographic randomness and large character sets, the probability of generating identical strings is astronomically small (virtually impossible for practical purposes).</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What's the maximum string length and quantity?</h3>
-                    <p>You can generate strings from 1 to 100 characters in length, and create up to 20 strings at once. These limits ensure optimal performance while covering the vast majority of use cases.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">Explore other essential tools included in DevUtilities</p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">🎲</div>
-                    <h3>UUID Generator</h3>
-                    <p>Generate unique identifiers with multiple UUID versions (v1, v4, v5, v7) for database records and distributed systems.</p>
-                    <a href="uuid-generator.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🔐</div>
-                    <h3>Crypto Tools</h3>
-                    <p>Complete cryptographic suite with hash functions, AES encryption, and RSA for secure data handling.</p>
-                    <a href="crypto-tools.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🎫</div>
-                    <h3>JWT Encoder/Decoder</h3>
-                    <p>Work with JSON Web Tokens for authentication - encode and decode JWTs with HMAC and RSA algorithms.</p>
-                    <a href="jwt-encoder.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🔤</div>
-                    <h3>Base64 Encoder</h3>
-                    <p>Encode and decode Base64 strings for API authentication, data transmission, and configuration files.</p>
-                    <a href="base64-encoder.html" class="tool-link">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Generate Secure Random Strings?</h2>
-                <p>Join thousands of developers who rely on DevUtilities's random string generator for secure password and token creation.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-primary">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 21 Developer Tools</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div></footer>
 </body>
 </html>

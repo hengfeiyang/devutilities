@@ -1,447 +1,95 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base64 Encoder/Decoder - Encode & Decode Base64 Online | DevUtilities</title>
-    <meta name="description" content="Professional Base64 encoder and decoder for developers. Encode text to Base64, decode Base64 to text with URL-safe variant support. Real-time conversion with automatic detection. Part of DevUtilities - 18 essential developer tools for macOS.">
-    <meta name="keywords" content="base64 encoder, base64 decoder, base64 encode online, base64 decode online, URL safe base64, base64 converter, encode decode base64, base64 tool online">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="Base64 Encoder/Decoder - Encode & Decode Base64 Online | DevUtilities">
-    <meta property="og:description" content="Professional Base64 encoder and decoder with URL-safe variant support. Real-time conversion and automatic detection for developers.">
-    <meta property="og:image" content="images/screenshots/base64.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Base64 Encoder/Decoder - Encode & Decode Base64 Online">
-    <meta property="twitter:description" content="Professional Base64 encoder and decoder with URL-safe variant support. Real-time conversion and automatic detection.">
-    <meta property="twitter:image" content="images/screenshots/base64.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities Base64 Encoder/Decoder",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Professional Base64 encoder and decoder with URL-safe variant support and automatic detection",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "10"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Base64 — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="Base64 encode and decode with URL-safe variants and automatic detection. Native macOS, fully offline." />
+  <meta name="keywords" content="Base64, base64 encode, base64 decode, URL-safe base64, base64 tool, macOS encoder" />
+  <meta property="og:image" content="images/screenshots/base64.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>Base64 Encoder/Decoder</span>
-                    </div>
-                    <h1 class="hero-title">
-                        Base64 Encoder & Decoder
-                        <span class="hero-subtitle">Professional Base64 Conversion Tool</span>
-                    </h1>
-                    <p class="hero-description">
-                        Encode text to Base64 and decode Base64 back to readable text with support for URL-safe variants. Features automatic format detection, real-time conversion, and comprehensive error handling. Essential for API authentication, data transmission, and web development.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🔄</span>
-                            <span>Bidirectional Conversion</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🌐</span>
-                            <span>URL-Safe Variants</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🎯</span>
-                            <span>Auto Detection</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/base64.png" alt="DevUtilities Base64 Encoder/Decoder Screenshot showing text encoding with URL-safe options">
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>Base64</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 12 of 23 · Format</div><h1 class="page-h">Base64, <em>both directions.</em></h1></section>
+  <div class="page-sub"><div></div><p>Encode and decode Base64 with URL-safe variants and automatic direction detection. Padding handled, line breaks tolerated, output ready for the clipboard.</p></div>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Advanced Base64 Conversion Features</h2>
-                <p class="section-description">
-                    Everything you need for professional Base64 encoding and decoding in development workflows.
-                </p>
-            </div>
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Direction</div><div class="tool-meta-value accent">Bidirectional</div><div class="tool-meta-sub">Auto-detected</div></div>
+    <div><div class="tool-meta-label">Variants</div><div class="tool-meta-value">Standard · URL-safe</div><div class="tool-meta-sub">Both round-trip</div></div>
+    <div><div class="tool-meta-label">Padding</div><div class="tool-meta-value">Handled</div><div class="tool-meta-sub">Optional on input</div></div>
+    <div><div class="tool-meta-label">Network</div><div class="tool-meta-value">Offline</div><div class="tool-meta-sub">Pure local</div></div>
+  </div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">🔄</div>
-                    <h3 class="feature-title">Bidirectional Conversion</h3>
-                    <p class="feature-description">Seamlessly encode text to Base64 and decode Base64 back to readable text. Handles both standard and URL-safe Base64 encoding formats.</p>
-                </div>
+  <section class="tool-shot"><figure><img src="images/screenshots/base64.png" alt="DevUtilities Base64 — paired input/output, encode/decode toggle." /></figure><figcaption>Plate xii — Base64 with the URL-safe variant toggle visible.</figcaption></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3 class="feature-title">URL-Safe Base64</h3>
-                    <p class="feature-description">Support for URL-safe Base64 encoding that replaces '+' and '/' with '-' and '_' characters, perfect for web applications and APIs.</p>
-                </div>
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Six things <span class="muted">it does well.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Encode and decode</h4><p>Both directions in the same panel. Auto-detects which way you mean from the input shape.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>URL-safe variant</h4><p>Toggle to use <code>-_</code> instead of <code>+/</code>. Padding is optional and stripped on output.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Tolerant input</h4><p>Whitespace and line breaks are silently ignored. Paste from a multi-line wrap and it still works.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Real-time conversion</h4><p>Type, see results immediately. Both panels update as you key.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>One-click copy</h4><p>Copy buttons on both sides. The clipboard gets the value alone.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>State persistence</h4><p>Last input and output stick across sessions.</p></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">Automatic Detection</h3>
-                    <p class="feature-description">Smart format detection automatically identifies whether your input is plain text or Base64 encoded data, streamlining the conversion process.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>between forms.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Paste</h4><p>Drop encoded or decoded text into either field.</p><div class="step-key">Paste · <b>⌘ V</b></div></div>
+      <div class="step"><span class="step-n"></span><h4>Pick a variant</h4><p>Standard or URL-safe. The toggle is visible at all times.</p><div class="step-key">Variant toggle</div></div>
+      <div class="step"><span class="step-n"></span><h4>Read the result</h4><p>The opposite field updates immediately.</p><div class="step-key">Live</div></div>
+      <div class="step"><span class="step-n"></span><h4>Copy</h4><p>One-click copy on either side.</p><div class="step-key">Copy · <b>⌘ C</b></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Real-time Processing</h3>
-                    <p class="feature-description">Instant conversion as you type with live validation. See results immediately without clicking buttons or waiting for processing.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — Auth</span><h4>Basic auth headers</h4><p>Encode <code>user:password</code> for an HTTP Basic header in one move.</p></div>
+      <div class="use"><span class="use-tag">ii — Tokens</span><h4>JWT segments</h4><p>Decode the URL-safe Base64 segments of a JWT to inspect headers and claims.</p></div>
+      <div class="use"><span class="use-tag">iii — Embed</span><h4>Inline binaries</h4><p>Encode a small image or font for inline data URLs.</p></div>
+      <div class="use"><span class="use-tag">iv — Webhook</span><h4>Decoding payloads</h4><p>Decode the Base64-wrapped payloads some webhook services pass along.</p></div>
+      <div class="use"><span class="use-tag">v — Email</span><h4>MIME parts</h4><p>Decode quoted-printable / Base64 mail body parts when debugging.</p></div>
+      <div class="use"><span class="use-tag">vi — Storage</span><h4>Round-tripping</h4><p>Stash arbitrary text in a field that only allows ASCII, decode on retrieval.</p></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🛡️</div>
-                    <h3 class="feature-title">Error Handling</h3>
-                    <p class="feature-description">Comprehensive error detection for invalid Base64 input with clear error messages and suggestions for fixing common formatting issues.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>What's the difference between standard and URL-safe Base64?</summary><p>Standard uses <code>+</code> and <code>/</code>; URL-safe uses <code>-</code> and <code>_</code> and often omits the trailing <code>=</code> padding. Both round-trip cleanly.</p></details>
+      <details><summary>Do I need to specify direction?</summary><p>No. The tool detects whether your input is encoded or decoded and routes accordingly.</p></details>
+      <details><summary>Are line breaks ignored?</summary><p>Yes. Whitespace and line breaks are silently stripped from encoded input.</p></details>
+      <details><summary>Is padding required?</summary><p>On output, yes — it's added when needed. On input, it's optional; the tool handles either form.</p></details>
+      <details><summary>Does this handle binary?</summary><p>Encoded text is text; decoding produces UTF-8 text by default. Genuine binary round-trips are best done with the Hex String Converter.</p></details>
+      <details><summary>Does this require network access?</summary><p>No. Base64 is fully local.</p></details>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">Content Analysis</h3>
-                    <p class="feature-description">Character and line count tracking for both input and output, helping you understand encoding overhead and data size changes.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="hex-converter.html"><div class="rel-head"><span>06 · Convert</span><span>New · 2.2</span></div><h4>Hex String Converter</h4><p>Bytes ↔ string with UTF-8 / 16 / ASCII handling.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="jwt-encoder.html"><div class="rel-head"><span>13 · Format</span><span></span></div><h4>JWT</h4><p>Decode URL-safe Base64 segments end-to-end with signature checks.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="url-tools.html"><div class="rel-head"><span>21 · Network</span><span></span></div><h4>URL Tools</h4><p>URL encode/decode, plus parser breakdowns.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="crypto-tools.html"><div class="rel-head"><span>23 · Network</span><span>New · 1.12</span></div><h4>Crypto Tools</h4><p>Hashes return Base64 or hex; decode them right next door.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON Formatter</h4><p>Format the JSON you decoded out of a Base64 envelope.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="base-converter.html"><div class="rel-head"><span>05 · Convert</span><span>Updated · 2.8</span></div><h4>Base Converter</h4><p>Numbers across bases — bin, oct, dec, hex, base62.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3 class="feature-title">Easy Copy & Share</h3>
-                    <p class="feature-description">One-click copying of encoded/decoded results. Seamlessly integrate with your development workflow and API testing tools.</p>
-                </div>
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Encode, decode, URL-safe — <em>one panel.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔤</div>
-                    <h3 class="feature-title">Unicode Support</h3>
-                    <p class="feature-description">Full Unicode and UTF-8 support for encoding international text, special characters, and multi-byte character sequences.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Base64 Information Section -->
-    <section class="base64-info">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Understanding Base64 Encoding</h2>
-                <p class="section-description">Learn about Base64 encoding and its applications in modern development</p>
-            </div>
-
-            <div class="info-grid">
-                <div class="info-card">
-                    <div class="info-icon">🔤</div>
-                    <h3>What is Base64?</h3>
-                    <p>Base64 is a binary-to-text encoding scheme that represents binary data in ASCII format. It uses 64 characters (A-Z, a-z, 0-9, +, /) to encode data, making it safe for transmission over text-based protocols.</p>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-icon">🌐</div>
-                    <h3>Standard vs URL-Safe</h3>
-                    <p>Standard Base64 uses '+' and '/' characters which can cause issues in URLs. URL-safe Base64 replaces these with '-' and '_', making encoded data safe for use in URLs and filenames.</p>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-icon">📈</div>
-                    <h3>Size Overhead</h3>
-                    <p>Base64 encoding increases data size by approximately 33%. Every 3 bytes of binary data becomes 4 characters of Base64 text, plus padding characters if needed.</p>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-icon">🔧</div>
-                    <h3>Common Applications</h3>
-                    <p>Used in email attachments (MIME), web authentication (Basic Auth), data URLs, API tokens, configuration files, and embedding binary data in JSON/XML.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Use Section -->
-    <section class="how-to-use">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">How to Use Base64 Encoder/Decoder</h2>
-                <p class="section-description">
-                    Encode and decode Base64 data in just a few simple steps.
-                </p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Input Your Data</h3>
-                    <p>Paste your text to encode to Base64, or paste Base64 encoded data to decode back to readable text.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Choose Format</h3>
-                    <p>Select between standard Base64 or URL-safe Base64 format depending on your use case and requirements.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>See Results</h3>
-                    <p>View the converted result instantly with automatic format detection and error handling for invalid input.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>Copy & Use</h3>
-                    <p>Copy the result with one click and use it in your applications, APIs, configuration files, or wherever needed.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect for These Development Tasks</h2>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔐</div>
-                    <h3>API Authentication</h3>
-                    <p>Encode credentials for HTTP Basic Authentication headers, API keys, and secure token generation for authentication workflows.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📧</div>
-                    <h3>Email & MIME Processing</h3>
-                    <p>Handle email attachments, decode MIME-encoded content, and process email headers that use Base64 encoding for non-ASCII characters.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🌐</div>
-                    <h3>Web Development</h3>
-                    <p>Create data URLs for embedding images, encode form data, handle file uploads, and process Base64-encoded content in web applications.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📄</div>
-                    <h3>Configuration Files</h3>
-                    <p>Encode binary data or sensitive information in JSON, YAML, or XML configuration files where plain text isn't suitable.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔧</div>
-                    <h3>API Testing & Development</h3>
-                    <p>Test APIs that send or receive Base64-encoded data, debug authentication issues, and validate data transmission formats.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">💾</div>
-                    <h3>Data Storage & Transmission</h3>
-                    <p>Store binary data in text-based databases, transmit binary data over text-based protocols, and ensure data integrity across systems.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>When should I use URL-safe Base64?</h3>
-                    <p>Use URL-safe Base64 when the encoded data will be used in URLs, filenames, or any context where '+' and '/' characters might cause issues. It replaces these characters with '-' and '_' respectively.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How much does Base64 encoding increase data size?</h3>
-                    <p>Base64 encoding increases data size by approximately 33%. Every 3 bytes of original data becomes 4 characters in Base64, plus potential padding characters ('=').</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I encode binary files with this tool?</h3>
-                    <p>This tool is optimized for text content. For binary files, you'll need to first convert them to a text representation or use specialized tools that can handle binary data directly.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What happens if I try to decode invalid Base64?</h3>
-                    <p>DevUtilities provides clear error messages when you try to decode invalid Base64 data, including suggestions for common issues like missing padding or invalid characters.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Does it support Unicode and special characters?</h3>
-                    <p>Yes! DevUtilities fully supports Unicode characters and international text. The tool properly handles UTF-8 encoding before applying Base64 conversion.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Is Base64 the same as encryption?</h3>
-                    <p>No, Base64 is encoding, not encryption. It's designed for data transmission and storage compatibility, not security. Base64 encoded data can be easily decoded by anyone.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">Explore other essential tools included in DevUtilities</p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">🔢</div>
-                    <h3>Hex String Converter</h3>
-                    <p>Convert between hexadecimal and string formats - another essential encoding tool for developers.</p>
-                    <a href="hex-converter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">📄</div>
-                    <h3>JSON Formatter</h3>
-                    <p>Format and validate JSON data that often contains Base64-encoded content in API responses.</p>
-                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🌍</div>
-                    <h3>HTTP Request</h3>
-                    <p>Test APIs that use Base64 authentication or send/receive Base64-encoded data with our HTTP client.</p>
-                    <a href="http-request.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🎫</div>
-                    <h3>JWT Encoder/Decoder</h3>
-                    <p>Work with JSON Web Tokens that use Base64 encoding internally for headers and payloads.</p>
-                    <a href="jwt-encoder.html" class="tool-link">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Streamline Your Base64 Workflow?</h2>
-                <p>Join thousands of developers who rely on DevUtilities's Base64 encoder for their daily development tasks.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-primary">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 23 Developer Tools</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div></footer>
 </body>
 </html>

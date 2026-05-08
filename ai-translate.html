@@ -1,412 +1,219 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Translate - Professional Translation Tool | DevUtilities</title>
-    <meta name="description" content="Professional AI-powered translation tool with 3 modes (Translate, Polishing, Summarize), 19 language support, OpenAI TTS with 13 voices, and special word mode. Part of DevUtilities - 23 essential developer tools for macOS.">
-    <meta name="keywords" content="AI translation, language translator, text polishing, text summarizer, word dictionary, OpenAI TTS, text to speech, multilingual translation, real-time translation, developer translation tool, macOS translator">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Translate — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="AI Translate in DevUtilities — three modes, nineteen languages, OpenAI TTS streaming, and a dictionary-grade word mode. A professional translator in your menu bar, not a tab in a browser." />
+  <meta name="keywords" content="AI translate, machine translation, OpenAI TTS, text-to-speech, 19 languages, word mode, polishing, summarize, professional translator, macOS" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="AI Translate - Professional Translation Tool | DevUtilities">
-    <meta property="og:description" content="Professional translation with 3 modes, 19 languages, OpenAI TTS with 13 voices, and special word mode with phonetic notation, examples, and etymology.">
-    <meta property="og:image" content="images/screenshots/aitranslate.png">
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="AI Translate — DevUtilities" />
+  <meta property="og:description" content="Three modes, nineteen languages, real-time TTS streaming. Word mode adds phonetics, meanings, examples, etymology." />
+  <meta property="og:image" content="images/screenshots/aitranslate.png" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="AI Translate - Professional Translation Tool">
-    <meta property="twitter:description" content="Professional translation with 3 modes, 19 languages, and special word mode with detailed explanations.">
-    <meta property="twitter:image" content="images/screenshots/aitranslate.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities AI Translate",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Professional AI-powered translation tool with 3 modes and 19 language support",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "12"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <header class="nav nav-static">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="DevUtilities home">
+        <img src="images/icon.png" alt="" width="26" height="26" class="logo-img" />
+        <span>DevUtilities</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary"><a href="index.html">Index</a><a href="index.html#tools">Tools</a>
+        <a href="index.html#feature">Spotlight</a>
+        <a href="index.html#voices">Voices</a>
+        <a href="release-notes.html">Changelog</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="index.html#download" class="nav-pill">
+          <span>Download</span>
+          <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </a>
+      </div>
+    </div>
+    <div class="nav-progress"></div>
+  </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>AI Translate</span>
-                    </div>
-                    <h1 class="hero-title">
-                        AI Translate
-                        <span class="hero-subtitle">Professional Translation Tool</span>
-                    </h1>
-                    <p class="hero-description">
-                        Professional AI-powered translation with intelligent translation, text polishing, and summarization. Now with OpenAI TTS — real-time PCM audio streaming with 13 voices, playback starts in realtime. Supports 19 languages and features a special word mode with phonetic notation, meanings, examples, and etymology.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🔊</span>
-                            <span>OpenAI TTS</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🌐</span>
-                            <span>19 Languages</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">📖</span>
-                            <span>Word Dictionary Mode</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/aitranslate.png" alt="DevUtilities AI Translate Screenshot showing professional translation interface">
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="tool-crumbs" aria-label="Breadcrumb">
+    <a href="index.html">DevUtilities</a><span class="sep">/</span>
+    <a href="index.html#tools">Tools</a><span class="sep">/</span>
+    <strong>AI Translate</strong>
+  </nav>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Professional Translation Features</h2>
-                <p class="section-description">
-                    Everything you need for intelligent translation, text polishing, and content summarization.
-                </p>
-            </div>
+  <section class="page-head">
+    <div class="page-eyebrow">§ Tool 02 of 23 · AI</div>
+    <h1 class="page-h">A translator <em>that listens</em> back.</h1>
+  </section>
+  <div class="page-sub">
+    <div></div>
+    <p>Nineteen languages, three modes — translate, polish, summarise — and a dedicated word mode that returns phonetics, meanings, examples, and etymology. v2.12 adds OpenAI TTS streaming: PCM audio decoded directly to the speaker, playback in roughly 200 ms, thirteen voices to choose from.</p>
+  </div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">🌐</div>
-                    <h3 class="feature-title">19 Language Support</h3>
-                    <p class="feature-description">Auto-detect, English, Chinese (Simplified/Traditional), Japanese, Korean, Spanish, French, German, Russian, Arabic, Hindi, Portuguese, Italian, Dutch, Turkish, Vietnamese, Thai, and Indonesian.</p>
-                </div>
+  <div class="tool-meta">
+    <div></div>
+    <div>
+      <div class="tool-meta-label">Version</div>
+      <div class="tool-meta-value accent">v2.12</div>
+      <div class="tool-meta-sub">May 2026 — current</div>
+    </div>
+    <div>
+      <div class="tool-meta-label">Languages</div>
+      <div class="tool-meta-value">19 + auto-detect</div>
+      <div class="tool-meta-sub">Including CJK, Arabic, Hindi</div>
+    </div>
+    <div>
+      <div class="tool-meta-label">TTS</div>
+      <div class="tool-meta-value">OpenAI · macOS</div>
+      <div class="tool-meta-sub">13 voices, real-time PCM</div>
+    </div>
+    <div>
+      <div class="tool-meta-label">Modes</div>
+      <div class="tool-meta-value">Translate · Polish · Summarise</div>
+      <div class="tool-meta-sub">Word mode auto-engages</div>
+    </div>
+  </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">Three Operation Modes</h3>
-                    <p class="feature-description">Translate for direct translation between languages, Polishing to improve clarity and fluency in the same language, and Summarize to create concise summaries in your target language.</p>
-                </div>
+  <section class="tool-shot">
+    <figure>
+      <img src="images/screenshots/aitranslate.png" alt="DevUtilities AI Translate — three modes, language picker, streaming output, and TTS playback." />
+    </figure>
+    <figcaption>Plate ii — AI Translate with the live status indicator and the OpenAI TTS playback affordance.</figcaption>
+  </section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📖</div>
-                    <h3 class="feature-title">Word Dictionary Mode</h3>
-                    <p class="feature-description">Automatic detection of single words with enhanced dictionary-style output including phonetic notation, all meanings with parts of speech, at least 3 example sentences, and detailed etymology.</p>
-                </div>
+  <main>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div>
+    <div>
+      <h2 class="tool-block-h">Eight pieces, <span class="muted">tightly fitted.</span></h2>
+      <div class="caps">
+        <div class="cap"><span class="cap-n">i</span><div class="cap-body">
+          <h4>Three operation modes</h4>
+          <p><strong>Translate</strong> renders meaning faithfully. <strong>Polish</strong> rewrites in the same language for clarity and flow. <strong>Summarise</strong> condenses long passages into the target language.</p>
+        </div></div>
+        <div class="cap"><span class="cap-n">ii</span><div class="cap-body">
+          <h4>Nineteen languages</h4>
+          <p>Auto-detect, English, Chinese (Simplified / Traditional), Japanese, Korean, Spanish, French, German, Russian, Arabic, Hindi, Portuguese, Italian, Dutch, Turkish, Vietnamese, Thai, Indonesian.</p>
+        </div></div>
+        <div class="cap"><span class="cap-n">iii</span><div class="cap-body">
+          <h4>Word mode</h4>
+          <p>Drop a single word and the output expands: phonetic notation, primary meanings, sample sentences, etymology — a pocket dictionary inline.</p>
+        </div></div>
+        <div class="cap"><span class="cap-n">iv</span><div class="cap-body">
+          <h4>OpenAI TTS streaming</h4>
+          <p>Raw PCM streamed straight to <code>AVAudioPlayerNode</code>. Playback starts in ~200 ms; no sentence splitting; thirteen voices.</p>
+        </div></div>
+        <div class="cap"><span class="cap-n">v</span><div class="cap-body">
+          <h4>Native macOS TTS</h4>
+          <p>Fall back to the system voices for any of the nineteen languages — useful offline or when you've blown through your TTS quota.</p>
+        </div></div>
+        <div class="cap"><span class="cap-n">vi</span><div class="cap-body">
+          <h4>Real-time streaming</h4>
+          <p>Output streams as the model generates. Live status indicator animates between thinking and done; copy and retry are one click each.</p>
+        </div></div>
+        <div class="cap"><span class="cap-n">vii</span><div class="cap-body">
+          <h4>Smart language defaults</h4>
+          <p>Target language is seeded from your system locale on first launch. Override per session; the choice sticks for future runs.</p>
+        </div></div>
+        <div class="cap"><span class="cap-n">viii</span><div class="cap-body">
+          <h4>Resizable split view</h4>
+          <p>Source and translation share a split that snaps to a 500 pt cap on input height. Long passages get a scroll, not a clipped box.</p>
+        </div></div>
+      </div>
+    </div>
+  </section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Real-time Streaming</h3>
-                    <p class="feature-description">See translation results as they're generated with live streaming and animated status indicators (✍️ writing animation → 👍 completion badge).</p>
-                </div>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div>
+    <div>
+      <h2 class="tool-block-h">Four moves <em>from paste to playback.</em></h2>
+      <div class="steps">
+        <div class="step"><span class="step-n"></span><h4>Pick a mode &amp; pair</h4><p>Translate, polish, or summarise. Choose source (or auto-detect) and target.</p><div class="step-key">Mode · pair · model</div></div>
+        <div class="step"><span class="step-n"></span><h4>Paste the text</h4><p>Single word, sentence, paragraph, or essay. Word mode engages on its own when the input is a single token.</p><div class="step-key">Send · <b>↩</b></div></div>
+        <div class="step"><span class="step-n"></span><h4>Listen if you'd like</h4><p>Hit the speaker to hear it. OpenAI TTS streams PCM in real time; the macOS engine handles offline playback.</p><div class="step-key">Speaker · <b>⌘ ⇧ S</b></div></div>
+        <div class="step"><span class="step-n"></span><h4>Copy or retry</h4><p>One-click copy on the output. Retry re-runs with the same input if you want a second pass.</p><div class="step-key">Copy · <b>⌘ C</b></div></div>
+      </div>
+    </div>
+  </section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔄</div>
-                    <h3 class="feature-title">Language Swap</h3>
-                    <p class="feature-description">Quickly swap source and target languages with a single click for bidirectional translation workflows.</p>
-                </div>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div>
+    <div>
+      <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+      <div class="uses">
+        <div class="use"><span class="use-tag">i — Read</span><h4>Foreign-language docs</h4><p>Drop a Mandarin RFC or a Japanese commit message; get faithful English back without leaving the window.</p></div>
+        <div class="use"><span class="use-tag">ii — Polish</span><h4>Email and PR rewrites</h4><p>Polish mode rewrites without translating. Tighten the same paragraph until it reads the way you'd like.</p></div>
+        <div class="use"><span class="use-tag">iii — Summarise</span><h4>Long threads</h4><p>Summarise into target language: a Slack debate becomes a paragraph in the language you actually publish in.</p></div>
+        <div class="use"><span class="use-tag">iv — Learn</span><h4>Vocabulary, with weight</h4><p>Word mode returns phonetics, meanings, sentences, etymology. The flashcard you didn't have to make.</p></div>
+        <div class="use"><span class="use-tag">v — Listen</span><h4>Pronunciation practice</h4><p>OpenAI TTS at native speed. Loop a phrase to learn its prosody, not just its letters.</p></div>
+        <div class="use"><span class="use-tag">vi — Write</span><h4>Marketing copy across markets</h4><p>Translate first, then polish in the destination language. Two clicks, two passes, one paragraph that reads native.</p></div>
+      </div>
+    </div>
+  </section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🧠</div>
-                    <h3 class="feature-title">Smart Language Detection</h3>
-                    <p class="feature-description">Automatically detects your system language for default target language selection. Source language defaults to auto-detect for seamless translation.</p>
-                </div>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div>
+    <div>
+      <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+      <div class="faq">
+        <details open><summary>Which model handles the translation?</summary><p>The same model picker AI Chat uses. GPT-5, DeepSeek, GPT-5.2-pro via the Responses API, or any custom OpenAI-compatible model you've added under <code>Settings → AI → Models</code>.</p></details>
+        <details><summary>What languages are supported?</summary><p>Auto-detect plus 19 languages: English, Chinese (Simplified &amp; Traditional), Japanese, Korean, Spanish, French, German, Russian, Arabic, Hindi, Portuguese, Italian, Dutch, Turkish, Vietnamese, Thai, Indonesian.</p></details>
+        <details><summary>What's word mode?</summary><p>When the input is a single word, AI Translate switches to a dictionary-style output: pronunciation (IPA where applicable), primary and secondary meanings, two example sentences, and brief etymology.</p></details>
+        <details><summary>How does the OpenAI TTS streaming work?</summary><p><code>OpenAITTSService</code> hits <code>/audio/speech</code> with raw PCM streaming. Audio is fed directly into <code>AVAudioPlayerNode</code> as it arrives — playback starts within ~200 ms with no sentence pre-splitting.</p></details>
+        <details><summary>Can I use macOS voices instead?</summary><p>Yes. <code>Settings → AI → Text-to-Speech</code> exposes three modes: <code>Auto</code> (prefer OpenAI when reachable), <code>OpenAI</code> only, or <code>macOS</code> only. The macOS engine works fully offline.</p></details>
+        <details><summary>Are translations stored anywhere?</summary><p>No — except in your local session state, so the panel restores on relaunch. Source text and output are sent only to the model endpoint you configured.</p></details>
+        <details><summary>Does Polish mode change languages?</summary><p>No. Polish mode keeps the language of the input and rewrites for clarity and flow. Use Translate if you want a different language.</p></details>
+      </div>
+    </div>
+  </section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🤖</div>
-                    <h3 class="feature-title">AI Model Integration</h3>
-                    <p class="feature-description">Reuses AI Chat's flexible model system supporting GPT-4, GPT-5, DeepSeek, and custom models. Configure once, use everywhere.</p>
-                </div>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div>
+    <div>
+      <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+      <div class="related-grid">
+        <a class="rel" href="ai-chat.html"><div class="rel-head"><span>01 · AI</span><span>Updated · 2.12</span></div><h4>AI Chat</h4><p>Markdown rendering, code copy, Responses API. Same model setup as Translate.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="text-compare.html"><div class="rel-head"><span>17 · Inspect</span><span>New · 2.11</span></div><h4>Text Compare</h4><p>Diff two versions side-by-side. Use it to compare a polish before/after.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON Formatter</h4><p>Format and diff JSON. Useful when localising structured strings.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="regex-tester.html"><div class="rel-head"><span>18 · Inspect</span><span></span></div><h4>Regex Test</h4><p>Live pattern matching for cleaning translation source data.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="hex-converter.html"><div class="rel-head"><span>06 · Convert</span><span>New · 2.2</span></div><h4>Hex String Converter</h4><p>UTF-8 / 16 / ASCII round-trip — handy for non-ASCII source debugging.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="url-tools.html"><div class="rel-head"><span>21 · Network</span><span></span></div><h4>URL Tools</h4><p>Encode and decode URL components for localised query strings.</p><span class="rel-arrow">Open →</span></a>
+      </div>
+    </div>
+  </section>
+  </main>
 
-                <div class="feature-card featured">
-                    <div class="feature-icon">🔊</div>
-                    <h3 class="feature-title">OpenAI Text-to-Speech <span class="feature-badge">Enhanced in v2.12.0</span></h3>
-                    <p class="feature-description">New OpenAI TTS engine with real-time PCM audio streaming — playback starts in realtime with no sentence splitting or waiting. Choose from 13 voices: alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer, verse, and more. Also supports native macOS voices for all 19 languages. Configure mode (Auto/OpenAI/macOS) and voice in Settings → AI → Text-to-Speech.</p>
-                </div>
+  <section class="tool-cta">
+    <div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div>
+    <h2 class="tool-cta-h">Nineteen languages, three modes, <em>one quiet window.</em></h2>
+    <div class="tool-cta-actions">
+      <a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>
+        Download — Mac App Store
+      </a>
+      <a href="release-notes.html" class="btn-ghost lg">Changelog</a>
+    </div>
+  </section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3 class="feature-title">Quick Actions</h3>
-                    <p class="feature-description">Retry button to retranslate with one click, Copy button to quickly copy results to clipboard. Streamlined workflow for efficient translation.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📏</div>
-                    <h3 class="feature-title">Flexible Layout</h3>
-                    <p class="feature-description">Resizable split view with optimized input area (max 300pt) and flexible output area. Enhanced line spacing (6pt) for better readability of translated content.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">✨</div>
-                    <h3 class="feature-title">Text Polishing</h3>
-                    <p class="feature-description">Improve clarity, conciseness, and coherence of your text in the same language. Perfect for making your writing match native speaker expression.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📝</div>
-                    <h3 class="feature-title">Text Summarization</h3>
-                    <p class="feature-description">Create concise summaries in your target language. Condense long texts into key points while maintaining essential information.</p>
-                </div>
-
-                
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect For</h2>
-                <p class="section-description">
-                    Designed to streamline translation workflows for developers and content creators
-                </p>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">💻</div>
-                    <h3 class="use-case-title">Developer Documentation</h3>
-                    <p class="use-case-description">Translate README files, API documentation, code comments, and technical articles between languages for international development teams.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📚</div>
-                    <h3 class="use-case-title">Learning New Languages</h3>
-                    <p class="use-case-description">Use word mode to understand vocabulary with phonetic notation, meanings, examples, and etymology. Perfect for language learners and developers working in multilingual environments.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">✍️</div>
-                    <h3 class="use-case-title">Content Writing</h3>
-                    <p class="use-case-description">Polish your blog posts, technical articles, and documentation to improve clarity and make them sound more natural. Summarize long content into concise overviews.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🌍</div>
-                    <h3 class="use-case-title">International Communication</h3>
-                    <p class="use-case-description">Translate emails, chat messages, and technical discussions with colleagues around the world. Support for 19 languages with auto-detection.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📖</div>
-                    <h3 class="use-case-title">Technical Research</h3>
-                    <p class="use-case-description">Translate technical papers, research articles, and documentation from various languages. Summarize long documents to quickly grasp key concepts.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🎯</div>
-                    <h3 class="use-case-title">Localization & i18n</h3>
-                    <p class="use-case-description">Help with software localization, translating UI strings, error messages, and help documentation for international users.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>What languages does AI Translate support?</h3>
-                    <p>AI Translate supports 19 languages including English, Chinese (Simplified/Traditional), Japanese, Korean, Spanish, French, German, Russian, Arabic, Hindi, Portuguese, Italian, Dutch, Turkish, Vietnamese, Thai, and Indonesian. It also features auto-detection for source language.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What's the difference between the three operation modes?</h3>
-                    <p>Translate mode converts text between different languages. Polishing mode improves clarity and fluency in the same language, making text sound more natural. Summarize mode creates concise summaries of long texts in your target language.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How does Word Mode work?</h3>
-                    <p>When you enter a single word, AI Translate automatically activates Word Mode, providing dictionary-style explanations including phonetic notation (IPA), multiple meanings with parts of speech, at least 3 example sentences, and detailed etymology.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I use my own AI model or API key?</h3>
-                    <p>Yes! AI Translate integrates with AI Chat's model system, allowing you to configure custom AI models including GPT-4, GPT-5, DeepSeek, or any OpenAI-compatible API with your own API keys.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Does it work offline?</h3>
-                    <p>No, AI Translate requires an internet connection to communicate with AI language models. The translation quality depends on the AI model you've configured (built-in models or your custom API).</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How do I swap languages quickly?</h3>
-                    <p>Click the swap button (🔄) between the source and target language dropdowns to instantly exchange the two languages. This is perfect for bidirectional translation workflows.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How does OpenAI TTS work?</h3>
-                    <p>Set your TTS mode to "OpenAI" (or "Auto") in Settings → AI → Text-to-Speech, and select a voice. When you click the speaker button next to any text, the app streams raw PCM audio from OpenAI's /audio/speech API directly to your speakers — playback starts in realtime. Requires your OpenAI API key.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What TTS voices are available?</h3>
-                    <p>OpenAI TTS offers 13 voices including alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, and shimmer. Native macOS TTS supports all 19 translation languages with system-installed voices. Auto mode picks OpenAI if a key is available, otherwise falls back to macOS.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">Explore other essential tools included in DevUtilities</p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">💬</div>
-                    <h3>AI Chat</h3>
-                    <p>Companion AI tool for intelligent code review, technical questions, and development guidance with context-aware responses.</p>
-                    <a href="ai-chat.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">📄</div>
-                    <h3>JSON Formatter</h3>
-                    <p>Format and validate JSON data from international APIs that often contain multilingual content and translated text.</p>
-                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🔠</div>
-                    <h3>Base64 Encoder</h3>
-                    <p>Encode and decode text in different formats - essential for handling multilingual content in API communications.</p>
-                    <a href="base64-encoder.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🔢</div>
-                    <h3>Hex String Converter</h3>
-                    <p>Convert between hexadecimal and string formats for character encoding operations in multilingual applications.</p>
-                    <a href="hex-converter.html" class="tool-link">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Translate Smarter?</h2>
-                <p>Join thousands of developers who rely on DevUtilities for translation, polishing, and language learning — now with ultra-fast OpenAI TTS.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-primary">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 23 Developer Tools</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <footer class="foot">
+    <div class="foot-inner">
+      <div class="foot-brand">
+        <a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a>
+        <p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p>
+      </div>
+      <div class="foot-cols">
+        <div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div>
+        <div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div>
+        <div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div>
+      </div>
+    </div>
+    <div class="foot-rule"></div>
+    <div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div>
+  </footer>
 </body>
 </html>

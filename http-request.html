@@ -1,465 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTTP Request Tool - API Testing Client Online | DevUtilities</title>
-    <meta name="description" content="Professional HTTP request tool for API testing and development. Send GET, POST, PUT, DELETE requests with headers, authentication, and JSON tree view. Server-sent events (SSE) support included. Part of DevUtilities - 18 essential developer tools for macOS.">
-    <meta name="keywords" content="HTTP request tool, API testing, REST client, HTTP client, API tester, POST request, GET request, JSON response viewer, API debugging, server sent events">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="HTTP Request Tool - API Testing Client | DevUtilities">
-    <meta property="og:description" content="Professional HTTP request tool with JSON tree view, authentication support, and server-sent events. Perfect for API testing and development.">
-    <meta property="og:image" content="images/screenshots/http.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="HTTP Request Tool - API Testing Client">
-    <meta property="twitter:description" content="Professional HTTP request tool with JSON tree view, authentication support, and server-sent events for API testing.">
-    <meta property="twitter:image" content="images/screenshots/http.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities HTTP Request Tool",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Professional HTTP request tool for API testing with JSON tree view, authentication, and server-sent events support",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "10"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HTTP Client — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="Full-featured HTTP client with method support, headers, auth, SSE streaming, and a JSON tree view for responses." />
+  <meta name="keywords" content="HTTP client, REST client, SSE streaming, JSON tree, API testing, curl alternative, macOS" />
+  <meta property="og:image" content="images/screenshots/http.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>HTTP Request</span>
-                    </div>
-                    <h1 class="hero-title">
-                        HTTP Request Tool
-                        <span class="hero-subtitle">Professional API Testing & Development Client</span>
-                    </h1>
-                    <p class="hero-description">
-                        Send HTTP requests with comprehensive method support, custom headers, authentication, and advanced response handling. Features JSON tree view, server-sent events (SSE) streaming, and request history. Perfect for API development, testing, and debugging workflows.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🌐</span>
-                            <span>All HTTP Methods</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">📊</span>
-                            <span>JSON Tree View</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🔒</span>
-                            <span>Authentication Support</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/http.png" alt="DevUtilities HTTP Request Tool Screenshot showing API testing with JSON response and request headers">
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>HTTP Client</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 20 of 23 · Network</div><h1 class="page-h">A request, <em>and what came back.</em></h1></section>
+  <div class="page-sub"><div></div><p>Methods, headers, auth, body shapes — the full request surface. Streaming responses (SSE) supported natively. The body lands in a JSON tree view when JSON; a syntax-coloured pane when it isn't.</p></div>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Advanced HTTP Request Features</h2>
-                <p class="section-description">
-                    Everything you need for professional API testing, development, and debugging workflows.
-                </p>
-            </div>
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Methods</div><div class="tool-meta-value accent">GET · POST · …</div><div class="tool-meta-sub">Plus PATCH / DELETE / HEAD</div></div>
+    <div><div class="tool-meta-label">Streaming</div><div class="tool-meta-value">SSE</div><div class="tool-meta-sub">Server-sent events</div></div>
+    <div><div class="tool-meta-label">Response</div><div class="tool-meta-value">JSON tree</div><div class="tool-meta-sub">Plus raw, headers</div></div>
+    <div><div class="tool-meta-label">History</div><div class="tool-meta-value">Persistent</div><div class="tool-meta-sub">Recall recent requests</div></div>
+  </div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">🌐</div>
-                    <h3 class="feature-title">Complete HTTP Method Support</h3>
-                    <p class="feature-description">Send GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS requests with full parameter and body support. Perfect for testing RESTful APIs and web services.</p>
-                </div>
+  <section class="tool-shot"><figure><img src="images/screenshots/http.png" alt="DevUtilities HTTP Client — method picker, URL, headers, body, response panes." /></figure><figcaption>Plate xx — HTTP Client with the JSON tree view of a streamed response.</figcaption></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">JSON Tree Viewer</h3>
-                    <p class="feature-description">Beautiful JSON response viewer with collapsible tree structure, syntax highlighting, and easy navigation through complex nested data structures.</p>
-                </div>
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Eight things <span class="muted">it does properly.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>All common methods</h4><p>GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS. Custom methods welcome.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>Headers panel</h4><p>Add / remove / toggle headers. Common ones autocomplete.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Body shapes</h4><p>JSON, form, raw text, binary. The body pane formats and validates as you type.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Auth helpers</h4><p>Bearer tokens, Basic auth, custom <code>Authorization</code> shapes — all without copy-pasting from the JWT tab.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>SSE streaming</h4><p>Server-sent events stream into the response pane as they arrive. Useful for AI APIs and event endpoints.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>JSON tree view</h4><p>JSON responses render as an explorable tree with type badges; collapse / expand / copy a sub-tree.</p></div></div>
+      <div class="cap"><span class="cap-n">vii</span><div class="cap-body"><h4>Response timings</h4><p>Status, total time, body size — all reported clearly. The slow request shows up as the slow request.</p></div></div>
+      <div class="cap"><span class="cap-n">viii</span><div class="cap-body"><h4>History &amp; recall</h4><p>Recent requests persist across sessions. Re-issue with one click.</p></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3 class="feature-title">Authentication Support</h3>
-                    <p class="feature-description">Built-in support for Bearer tokens, Basic Auth, API keys, and custom authentication headers. Secure credential management for API testing.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>through the request loop.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Pick method &amp; URL</h4><p>GET, POST, anything else. Type or paste the URL.</p><div class="step-key">Method · URL</div></div>
+      <div class="step"><span class="step-n"></span><h4>Add headers and body</h4><p>Auth, content type, payload — three panels, no surprises.</p><div class="step-key">Headers · Body</div></div>
+      <div class="step"><span class="step-n"></span><h4>Send</h4><p>Hit send; the response pane fills. Streams keep flowing as data arrives.</p><div class="step-key">Send · <b>⌘ ↩</b></div></div>
+      <div class="step"><span class="step-n"></span><h4>Read &amp; reuse</h4><p>JSON tree expands; raw view scrolls; copy any value, or recall the request later from history.</p><div class="step-key">Tree · raw · history</div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📡</div>
-                    <h3 class="feature-title">Server-Sent Events (SSE)</h3>
-                    <p class="feature-description">Real-time streaming support for server-sent events with live event display. Test streaming APIs, webhooks, and real-time data feeds.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — API</span><h4>Sanity checks</h4><p>Hit the endpoint your app talks to; verify the contract before chasing a bug into the codebase.</p></div>
+      <div class="use"><span class="use-tag">ii — Build</span><h4>Mock probing</h4><p>Talk to your local server while it's still mocked; switch to staging without leaving the panel.</p></div>
+      <div class="use"><span class="use-tag">iii — Debug</span><h4>Header tracing</h4><p>Inspect what your server is actually sending — caching headers, content type, set-cookie — in one view.</p></div>
+      <div class="use"><span class="use-tag">iv — Stream</span><h4>SSE endpoints</h4><p>Watch events flow from an LLM endpoint or an event broker; copy any piece of the stream.</p></div>
+      <div class="use"><span class="use-tag">v — Auth</span><h4>Token testing</h4><p>Issue a JWT in the JWT tool; paste into the auth helper here; check what the server returns.</p></div>
+      <div class="use"><span class="use-tag">vi — Doc</span><h4>Reproducible recipes</h4><p>Save the working request to history; reissue when documentation needs an example.</p></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">Custom Headers</h3>
-                    <p class="feature-description">Add unlimited custom HTTP headers with key-value pairs. Support for Content-Type, Accept, CORS headers, and any custom API requirements.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>Does it stream?</summary><p>Yes. SSE responses stream into the response pane as data arrives. The pane keeps growing; you can copy intermediate values.</p></details>
+      <details><summary>What auth methods are supported?</summary><p>Bearer tokens, Basic, and custom <code>Authorization</code> headers. For OAuth flows, paste the bearer token directly.</p></details>
+      <details><summary>Can I save a request for later?</summary><p>Yes. Recent requests persist across sessions in the history panel. One click to recall and re-send.</p></details>
+      <details><summary>Does it handle binary?</summary><p>Yes — both for upload bodies and download responses. Binary downloads can be saved to disk.</p></details>
+      <details><summary>What about cookies?</summary><p>The client respects the standard <code>Cookie</code> / <code>Set-Cookie</code> exchange. Cookies aren't persisted across sessions for safety.</p></details>
+      <details><summary>Where do request bodies live?</summary><p>Locally, in your session. Nothing is uploaded anywhere except the URL you choose to hit.</p></details>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📝</div>
-                    <h3 class="feature-title">Request History</h3>
-                    <p class="feature-description">Automatic request history tracking with quick recall functionality. Save time by reusing previous requests and building on tested API calls.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON Formatter</h4><p>Drop a response into JSON Formatter; diff two responses side-by-side.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="jwt-encoder.html"><div class="rel-head"><span>13 · Format</span><span></span></div><h4>JWT</h4><p>Mint an auth token; paste it into the request header.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="url-tools.html"><div class="rel-head"><span>21 · Network</span><span></span></div><h4>URL Tools</h4><p>Encode and decode URL components; parse query strings.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="ip-query.html"><div class="rel-head"><span>22 · Network</span><span></span></div><h4>IP Query</h4><p>See your address; geolocate any IP.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="ai-chat.html"><div class="rel-head"><span>01 · AI</span><span>Updated · 2.12</span></div><h4>AI Chat</h4><p>Hand the AI a response; ask why it has the shape it does.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="text-compare.html"><div class="rel-head"><span>17 · Inspect</span><span>New · 2.11</span></div><h4>Text Compare</h4><p>Diff two responses to spot what actually changed.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3 class="feature-title">Response Details</h3>
-                    <p class="feature-description">Comprehensive response information including status codes, headers, timing data, and content size. Full debugging information at your fingertips.</p>
-                </div>
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">A request, <em>and what came back.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔧</div>
-                    <h3 class="feature-title">Request Body Editor</h3>
-                    <p class="feature-description">Advanced request body editor with JSON, XML, form data, and raw text support. Syntax highlighting and validation for structured data formats.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- HTTP Methods Section -->
-    <section class="http-methods">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Supported HTTP Methods</h2>
-                <p class="section-description">Full support for all standard HTTP methods with detailed explanations and use cases</p>
-            </div>
-
-            <div class="methods-grid">
-                <div class="method-card">
-                    <div class="method-badge get">GET</div>
-                    <h3>GET Requests</h3>
-                    <p>Retrieve data from APIs, test endpoints, and fetch resources. Perfect for reading operations, data queries, and API exploration without side effects.</p>
-                </div>
-
-                <div class="method-card">
-                    <div class="method-badge post">POST</div>
-                    <h3>POST Requests</h3>
-                    <p>Create new resources, submit form data, and send JSON payloads. Essential for user registration, data creation, and file uploads.</p>
-                </div>
-
-                <div class="method-card">
-                    <div class="method-badge put">PUT</div>
-                    <h3>PUT Requests</h3>
-                    <p>Update entire resources with complete replacement. Ideal for editing user profiles, updating configuration, and replacing data records.</p>
-                </div>
-
-                <div class="method-card">
-                    <div class="method-badge patch">PATCH</div>
-                    <h3>PATCH Requests</h3>
-                    <p>Partial resource updates with specific field modifications. Perfect for incremental changes, status updates, and selective data editing.</p>
-                </div>
-
-                <div class="method-card">
-                    <div class="method-badge delete">DELETE</div>
-                    <h3>DELETE Requests</h3>
-                    <p>Remove resources and clean up data. Essential for user account deletion, content removal, and resource management operations.</p>
-                </div>
-
-                <div class="method-card">
-                    <div class="method-badge options">OPTIONS</div>
-                    <h3>OPTIONS Requests</h3>
-                    <p>Check available methods and CORS policies. Important for preflight requests, API capability discovery, and cross-origin testing.</p>
-                </div>
-
-                <div class="method-card">
-                    <div class="method-badge head">HEAD</div>
-                    <h3>HEAD Requests</h3>
-                    <p>Get response headers without body content. Useful for checking resource existence, metadata retrieval, and bandwidth-efficient testing.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Use Section -->
-    <section class="how-to-use">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">How to Use HTTP Request Tool</h2>
-                <p class="section-description">
-                    Send API requests and test endpoints in just a few simple steps.
-                </p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Configure Request</h3>
-                    <p>Enter your API endpoint URL, select HTTP method (GET, POST, PUT, etc.), and configure any required headers or authentication.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Add Headers & Auth</h3>
-                    <p>Set custom headers, authentication tokens, Content-Type, and any other required headers for your API endpoint.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>Prepare Request Body</h3>
-                    <p>For POST/PUT/PATCH requests, add your JSON, XML, or form data in the request body editor with syntax highlighting.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>Send & Analyze</h3>
-                    <p>Send the request and view the response with JSON tree view, status codes, headers, and timing information for analysis.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect for These Development Tasks</h2>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔧</div>
-                    <h3>API Development & Testing</h3>
-                    <p>Test REST APIs during development, validate endpoints, check response formats, and debug API behavior with comprehensive request/response analysis.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔍</div>
-                    <h3>API Integration</h3>
-                    <p>Integrate third-party APIs by testing authentication, exploring endpoints, validating data formats, and understanding API capabilities before implementation.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🐛</div>
-                    <h3>Debugging & Troubleshooting</h3>
-                    <p>Debug API issues, test different request parameters, analyze error responses, and validate authentication mechanisms during development.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📊</div>
-                    <h3>Data Validation</h3>
-                    <p>Validate API responses, test data schemas, verify JSON structures, and ensure data consistency across different API endpoints.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔒</div>
-                    <h3>Authentication Testing</h3>
-                    <p>Test various authentication methods including Bearer tokens, Basic Auth, API keys, and OAuth flows to ensure secure API access.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📡</div>
-                    <h3>Real-time API Testing</h3>
-                    <p>Test streaming APIs, webhooks, server-sent events, and real-time data feeds with live event monitoring and response tracking.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>What authentication methods are supported?</h3>
-                    <p>DevUtilities supports Bearer tokens, Basic Authentication, API keys in headers, and custom authentication schemes. You can add any custom headers needed for your API's authentication requirements.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I test GraphQL APIs?</h3>
-                    <p>Yes! You can send GraphQL queries using POST requests with the appropriate Content-Type header and GraphQL query in the request body. The JSON tree view makes it easy to explore GraphQL responses.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How does the JSON tree viewer work?</h3>
-                    <p>The JSON tree viewer automatically parses JSON responses and displays them in a collapsible, hierarchical tree structure with syntax highlighting, making it easy to navigate complex nested data.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I save and reuse requests?</h3>
-                    <p>Yes, DevUtilities automatically tracks your request history, allowing you to quickly recall and reuse previous requests. This saves time when testing similar endpoints or iterating on API calls.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What is Server-Sent Events (SSE) support?</h3>
-                    <p>SSE support allows you to test streaming APIs that send real-time data. You can monitor live events, webhooks, and continuous data streams with real-time display of incoming messages.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I test local development APIs?</h3>
-                    <p>Absolutely! DevUtilities can send requests to localhost, development servers, and any accessible API endpoints. Perfect for testing APIs during local development and staging environments.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">Explore other essential tools included in DevUtilities</p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">📄</div>
-                    <h3>JSON Formatter</h3>
-                    <p>Format and validate JSON data from API responses. Perfect companion for analyzing and beautifying API response data.</p>
-                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🔠</div>
-                    <h3>Base64 Encoder</h3>
-                    <p>Encode authentication credentials and decode Base64 data from API responses for complete request processing workflows.</p>
-                    <a href="base64-encoder.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🎫</div>
-                    <h3>JWT Encoder/Decoder</h3>
-                    <p>Work with JWT tokens for API authentication, decode response tokens, and validate JWT-based authentication flows.</p>
-                    <a href="jwt-encoder.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🕐</div>
-                    <h3>Timestamp Converter</h3>
-                    <p>Convert Unix timestamps from API responses to human-readable dates for better data analysis and debugging.</p>
-                    <a href="timestamp-converter.html" class="tool-link">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Streamline Your API Testing?</h2>
-                <p>Join thousands of developers who rely on DevUtilities's HTTP request tool for their daily API development and testing tasks.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-primary">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 23 Developer Tools</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div></footer>
 </body>
 </html>

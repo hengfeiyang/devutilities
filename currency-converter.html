@@ -1,403 +1,141 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currency Converter - Real-time Exchange Rates for 38 Currencies | DevUtilities</title>
-    <meta name="description" content="Professional currency converter for developers. Convert between 38 currencies with 24-hour caching, 30-day price history, and real-time trend indicators. Perfect for international API development and financial applications. Part of DevUtilities - 23 essential developer tools for macOS.">
-    <meta name="keywords" content="currency converter, exchange rates, USD to KRW, USD to INR, forex converter, currency calculator, real-time exchange rates, currency history, developer tools, macOS app">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Currency Converter — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="Real-time currency conversion across 38 fiat currencies. 24-hour smart caching, 30-day price history, trend arrows, and a clean swap-and-go layout." />
+  <meta name="keywords" content="currency converter, exchange rate, USD EUR JPY, KRW INR, fiat currency, price history, foreign exchange, macOS" />
+  <meta property="og:image" content="images/screenshots/currency.png" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="Currency Converter - Real-time Exchange Rates | DevUtilities">
-    <meta property="og:description" content="Convert between 38 currencies with smart caching, price history, and trend indicators. Perfect for developers working with international APIs.">
-    <meta property="og:image" content="images/screenshots/currency.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Currency Converter - Real-time Exchange Rates">
-    <meta property="twitter:description" content="Convert between 38 currencies with smart caching, price history, and trend indicators.">
-    <meta property="twitter:image" content="images/screenshots/currency.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities Currency Converter",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Professional currency converter with 38 currencies, price history, and real-time exchange rates",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <header class="nav nav-static">
+    <div class="nav-inner">
+      <a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a>
+      <nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav>
+      <div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div>
+    </div>
+    <div class="nav-progress"></div>
+  </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>Currency Converter</span>
-                    </div>
-                    <h1 class="hero-title">
-                        Currency Converter
-                        <span class="hero-subtitle">Real-time Exchange Rates for 38 Currencies</span>
-                    </h1>
-                    <p class="hero-description">
-                        Professional currency conversion tool for developers working with international APIs, financial applications, and multi-currency systems. Features 24-hour smart caching, 30-day price history tracking, and real-time trend indicators. Support for 38 major global currencies including USD, EUR, GBP, JPY, CNY, KRW (Korean Won), INR (Indian Rupee), and more.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">38 Currencies</div>
-                        <div class="hero-feature">30-Day History</div>
-                        <div class="hero-feature">Trend Indicators</div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20"></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/currency.png" alt="DevUtilities Currency Converter Screenshot showing real-time exchange rates and price history">
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>Currency Converter</strong></nav>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Advanced Currency Conversion Features</h2>
-                <p class="section-description">
-                    Everything you need for professional currency conversion and exchange rate tracking in a native macOS app.
-                </p>
-            </div>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 07 of 23 · Convert</div><h1 class="page-h">Thirty-eight currencies, <em>thirty days of memory.</em></h1></section>
+  <div class="page-sub"><div></div><p>Real-time conversion across 38 fiat currencies, 24-hour smart caching to keep API hits sane, and a daily snapshot that builds a 30-day history with quiet trend arrows. Works offline against the most recent cache when the network is gone.</p></div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">💱</div>
-                    <h3 class="feature-title">38 Global Currencies</h3>
-                    <p class="feature-description">Support for major global currencies including USD, EUR, GBP, JPY, CNY, KRW (Korean Won), INR (Indian Rupee), AUD, CAD, CHF, and 28 more. Perfect for international development and financial applications.</p>
-                </div>
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Currencies</div><div class="tool-meta-value accent">38</div><div class="tool-meta-sub">Fiat — incl. KRW, INR</div></div>
+    <div><div class="tool-meta-label">Cache</div><div class="tool-meta-value">24 hours</div><div class="tool-meta-sub">Smart re-fetch</div></div>
+    <div><div class="tool-meta-label">History</div><div class="tool-meta-value">30 days</div><div class="tool-meta-sub">Daily snapshots</div></div>
+    <div><div class="tool-meta-label">Offline</div><div class="tool-meta-value">Yes</div><div class="tool-meta-sub">Cache-backed</div></div>
+  </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">30-Day Price History</h3>
-                    <p class="feature-description">Automatic daily snapshots build a complete 30-day historical view. Track exchange rate trends over time with visual indicators showing daily percentage changes.</p>
-                </div>
+  <section class="tool-shot"><figure><img src="images/screenshots/currency.png" alt="DevUtilities Currency Converter — pair pickers, swap, history, trend." /></figure><figcaption>Plate vii — Currency Converter with the 24-hour trend arrow and 30-day chart.</figcaption></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Smart 24-Hour Caching</h3>
-                    <p class="feature-description">Intelligent caching minimizes API calls while keeping data fresh. Exchange rates are cached for 24 hours, with automatic refresh when expired or on manual request.</p>
-                </div>
+  <main>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div>
+    <div>
+      <h2 class="tool-block-h">Eight things <span class="muted">it does well.</span></h2>
+      <div class="caps">
+        <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>38 fiat currencies</h4><p>USD, EUR, GBP, JPY, CNY, KRW, INR — and 31 others. Major global currencies plus regional favourites.</p></div></div>
+        <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>24-hour smart cache</h4><p>Rates are fetched once a day and reused. API hits stay polite; conversions stay instant.</p></div></div>
+        <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>30-day price history</h4><p>Daily snapshots build a complete one-month history. Open the pair, see where it's been.</p></div></div>
+        <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>24-hour trend arrows</h4><p>Up or down, with the percentage change versus yesterday. A quiet visual; no chart noise.</p></div></div>
+        <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Flexible number input</h4><p>Type <code>1,000,000</code> or <code>1000000</code>. Both parse the same. Localised separators welcome.</p></div></div>
+        <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>Two-column layout</h4><p>Pair pickers on the left, amount on the right, swap button in the middle. The pattern that's been working for decades.</p></div></div>
+        <div class="cap"><span class="cap-n">vii</span><div class="cap-body"><h4>Offline mode</h4><p>When the network is gone, the most recent cached rates are still in play. The screen tells you which.</p></div></div>
+        <div class="cap"><span class="cap-n">viii</span><div class="cap-body"><h4>State persistence</h4><p>Pair, amount, last view — all of it remembered between sessions.</p></div></div>
+      </div>
+    </div>
+  </section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📈</div>
-                    <h3 class="feature-title">24-Hour Trend Indicators</h3>
-                    <p class="feature-description">Visual up/down arrows with percentage change compared to yesterday. Instantly see if currencies are strengthening or weakening with color-coded indicators.</p>
-                </div>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div>
+    <div>
+      <h2 class="tool-block-h">Four moves <em>across borders.</em></h2>
+      <div class="steps">
+        <div class="step"><span class="step-n"></span><h4>Pick a pair</h4><p>From and to. Both pickers know all 38 currencies; type to filter.</p><div class="step-key">Pickers</div></div>
+        <div class="step"><span class="step-n"></span><h4>Type the amount</h4><p>Enter a value. Conversion is instant; commas optional.</p><div class="step-key">Live</div></div>
+        <div class="step"><span class="step-n"></span><h4>Read the trend</h4><p>The 24-hour arrow tells you which way the rate moved since yesterday. Open the pair to see 30 days.</p><div class="step-key">Trend strip</div></div>
+        <div class="step"><span class="step-n"></span><h4>Swap and copy</h4><p>One-click swap reverses the pair. Copy outputs in either direction.</p><div class="step-key">Swap · Copy</div></div>
+      </div>
+    </div>
+  </section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔢</div>
-                    <h3 class="feature-title">Flexible Number Input</h3>
-                    <p class="feature-description">Supports both formatted numbers (1,000,000) and plain numbers (1000000). Type naturally with commas or without - the converter handles both seamlessly.</p>
-                </div>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div>
+    <div>
+      <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+      <div class="uses">
+        <div class="use"><span class="use-tag">i — Pricing</span><h4>International billing</h4><p>Translate USD price points into EUR, GBP, or JPY for marketing site copy without leaving the editor.</p></div>
+        <div class="use"><span class="use-tag">ii — Finance</span><h4>App development</h4><p>Sanity-check FX-rate logic against a tool that knows what it's doing.</p></div>
+        <div class="use"><span class="use-tag">iii — Freelance</span><h4>Multi-currency invoices</h4><p>Quote in your client's currency, paid in yours — without spreadsheets.</p></div>
+        <div class="use"><span class="use-tag">iv — Travel</span><h4>Quick conversions</h4><p>Wallet vs. menu price; see the answer at a glance.</p></div>
+        <div class="use"><span class="use-tag">v — Trends</span><h4>Spotting movement</h4><p>The 30-day chart hints at where a pair is heading; the arrow tells you what changed yesterday.</p></div>
+        <div class="use"><span class="use-tag">vi — Cross-team</span><h4>Distributed work</h4><p>Communicate budgets across markets in the unit each market actually pays in.</p></div>
+      </div>
+    </div>
+  </section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">⚙️</div>
-                    <h3 class="feature-title">Optimized Performance</h3>
-                    <p class="feature-description">History loads only when currency pair changes, providing instant conversion on amount changes. Smart loading ensures responsive performance even with large datasets.</p>
-                </div>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div>
+    <div>
+      <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+      <div class="faq">
+        <details open><summary>Where do exchange rates come from?</summary><p>From a public exchange-rate API. Rates are fetched once per day per currency; the smart cache covers everything in between.</p></details>
+        <details><summary>How does the 30-day history get built?</summary><p>Each launch within a new day takes a daily snapshot. After 30 days you have a full month, automatically.</p></details>
+        <details><summary>What does the 24-hour trend arrow show?</summary><p>The percentage change of the current pair versus the snapshot from 24 hours ago. Up or down, with the value.</p></details>
+        <details><summary>Does this work offline?</summary><p>Yes — against the most recent cache. The status strip tells you when the rate was last fetched, so you know whether to trust it.</p></details>
+        <details><summary>Are crypto assets supported?</summary><p>No. Only fiat currencies; 38 of them.</p></details>
+        <details><summary>Does it remember my last conversion?</summary><p>Yes. Currency pair, amount, view — all preserved between sessions.</p></details>
+      </div>
+    </div>
+  </section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔄</div>
-                    <h3 class="feature-title">Quick Swap & Shortcuts</h3>
-                    <p class="feature-description">One-click currency swap button to reverse conversion direction. Quick amount shortcuts (1, 100, 1K, 10K) for common conversion scenarios.</p>
-                </div>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div>
+    <div>
+      <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+      <div class="related-grid">
+        <a class="rel" href="unit-converter.html"><div class="rel-head"><span>04 · Convert</span><span></span></div><h4>Unit Converter</h4><p>Other units of measure across seven categories.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="timestamp-converter.html"><div class="rel-head"><span>03 · Convert</span><span>Updated · 2.1</span></div><h4>Timestamp Converter</h4><p>Tag price snapshots with the exact moment they were taken.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON Formatter</h4><p>Format the API responses you'd otherwise paste into a converter.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="http-request.html"><div class="rel-head"><span>20 · Network</span><span></span></div><h4>HTTP Client</h4><p>Hit the FX rate API directly when the cache isn't enough.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="ai-translate.html"><div class="rel-head"><span>02 · AI</span><span>Updated · 2.12</span></div><h4>AI Translate</h4><p>Localise the marketing copy that goes with the price.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="text-compare.html"><div class="rel-head"><span>17 · Inspect</span><span>New · 2.11</span></div><h4>Text Compare</h4><p>Diff two price lists when reconciling cross-market changes.</p><span class="rel-arrow">Open →</span></a>
+      </div>
+    </div>
+  </section>
+  </main>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📴</div>
-                    <h3 class="feature-title">Offline Mode Support</h3>
-                    <p class="feature-description">Continues working with cached data when network is unavailable. Clear offline indicators let you know when you're using cached exchange rates.</p>
-                </div>
+  <section class="tool-cta">
+    <div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div>
+    <h2 class="tool-cta-h">Thirty-eight currencies, <em>one quiet panel.</em></h2>
+    <div class="tool-cta-actions">
+      <a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a>
+      <a href="release-notes.html" class="btn-ghost lg">Changelog</a>
+    </div>
+  </section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">💾</div>
-                    <h3 class="feature-title">State Persistence</h3>
-                    <p class="feature-description">Automatically remembers your last conversion settings between sessions. Pick up right where you left off with saved currency pairs and amounts.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="how-to-use">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect for Developers</h2>
-                <p class="section-description">
-                    Currency Converter is designed specifically for developers working with international systems
-                </p>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case">
-                    <div class="use-case-icon">🌍</div>
-                    <h3>International API Development</h3>
-                    <p>Test and debug APIs that handle multiple currencies. Quickly verify exchange rate calculations and pricing logic across different currency pairs.</p>
-                </div>
-
-                <div class="use-case">
-                    <div class="use-case-icon">💰</div>
-                    <h3>Financial Application Testing</h3>
-                    <p>Essential for developing and testing financial apps with multi-currency support. Validate currency conversion logic with real exchange rates.</p>
-                </div>
-
-                <div class="use-case">
-                    <div class="use-case-icon">💼</div>
-                    <h3>Freelance & Contract Work</h3>
-                    <p>Calculate international client payments and project pricing. Convert between currencies instantly for proposals and invoicing.</p>
-                </div>
-
-                <div class="use-case">
-                    <div class="use-case-icon">🌏</div>
-                    <h3>Global Team Collaboration</h3>
-                    <p>Perfect for distributed teams working across different countries. Quickly reference exchange rates during budget discussions and planning.</p>
-                </div>
-
-                <div class="use-case">
-                    <div class="use-case-icon">📱</div>
-                    <h3>E-commerce Development</h3>
-                    <p>Build and test multi-currency e-commerce platforms. Verify price conversions and display logic for international shoppers.</p>
-                </div>
-
-                <div class="use-case">
-                    <div class="use-case-icon">📊</div>
-                    <h3>Data Analysis & Reporting</h3>
-                    <p>Convert financial data between currencies for reports and analysis. Track exchange rate trends over 30-day periods for insights.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Supported Currencies Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">38 Supported Currencies</h2>
-                <p class="section-description">
-                    Comprehensive coverage of major global fiat currencies across all regions
-                </p>
-            </div>
-
-            <div class="categories-grid">
-                <div class="category-card">
-                    <h3>Americas</h3>
-                    <p>
-                        🇺🇸 USD - US Dollar<br>
-                        🇨🇦 CAD - Canadian Dollar<br>
-                        🇲🇽 MXN - Mexican Peso<br>
-                        🇧🇷 BRL - Brazilian Real<br>
-                        🇦🇷 ARS - Argentine Peso<br>
-                        🇨🇱 CLP - Chilean Peso
-                    </p>
-                </div>
-
-                <div class="category-card">
-                    <h3>Europe</h3>
-                    <p>
-                        🇪🇺 EUR - Euro<br>
-                        🇬🇧 GBP - British Pound<br>
-                        🇨🇭 CHF - Swiss Franc<br>
-                        🇸🇪 SEK - Swedish Krona<br>
-                        🇳🇴 NOK - Norwegian Krone<br>
-                        🇩🇰 DKK - Danish Krone<br>
-                        🇵🇱 PLN - Polish Zloty<br>
-                        🇨🇿 CZK - Czech Koruna<br>
-                        🇷🇺 RUB - Russian Ruble<br>
-                        🇹🇷 TRY - Turkish Lira
-                    </p>
-                </div>
-
-                <div class="category-card">
-                    <h3>Asia-Pacific</h3>
-                    <p>
-                        🇨🇳 CNY - Chinese Yuan<br>
-                        🇯🇵 JPY - Japanese Yen<br>
-                        🇰🇷 KRW - South Korean Won<br>
-                        🇮🇳 INR - Indian Rupee<br>
-                        🇦🇺 AUD - Australian Dollar<br>
-                        🇳🇿 NZD - New Zealand Dollar<br>
-                        🇭🇰 HKD - Hong Kong Dollar<br>
-                        🇸🇬 SGD - Singapore Dollar<br>
-                        🇹🇭 THB - Thai Baht<br>
-                        🇲🇾 MYR - Malaysian Ringgit<br>
-                        🇮🇩 IDR - Indonesian Rupiah<br>
-                        🇵🇭 PHP - Philippine Peso<br>
-                        🇻🇳 VND - Vietnamese Dong<br>
-                        🇹🇼 TWD - Taiwan Dollar
-                    </p>
-                </div>
-
-                <div class="category-card">
-                    <h3>Middle East & Africa</h3>
-                    <p>
-                        🇦🇪 AED - UAE Dirham<br>
-                        🇸🇦 SAR - Saudi Riyal<br>
-                        🇿🇦 ZAR - South African Rand<br>
-                        🇮🇱 ILS - Israeli Shekel<br>
-                        🇪🇬 EGP - Egyptian Pound
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">
-                    Explore other powerful tools included in DevUtilities
-                </p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">📏</div>
-                    <h3>Unit Converter</h3>
-                    <p>Convert between 7 categories including Data, Time, Length, Weight, Temperature, Area, and Volume with real-time conversion.</p>
-                    <a href="unit-converter.html" class="tool-link">Learn more →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🔢</div>
-                    <h3>Base Converter</h3>
-                    <p>Mutual conversion between binary, octal, decimal, hexadecimal, and Base62 number systems with real-time validation.</p>
-                    <a href="base-converter.html" class="tool-link">Learn more →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🎨</div>
-                    <h3>Color Picker</h3>
-                    <p>Professional color format converter for HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK with color history tracking.</p>
-                    <a href="color-picker.html" class="tool-link">Learn more →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🤖</div>
-                    <h3>AI Translate</h3>
-                    <p>Professional translation with 19 languages, text polishing, summarization, and special word mode with TTS support.</p>
-                    <a href="ai-translate.html" class="tool-link">Learn more →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Convert Currencies?</h2>
-                <p>Download DevUtilities today and get instant access to the Currency Converter along with 21 other essential developer tools.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-download">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20"></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 23 Developer Tools</span>
-                        <span>✓ Free & Open Source</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <footer class="foot">
+    <div class="foot-inner">
+      <div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div>
+      <div class="foot-cols">
+        <div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div>
+        <div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div>
+        <div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div>
+      </div>
+    </div>
+    <div class="foot-rule"></div>
+    <div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div>
+  </footer>
 </body>
 </html>

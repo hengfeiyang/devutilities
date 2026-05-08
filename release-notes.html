@@ -1,907 +1,279 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevUtilities - Release Notes</title>
-    <meta name="description" content="DevUtilities release notes and version history - track new features, improvements, and bug fixes across all versions of the essential macOS developer tools app.">
-    <meta name="keywords" content="devutilities release notes, version history, updates, changelog, developer tools, macOS app">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Changelog — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="DevUtilities release notes and version history — track new tools, improvements, and bug fixes across all versions." />
+  <meta name="keywords" content="devutilities release notes, changelog, version history, updates, developer tools, macOS app" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="DevUtilities - Release Notes & Updates">
-    <meta property="og:description" content="Track new features, improvements, and bug fixes across all versions of DevUtilities - the essential macOS developer tools app.">
-    <meta property="og:image" content="images/devutilities-og.png">
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Changelog — DevUtilities" />
+  <meta property="og:description" content="Track new tools, improvements, and bug fixes across all versions of DevUtilities." />
+  <meta property="og:image" content="images/devhelper-og.png" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="DevUtilities - Release Notes & Updates">
-    <meta property="twitter:description" content="DevUtilities version history and changelog - see what's new in each release.">
-    <meta property="twitter:image" content="images/devutilities-og.png">
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        /* Release Notes Specific Styles - Technical Precision Theme */
-        .release-notes {
-            padding: calc(72px + var(--space-16)) 0 var(--space-24);
-            background: linear-gradient(180deg, #f8fafc 0%, white 100%);
-            min-height: calc(100vh - 140px);
-        }
-
-        .release-notes-header {
-            text-align: center;
-            margin-bottom: var(--space-16);
-            animation: slideInDown 0.8s var(--ease-smooth) backwards;
-        }
-
-        @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-        }
-
-        .release-notes-title {
-            font-family: var(--font-display);
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            font-weight: var(--weight-bold);
-            margin-bottom: var(--space-4);
-            background: linear-gradient(135deg, var(--color-cyan), var(--color-emerald));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: relative;
-        }
-
-        .release-notes-title::before {
-            content: '$ cat ';
-            color: var(--color-cyan);
-            font-size: 0.8em;
-            opacity: 0;
-            animation: blink 1s step-end infinite, fadeIn 0.5s forwards;
-            animation-delay: 0s, 0.2s;
-        }
-
-        .release-notes-description {
-            font-size: 1.0625rem;
-            color: var(--color-iron);
-            max-width: 680px;
-            margin: 0 auto;
-            line-height: 1.7;
-        }
-
-        .version-list {
-            max-width: 960px;
-            margin: 0 auto;
-        }
-
-        .version-card {
-            background: white;
-            border: 1px solid rgba(100, 116, 139, 0.15);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-small);
-            margin-bottom: var(--space-8);
-            overflow: hidden;
-            transition: all var(--duration-base) var(--ease-smooth);
-            animation: fadeInUp 0.6s var(--ease-smooth) backwards;
-            animation-delay: calc(var(--index) * 0.05s);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-        }
-
-        .version-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-medium);
-            border-color: rgba(6, 182, 212, 0.3);
-        }
-
-        .version-header {
-            background: linear-gradient(135deg, var(--color-carbon), var(--color-slate));
-            color: white;
-            padding: var(--space-8);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: var(--space-4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .version-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--color-cyan), var(--color-emerald));
-        }
-
-        .version-header::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .version-info {
-            display: flex;
-            align-items: center;
-            gap: var(--space-6);
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 1;
-        }
-
-        .version-number {
-            font-family: var(--font-display);
-            font-size: 2.25rem;
-            font-weight: var(--weight-bold);
-            margin: 0;
-            letter-spacing: -0.02em;
-        }
-
-        .version-date {
-            font-family: var(--font-ui);
-            font-size: 1rem;
-            opacity: 0.9;
-            font-weight: var(--weight-medium);
-        }
-
-        .version-badge {
-            background: linear-gradient(135deg, var(--color-cyan), var(--color-emerald));
-            color: white;
-            padding: var(--space-2) var(--space-4);
-            border-radius: var(--radius-md);
-            font-family: var(--font-display);
-            font-size: 0.75rem;
-            font-weight: var(--weight-bold);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            box-shadow: var(--shadow-small);
-            position: relative;
-            z-index: 1;
-        }
-
-        .version-badge.major {
-            background: linear-gradient(135deg, var(--color-rose), #e11d48);
-        }
-
-        .version-badge.minor {
-            background: linear-gradient(135deg, var(--color-emerald), #059669);
-        }
-
-        .version-badge.patch {
-            background: linear-gradient(135deg, var(--color-amber), #d97706);
-        }
-
-        .version-content {
-            padding: var(--space-8);
-        }
-
-        .feature-section {
-            margin-bottom: var(--space-8);
-        }
-
-        .feature-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .feature-title {
-            font-family: var(--font-display);
-            font-size: 1.25rem;
-            font-weight: var(--weight-bold);
-            color: var(--color-carbon);
-            margin-bottom: var(--space-4);
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-        }
-
-        .feature-item {
-            background: var(--color-paper);
-            border: 1px solid rgba(100, 116, 139, 0.15);
-            border-radius: var(--radius-md);
-            padding: var(--space-6);
-            margin-bottom: var(--space-4);
-        }
-
-        .feature-name {
-            font-family: var(--font-ui);
-            font-size: 1.125rem;
-            font-weight: var(--weight-semibold);
-            color: var(--color-carbon);
-            margin-bottom: var(--space-3);
-        }
-
-        .feature-description {
-            color: var(--color-iron);
-            line-height: 1.7;
-            font-size: 0.9375rem;
-        }
-
-        .feature-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .feature-list li {
-            padding-left: var(--space-6);
-            position: relative;
-            margin-bottom: var(--space-3);
-            color: var(--color-iron);
-            line-height: 1.7;
-            font-size: 0.9375rem;
-        }
-
-        .feature-list li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: var(--color-cyan);
-            font-weight: var(--weight-bold);
-        }
-
-        .feature-list li:last-child {
-            margin-bottom: 0;
-        }
-
-        .feature-list li strong {
-            color: var(--color-carbon);
-            font-weight: var(--weight-semibold);
-        }
-
-        .changes-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .change-item {
-            display: flex;
-            align-items: flex-start;
-            gap: var(--space-4);
-            margin-bottom: var(--space-4);
-            padding: var(--space-4);
-            border-radius: var(--radius-md);
-            background: var(--color-paper);
-            border: 1px solid rgba(100, 116, 139, 0.1);
-            transition: all var(--duration-fast) var(--ease-smooth);
-        }
-
-        .change-item:hover {
-            background: #e2e8f0;
-            border-color: rgba(6, 182, 212, 0.2);
-        }
-
-        .change-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .change-icon {
-            font-size: 1.25rem;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .change-text {
-            flex: 1;
-            line-height: 1.7;
-            color: var(--color-iron);
-            font-size: 0.9375rem;
-        }
-
-        .change-highlight {
-            background: linear-gradient(135deg, var(--color-cyan), var(--color-emerald));
-            color: white;
-            padding: 2px var(--space-2);
-            border-radius: var(--radius-sm);
-            font-family: var(--font-display);
-            font-weight: var(--weight-bold);
-            font-size: 0.8125rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .back-to-top {
-            position: fixed;
-            bottom: var(--space-8);
-            right: var(--space-8);
-            background: linear-gradient(135deg, var(--color-cyan), var(--color-emerald));
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 56px;
-            height: 56px;
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: var(--shadow-medium);
-            transition: all var(--duration-base) var(--ease-smooth);
-            opacity: 0;
-            visibility: hidden;
-            z-index: 100;
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-glow);
-        }
-
-        /* Active nav link styling */
-        .nav-link.active {
-            color: var(--color-cyan);
-            position: relative;
-        }
-
-        .nav-link.active::before {
-            width: 100%;
-        }
-
-        @media (max-width: 768px) {
-            .release-notes {
-                padding: calc(72px + var(--space-8)) 0 var(--space-16);
-            }
-
-            .release-notes-title {
-                font-size: 2rem;
-            }
-
-            .version-header {
-                padding: var(--space-6);
-                flex-direction: column;
-                align-items: flex-start;
-                text-align: left;
-            }
-
-            .version-number {
-                font-size: 1.875rem;
-            }
-
-            .version-content {
-                padding: var(--space-6);
-            }
-
-            .back-to-top {
-                bottom: var(--space-4);
-                right: var(--space-4);
-                width: 48px;
-                height: 48px;
-                font-size: 1.25rem;
-            }
-        }
-    </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link active">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+  <!-- ─── Nav ─────────────────────────────────────────────────────────── -->
+  <header class="nav nav-static">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="DevUtilities home">
+        <img src="images/icon.png" alt="" width="26" height="26" class="logo-img" />
+        <span>DevUtilities</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary"><a href="index.html">Index</a><a href="index.html#tools">Tools</a>
+        <a href="index.html#feature">Spotlight</a>
+        <a href="index.html#voices">Voices</a>
+        <a href="release-notes.html">Changelog</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="index.html#download" class="nav-pill">
+          <span>Download</span>
+          <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="nav-progress"></div>
+  </header>
 
-    <!-- Release Notes Section -->
-    <section class="release-notes">
-        <div class="container">
-            <div class="release-notes-header">
-                <h1 class="release-notes-title">CHANGELOG.md</h1>
-                <p class="release-notes-description">
-                    Track the evolution of DevUtilities through detailed release notes, featuring new tools, improvements, and bug fixes across all versions.
-                </p>
-            </div>
+  <!-- ─── Page head ───────────────────────────────────────────────────── -->
+  <section class="page-head">
+    <div class="page-eyebrow">§ Changelog</div>
+    <h1 class="page-h">Released, <em>in the open.</em></h1>
+  </section>
+  <div class="page-sub">
+    <div></div>
+    <p>Track the evolution of DevUtilities through detailed release notes — new tools, improvements, and bug fixes across every version, in the order they shipped.</p>
+  </div>
 
-            <div class="version-list">
-                <!-- Version 2.12.0 -->
-                <article class="version-card" style="--index: 0;">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v2.12.0</h2>
-                            <span class="version-date">March 2026</span>
-                        </div>
-                        <span class="version-badge">Latest</span>
-                    </div>
-                    <div class="version-content">
-                        <div class="feature-section">
-                            <h3 class="feature-title">✨ AI Chat Enhancements</h3>
-                            <div class="feature-item">
-                                <div class="feature-name">Enhanced Markdown Rendering</div>
-                                <div class="feature-description">
-                                    Migrated to the Textual rendering engine for richer, more accurate Markdown output. Code blocks now have syntax highlighting across all languages, tables and nested lists render correctly, and streaming updates are smooth with no layout flicker.
-                                </div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-name">One-Click Copy Code Snippets</div>
-                                <div class="feature-description">
-                                    Every code block in AI Chat responses now shows a Copy button. Grab any code snippet instantly without selecting text — perfect for copying commands, code examples, and configuration snippets directly from the chat.
-                                </div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-name">OpenAI Responses API Support</div>
-                                <div class="feature-description">
-                                    Added support for the OpenAI Responses API, enabling compatibility with GPT-5.2-pro and future models. Includes full SSE streaming and reasoning/thinking output — see the model's chain of thought as it streams. Enable per-model via "Use Responses API" toggle in model settings.
-                                </div>
-                            </div>
-                        </div>
+  <main class="page-body">
+    <div class="cl-list">
 
-                        <div class="feature-section">
-                            <h3 class="feature-title">🔊 AI Translate — OpenAI TTS</h3>
-                            <div class="feature-item">
-                                <div class="feature-name">Real-Time OpenAI Text-to-Speech</div>
-                                <div class="feature-description">
-                                    AI Translate now supports OpenAI's TTS engine alongside native macOS voices. PCM audio streams directly to the speaker — playback starts in realtime with no sentence splitting or waiting. Choose from 13 voices including alloy, nova, shimmer, echo, fable, and more. Configure your preferred mode (Auto/OpenAI/macOS) and voice in Settings → AI → Text-to-Speech.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Version 2.11.1 -->
-                <article class="version-card" style="--index: 1;">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v2.11.1</h2>
-                            <span class="version-date">February 2026</span>
-                        </div>
-                    </div>
-                    <div class="version-content">
-                        <div class="feature-section">
-                            <h3 class="feature-title">🐛 Bug Fixes</h3>
-                            <ul class="feature-list">
-                                <li><strong>AI Chat Stop Button</strong>: Clicking stop now preserves partial output already received instead of discarding it. The response is kept as-is with streaming indicator removed.</li>
-                                <li><strong>Built-in Model List Sync</strong>: Deprecated models (e.g. gpt-4.1, gpt-4.1-mini, gpt-4.1-nano) are automatically removed from the model list on startup. The app now reconciles stored models with current defaults each launch.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Version 2.11.0 -->
-                <article class="version-card" style="--index: 2;">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v2.11.0</h2>
-                            <span class="version-date">January 2026</span>
-                        </div>
-                    </div>
-                    <div class="version-content">
-                        <div class="feature-section">
-                            <h3 class="feature-title">🆕 New Tool</h3>
-                            <div class="feature-item">
-                                <div class="feature-name">Text Compare</div>
-                                <div class="feature-description">
-                                    Dedicated side-by-side text comparison tool with visual diff highlighting. Compare any two text documents with real-time status updates, character and line metrics for both sides, and instant visual feedback showing additions, deletions, and modifications.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="feature-section">
-                            <h3 class="feature-title">✨ Enhanced Features</h3>
-                            <ul class="feature-list">
-                                <li><strong>JSON Formatter Diff Mode</strong>: Added visual diff editor for comparing two JSON documents side-by-side with syntax highlighting</li>
-                                <li><strong>HTML Formatter Diff Mode</strong>: Compare HTML documents with automatic formatting and visual highlighting of differences</li>
-                                <li><strong>SQL Formatter Diff Mode</strong>: Side-by-side SQL query comparison with automatic beautification</li>
-                                <li><strong>Unified Diff Experience</strong>: All formatters share consistent diff interface with real-time status updates</li>
-                                <li><strong>Optimized Comparison Logic</strong>: Extracted reusable updateComparisonStatus() pattern for better code maintainability</li>
-                                <li><strong>CodeDiffEditor Extensions</strong>: Added html() and sql() methods to CodeDiffEditor component</li>
-                            </ul>
-                        </div>
-
-                        <div class="feature-section">
-                            <h3 class="feature-title">🎯 User Experience</h3>
-                            <ul class="feature-list">
-                                <li><strong>Character & Line Metrics</strong>: Detailed metrics display for both sides of comparison</li>
-                                <li><strong>Real-time Status</strong>: Instant visual feedback showing "Both are the same" or "Different" status</li>
-                                <li><strong>Sample Data</strong>: Each diff mode includes meaningful sample data pairs to demonstrate functionality</li>
-                                <li><strong>Auto-formatting</strong>: Diff modes automatically format content for optimal comparison</li>
-                                <li><strong>State Persistence</strong>: All comparison views remember content between sessions</li>
-                                <li><strong>Clear Button</strong>: Quick reset for both input fields in diff mode</li>
-                            </ul>
-                        </div>
-
-                        <div class="feature-section">
-                            <h3 class="feature-title">📊 Developer Impact</h3>
-                            <ul class="feature-list">
-                                <li>Essential for code review and comparing configuration files</li>
-                                <li>Perfect for checking API response differences during testing</li>
-                                <li>Useful for validating database schema changes</li>
-                                <li>Great for comparing HTML templates across environments</li>
-                                <li>Ideal for reviewing refactored code changes</li>
-                            </ul>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Version 2.10.0 -->
-                <article class="version-card" style="--index: 3;">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v2.10.0</h2>
-                            <span class="version-date">January 2026</span>
-                        </div>
-                        <span class="version-badge minor">New Feature</span>
-                    </div>
-                    <div class="version-content">
-                        <div class="feature-section">
-                            <h3 class="feature-title">🆕 New Tool</h3>
-                            <div class="feature-item">
-                                <div class="feature-name">Currency Converter</div>
-                                <div class="feature-description">
-                                    Real-time currency conversion tool with comprehensive features. Convert between 38 major global fiat currencies including USD, EUR, GBP, JPY, CNY, KRW (Korean Won), INR (Indian Rupee), and 31 others. Features 24-hour smart caching to minimize API calls while keeping data fresh.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="feature-section">
-                            <h3 class="feature-title">✨ Key Features</h3>
-                            <ul class="feature-list">
-                                <li><strong>38 Currencies Supported</strong>: Major global fiat currencies including regional favorites like KRW and INR</li>
-                                <li><strong>30-Day Price History</strong>: Automatic daily snapshots build a complete 30-day historical view</li>
-                                <li><strong>24-Hour Trend Indicators</strong>: Visual up/down arrows with percentage change vs yesterday</li>
-                                <li><strong>Smart Caching</strong>: Intelligent 24-hour exchange rate caching for optimal performance</li>
-                                <li><strong>Flexible Number Input</strong>: Supports both formatted (1,000,000) and plain (1000000) numbers</li>
-                                <li><strong>Optimized Performance</strong>: History loads only when currency pair changes, instant conversion on amount changes</li>
-                                <li><strong>Clean Two-Column Layout</strong>: Intuitive UI with swap button and quick amount shortcuts (1, 100, 1K, 10K)</li>
-                                <li><strong>Offline Mode</strong>: Continues working with cached data when network is unavailable</li>
-                                <li><strong>State Persistence</strong>: Remembers your last conversion settings between sessions</li>
-                            </ul>
-                        </div>
-
-                        <div class="feature-section">
-                            <h3 class="feature-title">📊 Developer Impact</h3>
-                            <ul class="feature-list">
-                                <li>Perfect for developers working with international APIs and pricing</li>
-                                <li>Essential for financial application development and testing</li>
-                                <li>Useful for freelancers handling multi-currency payments</li>
-                                <li>Great for teams working across different countries</li>
-                            </ul>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Version 2.9.0 -->
-                <article class="version-card" style="--index: 2;">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v2.9.0</h2>
-                            <span class="version-date">November 2025</span>
-                        </div>
-                        <span class="version-badge minor">New Feature</span>
-                    </div>
-
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">🎲</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Random String Generator</span> - NEW tool for cryptographically secure random string generation with customizable character sets and advanced security requirements
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">🎨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">5 Built-in Presets</span> - Quick templates for common use cases: Strong Password (16 chars), API Key (32 chars), Hex String (64 chars), PIN Code (6 digits), and Readable Code (no ambiguous characters)
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">🔐</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Cryptographically Secure</span> - Uses SecRandomCopyBytes with rejection sampling to eliminate modulo bias, suitable for passwords, API keys, and security tokens
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚙️</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Advanced Requirements</span> - Enforce minimum requirements for uppercase letters, numbers, or special characters to meet strict password policies
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">📊</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Bulk Generation</span> - Generate up to 20 random strings simultaneously with configurable length (1-100 chars)
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Version 2.8.2 -->
-                <article class="version-card" style="--index: 3;">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v2.8.2</h2>
-                            <span class="version-date">October 2025</span>
-                        </div>
-                        <span class="version-badge patch">Enhancement</span>
-                    </div>
-
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">🔊</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Text-to-Speech (TTS)</span> - Integrated native macOS TTS in AI Translate for listening to both source and translated text with one-click playback
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">🌍</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Multi-language TTS</span> - Supports all 19 translation languages with automatic voice selection (English, Chinese, Japanese, Korean, Spanish, French, German, Russian, Arabic, and more)
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">🎭</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Animated Speaker Icons</span> - Visual feedback with smooth wave animations during playback, left-aligned to prevent icon jitter
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">🛡️</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Smart Text Processing</span> - Prevents audio errors through SSML character escaping, whitespace validation, and comprehensive error handling
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Thread-safe Implementation</span> - Optimized with internal state tracking to eliminate priority inversion warnings and ensure smooth performance
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Version 2.8.1 -->
-                <article class="version-card" style="--index: 4;">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v2.8.1</h2>
-                            <span class="version-date">October 2025</span>
-                        </div>
-                        <span class="version-badge patch">Enhancement</span>
-                    </div>
-
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">🔢</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Base62 Support</span> - Enhanced Base Converter with Base62 number system support (0-9, A-Z, a-z) for URL shortening and compact identifiers
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚡</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Five Base Systems</span> - Now supports conversion between binary, octal, decimal, hexadecimal, and Base62 with real-time validation
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">🔄</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Real-time Conversion</span> - All five number bases convert simultaneously as you type in any field
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✅</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Custom Algorithms</span> - Implemented efficient custom toBase62 and fromBase62 conversion functions with character set validation
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Version 2.8.0 -->
-                <article class="version-card" style="--index: 4;">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v2.8.0</h2>
-                            <span class="version-date">October 2025</span>
-                        </div>
-                        <span class="version-badge minor">New Tool</span>
-                    </div>
-
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">🎨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Color Picker</span> - NEW professional color format converter with real-time conversion between HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK formats
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">🕐</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Color History</span> - Built-in color history tracking to quickly access and reuse up to 22 previously selected colors with visual swatches
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">🎯</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Visual Color Preview</span> - Large color preview box with system color panel integration for precise color selection
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✏️</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Format Flexibility</span> - Edit any color format directly - changes instantly reflect across all other formats
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">📦</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">20 Essential Tools</span> - Comprehensive toolkit now covering all essential developer utilities
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <!-- Abbreviated versions for space - continue pattern for remaining versions -->
-                <article class="version-card" style="--index: 5;">
-                    <div class="version-header">
-                        <div class="version-info">
-                            <h2 class="version-number">v2.7.0 - v1.11.1</h2>
-                            <span class="version-date">August - October 2025</span>
-                        </div>
-                        <span class="version-badge minor">Previous Releases</span>
-                    </div>
-                    <div class="version-content">
-                        <ul class="changes-list">
-                            <li class="change-item">
-                                <span class="change-icon">🔢</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Base Converter (v2.7.0)</span> - Mutual conversion between binary, octal, decimal, and hexadecimal number systems
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">🌐</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">AI Translate (v2.4.0)</span> - Professional translation with 19 languages, 3 modes (Translate, Polish, Summarize), and special word mode
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">⚙️</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Feature Management (v2.3.0)</span> - Customizable tool organization with drag-and-drop enable/disable functionality
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">🔢</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Hex String Converter (v2.2.0)</span> - Bidirectional hex-to-string conversion with UTF-8, UTF-16, and ASCII encoding
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Custom AI Models (v2.0.0)</span> - Flexible API configuration with custom model support
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">✨</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">AI Chat (v1.13.0)</span> - Intelligent AI assistant with DeepSeek integration and reasoning process visualization
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">🔐</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">Crypto Tools (v1.12.0)</span> - Comprehensive cryptographic suite with hash functions, AES-GCM-256, and RSA-2048/4096
-                                </div>
-                            </li>
-                            <li class="change-item">
-                                <span class="change-icon">🎫</span>
-                                <div class="change-text">
-                                    <span class="change-highlight">JWT RSA Support (v1.11.1)</span> - Enhanced JWT encoder/decoder with RS256, RS384, RS512 algorithm support
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-            </div>
+      <!-- ── v2.12.0 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.12.0</span>
+          <span>May 2026</span>
+          <span class="cl-tag">Latest</span>
         </div>
-    </section>
-
-    <!-- Back to top button -->
-    <button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="Back to top">
-        ↑
-    </button>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
+        <div class="cl-body">
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">AI Chat enhancements</p>
+            <h3>Markdown that renders the way you wrote it.</h3>
+            <h4>Enhanced Markdown rendering</h4>
+            <p>Migrated to the Textual rendering engine for richer, more accurate Markdown output. Code blocks now have syntax highlighting across all languages, tables and nested lists render correctly, and streaming updates are smooth with no layout flicker.</p>
+            <h4>One-click copy code snippets</h4>
+            <p>Every code block in AI Chat responses now shows a Copy button. Grab any code snippet instantly without selecting text — perfect for copying commands, code examples, and configuration directly from the chat.</p>
+            <h4>OpenAI Responses API support</h4>
+            <p>Added support for the OpenAI Responses API, enabling compatibility with GPT-5.2-pro and future models. Includes full SSE streaming and reasoning/thinking output — see the model's chain of thought as it streams. Enable per-model via the <code>Use Responses API</code> toggle in model settings.</p>
+          </div>
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">AI Translate — OpenAI TTS</p>
+            <h3>Real-time text-to-speech, no waiting.</h3>
+            <p>AI Translate now supports OpenAI's TTS engine alongside native macOS voices. PCM audio streams directly to the speaker — playback starts in realtime with no sentence splitting or waiting. Choose from 13 voices including alloy, nova, shimmer, echo, fable, and more. Configure mode (Auto / OpenAI / macOS) and voice in Settings → AI → Text-to-Speech.</p>
+          </div>
         </div>
-    </footer>
+      </article>
 
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
-    <script>
-        // Back to top functionality
-        const backToTop = document.getElementById('backToTop');
+      <!-- ── v2.11.1 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.11.1</span>
+          <span>February 2026</span>
+          <span class="cl-tag muted">Bug fixes</span>
+        </div>
+        <div class="cl-body">
+          <h3>Smaller fixes that add up.</h3>
+          <ul>
+            <li><strong>AI Chat stop button.</strong> Clicking stop now preserves partial output already received instead of discarding it. The response is kept as-is with the streaming indicator removed.</li>
+            <li><strong>Built-in model list sync.</strong> Deprecated models (e.g. gpt-4.1, gpt-4.1-mini, gpt-4.1-nano) are automatically removed from the model list on startup. The app now reconciles stored models with current defaults each launch.</li>
+          </ul>
+        </div>
+      </article>
 
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 300) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
-        });
+      <!-- ── v2.11.0 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.11.0</span>
+          <span>January 2026</span>
+          <span class="cl-tag">New tool</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">Text Compare</p>
+            <h3>Side-by-side comparison, with a real diff underneath.</h3>
+            <p>A dedicated text comparison tool with visual diff highlighting. Compare any two text documents with real-time status updates, character and line metrics for both sides, and instant visual feedback showing additions, deletions, and modifications.</p>
+          </div>
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">Diff mode for formatters</p>
+            <ul>
+              <li><strong>JSON Formatter Diff.</strong> Visual diff editor for comparing two JSON documents side-by-side with syntax highlighting.</li>
+              <li><strong>HTML Formatter Diff.</strong> Compare HTML documents with automatic formatting and visual highlighting of differences.</li>
+              <li><strong>SQL Formatter Diff.</strong> Side-by-side SQL query comparison with automatic beautification.</li>
+              <li><strong>Unified Diff experience.</strong> All formatters share a consistent diff interface with real-time status updates.</li>
+              <li><strong>State persistence.</strong> All comparison views remember content between sessions.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
 
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-    </script>
+      <!-- ── v2.10.0 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.10.0</span>
+          <span>January 2026</span>
+          <span class="cl-tag">New tool</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">Currency Converter</p>
+            <h3>Thirty-eight currencies, thirty days of history, no API hand-holding.</h3>
+            <p>Real-time currency conversion across 38 major global fiat currencies — USD, EUR, GBP, JPY, CNY, KRW, INR, and 31 others. 24-hour smart caching keeps data fresh while minimising API calls; everything still works offline against the most recent cache.</p>
+            <ul>
+              <li><strong>30-day price history.</strong> Daily snapshots build a complete historical view automatically.</li>
+              <li><strong>24-hour trend indicators.</strong> Visual up/down arrows with percentage change vs. yesterday.</li>
+              <li><strong>Flexible number input.</strong> Supports both formatted (1,000,000) and plain (1000000) numbers.</li>
+              <li><strong>Quick amount shortcuts.</strong> 1, 100, 1K, 10K — and a swap button for the pair.</li>
+              <li><strong>State persistence.</strong> Remembers your last conversion settings between sessions.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── v2.9.0 ─────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.9.0</span>
+          <span>November 2025</span>
+          <span class="cl-tag">New tool</span>
+        </div>
+        <div class="cl-body">
+          <h3>Random String Generator — cryptographically secure by default.</h3>
+          <p>A new tool for cryptographically secure random string generation with customizable character sets and advanced security requirements.</p>
+          <ul>
+            <li><strong>Five built-in presets.</strong> Strong Password (16 chars), API Key (32), Hex String (64), PIN Code (6 digits), Readable Code (no ambiguous characters).</li>
+            <li><strong>SecRandomCopyBytes.</strong> Rejection sampling eliminates modulo bias — suitable for passwords, API keys, and security tokens.</li>
+            <li><strong>Advanced requirements.</strong> Enforce minimum uppercase letters, numbers, or special characters to meet strict password policies.</li>
+            <li><strong>Bulk generation.</strong> Up to 20 strings simultaneously with configurable length (1–100 chars).</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ── v2.8.2 ─────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.8.2</span>
+          <span>October 2025</span>
+          <span class="cl-tag muted">Enhancement</span>
+        </div>
+        <div class="cl-body">
+          <h3>AI Translate gains a voice.</h3>
+          <p>Native macOS text-to-speech is now integrated into AI Translate — listen to both source and translated text with one-click playback.</p>
+          <ul>
+            <li><strong>19 languages.</strong> Automatic voice selection across English, Chinese, Japanese, Korean, Spanish, French, German, Russian, Arabic, and more.</li>
+            <li><strong>Animated speaker icons.</strong> Smooth wave animations during playback, left-aligned to prevent icon jitter.</li>
+            <li><strong>Smart text processing.</strong> SSML character escaping, whitespace validation, and comprehensive error handling.</li>
+            <li><strong>Thread-safe.</strong> Internal state tracking eliminates priority inversion warnings.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ── v2.8.1 ─────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.8.1</span>
+          <span>October 2025</span>
+          <span class="cl-tag muted">Enhancement</span>
+        </div>
+        <div class="cl-body">
+          <h3>Base Converter, now with Base62.</h3>
+          <p>Enhanced Base Converter with Base62 (0–9, A–Z, a–z) for URL shortening and compact identifiers. Five base systems — binary, octal, decimal, hexadecimal, and Base62 — convert simultaneously as you type, with custom <code>toBase62</code> / <code>fromBase62</code> implementations and character set validation.</p>
+        </div>
+      </article>
+
+      <!-- ── v2.8.0 ─────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.8.0</span>
+          <span>October 2025</span>
+          <span class="cl-tag">New tool</span>
+        </div>
+        <div class="cl-body">
+          <h3>Color Picker — every format, in real time.</h3>
+          <p>A professional color format converter with real-time conversion between HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK formats. Edit any format directly — changes instantly reflect across all other formats.</p>
+          <ul>
+            <li><strong>Color history.</strong> Quickly access and reuse up to 22 previously selected colors with visual swatches.</li>
+            <li><strong>Visual color preview.</strong> Large preview box with system color panel integration for precise selection.</li>
+            <li><strong>20 essential tools.</strong> A comprehensive toolkit covering all the everyday developer utilities.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ── v2.7.0 → v1.11.1 ───────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.7.0 → v1.11.1</span>
+          <span>Aug – Oct 2025</span>
+          <span class="cl-tag muted">Previous releases</span>
+        </div>
+        <div class="cl-body">
+          <h3>Earlier highlights.</h3>
+          <ul>
+            <li><strong>Base Converter (v2.7.0).</strong> Mutual conversion between binary, octal, decimal, and hexadecimal.</li>
+            <li><strong>AI Translate (v2.4.0).</strong> Professional translation with 19 languages and 3 modes (Translate, Polish, Summarize), plus a special word mode.</li>
+            <li><strong>Feature Management (v2.3.0).</strong> Customizable tool organization with drag-and-drop enable/disable.</li>
+            <li><strong>Hex String Converter (v2.2.0).</strong> Bidirectional hex-to-string conversion with UTF-8, UTF-16, and ASCII encoding.</li>
+            <li><strong>Custom AI Models (v2.0.0).</strong> Flexible API configuration with custom model support.</li>
+            <li><strong>AI Chat (v1.13.0).</strong> Intelligent assistant with DeepSeek integration and reasoning-process visualization.</li>
+            <li><strong>Crypto Tools (v1.12.0).</strong> Comprehensive cryptographic suite — hash functions, AES-GCM-256, RSA-2048/4096.</li>
+            <li><strong>JWT RSA support (v1.11.1).</strong> Enhanced JWT encoder/decoder with RS256, RS384, RS512.</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- ─── Footer ──────────────────────────────────────────────────────── -->
+  <footer class="foot">
+    <div class="foot-inner">
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <img src="images/icon.png" alt="" width="26" height="26" class="logo-img" />
+          <span>DevUtilities</span>
+        </a>
+        <p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p>
+      </div>
+      <div class="foot-cols">
+        <div>
+          <h5>Product</h5>
+          <a href="index.html#tools">Tools</a>
+          <a href="index.html#feature">Spotlight</a>
+          <a href="index.html#download">Download</a>
+        </div>
+        <div>
+          <h5>Resources</h5>
+          <a href="release-notes.html">Changelog</a>
+          <a href="https://github.com/hengfeiyang/devutilities/issues">Support</a>
+        </div>
+        <div>
+          <h5>Legal</h5>
+          <a href="privacy_policy.html">Privacy policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-rule"></div>
+    <div class="foot-bottom">
+      <span>© 2026 DevUtilities</span>
+      <span>v2.12.2</span>
+    </div>
+  </footer>
 </body>
 </html>

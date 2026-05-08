@@ -1,463 +1,95 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UUID Generator - Generate UUIDs v1, v4, v5, v7 Online | DevUtilities</title>
-    <meta name="description" content="Professional UUID generator for developers. Generate UUID v1, v4, v5, v7 with bulk generation, timestamp extraction, and format validation. Random UUID, time-based UUID, and name-based UUID support. Part of DevUtilities - 18 essential developer tools for macOS.">
-    <meta name="keywords" content="UUID generator, generate UUID online, UUID v4, UUID v1, UUID v7, random UUID, GUID generator, unique identifier, bulk UUID generation, timestamp UUID">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="UUID Generator - Generate UUIDs v1, v4, v5, v7 Online | DevUtilities">
-    <meta property="og:description" content="Professional UUID generator with support for v1, v4, v5, v7 formats. Bulk generation, timestamp extraction, and validation for developers.">
-    <meta property="og:image" content="images/screenshots/uuid.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="UUID Generator - Generate UUIDs v1, v4, v5, v7 Online">
-    <meta property="twitter:description" content="Professional UUID generator with support for v1, v4, v5, v7 formats. Bulk generation and timestamp extraction.">
-    <meta property="twitter:image" content="images/screenshots/uuid.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities UUID Generator",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Professional UUID generator with support for v1, v4, v5, v7 formats, bulk generation, and timestamp extraction",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "10"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UUID Generator — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="UUID Generator — v1, v4, v5, v7. Bulk generation; pull a timestamp out of a v1 or v7 ID." />
+  <meta name="keywords" content="UUID generator, UUIDv4, UUIDv7, UUIDv5, UUIDv1, bulk UUID, GUID, identifier tools, macOS" />
+  <meta property="og:image" content="images/screenshots/uuid.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>UUID Generator</span>
-                    </div>
-                    <h1 class="hero-title">
-                        UUID Generator
-                        <span class="hero-subtitle">Generate Unique Identifiers v1, v4, v5, v7</span>
-                    </h1>
-                    <p class="hero-description">
-                        Generate UUIDs in multiple formats including time-based (v1), random (v4), name-based (v5), and sortable time-ordered (v7) versions. Features bulk generation, timestamp extraction, format validation, and comprehensive UUID analysis for developers.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🎯</span>
-                            <span>Multiple Versions</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">📦</span>
-                            <span>Bulk Generation</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">⏰</span>
-                            <span>Timestamp Extraction</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/uuid.png" alt="DevUtilities UUID Generator Screenshot showing multiple UUID versions with bulk generation and timestamp extraction">
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>UUID Generator</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 14 of 23 · Generate</div><h1 class="page-h">UUIDs, in <em>every flavour.</em></h1></section>
+  <div class="page-sub"><div></div><p>Generate v1, v4, v5, and v7 UUIDs. Single or bulk. Timestamp extraction from v1 and v7. Copy individually or as a list, with the format the calling code expects.</p></div>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Advanced UUID Generation Features</h2>
-                <p class="section-description">
-                    Everything you need for professional UUID generation, analysis, and management in development workflows.
-                </p>
-            </div>
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Versions</div><div class="tool-meta-value accent">v1 · v4 · v5 · v7</div><div class="tool-meta-sub">All four shipped</div></div>
+    <div><div class="tool-meta-label">Bulk</div><div class="tool-meta-value">Yes</div><div class="tool-meta-sub">Up to a thousand at once</div></div>
+    <div><div class="tool-meta-label">Decode</div><div class="tool-meta-value">v1 · v7</div><div class="tool-meta-sub">Pull timestamp out</div></div>
+    <div><div class="tool-meta-label">Network</div><div class="tool-meta-value">Offline</div><div class="tool-meta-sub">Pure local</div></div>
+  </div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">Multiple UUID Versions</h3>
-                    <p class="feature-description">Generate UUIDs in v1 (time-based), v4 (random), v5 (name-based SHA-1), and v7 (time-ordered) formats. Each version serves different use cases and requirements.</p>
-                </div>
+  <section class="tool-shot"><figure><img src="images/screenshots/uuid.png" alt="DevUtilities UUID Generator — version picker, bulk count, list of generated IDs." /></figure><figcaption>Plate xiv — UUID Generator with bulk count and the v7 timestamp decoder.</figcaption></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📦</div>
-                    <h3 class="feature-title">Bulk Generation</h3>
-                    <p class="feature-description">Generate hundreds or thousands of UUIDs at once for testing, data seeding, and batch operations. Configurable quantity with instant generation.</p>
-                </div>
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Six things <span class="muted">it does well.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>v4 — random</h4><p>The default. Cryptographically random; collision probability essentially nil; what most APIs ask for.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>v7 — sortable</h4><p>Time-ordered with a millisecond timestamp prefix. Index-friendly; database-loving; modern.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>v1 — time-based</h4><p>The classic time-and-MAC variant. Useful where v1 compatibility matters.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>v5 — namespaced</h4><p>Deterministic, derived from a namespace UUID and a name. Useful for stable IDs from input.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Bulk generation</h4><p>Generate up to a thousand at a time. Output as a list, ready to paste into a seed script.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>Timestamp decode</h4><p>Drop a v1 or v7 UUID and read the timestamp out of it. Same panel; one click.</p></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">⏰</div>
-                    <h3 class="feature-title">Timestamp Extraction</h3>
-                    <p class="feature-description">Extract and display timestamps from UUID v1 and v7 with human-readable date conversion. Perfect for debugging and data analysis.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>to a fresh ID.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Pick version</h4><p>v4 for random, v7 for sortable, v5 for deterministic, v1 for legacy.</p><div class="step-key">Version picker</div></div>
+      <div class="step"><span class="step-n"></span><h4>Set count</h4><p>One, ten, a hundred. The output list grows with the count.</p><div class="step-key">Count input</div></div>
+      <div class="step"><span class="step-n"></span><h4>Generate</h4><p>Click; the IDs appear in a list. Bulk runs are still sub-second.</p><div class="step-key">Generate</div></div>
+      <div class="step"><span class="step-n"></span><h4>Copy or decode</h4><p>Copy individual or all. Drop a v1 / v7 ID into the decode panel to read its timestamp.</p><div class="step-key">Copy · decode</div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">✅</div>
-                    <h3 class="feature-title">Format Validation</h3>
-                    <p class="feature-description">Validate UUID format and detect version type from existing UUIDs. Comprehensive syntax checking with detailed error reporting.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — DB</span><h4>Seeding tables</h4><p>Bulk-generate IDs to populate test fixtures or migration scripts.</p></div>
+      <div class="use"><span class="use-tag">ii — Index</span><h4>Sortable inserts</h4><p>v7 IDs cluster nicely on disk because they sort by time. The index thanks you later.</p></div>
+      <div class="use"><span class="use-tag">iii — Stable</span><h4>Deterministic IDs</h4><p>v5 from a namespace + name gives the same UUID across machines, which is what some imports want.</p></div>
+      <div class="use"><span class="use-tag">iv — Debug</span><h4>Timestamp recovery</h4><p>Decode a v7 from a log line to see when it was minted, without joining to anything.</p></div>
+      <div class="use"><span class="use-tag">v — Test</span><h4>Cross-format</h4><p>Generate IDs in standard hyphenated form for APIs that demand that exact format.</p></div>
+      <div class="use"><span class="use-tag">vi — Mock</span><h4>Test data</h4><p>Whip up a thousand IDs for a load test in two clicks.</p></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3 class="feature-title">UUID Analysis</h3>
-                    <p class="feature-description">Analyze UUID structure, extract version information, timestamp data, and provide detailed breakdown of UUID components.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>Which UUID versions are supported?</summary><p>v1 (time + MAC), v4 (random), v5 (namespaced SHA-1), and v7 (sortable timestamp + random).</p></details>
+      <details><summary>What's the difference between v4 and v7?</summary><p>v4 is fully random. v7 prefixes the random bits with a millisecond timestamp, so IDs sort chronologically — better for B-tree indexes.</p></details>
+      <details><summary>Can I extract a timestamp from a v7 ID?</summary><p>Yes. The decode panel reads the timestamp prefix and shows the millisecond value plus a human-readable date.</p></details>
+      <details><summary>How is v5 generated?</summary><p>From a namespace UUID and a name, hashed via SHA-1 and formatted to v5 layout. Same inputs, same output, every time.</p></details>
+      <details><summary>How many IDs can I generate at once?</summary><p>Up to a thousand. The output list scrolls; bulk copy includes them all.</p></details>
+      <details><summary>Is the randomness cryptographically secure?</summary><p>Yes. v4 uses the system CSPRNG via <code>SecRandomCopyBytes</code>; v7 uses the same for the random portion.</p></details>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3 class="feature-title">Multiple Formats</h3>
-                    <p class="feature-description">Output UUIDs in various formats including standard hyphenated, uppercase, lowercase, and programming language specific formats.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="random-string-generator.html"><div class="rel-head"><span>15 · Generate</span><span>New · 2.9</span></div><h4>Random String</h4><p>Cryptographically secure presets for keys, passwords, tokens.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="timestamp-converter.html"><div class="rel-head"><span>03 · Convert</span><span>Updated · 2.1</span></div><h4>Timestamp Converter</h4><p>Take the timestamp you decoded out of a v7 and translate it.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="qr-code.html"><div class="rel-head"><span>16 · Generate</span><span></span></div><h4>QR Code</h4><p>Generate QR codes from your fresh IDs.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="hex-converter.html"><div class="rel-head"><span>06 · Convert</span><span>New · 2.2</span></div><h4>Hex String Converter</h4><p>UUIDs are hex; round-trip into raw bytes when you need them.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="base-converter.html"><div class="rel-head"><span>05 · Convert</span><span>Updated · 2.8</span></div><h4>Base Converter</h4><p>Bin, oct, dec, hex, base62 — for the UUIDs you've shrunk.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="crypto-tools.html"><div class="rel-head"><span>23 · Network</span><span>New · 1.12</span></div><h4>Crypto Tools</h4><p>Hashes for namespaces; ciphers for envelope encryption.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3 class="feature-title">Custom Namespaces</h3>
-                    <p class="feature-description">Generate UUID v5 with custom namespaces and names for deterministic, reproducible unique identifiers based on input data.</p>
-                </div>
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Every UUID you'll need, <em>at the keystroke.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Instant Generation</h3>
-                    <p class="feature-description">Lightning-fast UUID generation with no delays. Generate single UUIDs instantly or process bulk requests efficiently.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- UUID Versions Section -->
-    <section class="uuid-versions">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">UUID Version Guide</h2>
-                <p class="section-description">Understanding the different UUID versions and their specific use cases</p>
-            </div>
-
-            <div class="versions-grid">
-                <div class="version-card">
-                    <div class="version-badge v1">v1</div>
-                    <h3>Time-Based UUID</h3>
-                    <div class="version-format">xxxxxxxx-xxxx-1xxx-xxxx-xxxxxxxxxxxx</div>
-                    <p><strong>Based on:</strong> MAC address + timestamp</p>
-                    <p><strong>Use cases:</strong> Database primary keys, distributed systems, when you need sortable IDs by time</p>
-                    <p><strong>Pros:</strong> Sortable by time, includes timestamp information</p>
-                    <p><strong>Cons:</strong> May reveal MAC address, not fully random</p>
-                </div>
-
-                <div class="version-card featured">
-                    <div class="version-badge v4">v4</div>
-                    <h3>Random UUID</h3>
-                    <div class="version-format">xxxxxxxx-xxxx-4xxx-xxxx-xxxxxxxxxxxx</div>
-                    <p><strong>Based on:</strong> Random or pseudo-random numbers</p>
-                    <p><strong>Use cases:</strong> General purpose, API keys, session tokens, most common choice</p>
-                    <p><strong>Pros:</strong> Cryptographically random, no privacy concerns</p>
-                    <p><strong>Cons:</strong> Not sortable, no embedded information</p>
-                </div>
-
-                <div class="version-card">
-                    <div class="version-badge v5">v5</div>
-                    <h3>Name-Based UUID (SHA-1)</h3>
-                    <div class="version-format">xxxxxxxx-xxxx-5xxx-xxxx-xxxxxxxxxxxx</div>
-                    <p><strong>Based on:</strong> SHA-1 hash of namespace + name</p>
-                    <p><strong>Use cases:</strong> When you need deterministic UUIDs, content addressing</p>
-                    <p><strong>Pros:</strong> Reproducible, deterministic from input</p>
-                    <p><strong>Cons:</strong> Predictable if input is known</p>
-                </div>
-
-                <div class="version-card newest">
-                    <div class="version-badge v7">v7</div>
-                    <h3>Time-Ordered UUID</h3>
-                    <div class="version-format">xxxxxxxx-xxxx-7xxx-xxxx-xxxxxxxxxxxx</div>
-                    <p><strong>Based on:</strong> Unix timestamp + random data</p>
-                    <p><strong>Use cases:</strong> Modern applications, database performance, time-sortable random IDs</p>
-                    <p><strong>Pros:</strong> Sortable, efficient for databases, no privacy issues</p>
-                    <p><strong>Cons:</strong> Newer standard, limited support in some systems</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Use Section -->
-    <section class="how-to-use">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">How to Use UUID Generator</h2>
-                <p class="section-description">
-                    Generate and analyze UUIDs in just a few simple steps.
-                </p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Select UUID Version</h3>
-                    <p>Choose the appropriate UUID version (v1, v4, v5, v7) based on your use case and requirements.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Configure Options</h3>
-                    <p>Set generation quantity for bulk operations, choose output format, and configure version-specific options like namespaces for v5.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>Generate UUIDs</h3>
-                    <p>Click generate to create your UUIDs instantly. View results with formatting options and additional analysis information.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>Copy & Analyze</h3>
-                    <p>Copy individual UUIDs or bulk results. Use the analysis feature to extract timestamps and validate existing UUIDs.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect for These Development Tasks</h2>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">🗄️</div>
-                    <h3>Database Primary Keys</h3>
-                    <p>Generate unique primary keys for database records, especially in distributed systems where auto-increment isn't suitable. UUID v7 recommended for performance.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔑</div>
-                    <h3>API Keys & Tokens</h3>
-                    <p>Create unique API keys, session tokens, and authentication identifiers. UUID v4 provides cryptographic randomness for security applications.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🧪</div>
-                    <h3>Testing & Data Seeding</h3>
-                    <p>Generate bulk UUIDs for test data, database seeding, and load testing scenarios. Bulk generation saves time in development and testing workflows.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📁</div>
-                    <h3>File & Resource IDs</h3>
-                    <p>Create unique identifiers for files, uploads, resources, and content management systems. Ensures global uniqueness across distributed storage.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🌐</div>
-                    <h3>Distributed Systems</h3>
-                    <p>Generate conflict-free identifiers for microservices, distributed databases, and multi-node applications without coordination overhead.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📊</div>
-                    <h3>Analytics & Tracking</h3>
-                    <p>Create unique tracking IDs, event identifiers, and analytics markers. Time-based versions (v1, v7) provide chronological ordering benefits.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>Which UUID version should I use?</h3>
-                    <p>UUID v4 is the most common choice for general purposes due to its randomness. Use v7 for database primary keys (better performance), v1 if you need time sorting, and v5 for deterministic UUIDs from input data.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Are UUIDs truly unique globally?</h3>
-                    <p>Yes, UUIDs are designed for global uniqueness. The probability of collision is astronomically small - approximately 1 in 5.3 x 10^36 for UUID v4, making them effectively unique.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I extract timestamps from UUIDs?</h3>
-                    <p>Yes, from UUID v1 and v7. DevUtilities automatically detects time-based UUIDs and extracts the embedded timestamp, converting it to human-readable date format for analysis.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What's the difference between UUID and GUID?</h3>
-                    <p>UUID (Universally Unique Identifier) and GUID (Globally Unique Identifier) refer to the same concept. GUID is Microsoft's term, while UUID is the RFC standard terminology.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How many UUIDs can I generate at once?</h3>
-                    <p>DevUtilities supports bulk generation of thousands of UUIDs in a single operation. The exact limit depends on your system's memory, but typical usage supports generating 1000+ UUIDs instantly.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Is UUID v7 better than v4 for databases?</h3>
-                    <p>Yes, UUID v7 is generally better for database primary keys because it's time-ordered, which improves database performance, reduces index fragmentation, and maintains insertion order.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">Explore other essential tools included in DevUtilities</p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">🕐</div>
-                    <h3>Timestamp Converter</h3>
-                    <p>Convert timestamps extracted from UUID v1 and v7 to human-readable dates for analysis and debugging.</p>
-                    <a href="timestamp-converter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🎯</div>
-                    <h3>Regex Tester</h3>
-                    <p>Test regex patterns for UUID validation and extraction in your applications and data processing workflows.</p>
-                    <a href="regex-tester.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🎲</div>
-                    <h3>Random String Generator</h3>
-                    <p>Generate cryptographically secure random strings, passwords, and API keys - perfect companion to UUID generation.</p>
-                    <a href="random-string-generator.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">📱</div>
-                    <h3>QR Code Generator</h3>
-                    <p>Generate QR codes for UUIDs, perfect for physical asset tracking and mobile app integration.</p>
-                    <a href="qr-code.html" class="tool-link">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Generate Professional UUIDs?</h2>
-                <p>Join thousands of developers who rely on DevUtilities's UUID generator for their unique identifier needs.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-primary">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 23 Developer Tools</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div></footer>
 </body>
 </html>

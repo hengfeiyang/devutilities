@@ -1,479 +1,95 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regex Tester - Test Regular Expressions Online | DevUtilities</title>
-    <meta name="description" content="Professional regex tester for developers. Test regular expressions with pattern matching, capture groups, and common regex patterns. Real-time validation with detailed explanations. Part of DevUtilities - 18 essential developer tools for macOS.">
-    <meta name="keywords" content="regex tester, regular expression tester, regex test online, regexp tester, regex validator, regex pattern matcher, test regex online, regex debugger">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="Regex Tester - Test Regular Expressions Online | DevUtilities">
-    <meta property="og:description" content="Professional regex tester with pattern matching, capture groups, and common regex patterns. Real-time validation for developers.">
-    <meta property="og:image" content="images/screenshots/regex.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Regex Tester - Test Regular Expressions Online">
-    <meta property="twitter:description" content="Professional regex tester with pattern matching, capture groups, and common regex patterns. Real-time validation.">
-    <meta property="twitter:image" content="images/screenshots/regex.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities Regex Tester",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Professional regex tester with pattern matching, capture groups, and common regex patterns for developers",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "10"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Regex Test — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="Live regex testing with capture groups, common pattern templates, and instant feedback. Native macOS." />
+  <meta name="keywords" content="regex test, regular expression, pattern matching, capture groups, regex tool, macOS regex" />
+  <meta property="og:image" content="images/screenshots/regex.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>Regex Tester</span>
-                    </div>
-                    <h1 class="hero-title">
-                        Regex Tester
-                        <span class="hero-subtitle">Professional Regular Expression Testing Tool</span>
-                    </h1>
-                    <p class="hero-description">
-                        Test and validate regular expressions with real-time pattern matching, capture group extraction, and comprehensive error reporting. Features common regex patterns, detailed explanations, and advanced testing capabilities for developers and data processors.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🎯</span>
-                            <span>Pattern Matching</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">📋</span>
-                            <span>Capture Groups</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">⚡</span>
-                            <span>Real-time Testing</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/regex.png" alt="DevUtilities Regex Tester Screenshot showing pattern matching with capture groups and real-time validation">
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>Regex Test</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 18 of 23 · Inspect</div><h1 class="page-h">Patterns, <em>matched live.</em></h1></section>
+  <div class="page-sub"><div></div><p>Write a regex; type input; see matches highlight in real time. Capture groups list with their indices and names. A small library of common patterns covers email, URL, IP, date, and a dozen others.</p></div>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Advanced Regex Testing Features</h2>
-                <p class="section-description">
-                    Everything you need for professional regular expression development, testing, and debugging.
-                </p>
-            </div>
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Engine</div><div class="tool-meta-value accent">NSRegularExpression</div><div class="tool-meta-sub">ICU-flavoured</div></div>
+    <div><div class="tool-meta-label">Capture groups</div><div class="tool-meta-value">Indexed &amp; named</div><div class="tool-meta-sub">Listed live</div></div>
+    <div><div class="tool-meta-label">Templates</div><div class="tool-meta-value">A library</div><div class="tool-meta-sub">Email, URL, IP, etc.</div></div>
+    <div><div class="tool-meta-label">Network</div><div class="tool-meta-value">Offline</div><div class="tool-meta-sub">Pure local</div></div>
+  </div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">Live Pattern Matching</h3>
-                    <p class="feature-description">Real-time regex matching with instant visual feedback. See matches highlighted in your test text as you type your regular expression pattern.</p>
-                </div>
+  <section class="tool-shot"><figure><img src="images/screenshots/regex.png" alt="DevUtilities Regex Test — pattern, flags, input text, highlighted matches, capture group list." /></figure><figcaption>Plate xviii — Regex Test with capture groups and live highlighting.</figcaption></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3 class="feature-title">Capture Groups</h3>
-                    <p class="feature-description">Extract and display capture groups with detailed breakdown. Perfect for parsing structured text, extracting data, and understanding complex patterns.</p>
-                </div>
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Six things <span class="muted">it does cleanly.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Live matching</h4><p>Type the pattern; matches highlight in the input as you write. No "run" button.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>Capture groups</h4><p>Indexed and named groups listed in a side panel — the value of each, per match.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Flags</h4><p><code>i</code> case-insensitive, <code>m</code> multiline, <code>s</code> dotall, <code>x</code> extended. Toggle visibly.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Common patterns</h4><p>A library of templates — email, URL, IP, ISO date, hex color, semver — one click to insert.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Match list</h4><p>Every match listed with its position; click to scroll into view.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>Pattern errors inline</h4><p>Bad regex? The error explains where the parser tripped, in plain language.</p></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🏷️</div>
-                    <h3 class="feature-title">Named Groups Support</h3>
-                    <p class="feature-description">Full support for named capture groups with clear labeling and extraction. Makes complex regex patterns more readable and maintainable.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>to a working pattern.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Drop input</h4><p>Paste the text you want to match against.</p><div class="step-key">Paste · <b>⌘ V</b></div></div>
+      <div class="step"><span class="step-n"></span><h4>Write the pattern</h4><p>Type the regex; matches highlight in the input as you go.</p><div class="step-key">Live</div></div>
+      <div class="step"><span class="step-n"></span><h4>Adjust flags</h4><p>Tick case-insensitive or multiline as needed; the result re-evaluates.</p><div class="step-key">Flags</div></div>
+      <div class="step"><span class="step-n"></span><h4>Read groups</h4><p>Side panel shows captured groups — indexed and named — for each match.</p><div class="step-key">Groups panel</div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">⚠️</div>
-                    <h3 class="feature-title">Error Detection</h3>
-                    <p class="feature-description">Comprehensive regex syntax validation with clear error messages and suggestions for fixing common regex pattern mistakes.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — Logs</span><h4>Pulling fields</h4><p>Extract timestamps, IPs, status codes, paths from log lines with named capture groups.</p></div>
+      <div class="use"><span class="use-tag">ii — Validate</span><h4>Email / URL / IP</h4><p>Sanity-check user input against well-known patterns from the template library.</p></div>
+      <div class="use"><span class="use-tag">iii — Refactor</span><h4>Find &amp; replace</h4><p>Verify a regex matches exactly what you intend before running it across a codebase.</p></div>
+      <div class="use"><span class="use-tag">iv — Parse</span><h4>Semi-structured text</h4><p>Tease structure out of CSVs, free-text notes, or migration scripts.</p></div>
+      <div class="use"><span class="use-tag">v — Test</span><h4>Edge cases</h4><p>Try the empty string, the multi-line input, the Unicode quirk — without writing a test harness.</p></div>
+      <div class="use"><span class="use-tag">vi — Learn</span><h4>Reading patterns</h4><p>Visualise what a complex regex actually matches when you inherit one from a colleague.</p></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📚</div>
-                    <h3 class="feature-title">Common Patterns Library</h3>
-                    <p class="feature-description">Pre-built regex patterns for emails, URLs, phone numbers, dates, and other common validation scenarios. Quick-start templates for developers.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>Which regex flavour?</summary><p>ICU-flavoured, via <code>NSRegularExpression</code>. The patterns you'd write in Swift, Objective-C, or many command-line tools work directly.</p></details>
+      <details><summary>Are named groups supported?</summary><p>Yes. Named groups list alongside numbered ones; each match's named values appear in the groups panel.</p></details>
+      <details><summary>What's in the template library?</summary><p>Email, URL, IPv4, IPv6, ISO 8601 date, hex color, semver, integer, decimal, phone — and a handful of others.</p></details>
+      <details><summary>How does it handle catastrophic backtracking?</summary><p>The matcher has a sane timeout. Patterns that runaway are flagged so you can refactor; nothing freezes the UI.</p></details>
+      <details><summary>Multiline mode?</summary><p>Toggle the <code>m</code> flag; <code>^</code> and <code>$</code> then anchor per-line. <code>s</code> (dotall) is also available.</p></details>
+      <details><summary>Does this require network access?</summary><p>No. Regex testing is fully local.</p></details>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🎛️</div>
-                    <h3 class="feature-title">Regex Flags Support</h3>
-                    <p class="feature-description">Support for all standard regex flags including global (g), case-insensitive (i), multiline (m), and more for comprehensive pattern testing.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="text-compare.html"><div class="rel-head"><span>17 · Inspect</span><span>New · 2.11</span></div><h4>Text Compare</h4><p>Diff two passages with character and line metrics.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON Formatter</h4><p>Format the JSON whose values you're regex-extracting.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="url-tools.html"><div class="rel-head"><span>21 · Network</span><span></span></div><h4>URL Tools</h4><p>Decode URL components for further matching.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="hex-converter.html"><div class="rel-head"><span>06 · Convert</span><span>New · 2.2</span></div><h4>Hex String Converter</h4><p>Convert hex/text when matching binary-flavoured input.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="ai-chat.html"><div class="rel-head"><span>01 · AI</span><span>Updated · 2.12</span></div><h4>AI Chat</h4><p>Ask the assistant for a regex; paste it here and verify.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="parquet-viewer.html"><div class="rel-head"><span>19 · Inspect</span><span></span></div><h4>Parquet Viewer</h4><p>Browse columnar data; export rows for regex inspection.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">Match Statistics</h3>
-                    <p class="feature-description">Detailed statistics showing match count, position information, and performance metrics for regex pattern optimization.</p>
-                </div>
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Live matches, named groups, <em>no surprises.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3 class="feature-title">Replace & Substitute</h3>
-                    <p class="feature-description">Test regex replacement patterns with backreferences and substitution groups. Perfect for text processing and transformation workflows.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Regex Patterns Section -->
-    <section class="regex-patterns">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Common Regex Patterns</h2>
-                <p class="section-description">Ready-to-use regular expression patterns for common validation and extraction tasks</p>
-            </div>
-
-            <div class="patterns-grid">
-                <div class="pattern-card">
-                    <div class="pattern-icon">📧</div>
-                    <h3>Email Validation</h3>
-                    <div class="pattern-code">^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$</div>
-                    <p>Validates email addresses with proper format checking including domain and TLD requirements.</p>
-                </div>
-
-                <div class="pattern-card">
-                    <div class="pattern-icon">🌐</div>
-                    <h3>URL Matching</h3>
-                    <div class="pattern-code">https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)</div>
-                    <p>Matches HTTP and HTTPS URLs with optional www prefix and various URL parameters.</p>
-                </div>
-
-                <div class="pattern-card">
-                    <div class="pattern-icon">📱</div>
-                    <h3>Phone Numbers</h3>
-                    <div class="pattern-code">^\+?1?-?\.?\s?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$</div>
-                    <p>Validates US phone numbers in various formats including international prefix and formatting.</p>
-                </div>
-
-                <div class="pattern-card">
-                    <div class="pattern-icon">📅</div>
-                    <h3>Date Formats</h3>
-                    <div class="pattern-code">^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$</div>
-                    <p>Matches MM/DD/YYYY date format with proper month and day validation ranges.</p>
-                </div>
-
-                <div class="pattern-card">
-                    <div class="pattern-icon">🆔</div>
-                    <h3>UUID Pattern</h3>
-                    <div class="pattern-code">[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}</div>
-                    <p>Validates UUID format with proper hyphen placement and hexadecimal character validation.</p>
-                </div>
-
-                <div class="pattern-card">
-                    <div class="pattern-icon">🔢</div>
-                    <h3>IP Address</h3>
-                    <div class="pattern-code">^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$</div>
-                    <p>Validates IPv4 addresses with proper octet range validation (0-255).</p>
-                </div>
-
-                <div class="pattern-card">
-                    <div class="pattern-icon">💳</div>
-                    <h3>Credit Card</h3>
-                    <div class="pattern-code">^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3[0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12})$</div>
-                    <p>Validates major credit card formats including Visa, MasterCard, American Express.</p>
-                </div>
-
-                <div class="pattern-card">
-                    <div class="pattern-icon">🔒</div>
-                    <h3>Strong Password</h3>
-                    <div class="pattern-code">^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$</div>
-                    <p>Validates strong passwords with lowercase, uppercase, numbers, and special characters.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Use Section -->
-    <section class="how-to-use">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">How to Use Regex Tester</h2>
-                <p class="section-description">
-                    Test and validate regular expressions in just a few simple steps.
-                </p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Enter Your Pattern</h3>
-                    <p>Type your regular expression pattern in the regex field. Use common patterns from our library or create your own custom pattern.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Add Test Text</h3>
-                    <p>Paste your test text that you want to match against the regex pattern. Can be single lines or multi-line text content.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>Set Flags</h3>
-                    <p>Choose appropriate regex flags like global (g), case-insensitive (i), or multiline (m) based on your matching requirements.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>View Results</h3>
-                    <p>See live matches highlighted, capture groups extracted, and detailed statistics about your regex pattern performance.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect for These Development Tasks</h2>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">✅</div>
-                    <h3>Data Validation</h3>
-                    <p>Validate user input like email addresses, phone numbers, postal codes, and other structured data formats in web forms and applications.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔍</div>
-                    <h3>Text Processing & Parsing</h3>
-                    <p>Extract specific data from logs, configuration files, CSV data, or any structured text content using capture groups and pattern matching.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔄</div>
-                    <h3>Search & Replace Operations</h3>
-                    <p>Perform complex text transformations, format conversions, and batch text processing using regex replacement patterns with backreferences.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📊</div>
-                    <h3>Log Analysis</h3>
-                    <p>Parse server logs, application logs, and error files to extract timestamps, IP addresses, error codes, and other relevant information.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🌐</div>
-                    <h3>Web Scraping</h3>
-                    <p>Extract data from HTML content, parse API responses, and clean up scraped text data using sophisticated pattern matching.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">⚙️</div>
-                    <h3>Configuration & Routing</h3>
-                    <p>Create URL routing patterns, validate configuration parameters, and process template strings in web frameworks and applications.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>What regex flags are supported?</h3>
-                    <p>DevUtilities supports all standard regex flags: global (g), case-insensitive (i), multiline (m), dotall (s), unicode (u), and sticky (y). These flags modify how your regex pattern behaves.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I test replacement patterns?</h3>
-                    <p>Yes! The regex tester includes replacement functionality with support for backreferences ($1, $2, etc.) and named group references for complex text transformations.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How do I use capture groups effectively?</h3>
-                    <p>Use parentheses () to create capture groups. Named groups (?<name>pattern) are even better for readability. DevUtilities shows all captured groups with their values clearly.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What happens with invalid regex patterns?</h3>
-                    <p>DevUtilities provides clear error messages for invalid regex syntax, including suggestions for common mistakes like unescaped special characters or unclosed groups.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I test regex against large text files?</h3>
-                    <p>The regex tester is optimized for reasonably sized text content. For very large files, consider testing with smaller samples first to verify your pattern works correctly.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Are there performance warnings for complex patterns?</h3>
-                    <p>DevUtilities provides basic performance feedback and will warn about potentially problematic patterns that might cause excessive backtracking or slow execution.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">Explore other essential tools included in DevUtilities</p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">🔗</div>
-                    <h3>URL Tools</h3>
-                    <p>Parse and validate URLs that you might be matching with regex patterns for web development tasks.</p>
-                    <a href="url-tools.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">📄</div>
-                    <h3>JSON Formatter</h3>
-                    <p>Format JSON data that you might be parsing with regex, or validate structured data extraction results.</p>
-                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🌍</div>
-                    <h3>HTTP Request</h3>
-                    <p>Test APIs and process responses that require regex pattern matching for data extraction and validation.</p>
-                    <a href="http-request.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🔠</div>
-                    <h3>Base64 Encoder</h3>
-                    <p>Encode or decode text that you're processing with regex patterns for complete data transformation workflows.</p>
-                    <a href="base64-encoder.html" class="tool-link">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Master Regular Expressions?</h2>
-                <p>Join thousands of developers who rely on DevUtilities's regex tester for pattern development and validation.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-primary">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 23 Developer Tools</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div></footer>
 </body>
 </html>

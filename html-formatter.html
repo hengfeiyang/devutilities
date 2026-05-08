@@ -1,417 +1,96 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Formatter & Beautifier - Format & Compare HTML | DevUtilities</title>
-    <meta name="description" content="Professional HTML formatter and beautifier for developers. Format, beautify, minify, validate, and compare HTML code with visual diff mode. Proper indentation, syntax highlighting, and real-time analysis. Part of DevUtilities - 23 essential developer tools for macOS.">
-    <meta name="keywords" content="HTML formatter, HTML beautifier, format HTML, HTML pretty print, HTML minify, HTML compare, HTML diff, online HTML formatter, HTML syntax highlighting, beautify HTML code, minify HTML">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="HTML Formatter & Beautifier - Format & Compare HTML | DevUtilities">
-    <meta property="og:description" content="Format, beautify, and compare HTML code with visual diff mode. Advanced syntax highlighting, proper indentation, and minification for web developers.">
-    <meta property="og:image" content="images/screenshots/html.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="HTML Formatter & Beautifier - Format & Compare HTML">
-    <meta property="twitter:description" content="Format, beautify, and compare HTML code with visual diff mode. Advanced syntax highlighting and proper indentation.">
-    <meta property="twitter:image" content="images/screenshots/html.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "DevUtilities HTML Formatter",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS",
-        "description": "Professional HTML formatter and beautifier with advanced features",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "ratingCount": "11"
-        }
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HTML Formatter — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="HTML Formatter with format, minify, validate, and a side-by-side diff editor — for templates, snapshots, and email markup." />
+  <meta name="keywords" content="HTML formatter, HTML minifier, HTML diff, HTML validator, template tools, macOS web tools" />
+  <meta property="og:image" content="images/screenshots/html.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <img src="images/icon.png" alt="DevUtilities" class="nav-logo">
-                <span class="nav-title">DevUtilities</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html#features" class="nav-link">Features</a>
-                <a href="index.html#reviews" class="nav-link">Reviews</a>
-                <a href="release-notes.html" class="nav-link">Release Notes</a>
-                <a href="index.html#download" class="nav-link">Download</a>
-                <a href="https://github.com/hengfeiyang/devutilities/issues" class="nav-link" target="_blank" rel="noopener">Support</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="breadcrumb">
-                        <a href="index.html">DevUtilities</a> / <span>HTML Formatter</span>
-                    </div>
-                    <h1 class="hero-title">
-                        HTML Formatter
-                        <span class="hero-subtitle">Professional HTML Beautification Tool</span>
-                    </h1>
-                    <p class="hero-description">
-                        Advanced HTML formatter and beautifier for web developers. Format minified HTML into readable code with proper indentation, beautify complex HTML structures, minify HTML for production, and compare HTML documents side-by-side. Now includes visual diff mode for comparing HTML files with syntax highlighting and real-time analysis.
-                    </p>
-                    <div class="hero-features">
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🎨</span>
-                            <span>Syntax Highlighting</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">🔍</span>
-                            <span>HTML Diff Mode</span>
-                        </div>
-                        <div class="hero-feature">
-                            <span class="hero-feature-icon">📊</span>
-                            <span>Line & Char Count</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="index.html#download" class="btn btn-primary">
-                            <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                            Download DevUtilities
-                        </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <span class="btn-icon">👀</span>
-                            See Features
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="images/screenshots/html.png" alt="DevUtilities HTML Formatter Screenshot showing formatted HTML code with syntax highlighting">
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>HTML Formatter</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 11 of 23 · Format</div><h1 class="page-h">HTML, <em>indented properly.</em></h1></section>
+  <div class="page-sub"><div></div><p>Indent, minify, validate, and diff. Native treatment for void elements, comments, and CDATA. v2.11 added side-by-side comparison so two templates can be reconciled without an external diff tool.</p></div>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Advanced HTML Formatting Features</h2>
-                <p class="section-description">
-                    Everything you need for professional HTML code formatting and optimization.
-                </p>
-            </div>
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Updated</div><div class="tool-meta-value accent">v2.11</div><div class="tool-meta-sub">Diff added</div></div>
+    <div><div class="tool-meta-label">Modes</div><div class="tool-meta-value">Format · Minify · Diff</div><div class="tool-meta-sub">Pick by intent</div></div>
+    <div><div class="tool-meta-label">Validation</div><div class="tool-meta-value">Tag-aware</div><div class="tool-meta-sub">Void elements handled</div></div>
+    <div><div class="tool-meta-label">Network</div><div class="tool-meta-value">Offline</div><div class="tool-meta-sub">Pure local</div></div>
+  </div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="feature-icon">🔍</div>
-                    <h3 class="feature-title">HTML Diff Mode</h3>
-                    <p class="feature-description">NEW: Compare HTML documents side-by-side with CodeMirror-powered visual diff highlighting. Automatically formats both documents for optimal comparison with real-time status updates and detailed metrics.</p>
-                </div>
+  <section class="tool-shot"><figure><img src="images/screenshots/html.png" alt="DevUtilities HTML Formatter — formatted markup, minified output, side-by-side diff." /></figure><figcaption>Plate xi — HTML Formatter with the diff editor and tag-aware indentation.</figcaption></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3 class="feature-title">Syntax Highlighting</h3>
-                    <p class="feature-description">Color-coded HTML syntax highlighting for tags, attributes, text content, and comments. Makes complex HTML structures easy to read and understand at a glance.</p>
-                </div>
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Seven things <span class="muted">it does cleanly.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Indent properly</h4><p>Tag-aware indentation. Void elements (<code>br</code>, <code>img</code>) don't sprout phantom closing tags.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>Minify</h4><p>Strip comments and whitespace; preserve structure. Useful for embedded HTML in emails or docs.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Side-by-side diff</h4><p>CodeMirror diff editor. Both sides auto-format; differences light up.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Real-time</h4><p>Live formatting as you type. Errors are surfaced inline; the structure pane updates immediately.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Comments &amp; CDATA</h4><p>Both preserved through format and minify. Round-trip is loss-free.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>Character &amp; line metrics</h4><p>Both sides of the diff display character and line counts.</p></div></div>
+      <div class="cap"><span class="cap-n">vii</span><div class="cap-body"><h4>State persistence</h4><p>Last input and last diff stick across sessions.</p></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📏</div>
-                    <h3 class="feature-title">Smart Indentation</h3>
-                    <p class="feature-description">Intelligent indentation with customizable spacing. Properly nested elements with consistent formatting that follows HTML best practices and coding standards.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>across markup.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Paste markup</h4><p>From a CMS, an inspector, or an email template.</p><div class="step-key">Paste · <b>⌘ V</b></div></div>
+      <div class="step"><span class="step-n"></span><h4>Format or minify</h4><p>Indent for reading; minify for embedding. Toggle modes anytime.</p><div class="step-key">Mode toggle</div></div>
+      <div class="step"><span class="step-n"></span><h4>Diff</h4><p>Compare two templates. Both auto-format; differences highlight.</p><div class="step-key">Diff mode</div></div>
+      <div class="step"><span class="step-n"></span><h4>Copy</h4><p>One-click copy on either side.</p><div class="step-key">Copy · <b>⌘ C</b></div></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">Content Analysis</h3>
-                    <p class="feature-description">Real-time character and line count analysis helps optimize HTML file size and understand content complexity for performance optimization.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — Templates</span><h4>CMS markup</h4><p>Reformat the WYSIWYG output before pasting it into a structured template.</p></div>
+      <div class="use"><span class="use-tag">ii — Email</span><h4>Email HTML</h4><p>Minify before sending; format before reading the version your test inbox got.</p></div>
+      <div class="use"><span class="use-tag">iii — Diff</span><h4>Spotting drift</h4><p>Catch the missing <code>aria-*</code> attribute or the changed class name across two snapshots.</p></div>
+      <div class="use"><span class="use-tag">iv — Snapshot</span><h4>Test fixtures</h4><p>Format inspector dumps for use as test fixtures, with stable ordering.</p></div>
+      <div class="use"><span class="use-tag">v — Audit</span><h4>Migration review</h4><p>Compare an old and new template to spot what really moved.</p></div>
+      <div class="use"><span class="use-tag">vi — Embed</span><h4>Inline literals</h4><p>Minify into a single-line literal for an inline embed.</p></div>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔧</div>
-                    <h3 class="feature-title">Format & Beautify</h3>
-                    <p class="feature-description">Transform minified or messy HTML into beautifully formatted, readable code with proper tag alignment and hierarchical structure.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>What does formatting actually do?</summary><p>Tag-aware indentation. Void elements stay void; comments and CDATA round-trip; attribute order is preserved.</p></details>
+      <details><summary>Is it tolerant of malformed input?</summary><p>Reasonable amounts. Common issues (missing close tags, unquoted attributes) are reported with a line number and tolerated where unambiguous.</p></details>
+      <details><summary>How does diff handle whitespace?</summary><p>Both sides auto-format first, so cosmetic differences don't pollute the result. Real structural changes are what light up.</p></details>
+      <details><summary>What's the minify mode for?</summary><p>Producing compact HTML for embedding in JS strings, JSON payloads, or email templates that benefit from a single-line form.</p></details>
+      <details><summary>Does it preserve the doctype?</summary><p>Yes. The doctype, comments, conditional comments, and CDATA blocks all survive both format and minify.</p></details>
+      <details><summary>Does this require network access?</summary><p>No. HTML formatting is fully local.</p></details>
+    </div>
+  </div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📦</div>
-                    <h3 class="feature-title">Minify & Compress</h3>
-                    <p class="feature-description">Minimize HTML file size by removing unnecessary whitespace, comments, and formatting while preserving functionality for production deployment.</p>
-                </div>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON Formatter</h4><p>Same diff workflow, applied to JSON.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="sql-formatter.html"><div class="rel-head"><span>10 · Format</span><span>Updated · 2.11</span></div><h4>SQL Formatter</h4><p>Format and diff SQL alongside the markup.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="text-compare.html"><div class="rel-head"><span>17 · Inspect</span><span>New · 2.11</span></div><h4>Text Compare</h4><p>Plain-text diff when the structure isn't HTML.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="url-tools.html"><div class="rel-head"><span>21 · Network</span><span></span></div><h4>URL Tools</h4><p>Encode and decode URLs embedded in the markup.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="regex-tester.html"><div class="rel-head"><span>18 · Inspect</span><span></span></div><h4>Regex Test</h4><p>Pull attributes out of markup with the right pattern.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="ai-chat.html"><div class="rel-head"><span>01 · AI</span><span>Updated · 2.12</span></div><h4>AI Chat</h4><p>Hand the assistant a clean template; let it suggest tweaks.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
 
-                <div class="feature-card">
-                    <div class="feature-icon">✅</div>
-                    <h3 class="feature-title">HTML Validation</h3>
-                    <p class="feature-description">Basic HTML structure validation with error detection for unclosed tags, malformed elements, and common HTML syntax issues.</p>
-                </div>
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Indent, minify, diff, <em>without leaving the panel.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔄</div>
-                    <h3 class="feature-title">Real-time Processing</h3>
-                    <p class="feature-description">Instant HTML formatting as you type with live preview and immediate feedback. No waiting for processing or external API calls.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3 class="feature-title">Easy Copy & Export</h3>
-                    <p class="feature-description">One-click copying of formatted HTML results. Seamlessly integrate with your web development workflow and paste into code editors.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Use Section -->
-    <section class="how-to-use">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">How to Use HTML Formatter</h2>
-                <p class="section-description">
-                    Format your HTML code professionally in just a few simple steps.
-                </p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Input Your HTML</h3>
-                    <p>Paste your HTML code into the input area. DevUtilities accepts minified HTML, complex templates, and any HTML structure for formatting.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Choose Format Option</h3>
-                    <p>Select beautify for readable formatting with proper indentation, or minify to compress HTML for production use and faster loading.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>View Results</h3>
-                    <p>See your HTML formatted with syntax highlighting, proper indentation, and character/line count information for content analysis.</p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>Copy & Use</h3>
-                    <p>Copy the formatted HTML with one click and paste it directly into your code editor, CMS, or web development environment.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perfect for These Development Tasks</h2>
-            </div>
-
-            <div class="use-cases-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">🌐</div>
-                    <h3>Web Development</h3>
-                    <p>Format HTML templates, clean up generated HTML, and prepare code for production deployment in web development projects.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📝</div>
-                    <h3>Code Review & Maintenance</h3>
-                    <p>Standardize HTML formatting across your team, clean up legacy code, and ensure consistent coding standards in web projects.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📊</div>
-                    <h3>Performance Optimization</h3>
-                    <p>Minify HTML for faster page loading, analyze content size, and optimize HTML structure for better web performance metrics.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🛠️</div>
-                    <h3>Template Development</h3>
-                    <p>Format HTML templates for frameworks like React, Vue, Angular, or static site generators with consistent indentation and structure.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">📋</div>
-                    <h3>Documentation & Training</h3>
-                    <p>Create well-formatted HTML examples for documentation, tutorials, and educational content with proper syntax highlighting.</p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🔍</div>
-                    <h3>Debugging & Analysis</h3>
-                    <p>Format complex HTML structures to identify issues, analyze nested elements, and troubleshoot layout problems in web applications.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>Does the HTML formatter preserve functionality?</h3>
-                    <p>Yes, DevUtilities's HTML formatter preserves all HTML functionality while improving readability. It maintains proper tag structure, attributes, and content without altering the rendered output.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can it handle HTML with embedded CSS and JavaScript?</h3>
-                    <p>Absolutely! The formatter properly handles HTML documents containing embedded CSS in &lt;style&gt; tags and JavaScript in &lt;script&gt; tags, maintaining their structure while formatting the HTML.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What's the difference between beautify and minify modes?</h3>
-                    <p>Beautify mode adds proper indentation, spacing, and line breaks for maximum readability. Minify mode removes unnecessary whitespace and formatting to reduce file size for production use.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Does it support HTML5 and modern HTML features?</h3>
-                    <p>Yes, DevUtilities supports all HTML5 elements, attributes, and modern HTML features including semantic elements, custom attributes, and contemporary web standards.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I format large HTML files?</h3>
-                    <p>Yes, DevUtilities efficiently handles large HTML files including complex templates, generated HTML, and lengthy documents with consistent performance and formatting quality.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>How does the character and line count help?</h3>
-                    <p>The metrics help optimize file size, analyze content complexity, and track changes when formatting HTML. Essential for performance optimization and content management workflows.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Tools Section -->
-    <section class="related-tools">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Related Developer Tools</h2>
-                <p class="section-description">Explore other essential tools included in DevUtilities</p>
-            </div>
-
-            <div class="related-tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">📄</div>
-                    <h3>JSON Formatter</h3>
-                    <p>Format JSON data with the same attention to detail and syntax highlighting as our HTML formatter.</p>
-                    <a href="json-formatter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🗄️</div>
-                    <h3>SQL Formatter</h3>
-                    <p>Format SQL queries with similar beautification features and performance optimization capabilities.</p>
-                    <a href="sql-formatter.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🎨</div>
-                    <h3>Color Picker</h3>
-                    <p>Pick and convert color values for CSS styling in your HTML - work with HEX, RGB, HSL color formats.</p>
-                    <a href="color-picker.html" class="tool-link">Learn More →</a>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon">🎯</div>
-                    <h3>Regex Tester</h3>
-                    <p>Test regular expressions for HTML pattern matching, tag validation, and content extraction.</p>
-                    <a href="regex-tester.html" class="tool-link">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Format HTML Like a Pro?</h2>
-                <p>Join thousands of developers who rely on DevUtilities's HTML formatter for clean, readable web code.</p>
-                <div class="cta-actions">
-                    <a href="index.html#download" class="btn btn-primary">
-                        <span class="btn-icon"><img src="images/appstore.svg" alt="Download" width="20" ></span>
-                        Download DevUtilities
-                    </a>
-                    <div class="cta-info">
-                        <span>✓ macOS 14.0+</span>
-                        <span>✓ 23 Developer Tools</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="images/icon.png" alt="DevUtilities" class="footer-logo">
-                    <div>
-                        <h4>DevUtilities</h4>
-                        <p>Essential developer tools for macOS</p>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h5>Product</h5>
-                        <a href="index.html#features">Features</a>
-                        <a href="index.html#reviews">Reviews</a>
-                        <a href="index.html#download">Download</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Resources</h5>
-                        <a href="release-notes.html">Release Notes</a>
-                        <a href="https://github.com/hengfeiyang/devutilities/issues" target="_blank" rel="noopener">Support</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h5>Legal</h5>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 DevUtilities. Built with ❤️ using Claude Code.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div></footer>
 </body>
 </html>
