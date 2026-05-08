@@ -56,12 +56,31 @@
   <main class="page-body">
     <div class="cl-list">
 
+      <!-- ── v2.13.0 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.13.0</span>
+          <span>May 2026</span>
+          <span class="cl-tag">Latest</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">Struct Converter</p>
+            <h3>Sample data in, typed code out.</h3>
+            <p>The 24th tool turns sample data into a ready-to-paste type definition. Drop in JSON, TOML, YAML, or a SQL CREATE TABLE block, and pick an output language — TypeScript, Python, Go, Java, Rust, Swift, or PHP. The tool walks every nested object, infers strings, numbers, booleans, ISO 8601 dates, arrays, and nullable fields, and emits idiomatic field names with serde renames, Swift CodingKeys, or Go struct tags preserving the original keys.</p>
+            <h4>Four input formats</h4>
+            <p>JSON parses via Foundation; TOML supports tables, dotted keys, and arrays of tables; YAML handles block-style mappings and sequences; SQL DDL parses multi-statement CREATE TABLE blocks and maps SQL column types (INT/VARCHAR/DECIMAL/TIMESTAMP/...) to language-native types, respecting NOT NULL.</p>
+            <h4>Seven output languages</h4>
+            <p>TypeScript interface, Python <code>@dataclass</code>, Go struct with JSON tags and aligned columns, Java POJO with getters/setters, Rust struct with <code>#[derive(Serialize, Deserialize)]</code>, Swift Codable struct with <code>CodingKeys</code>, and PHP class with typed properties. Closes <a href="https://github.com/hengfeiyang/devutilities/issues/17">issue #17</a>.</p>
+          </div>
+        </div>
+      </article>
+
       <!-- ── v2.12.0 ────────────────────────────────────────────────── -->
       <article class="cl-entry">
         <div class="cl-meta">
           <span class="cl-version">v2.12.0</span>
           <span>May 2026</span>
-          <span class="cl-tag">Latest</span>
         </div>
         <div class="cl-body">
           <div class="cl-section">

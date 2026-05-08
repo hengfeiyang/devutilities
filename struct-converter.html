@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Struct Converter — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="Convert JSON, TOML, YAML, or SQL DDL into typed code structures — TypeScript, Python, Go, Java, Rust, Swift, and PHP. Nested structs, idiomatic naming, JSON tags, serde derives, and CodingKeys included." />
+  <meta name="keywords" content="struct converter, json to swift, json to go, json to typescript, json to rust, sql to struct, toml to struct, yaml to struct, code generator, type generator, devutilities" />
+  <meta property="og:image" content="images/screenshots/struct-converter.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
+
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>Struct Converter</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 24 of 24 · Generate</div><h1 class="page-h">Sample data in, <em>typed code out.</em></h1></section>
+  <div class="page-sub"><div></div><p>Drop in JSON, TOML, YAML, or a SQL CREATE TABLE block. Pick a target language. Get back a ready-to-paste type — fields, tags, optional markers, and every nested sub-type already named.</p></div>
+
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Inputs</div><div class="tool-meta-value">4 formats</div><div class="tool-meta-sub">JSON · TOML · YAML · SQL DDL</div></div>
+    <div><div class="tool-meta-label">Outputs</div><div class="tool-meta-value accent">7 languages</div><div class="tool-meta-sub">TS · Py · Go · Java · Rust · Swift · PHP</div></div>
+    <div><div class="tool-meta-label">Shipped</div><div class="tool-meta-value">v2.13</div><div class="tool-meta-sub">May 2026</div></div>
+    <div><div class="tool-meta-label">Network</div><div class="tool-meta-value">Offline</div><div class="tool-meta-sub">Pure local</div></div>
+  </div>
+
+  <section class="tool-shot"><figure><img src="images/screenshots/struct-converter.png" alt="DevUtilities Struct Converter — JSON input on the left, generated Java POJO on the right, with input format and output language pickers." /></figure><figcaption>Plate xxiv — Struct Converter with JSON in, Java out, and the language picker on top.</figcaption></section>
+
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Six things <span class="muted">it does cleanly.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Four input formats</h4><p>JSON via Foundation; TOML with tables, dotted keys, and arrays of tables; YAML block-style; SQL DDL parsed multi-statement.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>Seven output languages</h4><p>TypeScript interface, Python <code>@dataclass</code>, Go struct, Java POJO, Rust serde struct, Swift Codable struct, PHP typed class.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Smart type inference</h4><p>Strings, integers, doubles, booleans, ISO 8601 dates, arrays, nested objects — and nullable fields when data is missing or null.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Nested structs</h4><p>Every nested object and array-of-objects becomes a sub-type, named after the field with naive singularization for arrays.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Idiomatic naming</h4><p>camelCase for TS/Swift/PHP, snake_case for Python/Rust, PascalCase for Go/Java — with JSON tags, serde renames, and CodingKeys preserving the originals.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>SQL-aware</h4><p>Parses CREATE TABLE blocks, maps INT/VARCHAR/DECIMAL/TIMESTAMP/JSON to language-native types, respects NOT NULL.</p></div></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>to typed code.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Pick the input format</h4><p>JSON / TOML / YAML / SQL DDL. The editor switches highlighting accordingly.</p><div class="step-key">Segmented · top</div></div>
+      <div class="step"><span class="step-n"></span><h4>Pick the output language</h4><p>TypeScript / Python / Go / Java / Rust / Swift / PHP. Output regenerates instantly.</p><div class="step-key">Segmented · top</div></div>
+      <div class="step"><span class="step-n"></span><h4>Paste your sample</h4><p>Drop in a JSON response, a TOML config, a YAML block, or a CREATE TABLE statement.</p><div class="step-key">Paste · <b>⌘ V</b></div></div>
+      <div class="step"><span class="step-n"></span><h4>Copy the type</h4><p>One click on Copy in the right pane; paste into your project.</p><div class="step-key">Copy · <b>⌘ C</b></div></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — API</span><h4>Response shape</h4><p>Paste a representative API response; get back a typed model for your client.</p></div>
+      <div class="use"><span class="use-tag">ii — DB</span><h4>Schema to model</h4><p>CREATE TABLE → struct or class with column types and nullability already mapped.</p></div>
+      <div class="use"><span class="use-tag">iii — Config</span><h4>TOML / YAML config</h4><p>Generate a typed config struct from your <code>config.toml</code> or <code>values.yaml</code>.</p></div>
+      <div class="use"><span class="use-tag">iv — Migrate</span><h4>Cross-language port</h4><p>Move types between TypeScript, Go, Rust, and Swift without retyping every field.</p></div>
+      <div class="use"><span class="use-tag">v — Onboard</span><h4>Read the JSON, fast</h4><p>Hand a generated interface to a new collaborator instead of a 400-line example.</p></div>
+      <div class="use"><span class="use-tag">vi — Sketch</span><h4>API design</h4><p>Sketch a JSON shape, generate types in every language at once, see what feels best.</p></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>How are nested objects handled?</summary><p>Each nested object becomes its own struct/interface, named after the field. Arrays of objects use a singularized field name (e.g. <code>friends</code> → <code>Friend</code>).</p></details>
+      <details><summary>What about optional fields?</summary><p>A field is optional when its value is <code>null</code>, when it's missing from some elements of an array of objects, or when the SQL column lacks NOT NULL. Each language uses its native optional shape — <code>?</code>, <code>Option&lt;T&gt;</code>, <code>Optional[T]</code>, <code>*T</code>.</p></details>
+      <details><summary>Are dates auto-detected?</summary><p>Yes. ISO 8601 strings (<code>YYYY-MM-DD[THH:MM[:SS]][Z|±HHMM]</code>) become <code>Date</code> / <code>time.Time</code> / <code>DateTime&lt;Utc&gt;</code> / <code>datetime</code> / <code>Instant</code> / <code>\DateTimeImmutable</code> in their respective languages.</p></details>
+      <details><summary>Does it preserve original key names?</summary><p>Yes. Even when the field name is renamed to fit language conventions, the original key is preserved via <code>json:"…"</code> tags (Go), <code>#[serde(rename = "…")]</code> (Rust), <code>CodingKeys</code> (Swift), or quoted property names (TypeScript).</p></details>
+      <details><summary>What about TOML arrays of tables?</summary><p>Supported. <code>[[servers]]</code> blocks merge fields and become <code>[Server]</code> in the output schema.</p></details>
+      <details><summary>How big can the input be?</summary><p>Conversion is synchronous and runs locally; samples in the megabytes are fine. Nothing leaves the machine.</p></details>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span></span></div><h4>JSON Formatter</h4><p>Format and validate the JSON sample first, then generate.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="sql-formatter.html"><div class="rel-head"><span>10 · Format</span><span></span></div><h4>SQL Formatter</h4><p>Beautify the CREATE TABLE before pasting it in.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="text-compare.html"><div class="rel-head"><span>17 · Inspect</span><span></span></div><h4>Text Compare</h4><p>Diff the generated type across two language targets.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="http-request.html"><div class="rel-head"><span>20 · Network</span><span></span></div><h4>HTTP Client</h4><p>Hit the endpoint, copy the response, paste it back here.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="parquet-viewer.html"><div class="rel-head"><span>19 · Inspect</span><span></span></div><h4>Parquet Viewer</h4><p>Inspect the schema; build a model that matches.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="ai-chat.html"><div class="rel-head"><span>01 · AI</span><span></span></div><h4>AI Chat</h4><p>Hand the generated type to the AI and ask for serialization helpers.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
+
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">From sample to type, <em>in two clicks.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
+
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.13.0</span></div></footer>
+</body>
+</html>

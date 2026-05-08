@@ -80,6 +80,10 @@
     { n: '23', cat: 'Network',  slug: 'crypto',            name: 'Crypto Tools',
       href: 'crypto-tools.html',
       blurb: 'MD5, CRC32, SHA-1/256/384/512. AES-GCM-256 and RSA-2048/4096.', tag: 'New · 1.12' },
+
+    { n: '24', cat: 'Convert', slug: 'struct',            name: 'Struct Converter',
+      href: 'struct-converter.html',
+      blurb: 'Turn JSON, TOML, YAML, or SQL DDL into typed code — TypeScript, Python, Go, Java, Rust, Swift, PHP.', tag: 'New · 2.13' },
   ];
 
   const CATEGORIES = ['All', 'AI', 'Convert', 'Format', 'Generate', 'Inspect', 'Network'];

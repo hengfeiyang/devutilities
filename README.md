@@ -1,6 +1,6 @@
 # DevUtilities
 
-A native macOS application for developers, containing 23 essential tools commonly used in software development.
+A native macOS application for developers, containing 24 essential tools commonly used in software development.
 
 > This tool was 100% developed by `Claude Code`.
 
@@ -32,7 +32,8 @@ A native macOS application for developers, containing 23 essential tools commonl
 - **QR Code** - Generate QR codes with multiple sizes and error correction levels, scan QR codes from images
 - **Parquet Viewer** - Read and explore Parquet / arrow files with schema inspection and data export
 - **Crypto Tools** - Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA-1/256/384/512), symmetric encryption (AES-GCM-256), and asymmetric encryption (RSA-2048/4096)
-- **Currency Converter** - **NEW** Real-time currency conversion with 38 currencies, 24-hour caching, 30-day price history, and 24-hour trend indicators
+- **Currency Converter** - Real-time currency conversion with 38 currencies, 24-hour caching, 30-day price history, and 24-hour trend indicators
+- **Struct Converter** - **NEW** Convert JSON, TOML, YAML, and SQL DDL into typed code structures for TypeScript, Python, Go, Java, Rust, Swift, and PHP
 
 ## Key Features
 
@@ -45,7 +46,17 @@ A native macOS application for developers, containing 23 essential tools commonl
 
 ## Version
 
-Current version: 2.12.0
+Current version: 2.13.0
+
+## What's New in v2.13.0
+
+- **Struct Converter**: NEW tool that turns sample data into typed code (closes #17)
+- **Four Input Formats**: JSON, TOML, YAML, and SQL DDL (CREATE TABLE)
+- **Seven Output Languages**: TypeScript interface, Python dataclass, Go struct (with JSON tags), Java POJO with getters/setters, Rust struct (serde derives), Swift Codable struct, PHP typed class
+- **Type Inference**: Detects strings, numbers, booleans, ISO 8601 dates, arrays, nested objects, and nullable fields automatically
+- **Nested Struct Generation**: Walks every nested object and array-of-objects, emitting a sub-type per level
+- **Per-language Naming**: Idiomatic field names with serde/CodingKeys/JSON tags preserving original keys
+- **SQL DDL Parser**: Handles multi-statement input, maps SQL types to language-native types, respects NOT NULL
 
 ## What's New in v2.12.0
 
