@@ -276,7 +276,7 @@ extension AIProvider {
 
         let deepSeekChat = AIModelV2(
             name: "Chat",
-            modelId: "deepseek-chat",
+            modelId: "deepseek-v4-flash",
             capabilities: ModelCapabilities(
                 supportsStreaming: true,
                 supportsReasoning: false,
@@ -289,7 +289,7 @@ extension AIProvider {
 
         let deepSeekReasoner = AIModelV2(
             name: "Reasoner",
-            modelId: "deepseek-reasoner",
+            modelId: "deepseek-v4-pro",
             capabilities: ModelCapabilities(
                 supportsStreaming: true,
                 supportsReasoning: true,

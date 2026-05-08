@@ -199,7 +199,7 @@ mcp__XcodeBuildMCP__build_run_macos
 - **Code Cleanup**: Streamlined SwiftUI components and improved code maintainability
 
 ## Previous Updates (v1.13.2)
-- **DeepSeek Integration**: Added deepseek-chat and deepseek-reasoner models with OpenAI API compatibility
+- **DeepSeek Integration**: Added deepseek-v4-flash and deepseek-v4-pro models with OpenAI API compatibility
 - **Reasoning Process**: DeepSeek reasoner shows transparent "deepthink" Chain of Thought reasoning
 - **Collapsible Thinking**: Expandable/collapsible thinking process section with brain icon and smooth animations
 - **Stop Functionality**: Improved stop button that immediately cancels streaming responses for all models
