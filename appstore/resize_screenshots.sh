@@ -58,6 +58,7 @@ optional_sources=(
     "screenshots/11-random-string.png"
     "screenshots/12-currency.png"
     "screenshots/13-text-compare.png"
+    "screenshots/14-struct-converter.png"
 )
 
 optional_names=(
@@ -67,6 +68,7 @@ optional_names=(
     "11_random_string_generator"
     "12_currency_converter"
     "13_text_compare"
+    "14_struct_converter"
 )
 
 echo -e "${YELLOW}Resizing priority screenshots (1-7)...${NC}"
