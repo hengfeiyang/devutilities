@@ -191,7 +191,7 @@
       });
       if (!filtered.length) {
         grid.innerHTML = `<div class="tools-empty">
-          <p>No tool matches that search. Try a different word, or browse all 23.</p>
+          <p>No tool matches that search. Try a different word, or browse all 24.</p>
           <button type="button" class="btn-ghost" id="tools-reset">Reset</button>
         </div>`;
         const btn = document.getElementById('tools-reset');
