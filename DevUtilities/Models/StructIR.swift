@@ -52,8 +52,8 @@ struct StructSchema {
 
 enum StructInputFormat: String, CaseIterable, Identifiable {
     case json = "JSON"
-    case toml = "TOML"
     case yaml = "YAML"
+    case toml = "TOML"
     case sqlDDL = "SQL DDL"
 
     var id: String { rawValue }
@@ -61,8 +61,8 @@ enum StructInputFormat: String, CaseIterable, Identifiable {
     var sample: String {
         switch self {
         case .json: return sampleJSON
-        case .toml: return sampleTOML
         case .yaml: return sampleYAML
+        case .toml: return sampleTOML
         case .sqlDDL: return sampleSQLDDL
         }
     }

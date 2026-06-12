@@ -41,6 +41,7 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
     case currencyConverter = "currency"
     case textCompare = "text-compare"
     case structConverter = "struct-converter"
+    case dataConverter = "data-converter"
 
     var id: String { rawValue }
     
@@ -94,6 +95,8 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
             return "Text Compare"
         case .structConverter:
             return "Struct Converter"
+        case .dataConverter:
+            return "Data Converter"
         }
     }
 
@@ -147,6 +150,8 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
             return "doc.on.doc"
         case .structConverter:
             return "curlybraces.square"
+        case .dataConverter:
+            return "arrow.left.arrow.right.square"
         }
     }
 }

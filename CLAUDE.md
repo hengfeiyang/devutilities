@@ -3,11 +3,11 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 24 essential developer utilities. Version 2.13.0 with the new Struct Converter tool that turns JSON/TOML/YAML/SQL DDL into TypeScript, Python, Go, Java, Rust, Swift, and PHP types.
+DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities. Version 2.14.0 with the new Data Converter tool that converts between JSON, YAML, TOML, and CSV data formats.
 
 ## Key Tools & Status
 
-All 24 tools are ✅ **Complete**:
+All 25 tools are ✅ **Complete**:
 1. **Timestamp Converter** - Bidirectional timestamp conversion with timezone support
 2. **Unit Converter** - 7 categories (Data, Time, Length, Weight, Temperature, Area, Volume)
 3. **Base Converter** - Mutual conversion between binary, octal, decimal, hexadecimal, and Base62 number systems
@@ -31,12 +31,13 @@ All 24 tools are ✅ **Complete**:
 21. **AI Chat** - **Enhanced** Textual Markdown rendering, one-click copy code snippets, OpenAI Responses API, DeepSeek reasoning, and custom model support
 22. **AI Translate** - Professional translation with 3 modes, 19 languages, **OpenAI TTS** (13 voices), macOS TTS, and word mode
 23. **Currency Converter** - Real-time currency conversion with 38 currencies, 24-hour caching, 30-day price history, and trend indicators
-24. **Struct Converter** - **NEW** Convert JSON/TOML/YAML/SQL DDL into typed code structures for TypeScript, Python, Go, Java, Rust, Swift, and PHP
+24. **Struct Converter** - Convert JSON/TOML/YAML/SQL DDL into typed code structures for TypeScript, Python, Go, Java, Rust, Swift, and PHP
+25. **Data Converter** - **NEW** Convert between JSON, YAML, TOML, and CSV data formats with order preservation, nested-to-CSV flattening, and CSV type inference
 
 ## Architecture & Technical Stack
 - **Platform**: macOS 14.0+ SwiftUI
 - **Navigation**: NavigationSplitView with sidebar search
-- **Dependencies**: CodeMirror-SwiftUI via SPM, ParquetViewer (Rust FFI)
+- **Dependencies**: CodeMirror-SwiftUI via SPM, Textual via SPM, Yams via SPM (YAML), ParquetViewer (Rust FFI)
 - **Security**: CryptoKit for JWT HMAC operations, Security framework for RSA operations
 - **TTS**: OpenAI TTS (real-time PCM streaming via AVAudioPlayerNode) + AVFoundation for native macOS TTS
 
@@ -51,6 +52,16 @@ xcodebuild -project DevUtilities.xcodeproj -scheme DevUtilities build
 # Using MCP tools
 mcp__XcodeBuildMCP__build_run_macos
 ```
+
+## Recent Updates (v2.14.0)
+- **Data Converter**: NEW tool for converting between data interchange formats — JSON, YAML, TOML, and CSV
+- **Bidirectional Any-to-Any**: Pick any source and target format with a from/to picker and a one-click swap button
+- **Shared `DataValue` Model**: New order-preserving value tree (`DevUtilities/Models/DataValue.swift`) shared by the Data Converter and the Struct Converter; objects keep author key order and dates are stored verbatim
+- **Order-Preserving JSON**: Custom JSON scanner (replaces `JSONSerialization`) so keys round-trip in source order rather than being reordered
+- **YAML via Yams**: Added the Yams SPM dependency; YAML parses/serializes through `Yams.Node` to preserve key order and quoting. The Struct Converter's hand-rolled YAML parser was retired in favor of the shared pipeline
+- **TOML Tables**: TOML emitter handles top-level scalars, `[table]` sections, and `[[array of tables]]`; date literals stay unquoted
+- **CSV Flatten/Unflatten**: Nested objects/arrays flatten to dotted-key columns (`address.city`, `tags.0`) with an ordered union header; RFC-4180 quoting; a configurable "Infer types" toggle coerces cells like `123`/`true` or keeps them as strings
+- **Struct Converter Refactor**: JSON/TOML/YAML inputs now parse to `DataValue` and feed a unified `StructSchemaInferrer`; struct output is unchanged (fields stay alphabetized, ISO-8601 strings still promote to a date type)
 
 ## Recent Updates (v2.13.0)
 - **Struct Converter**: NEW tool for converting between data structures and code types (closes GitHub issue #17)

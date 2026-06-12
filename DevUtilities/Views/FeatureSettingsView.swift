@@ -219,6 +219,7 @@ struct FeatureCard: View {
         case .currencyConverter: return "Currency"
         case .textCompare: return "Diff"
         case .structConverter: return "Struct"
+        case .dataConverter: return "Data"
         }
     }
 

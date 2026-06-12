@@ -400,6 +400,7 @@ extension ToolType {
         case .currencyConverter: return "currency_converter"
         case .textCompare: return "text_compare"
         case .structConverter: return "struct_converter"
+        case .dataConverter: return "data_converter"
         }
     }
 }

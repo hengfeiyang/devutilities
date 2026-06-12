@@ -48,129 +48,122 @@ final class SchemaBuilder {
     }
 }
 
-// MARK: - JSON parser
+// MARK: - Parser factory
 
 enum StructParserFactory {
     static func parse(_ input: String, format: StructInputFormat, rootName: String) throws -> StructSchema {
         let trimmedRoot = rootName.trimmingCharacters(in: .whitespaces)
         let baseName = trimmedRoot.isEmpty ? "Root" : StructNaming.pascalCase(trimmedRoot)
         switch format {
-        case .json: return try JSONStructParser().parse(input, rootName: baseName)
-        case .toml: return try TOMLStructParser().parse(input, rootName: baseName)
-        case .yaml: return try YAMLStructParser().parse(input, rootName: baseName)
-        case .sqlDDL: return try SQLDDLStructParser().parse(input, rootName: baseName)
+        case .json:
+            return try StructSchemaInferrer().infer(DataConverter.parse(input, from: .json), rootName: baseName)
+        case .toml:
+            return try StructSchemaInferrer().infer(DataConverter.parse(input, from: .toml), rootName: baseName)
+        case .yaml:
+            return try StructSchemaInferrer().infer(DataConverter.parse(input, from: .yaml), rootName: baseName)
+        case .sqlDDL:
+            return try SQLDDLStructParser().parse(input, rootName: baseName)
         }
     }
 }
 
-private struct JSONStructParser {
-    func parse(_ input: String, rootName: String) throws -> StructSchema {
-        guard let data = input.data(using: .utf8) else {
-            throw StructConverterError(message: "Invalid UTF-8 input")
-        }
-        let object: Any
-        do {
-            object = try JSONSerialization.jsonObject(with: data, options: [.allowFragments])
-        } catch {
-            throw StructConverterError(message: "JSON parse error: \(error.localizedDescription)")
-        }
+// MARK: - Schema inference from a DataValue
 
+/// Walks a parsed `DataValue` tree and produces a `StructSchema` (types only). Shared by
+/// all data-format inputs (JSON/TOML/YAML). Field names are emitted in alphabetical order
+/// for stable output, and ISO-8601-looking strings are promoted to a date type — matching
+/// the converter's long-standing behavior independent of which parser produced the values.
+struct StructSchemaInferrer {
+    func infer(_ value: DataValue, rootName: String) throws -> StructSchema {
         let builder = SchemaBuilder()
         let rootStructName = builder.reserveUniqueName(rootName)
-        if let dict = object as? [String: Any] {
-            let fields = buildFields(from: dict, parentHint: rootStructName, builder: builder)
+        switch value {
+        case .object(let pairs):
+            let fields = buildFields(from: pairs, builder: builder)
             builder.add(StructDef(name: rootStructName, fields: fields))
-        } else if let array = object as? [Any] {
-            // Treat root array of objects as a struct array; struct = first object's shape
-            let elementType = inferArrayElementType(array, parentHint: StructNaming.singularize(rootStructName), builder: builder)
-            let field = StructField(name: "items", type: .array(elementType), isOptional: false)
-            builder.add(StructDef(name: rootStructName, fields: [field]))
-        } else {
-            throw StructConverterError(message: "JSON root must be an object or array")
+        case .array(let items):
+            let element = inferArrayElementType(items, parentHint: StructNaming.singularize(rootStructName), builder: builder)
+            builder.add(StructDef(name: rootStructName, fields: [StructField(name: "items", type: .array(element), isOptional: false)]))
+        default:
+            throw StructConverterError(message: "Root must be an object or array")
         }
         return builder.build(rootName: rootStructName)
     }
 
-    private func buildFields(from dict: [String: Any], parentHint: String, builder: SchemaBuilder) -> [StructField] {
-        // Preserve insertion order if the dictionary came from an OrderedDictionary. JSONSerialization
-        // does not preserve order, so we sort alphabetically for deterministic output.
-        let keys = dict.keys.sorted()
-        return keys.map { key in
-            let value = dict[key]!
-            let type = inferType(from: value, fieldHint: key, builder: builder)
-            let isOptional = value is NSNull
-            return StructField(name: key, type: type, isOptional: isOptional)
+    private func buildFields(from pairs: [(key: String, value: DataValue)], builder: SchemaBuilder) -> [StructField] {
+        let sorted = pairs.sorted { $0.key < $1.key }
+        return sorted.map { pair in
+            let type = inferType(from: pair.value, fieldHint: pair.key, builder: builder)
+            let isOptional = pair.value == .null
+            return StructField(name: pair.key, type: type, isOptional: isOptional)
         }
     }
 
-    private func inferType(from value: Any, fieldHint: String, builder: SchemaBuilder) -> IRType {
-        if value is NSNull { return .null }
-        if let str = value as? String {
-            return looksLikeISO8601(str) ? .date : .string
-        }
-        if let num = value as? NSNumber {
-            if CFGetTypeID(num) == CFBooleanGetTypeID() { return .bool }
-            let typeChar = String(cString: num.objCType)
-            if typeChar == "c" || typeChar == "B" { return .bool }
-            if typeChar == "f" || typeChar == "d" { return .double }
-            if num.doubleValue == Double(num.int64Value) { return .integer }
-            return .double
-        }
-        if let array = value as? [Any] {
-            let element = inferArrayElementType(array, parentHint: StructNaming.singularize(fieldHint), builder: builder)
-            return .array(element)
-        }
-        if let dict = value as? [String: Any] {
+    private func inferType(from value: DataValue, fieldHint: String, builder: SchemaBuilder) -> IRType {
+        switch value {
+        case .null: return .null
+        case .bool: return .bool
+        case .int: return .integer
+        case .double: return .double
+        case .date: return .date
+        case .string(let s): return looksLikeISO8601(s) ? .date : .string
+        case .array(let items):
+            return .array(inferArrayElementType(items, parentHint: StructNaming.singularize(fieldHint), builder: builder))
+        case .object(let pairs):
             let structName = builder.reserveUniqueName(fieldHint)
-            let fields = buildFields(from: dict, parentHint: structName, builder: builder)
+            let fields = buildFields(from: pairs, builder: builder)
             builder.add(StructDef(name: structName, fields: fields))
             return .object(structName)
         }
-        return .anyValue
     }
 
-    private func inferArrayElementType(_ array: [Any], parentHint: String, builder: SchemaBuilder) -> IRType {
-        guard !array.isEmpty else { return .anyValue }
-        // If any element is a dictionary, merge keys from all dictionaries.
-        if array.contains(where: { $0 is [String: Any] }) {
-            let dicts = array.compactMap { $0 as? [String: Any] }
-            let merged = mergeDictionaries(dicts)
+    private func inferArrayElementType(_ items: [DataValue], parentHint: String, builder: SchemaBuilder) -> IRType {
+        guard !items.isEmpty else { return .anyValue }
+        // If any element is an object, merge keys across all object elements.
+        if items.contains(where: { $0.isObject }) {
+            let objects = items.compactMap { value -> [(key: String, value: DataValue)]? in
+                if case .object(let pairs) = value { return pairs }
+                return nil
+            }
+            let merged = mergeObjects(objects)
             let structName = builder.reserveUniqueName(parentHint)
-            let fields = buildFields(from: merged.shape, parentHint: structName, builder: builder)
-                .map { f in StructField(name: f.name, type: f.type, isOptional: !merged.required.contains(f.name)) }
+            let fields = buildFields(from: merged.shape, builder: builder).map { field in
+                StructField(name: field.name, type: field.type, isOptional: !merged.required.contains(field.name))
+            }
             builder.add(StructDef(name: structName, fields: fields))
             return .object(structName)
         }
-        // Otherwise infer from the first element; fall back to anyValue if mixed scalar types.
-        var seenType: IRType? = nil
-        for v in array {
-            let t = inferType(from: v, fieldHint: parentHint, builder: builder)
-            if seenType == nil {
-                seenType = t
-            } else if seenType != t {
-                return .anyValue
-            }
+        // Otherwise infer from elements; fall back to anyValue when scalar types differ.
+        var seen: IRType? = nil
+        for item in items {
+            let t = inferType(from: item, fieldHint: parentHint, builder: builder)
+            if seen == nil { seen = t }
+            else if seen != t { return .anyValue }
         }
-        return seenType ?? .anyValue
+        return seen ?? .anyValue
     }
 
     private struct MergedShape {
-        var shape: [String: Any]
+        var shape: [(key: String, value: DataValue)]
         var required: Set<String>
     }
 
-    private func mergeDictionaries(_ dicts: [[String: Any]]) -> MergedShape {
-        var shape: [String: Any] = [:]
+    private func mergeObjects(_ objects: [[(key: String, value: DataValue)]]) -> MergedShape {
+        var shape: [(key: String, value: DataValue)] = []
+        var seenKeys = Set<String>()
         var keyCount: [String: Int] = [:]
-        for dict in dicts {
-            for (k, v) in dict {
-                if shape[k] == nil { shape[k] = v }
-                keyCount[k, default: 0] += 1
+        for object in objects {
+            for pair in object {
+                if !seenKeys.contains(pair.key) {
+                    seenKeys.insert(pair.key)
+                    shape.append(pair)
+                }
+                keyCount[pair.key, default: 0] += 1
             }
         }
-        var required: Set<String> = []
-        for (k, count) in keyCount where count == dicts.count {
-            required.insert(k)
+        var required = Set<String>()
+        for (key, count) in keyCount where count == objects.count {
+            required.insert(key)
         }
         return MergedShape(shape: shape, required: required)
     }
@@ -332,506 +325,5 @@ private struct SQLDDLStructParser {
         default:
             return .string
         }
-    }
-}
-
-// MARK: - TOML parser
-
-private struct TOMLStructParser {
-    func parse(_ input: String, rootName: String) throws -> StructSchema {
-        let lines = input.components(separatedBy: "\n")
-        let rootMap = NSMutableDictionary()
-        var currentTable: NSMutableDictionary = rootMap
-        for raw in lines {
-            var line = raw.trimmingCharacters(in: .whitespaces)
-            if line.isEmpty || line.hasPrefix("#") { continue }
-            line = stripTrailingComment(line)
-
-            if line.hasPrefix("[[") && line.hasSuffix("]]") {
-                let header = String(line.dropFirst(2).dropLast(2)).trimmingCharacters(in: .whitespaces)
-                let path = splitDottedKey(header)
-                currentTable = appendArrayTable(into: rootMap, path: path)
-                continue
-            }
-            if line.hasPrefix("[") && line.hasSuffix("]") {
-                let header = String(line.dropFirst().dropLast()).trimmingCharacters(in: .whitespaces)
-                let path = splitDottedKey(header)
-                currentTable = ensureTable(into: rootMap, path: path)
-                continue
-            }
-            guard let eqIdx = line.firstIndex(of: "=") else { continue }
-            let keyRaw = line[..<eqIdx].trimmingCharacters(in: .whitespaces)
-            let valueRaw = line[line.index(after: eqIdx)...].trimmingCharacters(in: .whitespaces)
-            let keyPath = splitDottedKey(keyRaw)
-            let value = parseValue(String(valueRaw))
-            assignNested(into: currentTable, keyPath: keyPath, value: value)
-        }
-
-        let builder = SchemaBuilder()
-        let rootStructName = builder.reserveUniqueName(rootName)
-        let fields = buildFields(from: nsDictToSwift(rootMap), parentHint: rootStructName, builder: builder)
-        builder.add(StructDef(name: rootStructName, fields: fields))
-        return builder.build(rootName: rootStructName)
-    }
-
-    private func nsDictToSwift(_ dict: NSDictionary) -> [String: Any] {
-        var result: [String: Any] = [:]
-        for (k, v) in dict {
-            guard let key = k as? String else { continue }
-            result[key] = convertNSValue(v)
-        }
-        return result
-    }
-
-    private func convertNSValue(_ v: Any) -> Any {
-        if let d = v as? NSDictionary { return nsDictToSwift(d) }
-        if let a = v as? NSArray { return a.map { convertNSValue($0) } }
-        return v
-    }
-
-    private func splitDottedKey(_ raw: String) -> [String] {
-        raw.split(separator: ".").map { $0.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "\"", with: "") }
-    }
-
-    private func stripTrailingComment(_ line: String) -> String {
-        var inSingle = false
-        var inDouble = false
-        var idx = line.startIndex
-        while idx < line.endIndex {
-            let ch = line[idx]
-            if ch == "'" && !inDouble { inSingle.toggle() }
-            else if ch == "\"" && !inSingle { inDouble.toggle() }
-            else if ch == "#" && !inSingle && !inDouble {
-                return String(line[..<idx]).trimmingCharacters(in: .whitespaces)
-            }
-            idx = line.index(after: idx)
-        }
-        return line
-    }
-
-    private func ensureTable(into root: NSMutableDictionary, path: [String]) -> NSMutableDictionary {
-        var current = root
-        for k in path {
-            if let existing = current[k] as? NSMutableDictionary {
-                current = existing
-            } else {
-                let newDict = NSMutableDictionary()
-                current[k] = newDict
-                current = newDict
-            }
-        }
-        return current
-    }
-
-    private func appendArrayTable(into root: NSMutableDictionary, path: [String]) -> NSMutableDictionary {
-        guard !path.isEmpty else { return root }
-        var keys = path
-        let last = keys.removeLast()
-        var current = root
-        for k in keys {
-            if let existing = current[k] as? NSMutableDictionary {
-                current = existing
-            } else {
-                let newDict = NSMutableDictionary()
-                current[k] = newDict
-                current = newDict
-            }
-        }
-        let array: NSMutableArray
-        if let existing = current[last] as? NSMutableArray {
-            array = existing
-        } else {
-            array = NSMutableArray()
-            current[last] = array
-        }
-        let entry = NSMutableDictionary()
-        array.add(entry)
-        return entry
-    }
-
-    private func assignNested(into dict: NSMutableDictionary, keyPath: [String], value: Any) {
-        guard !keyPath.isEmpty else { return }
-        if keyPath.count == 1 {
-            dict[keyPath[0]] = value
-            return
-        }
-        var current = dict
-        for k in keyPath.dropLast() {
-            if let existing = current[k] as? NSMutableDictionary {
-                current = existing
-            } else {
-                let newDict = NSMutableDictionary()
-                current[k] = newDict
-                current = newDict
-            }
-        }
-        current[keyPath.last!] = value
-    }
-
-    private func parseValue(_ raw: String) -> Any {
-        let trimmed = raw.trimmingCharacters(in: .whitespaces)
-        if trimmed.isEmpty { return NSNull() }
-        // String
-        if trimmed.hasPrefix("\"\"\"") && trimmed.hasSuffix("\"\"\"") && trimmed.count >= 6 {
-            return String(trimmed.dropFirst(3).dropLast(3))
-        }
-        if (trimmed.hasPrefix("\"") && trimmed.hasSuffix("\"")) || (trimmed.hasPrefix("'") && trimmed.hasSuffix("'")) {
-            return String(trimmed.dropFirst().dropLast())
-        }
-        // Bool
-        if trimmed == "true" { return true }
-        if trimmed == "false" { return false }
-        // Inline array
-        if trimmed.hasPrefix("[") && trimmed.hasSuffix("]") {
-            let inner = String(trimmed.dropFirst().dropLast())
-            return splitInline(inner).map { parseValue($0) }
-        }
-        // Inline table
-        if trimmed.hasPrefix("{") && trimmed.hasSuffix("}") {
-            let inner = String(trimmed.dropFirst().dropLast())
-            var dict: [String: Any] = [:]
-            for part in splitInline(inner) {
-                if let eq = part.firstIndex(of: "=") {
-                    let k = part[..<eq].trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "\"", with: "")
-                    let v = String(part[part.index(after: eq)...]).trimmingCharacters(in: .whitespaces)
-                    dict[k] = parseValue(v)
-                }
-            }
-            return dict
-        }
-        // Date-like (TOML date/datetime literal — keep as date marker via NSDate placeholder)
-        let dateRegex = #"^\d{4}-\d{2}-\d{2}([T ]\d{2}:\d{2}(:\d{2})?(\.\d+)?(Z|[+-]\d{2}:?\d{2})?)?$"#
-        if trimmed.range(of: dateRegex, options: .regularExpression) != nil {
-            return ISO8601DateMarker()
-        }
-        // Number
-        if let intVal = Int64(trimmed.replacingOccurrences(of: "_", with: "")) {
-            return NSNumber(value: intVal)
-        }
-        if let dblVal = Double(trimmed.replacingOccurrences(of: "_", with: "")) {
-            return NSNumber(value: dblVal)
-        }
-        return trimmed
-    }
-
-    private func splitInline(_ src: String) -> [String] {
-        var result: [String] = []
-        var current = ""
-        var depth = 0
-        var inSingle = false
-        var inDouble = false
-        for ch in src {
-            if !inDouble && ch == "'" { inSingle.toggle(); current.append(ch); continue }
-            if !inSingle && ch == "\"" { inDouble.toggle(); current.append(ch); continue }
-            if !inSingle && !inDouble {
-                if ch == "[" || ch == "{" { depth += 1 }
-                else if ch == "]" || ch == "}" { depth -= 1 }
-                else if ch == "," && depth == 0 {
-                    let t = current.trimmingCharacters(in: .whitespaces)
-                    if !t.isEmpty { result.append(t) }
-                    current = ""
-                    continue
-                }
-            }
-            current.append(ch)
-        }
-        let t = current.trimmingCharacters(in: .whitespaces)
-        if !t.isEmpty { result.append(t) }
-        return result
-    }
-
-    private func buildFields(from dict: [String: Any], parentHint: String, builder: SchemaBuilder) -> [StructField] {
-        let keys = dict.keys.sorted()
-        return keys.map { key in
-            let value = dict[key]!
-            let type = inferType(from: value, fieldHint: key, builder: builder)
-            return StructField(name: key, type: type, isOptional: false)
-        }
-    }
-
-    private func inferType(from value: Any, fieldHint: String, builder: SchemaBuilder) -> IRType {
-        if value is NSNull { return .null }
-        if value is ISO8601DateMarker { return .date }
-        if value is String { return .string }
-        if let num = value as? NSNumber {
-            if CFGetTypeID(num) == CFBooleanGetTypeID() { return .bool }
-            let typeChar = String(cString: num.objCType)
-            if typeChar == "c" || typeChar == "B" { return .bool }
-            if typeChar == "f" || typeChar == "d" { return .double }
-            if num.doubleValue == Double(num.int64Value) { return .integer }
-            return .double
-        }
-        if let arr = value as? [[String: Any]] {
-            let merged = mergeDicts(arr)
-            let structName = builder.reserveUniqueName(StructNaming.singularize(fieldHint))
-            let fields = buildFields(from: merged, parentHint: structName, builder: builder)
-            builder.add(StructDef(name: structName, fields: fields))
-            return .array(.object(structName))
-        }
-        if let arr = value as? [Any] {
-            guard !arr.isEmpty else { return .array(.anyValue) }
-            var seen: IRType? = nil
-            for v in arr {
-                let t = inferType(from: v, fieldHint: fieldHint, builder: builder)
-                if seen == nil { seen = t }
-                else if seen != t { return .array(.anyValue) }
-            }
-            return .array(seen ?? .anyValue)
-        }
-        if let dict = value as? [String: Any] {
-            let structName = builder.reserveUniqueName(fieldHint)
-            let fields = buildFields(from: dict, parentHint: structName, builder: builder)
-            builder.add(StructDef(name: structName, fields: fields))
-            return .object(structName)
-        }
-        return .anyValue
-    }
-
-    private func mergeDicts(_ dicts: [[String: Any]]) -> [String: Any] {
-        var merged: [String: Any] = [:]
-        for d in dicts {
-            for (k, v) in d where merged[k] == nil { merged[k] = v }
-        }
-        return merged
-    }
-}
-
-private struct ISO8601DateMarker {}
-
-// MARK: - YAML parser (minimal block style)
-
-private struct YAMLStructParser {
-    func parse(_ input: String, rootName: String) throws -> StructSchema {
-        var lines: [(indent: Int, text: String)] = []
-        for raw in input.components(separatedBy: "\n") {
-            let stripped = stripComment(raw)
-            if stripped.trimmingCharacters(in: .whitespaces).isEmpty { continue }
-            let indent = raw.prefix { $0 == " " }.count
-            lines.append((indent, stripped))
-        }
-        var index = 0
-        let value = parseNode(lines: lines, index: &index, baseIndent: 0)
-        let builder = SchemaBuilder()
-        let rootStructName = builder.reserveUniqueName(rootName)
-        if let dict = value as? [String: Any] {
-            let fields = buildFields(from: dict, parentHint: rootStructName, builder: builder)
-            builder.add(StructDef(name: rootStructName, fields: fields))
-        } else if let arr = value as? [Any] {
-            let element = inferArrayElementType(arr, parentHint: StructNaming.singularize(rootStructName), builder: builder)
-            builder.add(StructDef(name: rootStructName, fields: [StructField(name: "items", type: .array(element), isOptional: false)]))
-        } else {
-            throw StructConverterError(message: "YAML root must be a mapping or sequence")
-        }
-        return builder.build(rootName: rootStructName)
-    }
-
-    private func stripComment(_ line: String) -> String {
-        var inSingle = false
-        var inDouble = false
-        var idx = line.startIndex
-        while idx < line.endIndex {
-            let ch = line[idx]
-            if ch == "'" && !inDouble { inSingle.toggle() }
-            else if ch == "\"" && !inSingle { inDouble.toggle() }
-            else if ch == "#" && !inSingle && !inDouble {
-                return String(line[..<idx])
-            }
-            idx = line.index(after: idx)
-        }
-        return line
-    }
-
-    private func parseNode(lines: [(indent: Int, text: String)], index: inout Int, baseIndent: Int) -> Any {
-        guard index < lines.count else { return NSNull() }
-        let first = lines[index]
-        let trimmed = first.text.trimmingCharacters(in: .whitespaces)
-        if trimmed.hasPrefix("- ") || trimmed == "-" {
-            return parseSequence(lines: lines, index: &index, baseIndent: first.indent)
-        }
-        return parseMapping(lines: lines, index: &index, baseIndent: first.indent)
-    }
-
-    private func parseMapping(lines: [(indent: Int, text: String)], index: inout Int, baseIndent: Int) -> [String: Any] {
-        var result: [String: Any] = [:]
-        while index < lines.count {
-            let line = lines[index]
-            if line.indent < baseIndent { break }
-            if line.indent > baseIndent { break }
-            let text = line.text.trimmingCharacters(in: .whitespaces)
-            if text.hasPrefix("- ") || text == "-" { break }
-            guard let colonIdx = findUnquotedColon(text) else { index += 1; continue }
-            let key = String(text[..<colonIdx]).trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "'", with: "")
-            let valueRaw = String(text[text.index(after: colonIdx)...]).trimmingCharacters(in: .whitespaces)
-            index += 1
-            if valueRaw.isEmpty {
-                if index < lines.count && lines[index].indent > baseIndent {
-                    let childIndent = lines[index].indent
-                    let childText = lines[index].text.trimmingCharacters(in: .whitespaces)
-                    if childText.hasPrefix("- ") || childText == "-" {
-                        result[key] = parseSequence(lines: lines, index: &index, baseIndent: childIndent)
-                    } else {
-                        result[key] = parseMapping(lines: lines, index: &index, baseIndent: childIndent)
-                    }
-                } else {
-                    result[key] = NSNull()
-                }
-            } else {
-                result[key] = parseScalar(valueRaw)
-            }
-        }
-        return result
-    }
-
-    private func parseSequence(lines: [(indent: Int, text: String)], index: inout Int, baseIndent: Int) -> [Any] {
-        var result: [Any] = []
-        while index < lines.count {
-            let line = lines[index]
-            if line.indent < baseIndent { break }
-            if line.indent > baseIndent { break }
-            let text = line.text.trimmingCharacters(in: .whitespaces)
-            guard text.hasPrefix("-") else { break }
-            let after = String(text.dropFirst()).trimmingCharacters(in: .whitespaces)
-            index += 1
-            if after.isEmpty {
-                // Block element on following indented lines
-                if index < lines.count && lines[index].indent > baseIndent {
-                    let childIndent = lines[index].indent
-                    let childText = lines[index].text.trimmingCharacters(in: .whitespaces)
-                    if childText.hasPrefix("- ") || childText == "-" {
-                        result.append(parseSequence(lines: lines, index: &index, baseIndent: childIndent))
-                    } else {
-                        result.append(parseMapping(lines: lines, index: &index, baseIndent: childIndent))
-                    }
-                } else {
-                    result.append(NSNull())
-                }
-            } else if let colon = findUnquotedColon(after), !after.hasSuffix(":") {
-                // Inline mapping starts on this line: e.g. "- id: 2"
-                let key = String(after[..<colon]).trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "'", with: "")
-                let value = String(after[after.index(after: colon)...]).trimmingCharacters(in: .whitespaces)
-                var dict: [String: Any] = [key: parseScalar(value)]
-                // Continue collecting siblings of this mapping: lines with indent == baseIndent + (offset of after)
-                // Best-effort: child-mapping lines have indent > baseIndent and don't start with '-'
-                let inlineKeyIndent = baseIndent + 2
-                while index < lines.count && lines[index].indent >= inlineKeyIndent {
-                    let l = lines[index]
-                    let t = l.text.trimmingCharacters(in: .whitespaces)
-                    if t.hasPrefix("- ") || t == "-" { break }
-                    if l.indent != inlineKeyIndent { break }
-                    guard let c = findUnquotedColon(t) else { index += 1; continue }
-                    let k = String(t[..<c]).trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "'", with: "")
-                    let vRaw = String(t[t.index(after: c)...]).trimmingCharacters(in: .whitespaces)
-                    index += 1
-                    if vRaw.isEmpty {
-                        if index < lines.count && lines[index].indent > inlineKeyIndent {
-                            let childIndent = lines[index].indent
-                            let childText = lines[index].text.trimmingCharacters(in: .whitespaces)
-                            if childText.hasPrefix("- ") {
-                                dict[k] = parseSequence(lines: lines, index: &index, baseIndent: childIndent)
-                            } else {
-                                dict[k] = parseMapping(lines: lines, index: &index, baseIndent: childIndent)
-                            }
-                        } else {
-                            dict[k] = NSNull()
-                        }
-                    } else {
-                        dict[k] = parseScalar(vRaw)
-                    }
-                }
-                result.append(dict)
-            } else {
-                result.append(parseScalar(after))
-            }
-        }
-        return result
-    }
-
-    private func findUnquotedColon(_ s: String) -> String.Index? {
-        var inSingle = false
-        var inDouble = false
-        var idx = s.startIndex
-        while idx < s.endIndex {
-            let ch = s[idx]
-            if ch == "'" && !inDouble { inSingle.toggle() }
-            else if ch == "\"" && !inSingle { inDouble.toggle() }
-            else if ch == ":" && !inSingle && !inDouble {
-                return idx
-            }
-            idx = s.index(after: idx)
-        }
-        return nil
-    }
-
-    private func parseScalar(_ raw: String) -> Any {
-        let trimmed = raw.trimmingCharacters(in: .whitespaces)
-        if trimmed.isEmpty { return NSNull() }
-        if trimmed == "null" || trimmed == "~" || trimmed == "Null" || trimmed == "NULL" { return NSNull() }
-        if (trimmed.hasPrefix("\"") && trimmed.hasSuffix("\"")) || (trimmed.hasPrefix("'") && trimmed.hasSuffix("'")) {
-            return String(trimmed.dropFirst().dropLast())
-        }
-        let lowered = trimmed.lowercased()
-        if lowered == "true" || lowered == "yes" { return true }
-        if lowered == "false" || lowered == "no" { return false }
-        let dateRegex = #"^\d{4}-\d{2}-\d{2}([T ]\d{2}:\d{2}(:\d{2})?(\.\d+)?(Z|[+-]\d{2}:?\d{2})?)?$"#
-        if trimmed.range(of: dateRegex, options: .regularExpression) != nil {
-            return ISO8601DateMarker()
-        }
-        if let intVal = Int64(trimmed) { return NSNumber(value: intVal) }
-        if let dbl = Double(trimmed) { return NSNumber(value: dbl) }
-        return trimmed
-    }
-
-    private func buildFields(from dict: [String: Any], parentHint: String, builder: SchemaBuilder) -> [StructField] {
-        let keys = dict.keys.sorted()
-        return keys.map { key in
-            let value = dict[key]!
-            let type = inferType(from: value, fieldHint: key, builder: builder)
-            return StructField(name: key, type: type, isOptional: value is NSNull)
-        }
-    }
-
-    private func inferType(from value: Any, fieldHint: String, builder: SchemaBuilder) -> IRType {
-        if value is NSNull { return .null }
-        if value is ISO8601DateMarker { return .date }
-        if value is String { return .string }
-        if let num = value as? NSNumber {
-            if CFGetTypeID(num) == CFBooleanGetTypeID() { return .bool }
-            let typeChar = String(cString: num.objCType)
-            if typeChar == "c" || typeChar == "B" { return .bool }
-            if typeChar == "f" || typeChar == "d" { return .double }
-            if num.doubleValue == Double(num.int64Value) { return .integer }
-            return .double
-        }
-        if let arr = value as? [Any] {
-            return .array(inferArrayElementType(arr, parentHint: StructNaming.singularize(fieldHint), builder: builder))
-        }
-        if let dict = value as? [String: Any] {
-            let structName = builder.reserveUniqueName(fieldHint)
-            let fields = buildFields(from: dict, parentHint: structName, builder: builder)
-            builder.add(StructDef(name: structName, fields: fields))
-            return .object(structName)
-        }
-        return .anyValue
-    }
-
-    private func inferArrayElementType(_ array: [Any], parentHint: String, builder: SchemaBuilder) -> IRType {
-        guard !array.isEmpty else { return .anyValue }
-        if array.contains(where: { $0 is [String: Any] }) {
-            var merged: [String: Any] = [:]
-            for d in array.compactMap({ $0 as? [String: Any] }) {
-                for (k, v) in d where merged[k] == nil { merged[k] = v }
-            }
-            let structName = builder.reserveUniqueName(parentHint)
-            let fields = buildFields(from: merged, parentHint: structName, builder: builder)
-            builder.add(StructDef(name: structName, fields: fields))
-            return .object(structName)
-        }
-        var seen: IRType? = nil
-        for v in array {
-            let t = inferType(from: v, fieldHint: parentHint, builder: builder)
-            if seen == nil { seen = t }
-            else if seen != t { return .anyValue }
-        }
-        return seen ?? .anyValue
     }
 }

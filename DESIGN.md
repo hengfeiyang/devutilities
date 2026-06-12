@@ -1,7 +1,7 @@
 # DevUtilities - Design Document
 
 ## Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 24 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
 
 ## Architecture
 
@@ -23,8 +23,9 @@ DevUtilities/
 │   │   ├── RandomStringConfig.swift    # Random string configuration (v2.9.0)
 │   │   ├── Currency.swift              # 38 currency definitions with flags (v2.10.0)
 │   │   ├── ExchangeRateData.swift      # API response & cache models (v2.10.0)
-│   │   └── StructIR.swift              # NEW: Intermediate representation for Struct Converter (v2.13.0)
-│   ├── Views/                      # All 24 tool implementations
+│   │   ├── StructIR.swift              # Intermediate representation for Struct Converter (v2.13.0)
+│   │   └── DataValue.swift             # NEW: Order-preserving shared value tree + DataFormat (v2.14.0)
+│   ├── Views/                      # All 25 tool implementations
 │   │   ├── TimestampConverterView.swift
 │   │   ├── UnitConverterView.swift
 │   │   ├── BaseConverterView.swift
@@ -48,7 +49,8 @@ DevUtilities/
 │   │   ├── AIChatView.swift
 │   │   ├── AITranslateView.swift       # AI translation interface
 │   │   ├── CurrencyConverterView.swift # Currency converter (v2.10.0)
-│   │   ├── StructConverterView.swift   # NEW: Struct Converter (v2.13.0)
+│   │   ├── StructConverterView.swift   # Struct Converter (v2.13.0)
+│   │   ├── DataConverterView.swift      # NEW: Data Converter — JSON/YAML/TOML/CSV (v2.14.0)
 │   │   └── FeatureSettingsView.swift   # Feature management interface
 │   ├── Components/                 # Shared UI components
 │   │   ├── CodeEditor.swift        # CodeMirror integration & diff editor (enhanced v2.11.0)
@@ -64,8 +66,9 @@ DevUtilities/
 │   │   ├── AVSpeechService.swift   # macOS native text-to-speech engine
 │   │   ├── RandomStringGenerator.swift # Secure random generation (v2.9.0)
 │   │   ├── CurrencyService.swift   # Currency API & caching (v2.10.0)
-│   │   ├── StructConverterParsers.swift    # NEW: JSON/TOML/YAML/SQL DDL → IR (v2.13.0)
-│   │   └── StructConverterGenerators.swift # NEW: IR → Swift/Go/TS/Rust/Python/Java/PHP (v2.13.0)
+│   │   ├── StructConverterParsers.swift    # JSON/TOML/YAML → DataValue → IR, SQL DDL → IR (v2.13.0, shared pipeline v2.14.0)
+│   │   ├── StructConverterGenerators.swift # IR → Swift/Go/TS/Rust/Python/Java/PHP (v2.13.0)
+│   │   └── DataConverter.swift             # NEW: DataValue parsers + serializers for JSON/YAML/TOML/CSV (v2.14.0)
 │   ├── Assets.xcassets/            # App icons and assets
 │   ├── Preview Content/            # SwiftUI preview assets
 │   └── DevUtilities.entitlements      # App sandbox permissions
@@ -667,7 +670,7 @@ Input Text ──▶ StructParserFactory ──▶ StructSchema (IR) ──▶ S
 ```
 
 - **`StructIR.swift`** — Defines `IRType` (string/integer/double/bool/date/array/object/dictionary/null/anyValue), `StructField`, `StructDef`, `StructSchema`, plus `StructInputFormat` and `StructOutputLanguage` enums and per-format sample inputs.
-- **`StructConverterParsers.swift`** — `JSONStructParser` uses `JSONSerialization` and merges arrays-of-objects to compute optional fields; `TOMLStructParser` is a line-based parser using `NSMutableDictionary` for safe nested mutation, supporting `[table]`, `[[array.of.tables]]`, dotted keys, inline arrays/tables; `YAMLStructParser` is an indentation-tracking block-style parser; `SQLDDLStructParser` parses CREATE TABLE blocks via regex, splits columns at top-level commas, maps SQL types (INT/VARCHAR/DECIMAL/TIMESTAMP/...) to IR types, respects NOT NULL/PRIMARY KEY for non-null fields.
+- **`StructConverterParsers.swift`** — As of v2.14.0, JSON/TOML/YAML inputs parse to the shared `DataValue` tree (via `DataConverter`) and feed a single `StructSchemaInferrer` that handles arrays-of-objects merging, optional-field detection, ISO 8601 date promotion, and alphabetical field ordering. `SQLDDLStructParser` is unchanged: it parses CREATE TABLE blocks via regex, splits columns at top-level commas, maps SQL types (INT/VARCHAR/DECIMAL/TIMESTAMP/...) to IR types, and respects NOT NULL/PRIMARY KEY for non-null fields.
 - **`StructConverterGenerators.swift`** — One generator per language. Each implements `StructCodeGenerator` and emits text for the schema. Output is sorted child-first by traversing the IR (`orderedStructs`).
 
 **UI Components**:
@@ -681,6 +684,33 @@ Input Text ──▶ StructParserFactory ──▶ StructSchema (IR) ──▶ S
 - Optional handling: a field is optional if it's `null` in JSON, not present in every element of an array of objects, or lacks NOT NULL in SQL DDL
 - Date detection: ISO 8601 regex (`YYYY-MM-DD[THH:MM[:SS][.fff][Z|±HHMM]]`) on string-shaped values
 - Array element merging: when parsing arrays of objects, fields present in every element are required; others are optional
+
+### 21. Data Converter
+**Files**: `DataConverterView.swift`, `DataConverter.swift`, `DataValue.swift`
+
+**Features** (v2.14.0):
+- **Four Formats, Any Direction**: Convert between JSON, YAML, TOML, and CSV with a from/to picker and a one-click swap button (swap also moves the last output back into the input)
+- **Order Preservation**: A shared `DataValue` tree stores objects as ordered key/value pairs and dates verbatim, so conversions keep the author's field order and date representation
+- **CSV Type Inference**: An "Infer types" toggle coerces CSV cells (`123` → int, `true` → bool, `98.5` → double, empty → null) or keeps every cell as a string
+- **Nested ↔ CSV**: Nested objects/arrays flatten to dotted-key columns (`address.city`, `tags.0`) with an ordered union header across rows; reading CSV unflattens dotted keys back into nested objects/arrays (numeric segments become arrays)
+- **State Persistence**: Remembers input text, source/target formats, and the coercion toggle between sessions
+
+**Architecture**:
+```
+Input Text ──▶ DataConverter.parse ──▶ DataValue ──▶ DataConverter.serialize ──▶ Output Text
+```
+
+- **`DataValue.swift`** — `indirect enum DataValue` (string/int/double/bool/date/null/array/object-as-ordered-pairs) with a custom `Equatable`, plus the `DataFormat` enum, per-format sample inputs, and `DataConvertError`.
+- **`DataConverter.swift`** — `DataConverter` facade (`parse`/`serialize`/`convert`). JSON uses a hand-written order-preserving scanner and pretty-printer (avoids `JSONSerialization` key reordering). YAML routes through Yams `Node` to preserve order and quoting. TOML has a line-based parser (`[table]`, `[[array of tables]]`, dotted/inline) and an emitter that writes scalars, tables, and arrays-of-tables with unquoted date literals. CSV is an RFC-4180 reader/writer with dotted-key flatten/unflatten and a shared `DataScalar.infer` for type coercion.
+
+**UI Components**:
+- From/To segmented pickers with a swap button between them
+- "Infer types" checkbox shown only when the source format is CSV
+- Two-column layout: input editor (CodeMirror highlighted per format) and read-only output editor; Sample/Clear on input, Copy on output; line/character metrics and a status line
+
+**Implementation Details**:
+- Conversion is synchronous and runs on every input/format change; identical source and target formats short-circuit to a pass-through
+- The `DataValue` model is shared with the Struct Converter, which adds date promotion and alphabetical ordering on its own side so its output is unaffected
 
 ## UI Design Principles
 

@@ -152,6 +152,8 @@ struct ContentView: View {
                         TextCompareView()
                     case .structConverter:
                         StructConverterView()
+                    case .dataConverter:
+                        DataConverterView()
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
