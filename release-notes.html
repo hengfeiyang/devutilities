@@ -56,12 +56,33 @@
   <main class="page-body">
     <div class="cl-list">
 
+      <!-- ── v2.14.0 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.14.0</span>
+          <span>June 2026</span>
+          <span class="cl-tag">Latest</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">Data Converter</p>
+            <h3>One format in, another out.</h3>
+            <p>The 25th tool converts between JSON, YAML, TOML, and CSV in any direction. Pick a source and a target format with a from/to picker, or hit the swap button to flip them. Conversion runs instantly and entirely on-device.</p>
+            <h4>Order preserved, dates verbatim</h4>
+            <p>A new shared value model stores objects as ordered key/value pairs and keeps date literals untouched, so conversions don't reshuffle your fields or reformat your timestamps. JSON is parsed with a custom order-preserving scanner, and YAML goes through the Yams library to preserve key order and quoting.</p>
+            <h4>Nested data ↔ CSV</h4>
+            <p>Nested objects and arrays flatten into dotted-key columns (<code>address.city</code>, <code>tags.0</code>) with an ordered union header across rows; reading CSV rebuilds the nesting. An <em>Infer types</em> toggle coerces cells like <code>123</code> and <code>true</code> into numbers and booleans, or keeps every cell as a string.</p>
+            <h4>Shared pipeline</h4>
+            <p>The Struct Converter now parses through the same value model — its output is unchanged.</p>
+          </div>
+        </div>
+      </article>
+
       <!-- ── v2.13.0 ────────────────────────────────────────────────── -->
       <article class="cl-entry">
         <div class="cl-meta">
           <span class="cl-version">v2.13.0</span>
           <span>May 2026</span>
-          <span class="cl-tag">Latest</span>
         </div>
         <div class="cl-body">
           <div class="cl-section">
@@ -291,7 +312,7 @@
     <div class="foot-rule"></div>
     <div class="foot-bottom">
       <span>© 2026 DevUtilities</span>
-      <span>v2.12.2</span>
+      <span>v2.14.0</span>
     </div>
   </footer>
 </body>

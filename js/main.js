@@ -83,7 +83,11 @@
 
     { n: '24', cat: 'Convert', slug: 'struct',            name: 'Struct Converter',
       href: 'struct-converter.html',
-      blurb: 'Turn JSON, TOML, YAML, or SQL DDL into typed code — TypeScript, Python, Go, Java, Rust, Swift, PHP.', tag: 'New · 2.13' },
+      blurb: 'Turn JSON, TOML, YAML, or SQL DDL into typed code — TypeScript, Python, Go, Java, Rust, Swift, PHP.', tag: '2.13' },
+
+    { n: '25', cat: 'Convert', slug: 'data',              name: 'Data Converter',
+      href: 'data-converter.html',
+      blurb: 'Convert between JSON, YAML, TOML, and CSV — order preserved, nested data flattened to dotted CSV columns.', tag: 'New · 2.14' },
   ];
 
   const CATEGORIES = ['All', 'AI', 'Convert', 'Format', 'Generate', 'Inspect', 'Network'];

@@ -1,6 +1,6 @@
 # DevUtilities
 
-A native macOS application for developers, containing 24 essential tools commonly used in software development.
+A native macOS application for developers, containing 25 essential tools commonly used in software development.
 
 > This tool was 100% developed by `Claude Code`.
 
@@ -33,7 +33,8 @@ A native macOS application for developers, containing 24 essential tools commonl
 - **Parquet Viewer** - Read and explore Parquet / arrow files with schema inspection and data export
 - **Crypto Tools** - Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA-1/256/384/512), symmetric encryption (AES-GCM-256), and asymmetric encryption (RSA-2048/4096)
 - **Currency Converter** - Real-time currency conversion with 38 currencies, 24-hour caching, 30-day price history, and 24-hour trend indicators
-- **Struct Converter** - **NEW** Convert JSON, TOML, YAML, and SQL DDL into typed code structures for TypeScript, Python, Go, Java, Rust, Swift, and PHP
+- **Struct Converter** - Convert JSON, TOML, YAML, and SQL DDL into typed code structures for TypeScript, Python, Go, Java, Rust, Swift, and PHP
+- **Data Converter** - **NEW** Convert between JSON, YAML, TOML, and CSV data formats with order preservation, nested-to-CSV flattening, and CSV type inference
 
 ## Key Features
 
@@ -46,7 +47,15 @@ A native macOS application for developers, containing 24 essential tools commonl
 
 ## Version
 
-Current version: 2.13.0
+Current version: 2.14.0
+
+## What's New in v2.14.0
+
+- **Data Converter**: NEW tool for converting between JSON, YAML, TOML, and CSV
+- **Bidirectional**: Choose any source and target format with a from/to picker and one-click swap
+- **Order Preserving**: A shared `DataValue` model keeps object key order across conversions; JSON is parsed with a custom order-preserving scanner
+- **YAML via Yams**: YAML parsing/serialization uses the Yams library through `Node` to preserve order and quoting
+- **CSV Flatten/Unflatten**: Nested data flattens to dotted-key columns (`address.city`, `tags.0`) with an ordered union header and RFC-4180 quoting; an "Infer types" toggle coerces `123`/`true` or keeps cells as strings
 
 ## What's New in v2.13.0
 

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Data Converter — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="Convert between JSON, YAML, TOML, and CSV in any direction. Object key order is preserved, nested data flattens to dotted CSV columns, and CSV cells can be type-inferred or kept as strings. Fully offline." />
+  <meta name="keywords" content="data converter, json to yaml, yaml to json, json to csv, csv to json, toml to yaml, json to toml, format converter, devutilities" />
+  <meta property="og:image" content="images/screenshots/data-converter.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400..700;1,400..700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
+
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>Data Converter</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 25 of 25 · Convert</div><h1 class="page-h">One format in, <em>another out.</em></h1></section>
+  <div class="page-sub"><div></div><p>Paste JSON, YAML, TOML, or CSV. Pick a target format. Get it back converted — with your object keys in the order you wrote them, nested data flattened into tidy CSV columns, and dates left exactly as they were.</p></div>
+
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Inputs</div><div class="tool-meta-value">4 formats</div><div class="tool-meta-sub">JSON · YAML · TOML · CSV</div></div>
+    <div><div class="tool-meta-label">Outputs</div><div class="tool-meta-value accent">4 formats</div><div class="tool-meta-sub">JSON · YAML · TOML · CSV</div></div>
+    <div><div class="tool-meta-label">Shipped</div><div class="tool-meta-value">v2.14</div><div class="tool-meta-sub">June 2026</div></div>
+    <div><div class="tool-meta-label">Network</div><div class="tool-meta-value">Offline</div><div class="tool-meta-sub">Pure local</div></div>
+  </div>
+
+  <section class="tool-shot"><figure><img src="images/screenshots/data-converter.png" alt="DevUtilities Data Converter — JSON input on the left, converted YAML on the right, with from/to format pickers and a swap button on top." /></figure><figcaption>Plate xxv — Data Converter with JSON in, YAML out, and the from/to picker on top.</figcaption></section>
+
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Six things <span class="muted">it does cleanly.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Any direction</h4><p>JSON, YAML, TOML, and CSV — pick any source and any target with a from/to picker and a one-click swap button.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>Order preserved</h4><p>A shared value tree keeps object keys in the order you wrote them; JSON uses a custom order-preserving parser instead of reshuffling fields.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Dates kept verbatim</h4><p>Date and datetime literals carry across untouched, so a round-trip never rewrites or reformats them.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Nested ↔ CSV</h4><p>Nested objects and arrays flatten into dotted-key columns (<code>address.city</code>, <code>tags.0</code>) with an ordered union header; reading CSV rebuilds the nesting.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>CSV type inference</h4><p>An <em>Infer types</em> toggle coerces cells like <code>123</code>, <code>true</code>, and <code>98.5</code> into numbers and booleans — or keeps every cell as a string.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>Real YAML</h4><p>YAML parses and serializes through the Yams library, preserving key order and quoting rather than guessing.</p></div></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>to a clean conversion.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Pick the source format</h4><p>JSON / YAML / TOML / CSV. The editor switches highlighting accordingly.</p><div class="step-key">Segmented · top</div></div>
+      <div class="step"><span class="step-n"></span><h4>Pick the target format</h4><p>JSON / YAML / TOML / CSV. Output regenerates instantly; the swap button flips the two.</p><div class="step-key">Segmented · top</div></div>
+      <div class="step"><span class="step-n"></span><h4>Paste your data</h4><p>Drop in an API response, a config file, or a spreadsheet export.</p><div class="step-key">Paste · <b>⌘ V</b></div></div>
+      <div class="step"><span class="step-n"></span><h4>Copy the result</h4><p>One click on Copy in the right pane; paste it wherever you need it.</p><div class="step-key">Copy · <b>⌘ C</b></div></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — Config</span><h4>YAML ↔ TOML</h4><p>Move a config between a YAML-based tool and a TOML-based one without hand-translating it.</p></div>
+      <div class="use"><span class="use-tag">ii — Data</span><h4>JSON → CSV</h4><p>Flatten an array of JSON records into a spreadsheet-ready CSV with dotted columns.</p></div>
+      <div class="use"><span class="use-tag">iii — Import</span><h4>CSV → JSON</h4><p>Turn a CSV export into an array of typed JSON objects for an API or a fixture.</p></div>
+      <div class="use"><span class="use-tag">iv — Read</span><h4>JSON → YAML</h4><p>Render a dense JSON payload as readable YAML to scan it quickly.</p></div>
+      <div class="use"><span class="use-tag">v — Author</span><h4>Hand-write less</h4><p>Sketch in whichever format is quickest, then convert to the one your tool expects.</p></div>
+      <div class="use"><span class="use-tag">vi — Diff</span><h4>Normalize first</h4><p>Convert both sides to the same format before comparing them in Text Compare.</p></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>Does it keep my key order?</summary><p>Yes. Objects are stored as ordered key/value pairs end to end, and JSON is parsed with a custom order-preserving scanner — so fields come out in the order you wrote them, not alphabetized or reshuffled.</p></details>
+      <details><summary>How is nested data handled in CSV?</summary><p>Nested objects and arrays flatten to dotted-key columns — <code>address.city</code>, <code>tags.0</code>, <code>friends.0.id</code> — and the header is the ordered union of every row's columns. Reading a CSV reverses this, rebuilding objects and arrays from the dotted keys.</p></details>
+      <details><summary>Will CSV numbers become real numbers?</summary><p>Your choice. The <em>Infer types</em> toggle coerces cells like <code>123</code>, <code>true</code>, and <code>98.5</code> into numbers and booleans (empty cells become null), or you can keep every cell as a string.</p></details>
+      <details><summary>What about dates?</summary><p>Date and datetime literals are carried verbatim. TOML date literals stay unquoted; nothing gets reformatted on a round-trip.</p></details>
+      <details><summary>Is the YAML support real?</summary><p>Yes — parsing and serialization go through the Yams library via its node API, which preserves key order and quoting and handles the awkward corners of the spec.</p></details>
+      <details><summary>Does anything leave my machine?</summary><p>No. Conversion is synchronous and entirely local. Nothing is uploaded.</p></details>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="struct-converter.html"><div class="rel-head"><span>24 · Convert</span><span></span></div><h4>Struct Converter</h4><p>Once the shape is right, turn it into typed code.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span></span></div><h4>JSON Formatter</h4><p>Format and validate the JSON before or after converting.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="text-compare.html"><div class="rel-head"><span>17 · Inspect</span><span></span></div><h4>Text Compare</h4><p>Normalize both sides to one format, then diff them.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="http-request.html"><div class="rel-head"><span>20 · Network</span><span></span></div><h4>HTTP Client</h4><p>Hit the endpoint, copy the response, paste it back here.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="parquet-viewer.html"><div class="rel-head"><span>19 · Inspect</span><span></span></div><h4>Parquet Viewer</h4><p>Inspect a Parquet file, then shape the data into JSON or CSV.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="ai-chat.html"><div class="rel-head"><span>01 · AI</span><span></span></div><h4>AI Chat</h4><p>Hand the converted data to the AI and ask what to do with it.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
+
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">One format to another, <em>in two clicks.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
+
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.14.0</span></div></footer>
+</body>
+</html>
