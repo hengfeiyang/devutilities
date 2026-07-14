@@ -77,7 +77,7 @@ enum AsymmetricAlgorithm: String, CaseIterable {
 }
 
 struct CryptoToolsView: View {
-    let screenName = "Crypto Tools"
+    let screenName = "Crypto"
     let module = "crypto_tools"
     @State private var selectedTab: CryptoTab = .hash
     

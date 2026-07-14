@@ -193,49 +193,21 @@ struct FeatureCard: View {
     let isDragging: Bool
     let onTap: () -> Void
 
-    private var abbreviatedName: String {
-        switch tool {
-        case .aiChat: return "AI"
-        case .aiTranslate: return "Translate"
-        case .timestampConverter: return "Time"
-        case .unitConverter: return "Unit"
-        case .baseConverter: return "BaseNum"
-        case .jsonFormatter: return "JSON"
-        case .sqlFormatter: return "SQL"
-        case .htmlFormatter: return "HTML"
-        case .base64: return "Base64"
-        case .colorPicker: return "Color"
-        case .hexString: return "Hex"
-        case .jwt: return "JWT"
-        case .regexTest: return "Regex"
-        case .uuidGenerator: return "UUID"
-        case .randomString: return "Random"
-        case .cryptoTools: return "Crypto"
-        case .urlTools: return "URL"
-        case .httpRequest: return "HTTP"
-        case .ipQuery: return "IP"
-        case .qrCode: return "QR"
-        case .parquetViewer: return "Parquet"
-        case .currencyConverter: return "Currency"
-        case .textCompare: return "Diff"
-        case .structConverter: return "Struct"
-        case .dataConverter: return "Data"
-        }
-    }
-
     var body: some View {
         VStack(spacing: 8) {
             Image(systemName: tool.iconName)
                 .font(.title2)
                 .foregroundColor(isEnabled ? .primary : .secondary)
 
-            Text(abbreviatedName)
+            Text(tool.title)
                 .font(.caption)
                 .fontWeight(.medium)
                 .foregroundColor(isEnabled ? .primary : .secondary)
-                .lineLimit(1)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
         }
-        .frame(width: 80, height: 50)
+        .frame(width: 80, height: 64)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(isEnabled ? Color.primary.opacity(0.05) : Color.secondary.opacity(0.05))

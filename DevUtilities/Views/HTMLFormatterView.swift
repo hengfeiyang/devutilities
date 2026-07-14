@@ -17,7 +17,7 @@ import SwiftUI
 import AppKit
 
 struct HTMLFormatterView: View {
-    let screenName = "HTML Formatter"
+    let screenName = "HTML"
     let module = "html_formatter"
     @State private var htmlInput: String = ""
     @State private var htmlInput2: String = ""

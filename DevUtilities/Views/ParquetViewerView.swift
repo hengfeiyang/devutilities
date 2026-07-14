@@ -49,7 +49,7 @@ enum FileType {
 }
 
 struct ParquetViewerView: View {
-    let screenName = "Parquet Viewer"
+    let screenName = "Parquet"
     @State private var selectedTab = "schema"
     @State private var fileURL: URL?
     @State private var fileName: String = ""

@@ -19,7 +19,7 @@ import Foundation
 import Combine
 
 struct HTTPRequestView: View {
-    let screenName = "HTTP Request"
+    let screenName = "HTTP Client"
     @State private var httpMethod: HTTPMethod = .GET
     @State private var urlInput: String = ""
     @State private var headers: [HTTPHeader] = [HTTPHeader()]

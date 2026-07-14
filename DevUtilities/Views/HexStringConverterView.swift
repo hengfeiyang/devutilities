@@ -17,7 +17,7 @@ import SwiftUI
 import AppKit
 
 struct HexStringConverterView: View {
-    let screenName = "Hex String Converter"
+    let screenName = "Hex String"
     let module = "hex_string_converter"
     @State private var stringInput: String = ""
     @State private var hexOutput: String = ""

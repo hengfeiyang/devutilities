@@ -17,7 +17,7 @@ import SwiftUI
 import AppKit
 
 struct SQLFormatterView: View {
-    let screenName = "SQL Formatter"
+    let screenName = "SQL"
     let module = "sql_formatter"
     @State private var sqlInput: String = ""
     @State private var sqlInput2: String = ""

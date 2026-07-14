@@ -2,7 +2,7 @@
 //  RandomStringConfig.swift
 //  DevUtilities
 //
-//  Configuration model for Random String Generator
+//  Configuration model for Random String
 //
 
 import Foundation

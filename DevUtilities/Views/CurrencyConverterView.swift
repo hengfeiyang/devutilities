@@ -16,7 +16,7 @@
 import SwiftUI
 
 struct CurrencyConverterView: View {
-    let screenName = "Currency Converter"
+    let screenName = "Currency"
     let module = "currency_converter"
 
     // State

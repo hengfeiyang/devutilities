@@ -16,7 +16,7 @@
 import SwiftUI
 
 struct RandomStringView: View {
-    let screenName = "Random String Generator"
+    let screenName = "Random String"
 
     @State private var config = RandomStringConfig.load()
     @State private var selectedPreset: StringPreset = .custom

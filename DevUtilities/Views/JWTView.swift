@@ -65,7 +65,7 @@ enum JWTAlgorithm: String, CaseIterable {
 }
 
 struct JWTView: View {
-    let screenName = "JWT Encoder/Decoder"
+    let screenName = "JWT"
     let module = "jwt_codec"
     @State private var selectedTab: JWTTab = .decode
     @State private var jwtToken: String = ""

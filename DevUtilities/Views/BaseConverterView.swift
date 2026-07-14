@@ -16,7 +16,7 @@
 import SwiftUI
 
 struct BaseConverterView: View {
-    let screenName = "Base Converter"
+    let screenName = "Number Base"
     let module = "base_converter"
 
     @State private var binaryValue: String = ""

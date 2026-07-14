@@ -1,7 +1,7 @@
 # DevUtilities - Design Document
 
 ## Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities in a single, easy-to-use interface. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities in a single, easy-to-use interface. The current release is v2.14.1. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
 
 ## Architecture
 
@@ -93,6 +93,8 @@ DevUtilities/
 - **Window Configuration**: Resizable with minimum size constraints
 - **Search Bar**: Integrated search to filter tools by name
 
+Tool labels use concise, object-oriented names in the sidebar. Recognizable formats and technologies use their canonical names (for example, JSON, Base64, JWT, and UUID), while potentially ambiguous tools retain a descriptive suffix (for example, Unit Converter, HTTP Client, and IP Lookup). `ToolType` raw values remain stable when display names change so persisted feature preferences continue to decode correctly.
+
 ### Tool Integration Pattern
 Each tool follows a consistent pattern:
 1. **Enum Definition**: Added to `ToolType` enum
@@ -102,7 +104,7 @@ Each tool follows a consistent pattern:
 
 ## Tool Specifications
 
-### 1. Timestamp Converter
+### 1. Timestamp
 **File**: `TimestampConverterView.swift`
 
 **Features**:
@@ -146,7 +148,7 @@ Each tool follows a consistent pattern:
 - Base unit conversion pattern
 - Time conversions from nanoseconds to years
 
-### 3. Base Converter
+### 3. Number Base
 **File**: `BaseConverterView.swift`
 
 **Features**:
@@ -183,7 +185,7 @@ Each tool follows a consistent pattern:
 - Hexadecimal: Digits 0-9 and letters A-F (case-insensitive), optional 0x prefix
 - Base62: Digits 0-9, uppercase A-Z, lowercase a-z (62 characters total)
 
-### 4. Color Picker
+### 4. Color
 **File**: `ColorPickerView.swift`
 
 **Features**:
@@ -231,7 +233,7 @@ Each tool follows a consistent pattern:
 - RGB to CMYK: Subtractive color model for print applications
 - All conversions maintain color accuracy and handle edge cases (black, white, grays)
 
-### 5. JSON Formatter
+### 5. JSON
 **File**: `JSONFormatterView.swift`
 
 **Features**:
@@ -259,7 +261,7 @@ Each tool follows a consistent pattern:
 - CodeMirror-SwiftUI integration for diff visualization
 - `CodeDiffEditor` component for visual diff comparison
 
-### 6. Base64 Encode/Decode
+### 6. Base64
 **File**: `Base64View.swift`
 
 **Features**:
@@ -281,7 +283,7 @@ Each tool follows a consistent pattern:
 - URL-safe character substitution
 - UTF-8 encoding/decoding
 
-### 7. Hex String Converter
+### 7. Hex String
 **File**: `HexStringConverterView.swift`
 
 **Features**:
@@ -311,7 +313,7 @@ Each tool follows a consistent pattern:
 - UserDefaults integration for state persistence
 - Comprehensive error handling with descriptive messages
 
-### 8. Regex Test
+### 8. Regex
 **File**: `RegexTestView.swift`
 
 **Features**:
@@ -334,7 +336,7 @@ Each tool follows a consistent pattern:
 - Flag handling for regex options
 - String replacement with capture group support
 
-### 9. UUID Generator
+### 9. UUID
 **File**: `UUIDGeneratorView.swift`
 
 **Features**:
@@ -360,7 +362,7 @@ Each tool follows a consistent pattern:
 - UUID v7 timestamp-ordered generation
 - Automatic timestamp extraction from v7 UUIDs
 
-### 10. URL Tools
+### 10. URL
 **File**: `URLToolsView.swift`
 
 **Features**:
@@ -382,7 +384,7 @@ Each tool follows a consistent pattern:
 - `URLComponents` for parsing
 - Query parameter array management
 
-### 11. IP Query
+### 11. IP Lookup
 **File**: `IPQueryView.swift`
 
 **Features**:
@@ -406,7 +408,7 @@ Each tool follows a consistent pattern:
 - User-Agent headers to avoid bot detection
 - Comprehensive error handling and validation
 
-### 12. HTTP Request
+### 12. HTTP Client
 **File**: `HTTPRequestView.swift`
 
 **Features**:
@@ -481,7 +483,7 @@ Each tool follows a consistent pattern:
 - Real-time UI updates using `onChange` modifiers
 - Error handling for image processing and file operations
 
-### 14. SQL Formatter
+### 14. SQL
 **File**: `SQLFormatterView.swift`
 
 **Features**:
@@ -506,7 +508,7 @@ Each tool follows a consistent pattern:
 - **Error resilience**: Comprehensive do-catch blocks with intelligent fallback to original text
 - **FFI bridge**: Seamless Swift-to-Rust communication via C header interface
 
-### 15. HTML Formatter
+### 15. HTML
 **File**: `HTMLFormatterView.swift`
 
 **Features**:
@@ -531,7 +533,7 @@ Each tool follows a consistent pattern:
 - Real-time processing with input validation
 - Error handling with descriptive feedback
 
-### 16. JWT Encoder/Decoder
+### 16. JWT
 **File**: `JWTView.swift`
 
 **Features**:
@@ -561,7 +563,7 @@ Each tool follows a consistent pattern:
 - Error handling for malformed tokens
 - Secure key handling for signature operations
 
-### 17. Parquet Viewer
+### 17. Parquet
 **File**: `ParquetViewerView.swift`
 
 **Features**:
@@ -593,7 +595,7 @@ Each tool follows a consistent pattern:
 - Automatic file type detection based on extension
 - Comprehensive metadata extraction including row groups and format version
 
-### 18. Crypto Tools
+### 18. Crypto
 **File**: `CryptoToolsView.swift`
 
 **Features**:
@@ -781,7 +783,7 @@ enum ToolType: String, CaseIterable, Identifiable {
 - **Swift Version**: 5.0
 - **App Sandbox**: Enabled
 - **Hardened Runtime**: Enabled
-- **Network Access**: Enabled (for HTTP and IP Query tools)
+- **Network Access**: Enabled (for HTTP and IP Lookup tools)
 - **File Access**: User-selected read-write
 
 ### Dependencies

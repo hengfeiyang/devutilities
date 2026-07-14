@@ -17,7 +17,7 @@ import SwiftUI
 import AppKit
 
 struct IPQueryView: View {
-    let screenName = "IP Query"
+    let screenName = "IP Lookup"
     @State private var myIPAddress: String = ""
     @State private var myIPDetails: IPLocationInfo? = nil
     @State private var chinaIPAddress: String = ""

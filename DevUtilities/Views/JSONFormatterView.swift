@@ -17,7 +17,7 @@ import SwiftUI
 import AppKit
 
 struct JSONFormatterView: View {
-    let screenName = "JSON Formatter"
+    let screenName = "JSON"
     let module = "json_formatter"
     @State private var jsonInput: String = ""
     @State private var jsonInput2: String = ""

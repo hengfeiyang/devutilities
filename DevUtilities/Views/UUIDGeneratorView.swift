@@ -16,7 +16,7 @@
 import SwiftUI
 
 struct UUIDGeneratorView: View {
-    let screenName = "UUID Generator"
+    let screenName = "UUID"
     @State private var selectedVersion: UUIDVersion = .v4
     @State private var uuidFormat: UUIDFormat = .standard
     @State private var generatedUUIDs: [String] = []

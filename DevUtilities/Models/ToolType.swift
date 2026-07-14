@@ -52,45 +52,45 @@ enum ToolType: String, CaseIterable, Identifiable, Codable {
         case .aiTranslate:
             return "AI Translate"
         case .timestampConverter:
-            return "Timestamp Converter"
+            return "Timestamp"
         case .unitConverter:
             return "Unit Converter"
         case .baseConverter:
-            return "Base Converter"
+            return "Number Base"
         case .colorPicker:
-            return "Color Picker"
+            return "Color"
         case .jsonFormatter:
-            return "JSON Formatter"
+            return "JSON"
         case .sqlFormatter:
-            return "SQL Formatter"
+            return "SQL"
         case .htmlFormatter:
-            return "HTML Formatter"
+            return "HTML"
         case .base64:
-            return "Base64 Encode/Decode"
+            return "Base64"
         case .hexString:
-            return "Hex String Converter"
+            return "Hex String"
         case .jwt:
-            return "JWT Encoder/Decoder"
+            return "JWT"
         case .regexTest:
-            return "Regex Test"
+            return "Regex"
         case .uuidGenerator:
-            return "UUID Generator"
+            return "UUID"
         case .randomString:
             return "Random String"
         case .cryptoTools:
-            return "Crypto Tools"
+            return "Crypto"
         case .urlTools:
-            return "URL Tools"
+            return "URL"
         case .httpRequest:
-            return "HTTP Request"
+            return "HTTP Client"
         case .ipQuery:
-            return "IP Query"
+            return "IP Lookup"
         case .qrCode:
             return "QR Code"
         case .parquetViewer:
-            return "Parquet Viewer"
+            return "Parquet"
         case .currencyConverter:
-            return "Currency Converter"
+            return "Currency"
         case .textCompare:
             return "Text Compare"
         case .structConverter:

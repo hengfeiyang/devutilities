@@ -17,7 +17,7 @@ import SwiftUI
 import AppKit
 
 struct URLToolsView: View {
-    let screenName = "URL Tools"
+    let screenName = "URL"
     let module = "url_tools"
     @State private var selectedTab: URLTab = .encoder
     @State private var textInput: String = ""

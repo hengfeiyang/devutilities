@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code when working with this repository.
+This file provides guidance to Codex when working with this repository.
 
 ## Project Overview
 DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities. Version 2.14.1 introduces concise, consistent tool names across the app, website, and documentation.
@@ -280,7 +280,7 @@ mcp__XcodeBuildMCP__build_run_macos
 ## Documentation Update Protocol
 When updating the version or adding new features, you must update ALL of these files:
 1. README.md (main repository documentation)
-2. CLAUDE.md (this file - project guidance)
+2. AGENTS.md (this file - project guidance)
 3. DESIGN.md (technical design document)
 4. website/README.md (website repository documentation)
 5. website/index.html (main website page)

@@ -17,7 +17,7 @@ import SwiftUI
 import AppKit
 
 struct RegexTestView: View {
-    let screenName = "Regex Test"
+    let screenName = "Regex"
     let module = "regex_test"
     @State private var regexPattern: String = ""
     @State private var testString: String = ""

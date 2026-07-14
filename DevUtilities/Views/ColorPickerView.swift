@@ -16,7 +16,7 @@
 import SwiftUI
 
 struct ColorPickerView: View {
-    let screenName = "Color Picker"
+    let screenName = "Color"
     let module = "color_picker"
 
     @State private var selectedColor: Color = .blue

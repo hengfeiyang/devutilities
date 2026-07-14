@@ -17,7 +17,7 @@ import SwiftUI
 import AppKit
 
 struct Base64View: View {
-    let screenName = "Base64 Encode/Decode"
+    let screenName = "Base64"
     let module = "base64_codec"
     @State private var textInput: String = ""
     @State private var base64Output: String = ""

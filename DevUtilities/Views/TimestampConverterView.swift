@@ -101,7 +101,7 @@ class TimestampHistoryManager: ObservableObject {
 }
 
 struct TimestampConverterView: View {
-    let screenName = "Timestamp Converter"
+    let screenName = "Timestamp"
     @State private var timestampInput: String = ""
     @State private var dateInput: String = ""
     @State private var convertedDate: String = ""
