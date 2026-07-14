@@ -56,12 +56,31 @@
   <main class="page-body">
     <div class="cl-list">
 
+      <!-- ── v2.14.1 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.14.1</span>
+          <span>July 2026</span>
+          <span class="cl-tag">Latest</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">Tool naming</p>
+            <h3>Shorter labels, clearer shelf.</h3>
+            <p>Tool names are now concise and consistent across the app, website, and documentation. Recognizable technologies and formats use their canonical names — Base64, JWT, JSON, SQL, HTML, UUID, Crypto, URL, and Parquet — without repeating actions the tool already makes clear.</p>
+            <h4>Clear where context matters</h4>
+            <p>Ambiguous labels keep enough context: Unit Converter, Struct Converter, and Data Converter remain descriptive; HTTP Request is now HTTP Client, IP Query is now IP Lookup, and Base Converter is now Number Base.</p>
+            <h4>No broken preferences or links</h4>
+            <p>The change is presentational. Stable tool identifiers and existing website URLs remain unchanged, so saved sidebar settings and bookmarked pages continue to work.</p>
+          </div>
+        </div>
+      </article>
+
       <!-- ── v2.14.0 ────────────────────────────────────────────────── -->
       <article class="cl-entry">
         <div class="cl-meta">
           <span class="cl-version">v2.14.0</span>
           <span>June 2026</span>
-          <span class="cl-tag">Latest</span>
         </div>
         <div class="cl-body">
           <div class="cl-section">
@@ -154,9 +173,9 @@
           <div class="cl-section">
             <p class="cl-section-eyebrow">Diff mode for formatters</p>
             <ul>
-              <li><strong>JSON Formatter Diff.</strong> Visual diff editor for comparing two JSON documents side-by-side with syntax highlighting.</li>
-              <li><strong>HTML Formatter Diff.</strong> Compare HTML documents with automatic formatting and visual highlighting of differences.</li>
-              <li><strong>SQL Formatter Diff.</strong> Side-by-side SQL query comparison with automatic beautification.</li>
+              <li><strong>JSON Diff.</strong> Visual diff editor for comparing two JSON documents side-by-side with syntax highlighting.</li>
+              <li><strong>HTML Diff.</strong> Compare HTML documents with automatic formatting and visual highlighting of differences.</li>
+              <li><strong>SQL Diff.</strong> Side-by-side SQL query comparison with automatic beautification.</li>
               <li><strong>Unified Diff experience.</strong> All formatters share a consistent diff interface with real-time status updates.</li>
               <li><strong>State persistence.</strong> All comparison views remember content between sessions.</li>
             </ul>
@@ -173,7 +192,7 @@
         </div>
         <div class="cl-body">
           <div class="cl-section">
-            <p class="cl-section-eyebrow">Currency Converter</p>
+            <p class="cl-section-eyebrow">Currency</p>
             <h3>Thirty-eight currencies, thirty days of history, no API hand-holding.</h3>
             <p>Real-time currency conversion across 38 major global fiat currencies — USD, EUR, GBP, JPY, CNY, KRW, INR, and 31 others. 24-hour smart caching keeps data fresh while minimising API calls; everything still works offline against the most recent cache.</p>
             <ul>
@@ -195,7 +214,7 @@
           <span class="cl-tag">New tool</span>
         </div>
         <div class="cl-body">
-          <h3>Random String Generator — cryptographically secure by default.</h3>
+          <h3>Random String — cryptographically secure by default.</h3>
           <p>A new tool for cryptographically secure random string generation with customizable character sets and advanced security requirements.</p>
           <ul>
             <li><strong>Five built-in presets.</strong> Strong Password (16 chars), API Key (32), Hex String (64), PIN Code (6 digits), Readable Code (no ambiguous characters).</li>
@@ -233,8 +252,8 @@
           <span class="cl-tag muted">Enhancement</span>
         </div>
         <div class="cl-body">
-          <h3>Base Converter, now with Base62.</h3>
-          <p>Enhanced Base Converter with Base62 (0–9, A–Z, a–z) for URL shortening and compact identifiers. Five base systems — binary, octal, decimal, hexadecimal, and Base62 — convert simultaneously as you type, with custom <code>toBase62</code> / <code>fromBase62</code> implementations and character set validation.</p>
+          <h3>Number Base, now with Base62.</h3>
+          <p>Enhanced Number Base with Base62 (0–9, A–Z, a–z) for URL shortening and compact identifiers. Five base systems — binary, octal, decimal, hexadecimal, and Base62 — convert simultaneously as you type, with custom <code>toBase62</code> / <code>fromBase62</code> implementations and character set validation.</p>
         </div>
       </article>
 
@@ -246,7 +265,7 @@
           <span class="cl-tag">New tool</span>
         </div>
         <div class="cl-body">
-          <h3>Color Picker — every format, in real time.</h3>
+          <h3>Color — every format, in real time.</h3>
           <p>A professional color format converter with real-time conversion between HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK formats. Edit any format directly — changes instantly reflect across all other formats.</p>
           <ul>
             <li><strong>Color history.</strong> Quickly access and reuse up to 22 previously selected colors with visual swatches.</li>
@@ -266,13 +285,13 @@
         <div class="cl-body">
           <h3>Earlier highlights.</h3>
           <ul>
-            <li><strong>Base Converter (v2.7.0).</strong> Mutual conversion between binary, octal, decimal, and hexadecimal.</li>
+            <li><strong>Number Base (v2.7.0).</strong> Mutual conversion between binary, octal, decimal, and hexadecimal.</li>
             <li><strong>AI Translate (v2.4.0).</strong> Professional translation with 19 languages and 3 modes (Translate, Polish, Summarize), plus a special word mode.</li>
             <li><strong>Feature Management (v2.3.0).</strong> Customizable tool organization with drag-and-drop enable/disable.</li>
-            <li><strong>Hex String Converter (v2.2.0).</strong> Bidirectional hex-to-string conversion with UTF-8, UTF-16, and ASCII encoding.</li>
+            <li><strong>Hex String (v2.2.0).</strong> Bidirectional hex-to-string conversion with UTF-8, UTF-16, and ASCII encoding.</li>
             <li><strong>Custom AI Models (v2.0.0).</strong> Flexible API configuration with custom model support.</li>
             <li><strong>AI Chat (v1.13.0).</strong> Intelligent assistant with DeepSeek integration and reasoning-process visualization.</li>
-            <li><strong>Crypto Tools (v1.12.0).</strong> Comprehensive cryptographic suite — hash functions, AES-GCM-256, RSA-2048/4096.</li>
+            <li><strong>Crypto (v1.12.0).</strong> Comprehensive cryptographic suite — hash functions, AES-GCM-256, RSA-2048/4096.</li>
             <li><strong>JWT RSA support (v1.11.1).</strong> Enhanced JWT encoder/decoder with RS256, RS384, RS512.</li>
           </ul>
         </div>
@@ -312,7 +331,7 @@
     <div class="foot-rule"></div>
     <div class="foot-bottom">
       <span>© 2026 DevUtilities</span>
-      <span>v2.14.0</span>
+      <span>v2.14.1</span>
     </div>
   </footer>
 </body>

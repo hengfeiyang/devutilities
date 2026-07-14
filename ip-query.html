@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IP Query — DevUtilities</title>
+  <title>IP Lookup — DevUtilities</title>
   <link rel="icon" type="image/png" href="images/icon.png" />
   <meta name="description" content="Your IP address at a glance. Geolocation lookup for any IPv4 or IPv6 via ipinfo.io and ip.sb. Native macOS, China-friendly." />
   <meta name="keywords" content="IP query, IP lookup, geolocation, IPv4, IPv6, ipinfo, ip.sb, network tools, macOS" />
@@ -14,7 +14,7 @@
 <body class="tool-page">
   <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
 
-  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>IP Query</strong></nav>
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>IP Lookup</strong></nav>
   <section class="page-head"><div class="page-eyebrow">§ Tool 22 of 25 · Network</div><h1 class="page-h">Your address, <em>at a glance.</em></h1></section>
   <div class="page-sub"><div></div><p>See your public IP — both v4 and v6 when available — alongside geolocation. Look up any IPv4 or IPv6 to see country, region, city, ASN, and timezone. Two providers (<code>ipinfo.io</code> and <code>ip.sb</code>) keep the lookup reliable across regions.</p></div>
 
@@ -26,7 +26,7 @@
     <div><div class="tool-meta-label">Data</div><div class="tool-meta-value">Country · region · city · ASN</div><div class="tool-meta-sub">Plus timezone</div></div>
   </div>
 
-  <section class="tool-shot"><figure><img src="images/screenshots/ip.png" alt="DevUtilities IP Query — your address, geolocation card, lookup field." /></figure><figcaption>Plate xxii — IP Query with the dual-provider geolocation card.</figcaption></section>
+  <section class="tool-shot"><figure><img src="images/screenshots/ip.png" alt="DevUtilities IP Lookup — your address, geolocation card, lookup field." /></figure><figcaption>Plate xxii — IP Lookup with the dual-provider geolocation card.</figcaption></section>
 
   <main>
   <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
@@ -36,7 +36,7 @@
       <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>Lookup any address</h4><p>Type or paste any v4 / v6 address; the geolocation card fills in.</p></div></div>
       <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Two providers</h4><p><code>ipinfo.io</code> is the primary; <code>ip.sb</code> covers regions where <code>ipinfo</code> is rate-limited or blocked. Toggle visibly.</p></div></div>
       <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>ASN &amp; org</h4><p>The autonomous-system number and the organisation it belongs to. Useful for hosting checks.</p></div></div>
-      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Timezone</h4><p>The IP's local timezone, alongside city. Pair with Timestamp Converter when reproducing user reports.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Timezone</h4><p>The IP's local timezone, alongside city. Pair with Timestamp when reproducing user reports.</p></div></div>
       <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>One-click copy</h4><p>Copy any field individually; copy the whole card as JSON.</p></div></div>
     </div>
   </div></section>
@@ -54,7 +54,7 @@
   <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
     <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
     <div class="uses">
-      <div class="use"><span class="use-tag">i — Support</span><h4>Reproducing tickets</h4><p>Look up a user's reported IP to confirm region; pair with Timestamp Converter for time-of-day reproduction.</p></div>
+      <div class="use"><span class="use-tag">i — Support</span><h4>Reproducing tickets</h4><p>Look up a user's reported IP to confirm region; pair with Timestamp for time-of-day reproduction.</p></div>
       <div class="use"><span class="use-tag">ii — Hosting</span><h4>ASN identification</h4><p>Spot hosting providers, CDNs, and ISPs by their autonomous-system numbers.</p></div>
       <div class="use"><span class="use-tag">iii — Security</span><h4>Suspicious traffic</h4><p>Geolocate IPs from access logs to spot outliers in traffic patterns.</p></div>
       <div class="use"><span class="use-tag">iv — Diag</span><h4>Dual-stack checks</h4><p>Confirm both v4 and v6 reachability from your network.</p></div>
@@ -79,10 +79,10 @@
     <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
     <div class="related-grid">
       <a class="rel" href="http-request.html"><div class="rel-head"><span>20 · Network</span><span></span></div><h4>HTTP Client</h4><p>Hit the IP directly to verify reachability or auth flow.</p><span class="rel-arrow">Open →</span></a>
-      <a class="rel" href="url-tools.html"><div class="rel-head"><span>21 · Network</span><span></span></div><h4>URL Tools</h4><p>Encode and decode URLs that resolve to those addresses.</p><span class="rel-arrow">Open →</span></a>
-      <a class="rel" href="timestamp-converter.html"><div class="rel-head"><span>03 · Convert</span><span>Updated · 2.1</span></div><h4>Timestamp Converter</h4><p>Pair geolocation with the IP's local timezone when reproducing reports.</p><span class="rel-arrow">Open →</span></a>
-      <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON Formatter</h4><p>Format the IP card you exported as JSON.</p><span class="rel-arrow">Open →</span></a>
-      <a class="rel" href="regex-tester.html"><div class="rel-head"><span>18 · Inspect</span><span></span></div><h4>Regex Test</h4><p>Pattern-match IPs out of unstructured logs.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="url-tools.html"><div class="rel-head"><span>21 · Network</span><span></span></div><h4>URL</h4><p>Encode and decode URLs that resolve to those addresses.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="timestamp-converter.html"><div class="rel-head"><span>03 · Convert</span><span>Updated · 2.1</span></div><h4>Timestamp</h4><p>Pair geolocation with the IP's local timezone when reproducing reports.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON</h4><p>Format the IP card you exported as JSON.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="regex-tester.html"><div class="rel-head"><span>18 · Inspect</span><span></span></div><h4>Regex</h4><p>Pattern-match IPs out of unstructured logs.</p><span class="rel-arrow">Open →</span></a>
       <a class="rel" href="ai-chat.html"><div class="rel-head"><span>01 · AI</span><span>Updated · 2.12</span></div><h4>AI Chat</h4><p>Ask the assistant about the ASN, the org, the routing.</p><span class="rel-arrow">Open →</span></a>
     </div>
   </div></section>
@@ -90,6 +90,6 @@
 
   <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Your address; everyone else's, <em>too.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
 
-  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.12.2</span></div></footer>
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/devutilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.14.1</span></div></footer>
 </body>
 </html>
