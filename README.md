@@ -47,7 +47,14 @@ A native macOS application for developers, containing 25 essential tools commonl
 
 ## Version
 
-Current version: 2.14.1
+Current version: 2.15.0
+
+## What's New in v2.15.0
+
+- **Spotlight Integration**: 11 commands built on App Intents — run conversions directly in Spotlight without opening the app (macOS 26 Tahoe)
+- **11 Commands, 9 Tools**: Convert Timestamp, Convert Number Base, Convert Unit, Encode/Decode Base64, URL Encode/Decode, Decode JWT, Hash Text, Generate UUID, Generate Random String
+- **Inline Results**: Results render in place under the Spotlight bar and are copied to the clipboard automatically
+- **Shortcuts & Siri**: Every command is a native App Intent, automatable in the Shortcuts app and callable through Siri
 
 ## What's New in v2.14.1
 
