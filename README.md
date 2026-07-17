@@ -34,7 +34,8 @@ A native macOS application for developers, containing 25 essential tools commonl
 
 ## Key Features
 
-- **Customizable Tool Management** - **NEW** Enable/disable tools and organize them with drag-and-drop interface
+- **Spotlight Commands** - **NEW** 11 App Intents commands run inline in Spotlight (macOS 26) with results copied to the clipboard automatically; also available in Shortcuts and Siri
+- **Customizable Tool Management** - Enable/disable tools and organize them with drag-and-drop interface
 - **Search Functionality** - Quickly find tools using the search bar in the sidebar
 - **Selectable Results** - Copy results directly from the output areas
 - **Modern UI** - Clean, intuitive interface designed for macOS
@@ -43,7 +44,16 @@ A native macOS application for developers, containing 25 essential tools commonl
 
 ## Version
 
-Current version: 2.14.1
+Current version: 2.15.0
+
+## What's New in v2.15.0
+
+- **Spotlight Integration**: 11 commands built on App Intents — run conversions directly in Spotlight without opening the app (macOS 26 Tahoe)
+- **11 Commands, 9 Tools**: Convert Timestamp (smart two-way, `now` supported), Convert Number Base, Convert Unit (all 7 categories), Encode/Decode Base64, URL Encode/Decode, Decode JWT, Hash Text (MD5/CRC32/SHA-1/256/384/512), Generate UUID (v4/v7), Generate Random String
+- **Inline Results**: Results render in place under the Spotlight bar and are copied to the clipboard automatically
+- **Shortcuts & Siri**: Every command is a native App Intent, automatable in the Shortcuts app and callable through Siri
+- **Shared Service Layer**: New `QuickToolService` extracts UI-independent conversion logic shared by tool views and intents
+- **Cleanup**: Removed stale `NSUserActivityTypes` entries from Info.plist left over from an earlier Spotlight experiment
 
 ## What's New in v2.14.1
 

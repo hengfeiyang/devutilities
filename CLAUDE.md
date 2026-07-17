@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities. Version 2.14.1 introduces concise, consistent tool names across the app, website, and documentation.
+DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities. Version 2.15.0 introduces Spotlight integration: 11 App Intents commands that run inline in Spotlight (macOS 26) with automatic clipboard copy, also available in Shortcuts and Siri.
 
 ## Key Tools & Status
 
@@ -52,6 +52,15 @@ xcodebuild -project DevUtilities.xcodeproj -scheme DevUtilities build
 # Using MCP tools
 mcp__XcodeBuildMCP__build_run_macos
 ```
+
+## Recent Updates (v2.15.0)
+- **Spotlight Integration**: 11 commands built on App Intents run inline in Spotlight on macOS 26 — no app window needed; results render in place and are copied to the clipboard automatically
+- **Command List**: Convert Timestamp (smart two-way, `now` supported), Convert Number Base, Convert Unit (all 7 categories), Encode/Decode Base64, URL Encode/Decode, Decode JWT, Hash Text, Generate UUID (v4/v7), Generate Random String
+- **Implementation**: `Services/QuickToolService.swift` holds UI-independent conversion logic; `Services/ToolIntents.swift` defines the intents, enums, and `AppShortcutsProvider`
+- **App Shortcuts Cap**: AppShortcutsProvider is limited to 10 entries per app — Decode JWT is registered as a plain intent (still in the Shortcuts actions catalog) to stay under the cap
+- **Inline Results**: Intents return `ReturnsValue<String> & ProvidesDialog` (no custom snippet view) so Spotlight renders results inline instead of opening a dialog window
+- **Parameter Order**: Enum parameters come before free-text ones in parameter summaries (e.g. "Generate MD5 hash of …") for a natural Spotlight typing flow
+- **Cleanup**: Removed stale `NSUserActivityTypes` from Info.plist (leftover from an earlier Spotlight experiment); views still contain duplicate conversion logic pending refactor to `QuickToolService`
 
 ## Recent Updates (v2.14.1)
 - **Concise Tool Names**: Shortened recognizable tool labels to their core technology or format name, including Base64, JWT, JSON, SQL, HTML, UUID, Crypto, URL, and Parquet

@@ -1,7 +1,7 @@
 # DevUtilities - Design Document
 
 ## Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities in a single, easy-to-use interface. The current release is v2.14.1. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities in a single, easy-to-use interface. The current release is v2.15.0, which adds Spotlight integration: 11 App Intents commands run inline in Spotlight (macOS 26), with results copied to the clipboard automatically and the same actions exposed to Shortcuts and Siri. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
 
 ## Architecture
 
@@ -101,6 +101,13 @@ Each tool follows a consistent pattern:
 2. **Icon Assignment**: SF Symbols icon
 3. **View Implementation**: SwiftUI view with consistent styling
 4. **Navigation Integration**: Switch case in `ContentView`
+
+### Spotlight / App Intents Layer (v2.15.0)
+Quick conversions are exposed system-wide through App Intents:
+- **`Services/QuickToolService.swift`**: UI-independent conversion logic (timestamp, Base64, URL, UUID v4/v7, JWT decode, hashes, number bases, random strings, unit conversion). Pure static functions that throw `QuickToolError` with user-readable messages.
+- **`Services/ToolIntents.swift`**: 11 `AppIntent` structs plus `AppEnum` wrappers (hash algorithm, UUID version, number base, 44 measurement units across 7 categories). Each intent returns `ReturnsValue<String> & ProvidesDialog` — no custom snippet view — so Spotlight on macOS 26 renders the result inline instead of opening a dialog window. Results are copied to the clipboard by default (per-intent toggle).
+- **`AppShortcutsProvider`**: Registers 10 commands as App Shortcuts (system cap is 10 per app); Decode JWT stays a plain intent available in the Shortcuts actions catalog. Parameter summaries put enum parameters before free text ("Generate MD5 hash of …") to match Spotlight's inline typing flow.
+- **Deployment note**: The App Intents registry follows the copy of the app in `/Applications`; a stale copy without intents shadows newer builds from DerivedData.
 
 ## Tool Specifications
 

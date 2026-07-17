@@ -36,18 +36,5 @@
 		<key>OpenUUIDGeneratorIntent</key>
 		<string>Generate UUID identifiers</string>
 	</dict>
-	<key>NSUserActivityTypes</key>
-	<array>
-		<string>OpenJSONFormatterIntent</string>
-		<string>OpenBase64Intent</string>
-		<string>OpenUUIDGeneratorIntent</string>
-		<string>OpenTimestampConverterIntent</string>
-		<string>OpenURLToolsIntent</string>
-		<string>OpenRegexTestIntent</string>
-		<string>OpenJWTIntent</string>
-		<string>OpenHTTPRequestIntent</string>
-		<string>OpenCryptoToolsIntent</string>
-		<string>OpenAIChatIntent</string>
-	</array>
 </dict>
 </plist>

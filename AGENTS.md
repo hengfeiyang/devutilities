@@ -3,7 +3,7 @@
 This file provides guidance to Codex when working with this repository.
 
 ## Project Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities. Version 2.14.1 introduces concise, consistent tool names across the app, website, and documentation.
+DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities. Version 2.15.0 introduces Spotlight integration: 11 App Intents commands that run inline in Spotlight (macOS 26) with automatic clipboard copy, also available in Shortcuts and Siri.
 
 ## Key Tools & Status
 
@@ -52,6 +52,11 @@ xcodebuild -project DevUtilities.xcodeproj -scheme DevUtilities build
 # Using MCP tools
 mcp__XcodeBuildMCP__build_run_macos
 ```
+
+## Recent Updates (v2.15.0)
+- **Spotlight Integration**: 11 commands built on App Intents run inline in Spotlight on macOS 26 — results render in place and are copied to the clipboard automatically
+- **Command List**: Convert Timestamp, Convert Number Base, Convert Unit, Encode/Decode Base64, URL Encode/Decode, Decode JWT, Hash Text, Generate UUID, Generate Random String
+- **Implementation**: `Services/QuickToolService.swift` (shared conversion logic) + `Services/ToolIntents.swift` (intents, enums, `AppShortcutsProvider`; provider capped at 10 entries — Decode JWT registered as a plain intent)
 
 ## Recent Updates (v2.14.1)
 - **Concise Tool Names**: Shortened recognizable tool labels to their core technology or format name, including Base64, JWT, JSON, SQL, HTML, UUID, Crypto, URL, and Parquet
