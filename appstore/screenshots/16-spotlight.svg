@@ -1,0 +1,102 @@
+<svg viewBox="0 0 2880 1800" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', sans-serif">
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8654f"/>
+      <stop offset="0.35" stop-color="#8a63d2"/>
+      <stop offset="0.7" stop-color="#3f7ad1"/>
+      <stop offset="1" stop-color="#6fbf5e"/>
+    </linearGradient>
+    <filter id="blob" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="160"/>
+    </filter>
+    <filter id="panelShadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="40" stdDeviation="60" flood-color="#101830" flood-opacity="0.4"/>
+    </filter>
+    <filter id="bannerShadow" x="-20%" y="-20%" width="140%" height="180%">
+      <feDropShadow dx="0" dy="14" stdDeviation="24" flood-color="#101830" flood-opacity="0.18"/>
+    </filter>
+    <linearGradient id="appIcon" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6ea8ff"/>
+      <stop offset="1" stop-color="#3671e8"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.97"/>
+      <stop offset="1" stop-color="#f6f7fa" stop-opacity="0.97"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Wallpaper -->
+  <rect width="2880" height="1800" fill="url(#wall)"/>
+  <g filter="url(#blob)">
+    <circle cx="420" cy="300" r="500" fill="#f5926e" opacity="0.75"/>
+    <circle cx="2450" cy="380" r="560" fill="#9a7ae8" opacity="0.7"/>
+    <circle cx="2280" cy="1560" r="580" fill="#8fd07a" opacity="0.75"/>
+    <circle cx="520" cy="1560" r="540" fill="#4e86dd" opacity="0.7"/>
+    <circle cx="1450" cy="950" r="620" fill="#7aa3e8" opacity="0.45"/>
+  </g>
+
+  <!-- Title banner -->
+  <g filter="url(#bannerShadow)">
+    <rect x="790" y="110" width="1300" height="160" rx="26" fill="#ffffff" fill-opacity="0.55"/>
+  </g>
+  <text x="1440" y="222" font-size="96" font-weight="700" fill="#14161c" text-anchor="middle">Spotlight Commands</text>
+
+  <!-- Spotlight panel -->
+  <g filter="url(#panelShadow)">
+    <rect x="660" y="480" width="1560" height="640" rx="60" fill="url(#glass)"/>
+    <rect x="661" y="481" width="1558" height="638" rx="59" fill="none" stroke="#ffffff" stroke-opacity="0.9" stroke-width="1.5"/>
+    <rect x="662" y="482" width="1556" height="636" rx="58" fill="none" stroke="#1b2a45" stroke-opacity="0.08" stroke-width="1.5"/>
+  </g>
+
+  <!-- Query row -->
+  <rect x="724" y="536" width="104" height="104" rx="26" fill="url(#appIcon)"/>
+  <g stroke="#ffffff" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="750" y="576" width="52" height="38" rx="7"/>
+    <path d="M764 576 v-7 a12 12 0 0 1 12 -12 a12 12 0 0 1 12 12 v7"/>
+    <path d="M750 593 h52"/>
+  </g>
+
+  <text x="866" y="610" font-size="60" fill="#171c26" font-weight="500">Generate</text>
+  <rect x="1156" y="556" width="168" height="80" rx="20" fill="#3671e8" fill-opacity="0.14"/>
+  <text x="1240" y="610" font-size="57" font-weight="600" fill="#2f66d8" text-anchor="middle">MD5</text>
+  <text x="1362" y="610" font-size="60" fill="#171c26" font-weight="500">hash of</text>
+  <text x="1584" y="610" font-size="60" fill="#171c26" font-weight="500">aaa</text>
+  <rect x="1694" y="562" width="5" height="70" rx="2.5" fill="#3671e8"/>
+  <text x="2156" y="608" font-size="44" fill="#9aa2b1" text-anchor="end">↩</text>
+
+  <!-- Divider -->
+  <line x1="724" y1="690" x2="2156" y2="690" stroke="#1b2a45" stroke-opacity="0.08" stroke-width="2"/>
+
+  <!-- Result card -->
+  <rect x="724" y="738" width="1432" height="300" rx="34" fill="#f2f4f8"/>
+  <text x="790" y="880" font-size="64" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, monospace" fill="#171c26" letter-spacing="1">47bce5c74f589f4867dbd57e9ca9f808</text>
+  <g>
+    <path d="M800 962 l13 13 l24 -26" stroke="#3f9e63" stroke-width="6.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="860" y="978" font-size="40" fill="#7c8494">Copied to clipboard</text>
+  </g>
+  <text x="2092" y="978" font-size="40" fill="#9aa2b1" text-anchor="end">DevUtilities</text>
+
+  <!-- Command pills -->
+  <g font-size="34" font-weight="500">
+    <rect x="308" y="1220" width="370" height="64" rx="32" fill="#ffffff" fill-opacity="0.55"/>
+    <text x="493" y="1263" fill="#1b2233" text-anchor="middle">Convert Timestamp</text>
+    <rect x="702" y="1220" width="285" height="64" rx="32" fill="#ffffff" fill-opacity="0.55"/>
+    <text x="844" y="1263" fill="#1b2233" text-anchor="middle">Convert Unit</text>
+    <rect x="1011" y="1220" width="270" height="64" rx="32" fill="#ffffff" fill-opacity="0.55"/>
+    <text x="1146" y="1263" fill="#1b2233" text-anchor="middle">Number Base</text>
+    <rect x="1305" y="1220" width="185" height="64" rx="32" fill="#ffffff" fill-opacity="0.55"/>
+    <text x="1397" y="1263" fill="#1b2233" text-anchor="middle">Base64</text>
+    <rect x="1514" y="1220" width="135" height="64" rx="32" fill="#ffffff" fill-opacity="0.55"/>
+    <text x="1581" y="1263" fill="#1b2233" text-anchor="middle">URL</text>
+    <rect x="1673" y="1220" width="250" height="64" rx="32" fill="#ffffff" fill-opacity="0.55"/>
+    <text x="1798" y="1263" fill="#1b2233" text-anchor="middle">Decode JWT</text>
+    <rect x="1947" y="1220" width="300" height="64" rx="32" fill="#ffffff" fill-opacity="0.55"/>
+    <text x="2097" y="1263" fill="#1b2233" text-anchor="middle">Generate UUID</text>
+    <rect x="2271" y="1220" width="300" height="64" rx="32" fill="#ffffff" fill-opacity="0.55"/>
+    <text x="2421" y="1263" fill="#1b2233" text-anchor="middle">Random String</text>
+  </g>
+
+  <!-- Caption -->
+  <text x="1440" y="1400" font-size="46" font-weight="500" fill="#ffffff" fill-opacity="0.92" text-anchor="middle">11 commands run inline in Spotlight — results copied to your clipboard</text>
+  <text x="1440" y="1470" font-size="36" fill="#ffffff" fill-opacity="0.7" text-anchor="middle">Press ⌘ Space · type · done — the app never opens</text>
+</svg>
