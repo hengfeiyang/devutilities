@@ -56,12 +56,33 @@
   <main class="page-body">
     <div class="cl-list">
 
+      <!-- ── v2.16.0 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.16.0</span>
+          <span>August 2026</span>
+          <span class="cl-tag">Latest</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">AI providers</p>
+            <h3>Two protocols, the models people use.</h3>
+            <p>AI Chat and AI Translate now share one protocol-aware runtime. Choose <strong>OpenAI Compatible</strong> for GPT, DeepSeek, Qwen, Kimi, GLM, Gemini, and compatible gateways, or <strong>Anthropic Messages</strong> for Claude.</p>
+            <h4>Claude, natively</h4>
+            <p>Anthropic providers use the native <code>/messages</code> schema and headers, top-level system prompts, image content blocks, and streamed text, thinking, and token-usage events. Claude no longer depends on an OpenAI-shaped proxy.</p>
+            <h4>Chat Completions and Responses, clarified</h4>
+            <p>OpenAI Chat Completions and Responses are model-level endpoint choices inside the OpenAI-compatible family. This keeps provider setup simple while still supporting Responses-only models and OpenAI-native web and image tools.</p>
+            <h4>Presets and safe migration</h4>
+            <p>Provider presets cover OpenAI, DeepSeek, Qwen, Kimi, GLM, Gemini, and Anthropic. Existing configurations upgrade automatically: providers default to OpenAI Compatible, and the old Responses toggle migrates to the new model endpoint field.</p>
+          </div>
+        </div>
+      </article>
+
       <!-- ── v2.15.0 ────────────────────────────────────────────────── -->
       <article class="cl-entry">
         <div class="cl-meta">
           <span class="cl-version">v2.15.0</span>
           <span>July 2026</span>
-          <span class="cl-tag">Latest</span>
         </div>
         <div class="cl-body">
           <div class="cl-section">
@@ -350,7 +371,7 @@
     <div class="foot-rule"></div>
     <div class="foot-bottom">
       <span>© 2026 DevUtilities</span>
-      <span>v2.15.0</span>
+      <span>v2.16.0</span>
     </div>
   </footer>
 </body>

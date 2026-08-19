@@ -10,8 +10,8 @@ A native macOS application for developers, containing 25 essential tools commonl
 
 ## Features
 
-- **AI Chat** - Intelligent AI assistant with enhanced Markdown rendering, one-click copy for code snippets, OpenAI Responses API support, and custom model configuration
-- **AI Translate** - Professional translation with 3 modes, 19 languages, OpenAI TTS (13 voices), and special word mode
+- **AI Chat** - Intelligent AI assistant with OpenAI-compatible and Anthropic Messages protocols, enhanced Markdown rendering, and custom model configuration
+- **AI Translate** - Professional translation using the same two-protocol model router, with 3 modes, 19 languages, OpenAI TTS (13 voices), and special word mode
 - **Timestamp** - Convert between timestamps and human-readable dates with multiple format support
 - **Unit Converter** - Convert between different units (Data, Time, Length, Weight, Temperature, Area, Volume)
 - **Number Base** - Mutual conversion between binary, octal, decimal, hexadecimal, and Base62 number systems with real-time validation
@@ -47,7 +47,16 @@ A native macOS application for developers, containing 25 essential tools commonl
 
 ## Version
 
-Current version: 2.15.0
+Current version: 2.16.0
+
+## What's New in v2.16.0
+
+- **Two AI Protocol Families**: OpenAI Compatible and Anthropic Messages are explicit provider choices
+- **Popular Provider Presets**: OpenAI, DeepSeek, Qwen, Kimi, GLM, Gemini, and Anthropic/Claude
+- **Unified Chat + Translate Routing**: Both tools now call the same protocol-aware streaming layer
+- **OpenAI Endpoint Choice**: Chat Completions and Responses remain model-level options inside the OpenAI-compatible family
+- **Safe Migration**: Existing provider/model settings are upgraded automatically
+- **Protocol-aware Testing**: Correct authentication headers and `/models` checks for each family
 
 ## What's New in v2.15.0
 

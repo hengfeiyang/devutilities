@@ -52,15 +52,15 @@
   </section>
   <div class="page-sub">
     <div></div>
-    <p>Nineteen languages, three modes — translate, polish, summarise — and a dedicated word mode that returns phonetics, meanings, examples, and etymology. v2.12 adds OpenAI TTS streaming: PCM audio decoded directly to the speaker, playback in roughly 200 ms, thirteen voices to choose from.</p>
+    <p>Nineteen languages, three modes — translate, polish, summarise — and a dedicated word mode that returns phonetics, meanings, examples, and etymology. Translation now shares AI Chat's OpenAI-compatible and Anthropic Messages routing; OpenAI TTS still offers thirteen real-time streaming voices.</p>
   </div>
 
   <div class="tool-meta">
     <div></div>
     <div>
       <div class="tool-meta-label">Version</div>
-      <div class="tool-meta-value accent">v2.12</div>
-      <div class="tool-meta-sub">May 2026 — current</div>
+      <div class="tool-meta-value accent">v2.16</div>
+      <div class="tool-meta-sub">August 2026 — current</div>
     </div>
     <div>
       <div class="tool-meta-label">Languages</div>
@@ -161,7 +161,7 @@
     <div>
       <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
       <div class="faq">
-        <details open><summary>Which model handles the translation?</summary><p>The same model picker AI Chat uses. GPT-5, DeepSeek via the Responses API, or any custom OpenAI-compatible model you've added under <code>Settings → AI → Models</code>.</p></details>
+        <details open><summary>Which model handles the translation?</summary><p>The same protocol-aware model picker AI Chat uses: GPT, DeepSeek, Qwen, Kimi, GLM, or Gemini through an OpenAI-compatible endpoint, and Claude through Anthropic Messages.</p></details>
         <details><summary>What languages are supported?</summary><p>Auto-detect plus 19 languages: English, Chinese (Simplified &amp; Traditional), Japanese, Korean, Spanish, French, German, Russian, Arabic, Hindi, Portuguese, Italian, Dutch, Turkish, Vietnamese, Thai, Indonesian.</p></details>
         <details><summary>What's word mode?</summary><p>When the input is a single word, AI Translate switches to a dictionary-style output: pronunciation (IPA where applicable), primary and secondary meanings, two example sentences, and brief etymology.</p></details>
         <details><summary>How does the OpenAI TTS streaming work?</summary><p><code>OpenAITTSService</code> hits <code>/audio/speech</code> with raw PCM streaming. Audio is fed directly into <code>AVAudioPlayerNode</code> as it arrives — playback starts within ~200 ms with no sentence pre-splitting.</p></details>
@@ -213,7 +213,7 @@
       </div>
     </div>
     <div class="foot-rule"></div>
-    <div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.15.0</span></div>
+    <div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.16.0</span></div>
   </footer>
 </body>
 </html>

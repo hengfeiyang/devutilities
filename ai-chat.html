@@ -64,7 +64,7 @@
   </section>
   <div class="page-sub">
     <div></div>
-    <p>An assistant that lives inside the same window as your formatters and converters. Markdown that breathes, code blocks you can copy in one click, the OpenAI Responses API for the latest models, and DeepSeek reasoning streamed as it thinks. Bring your own key, point it at any compatible endpoint, keep your conversation on disk.</p>
+    <p>An assistant that lives inside the same window as your formatters and converters. Markdown that breathes, code blocks you can copy in one click, and two clean protocol families: OpenAI Compatible for GPT, DeepSeek, Qwen, Kimi, GLM, and Gemini; Anthropic Messages for Claude. Bring your own key and keep your conversation on disk.</p>
   </div>
 
   <!-- ─── Meta strip ──────────────────────────────────────────────────── -->
@@ -72,13 +72,13 @@
     <div></div>
     <div>
       <div class="tool-meta-label">Version</div>
-      <div class="tool-meta-value accent">v2.12</div>
-      <div class="tool-meta-sub">May 2026 — current</div>
+      <div class="tool-meta-value accent">v2.16</div>
+      <div class="tool-meta-sub">August 2026 — current</div>
     </div>
     <div>
       <div class="tool-meta-label">Models</div>
-      <div class="tool-meta-value">GPT-5 · DeepSeek · custom</div>
-      <div class="tool-meta-sub">Any OpenAI-compatible endpoint</div>
+      <div class="tool-meta-value">GPT · Claude · open models</div>
+      <div class="tool-meta-sub">OpenAI-compatible + Anthropic Messages</div>
     </div>
     <div>
       <div class="tool-meta-label">Shortcut</div>
@@ -131,7 +131,7 @@
           <span class="cap-n">iii</span>
           <div class="cap-body">
             <h4>OpenAI Responses API</h4>
-            <p>Full SSE streaming with reasoning output. Compatible with GPT-5-pro and any model that requires the new endpoint. Toggled per-model via <code>Use Responses API</code>.</p>
+            <p>Full SSE streaming with reasoning output. Chat Completions and Responses are clear model-level endpoint choices inside the OpenAI-compatible family.</p>
           </div>
         </div>
         <div class="cap">
@@ -144,8 +144,8 @@
         <div class="cap">
           <span class="cap-n">v</span>
           <div class="cap-body">
-            <h4>Bring your own model</h4>
-            <p>Any OpenAI-compatible endpoint. Custom headers, custom auth, self-hosted URLs. Built-in list reconciles with current defaults each launch.</p>
+            <h4>Claude Messages, natively</h4>
+            <p>Claude uses Anthropic's native request schema, authentication headers, image blocks, and text/thinking SSE events — no OpenAI-shaped proxy required.</p>
           </div>
         </div>
         <div class="cap">
@@ -194,7 +194,7 @@
         <div class="step">
           <span class="step-n"></span>
           <h4>Pick a model</h4>
-          <p>Choose a built-in (GPT-5, DeepSeek), or add your own with endpoint, headers and key.</p>
+          <p>Choose a preset for OpenAI, DeepSeek, Qwen, Kimi, GLM, Gemini, or Anthropic; then add your key and model ID.</p>
           <div class="step-key">Settings · <b>⌘ ,</b> · AI · Models</div>
         </div>
         <div class="step">
@@ -277,12 +277,12 @@
       </h2>
       <div class="faq">
         <details open>
-          <summary>What's new in v2.12?</summary>
-          <p>Three threads. The Markdown renderer migrated to Textual — better code highlighting, no streaming flicker, accurate tables. Every code block carries a copy button. And the OpenAI Responses API is supported for GPT-5-pro and reasoning models, with full SSE streaming.</p>
+          <summary>What's new in v2.16?</summary>
+          <p>Provider setup now exposes two protocol families. AI Chat and AI Translate share one router, Claude uses native Anthropic Messages, and existing OpenAI/Responses settings migrate automatically.</p>
         </details>
         <details>
           <summary>Which models are supported?</summary>
-          <p>Built-ins include GPT-5, DeepSeek <code>v4-flash</code> and <code>v4-pro</code>, and GPT-5-pro via the Responses API. Beyond that — any OpenAI-compatible endpoint. Add a model under <code>Settings → AI → Models → Add Model</code>: endpoint, key, model name, optional custom headers.</p>
+          <p>Presets cover GPT-5.6 Sol/Terra/Luna, DeepSeek V4, Qwen 3.8/3.7, Kimi K3, GLM 5.2, Gemini 3.6 Flash, and Claude Fable/Opus/Sonnet 5. You can also add a custom endpoint implementing OpenAI Chat Completions/Responses or Anthropic Messages.</p>
         </details>
         <details>
           <summary>How does the copy button work?</summary>
@@ -290,7 +290,7 @@
         </details>
         <details>
           <summary>What is the OpenAI Responses API?</summary>
-          <p>OpenAI's newer endpoint, required for GPT-5-pro and any model that exposes reasoning output. Toggle it per model with <code>Use Responses API</code> in the model settings — DevUtilities handles the SSE stream, including the thinking section.</p>
+          <p>OpenAI's newer endpoint is required by some models and powers OpenAI-native web and image tools. Select <code>Responses</code> as the model's Chat Endpoint; it remains part of the OpenAI-compatible provider family.</p>
         </details>
         <details>
           <summary>How does DeepSeek reasoning surface in the UI?</summary>
@@ -414,7 +414,7 @@
     <div class="foot-rule"></div>
     <div class="foot-bottom">
       <span>© 2026 DevUtilities</span>
-      <span>v2.15.0</span>
+      <span>v2.16.0</span>
     </div>
   </footer>
 </body>
