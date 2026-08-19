@@ -275,20 +275,10 @@ struct AIGeneralSettingsView: View {
         if let savedModelKey = uiSettings.selectedDefaultModelKey,
            activeModels.contains(where: { modelKey(for: $0) == savedModelKey }) {
             selectedModelKey = savedModelKey
-        } else if !activeModels.isEmpty {
-            // Try to find OpenAI GPT-5 as the preferred default
-            if let gpt5Model = activeModels.first(where: { $0.provider.name == "OpenAI" && $0.model.modelId == "gpt-5.2" }) {
-                let key = modelKey(for: gpt5Model)
-                selectedModelKey = key
-                uiSettings.selectedDefaultModelKey = key
-            } else {
-                // Fallback to first available model
-                if let firstModel = activeModels.first {
-                    let key = modelKey(for: firstModel)
-                    selectedModelKey = key
-                    uiSettings.selectedDefaultModelKey = key
-                }
-            }
+        } else if let preferredModel = ProviderManager.preferredDefaultModel(in: activeModels) {
+            let key = modelKey(for: preferredModel)
+            selectedModelKey = key
+            uiSettings.selectedDefaultModelKey = key
         }
     }
 

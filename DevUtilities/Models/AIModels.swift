@@ -80,7 +80,8 @@ struct ChatSession: Identifiable, Codable, Hashable {
                 return model
             }
         }
-        return ProviderManager.shared.getAllActiveModels().first?.model
+        let activeModels = ProviderManager.shared.getAllActiveModels()
+        return ProviderManager.preferredDefaultModel(in: activeModels)?.model
     }
 
     // Helper to get the current model ID for API calls
@@ -107,20 +108,19 @@ struct ChatSession: Identifiable, Codable, Hashable {
             }
         }
 
-        // Ultimate fallback to first available active model
         let activeModels = ProviderManager.shared.getAllActiveModels()
-        return activeModels.first?.model.modelId
+        return ProviderManager.preferredDefaultModel(in: activeModels)?.model.modelId
     }
 
     // Helper to get current provider details for API calls
-    @MainActor func getCurrentProviderInfo() -> (baseURL: String, apiKey: String)? {
+    @MainActor func getCurrentProviderInfo() -> (baseURL: String, apiKey: String, apiProtocol: AIAPIProtocol)? {
         // If we have a selected model, get provider info
         if let providerId = selectedProviderModelId,
            let modelId = selectedModelId,
            let provider = ProviderManager.shared.getProviderById(providerId),
            provider.models.contains(where: { $0.id == modelId }),
            let apiKey = ProviderManager.shared.getAPIKey(for: providerId), !apiKey.isEmpty {
-            return (baseURL: provider.baseURL, apiKey: apiKey)
+            return (baseURL: provider.baseURL, apiKey: apiKey, apiProtocol: provider.apiProtocol)
         }
 
         // Fall back to default model from UI settings
@@ -134,15 +134,18 @@ struct ChatSession: Identifiable, Codable, Hashable {
                let provider = ProviderManager.shared.getProviderById(providerId),
                provider.models.contains(where: { $0.id == modelId }),
                let apiKey = ProviderManager.shared.getAPIKey(for: providerId), !apiKey.isEmpty {
-                return (baseURL: provider.baseURL, apiKey: apiKey)
+                return (baseURL: provider.baseURL, apiKey: apiKey, apiProtocol: provider.apiProtocol)
             }
         }
 
-        // Ultimate fallback to first available active model
         let activeModels = ProviderManager.shared.getAllActiveModels()
-        if let firstModel = activeModels.first,
-           let apiKey = ProviderManager.shared.getAPIKey(for: firstModel.provider.id), !apiKey.isEmpty {
-            return (baseURL: firstModel.provider.baseURL, apiKey: apiKey)
+        if let preferredModel = ProviderManager.preferredDefaultModel(in: activeModels),
+           let apiKey = ProviderManager.shared.getAPIKey(for: preferredModel.provider.id), !apiKey.isEmpty {
+            return (
+                baseURL: preferredModel.provider.baseURL,
+                apiKey: apiKey,
+                apiProtocol: preferredModel.provider.apiProtocol
+            )
         }
 
         return nil

@@ -22,7 +22,12 @@ struct AddModelView: View {
 
     @State private var name = ""
     @State private var modelId = ""
+    @State private var chatEndpoint: AIChatEndpoint = .chatCompletions
     @State private var capabilities = ModelCapabilities()
+
+    private var apiProtocol: AIAPIProtocol {
+        providerManager.getProviderById(providerId)?.apiProtocol ?? .openAICompatible
+    }
 
     var body: some View {
         Form {
@@ -36,20 +41,26 @@ struct AddModelView: View {
                 Text("Model ID is the identifier used in API requests")
                     .font(.caption)
                     .foregroundColor(.secondary)
+
+                if apiProtocol == .openAICompatible {
+                    Picker("Chat Endpoint", selection: $chatEndpoint) {
+                        ForEach(AIChatEndpoint.allCases) { endpoint in
+                            Text(endpoint.displayName).tag(endpoint)
+                        }
+                    }
+                    Text("Use Responses only for models or OpenAI-native tools that require /responses.")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
             }
 
             Section("Capabilities") {
                 Toggle("Supports Streaming", isOn: $capabilities.supportsStreaming)
                 Toggle("Supports Reasoning", isOn: $capabilities.supportsReasoning)
                 Toggle("Supports Function Calls", isOn: $capabilities.supportsFunctionCalls)
-                Toggle("Supports Images", isOn: $capabilities.supportsImages)
+                Toggle("Supports Image Input", isOn: $capabilities.supportsImages)
+                Toggle("Supports Image Generation", isOn: $capabilities.supportsImageGeneration)
                 Toggle("Supports Web Browsing", isOn: $capabilities.supportsWeb)
-                Toggle("Use Responses API", isOn: $capabilities.useResponsesAPI)
-                if capabilities.useResponsesAPI {
-                    Text("Routes chat through /responses instead of /chat/completions")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
             }
 
             Section("Limits") {
@@ -87,13 +98,14 @@ struct AddModelView: View {
                 .disabled(name.isEmpty || modelId.isEmpty)
             }
         }
-        .frame(width: 500, height: 400)
+        .frame(width: 520, height: 480)
     }
 
     private func addModel() {
         let model = AIModelV2(
             name: name.trimmingCharacters(in: .whitespacesAndNewlines),
             modelId: modelId.trimmingCharacters(in: .whitespacesAndNewlines),
+            chatEndpoint: chatEndpoint,
             capabilities: capabilities,
             providerId: providerId
         )
@@ -110,13 +122,19 @@ struct EditModelView: View {
 
     @State private var name: String
     @State private var modelId: String
+    @State private var chatEndpoint: AIChatEndpoint
     @State private var capabilities: ModelCapabilities
+
+    private var apiProtocol: AIAPIProtocol {
+        providerManager.getProviderById(model.providerId)?.apiProtocol ?? .openAICompatible
+    }
 
     init(model: AIModelV2, providerManager: ProviderManager) {
         self.model = model
         self.providerManager = providerManager
         self._name = State(initialValue: model.name)
         self._modelId = State(initialValue: model.modelId)
+        self._chatEndpoint = State(initialValue: model.chatEndpoint)
         self._capabilities = State(initialValue: model.capabilities)
     }
 
@@ -132,20 +150,26 @@ struct EditModelView: View {
                 Text("Model ID is the identifier used in API requests")
                     .font(.caption)
                     .foregroundColor(.secondary)
+
+                if apiProtocol == .openAICompatible {
+                    Picker("Chat Endpoint", selection: $chatEndpoint) {
+                        ForEach(AIChatEndpoint.allCases) { endpoint in
+                            Text(endpoint.displayName).tag(endpoint)
+                        }
+                    }
+                    Text("Use Responses only for models or OpenAI-native tools that require /responses.")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
             }
 
             Section("Capabilities") {
                 Toggle("Supports Streaming", isOn: $capabilities.supportsStreaming)
                 Toggle("Supports Reasoning", isOn: $capabilities.supportsReasoning)
                 Toggle("Supports Function Calls", isOn: $capabilities.supportsFunctionCalls)
-                Toggle("Supports Images", isOn: $capabilities.supportsImages)
+                Toggle("Supports Image Input", isOn: $capabilities.supportsImages)
+                Toggle("Supports Image Generation", isOn: $capabilities.supportsImageGeneration)
                 Toggle("Supports Web Browsing", isOn: $capabilities.supportsWeb)
-                Toggle("Use Responses API", isOn: $capabilities.useResponsesAPI)
-                if capabilities.useResponsesAPI {
-                    Text("Routes chat through /responses instead of /chat/completions")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
             }
 
             Section("Limits") {
@@ -183,13 +207,14 @@ struct EditModelView: View {
                 .disabled(name.isEmpty || modelId.isEmpty)
             }
         }
-        .frame(width: 500, height: 400)
+        .frame(width: 520, height: 480)
     }
 
     private func saveModel() {
         var updatedModel = model
         updatedModel.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
         updatedModel.modelId = modelId.trimmingCharacters(in: .whitespacesAndNewlines)
+        updatedModel.chatEndpoint = chatEndpoint
         updatedModel.capabilities = capabilities
 
         providerManager.updateModel(updatedModel)

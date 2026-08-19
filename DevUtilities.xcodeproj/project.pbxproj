@@ -48,6 +48,8 @@
 		93CECFE82E612F2B00F5A131 /* AISettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CECFE72E612F2B00F5A131 /* AISettingsView.swift */; };
 		93CECFE92E612F2B00F5A131 /* AIChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CECFE62E612F2B00F5A131 /* AIChatView.swift */; };
 		93CECFEB2E612F3400F5A131 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CECFEA2E612F3400F5A131 /* ChatManager.swift */; };
+		A1B2C3D4E5F60008A2B3C402 /* AIChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60008A2B3C401 /* AIChatRouter.swift */; };
+		A1B2C3D4E5F60009A2B3C402 /* AIStreamCodec.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60009A2B3C401 /* AIStreamCodec.swift */; };
 		93DB98A32E635E5200E70747 /* ImageStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DB98A22E635E5200E70747 /* ImageStorageService.swift */; };
 		93DE0EA82E7AB9F200731598 /* AIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EA72E7AB9F200731598 /* AIProvider.swift */; };
 		93DE0EAA2E7ABA0300731598 /* ProviderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE0EA92E7ABA0300731598 /* ProviderManager.swift */; };
@@ -142,6 +144,8 @@
 		93CECFE62E612F2B00F5A131 /* AIChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatView.swift; sourceTree = "<group>"; };
 		93CECFE72E612F2B00F5A131 /* AISettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISettingsView.swift; sourceTree = "<group>"; };
 		93CECFEA2E612F3400F5A131 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60008A2B3C401 /* AIChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatRouter.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60009A2B3C401 /* AIStreamCodec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIStreamCodec.swift; sourceTree = "<group>"; };
 		93DB98A22E635E5200E70747 /* ImageStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStorageService.swift; sourceTree = "<group>"; };
 		93DE0EA72E7AB9F200731598 /* AIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProvider.swift; sourceTree = "<group>"; };
 		93DE0EA92E7ABA0300731598 /* ProviderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderManager.swift; sourceTree = "<group>"; };
@@ -218,6 +222,8 @@
 				816683E82EADF7E70050027B /* AVSpeechService.swift */,
 				E5D61346D87B4A55B5F702D8 /* OpenAITTSService.swift */,
 				93DE0EA92E7ABA0300731598 /* ProviderManager.swift */,
+				A1B2C3D4E5F60008A2B3C401 /* AIChatRouter.swift */,
+				A1B2C3D4E5F60009A2B3C401 /* AIStreamCodec.swift */,
 				93DB98A22E635E5200E70747 /* ImageStorageService.swift */,
 				93CECFEA2E612F3400F5A131 /* ChatManager.swift */,
 				934569042E5FFCD600491835 /* UpdateChecker.swift */,
@@ -473,6 +479,8 @@
 				93B55B4E2E5EF944001ECD91 /* EventBatchProcessor.swift in Sources */,
 				93B179242E6EF63C00A6B491 /* MarkdownTheme.swift in Sources */,
 				93CECFEB2E612F3400F5A131 /* ChatManager.swift in Sources */,
+				A1B2C3D4E5F60008A2B3C402 /* AIChatRouter.swift in Sources */,
+				A1B2C3D4E5F60009A2B3C402 /* AIStreamCodec.swift in Sources */,
 				93CECFE52E612F2000F5A131 /* AIModels.swift in Sources */,
 				813459522E8A95EA003222BC /* FeatureManager.swift in Sources */,
 				93B55B4F2E5EF944001ECD91 /* EventStorage.swift in Sources */,
@@ -639,7 +647,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 80;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -663,7 +671,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 2.15.0;
+				MARKETING_VERSION = 2.16.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.devutilities;
 				PRODUCT_NAME = DevUtilities;
@@ -681,7 +689,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 80;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"DevUtilities/Preview Content\"";
 				DEVELOPMENT_TEAM = VS7S7V6J2F;
@@ -705,7 +713,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MARKETING_VERSION = 2.15.0;
+				MARKETING_VERSION = 2.16.0;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hengfeiyang.devutilities;
 				PRODUCT_NAME = DevUtilities;

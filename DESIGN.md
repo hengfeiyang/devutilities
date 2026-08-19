@@ -1,7 +1,7 @@
 # DevUtilities - Design Document
 
 ## Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities in a single, easy-to-use interface. The current release is v2.15.0, which adds Spotlight integration: 11 App Intents commands run inline in Spotlight (macOS 26), with results copied to the clipboard automatically and the same actions exposed to Shortcuts and Siri. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities in a single, easy-to-use interface. The current release is v2.16.0, which unifies AI Chat and AI Translate behind two provider protocol families: OpenAI Compatible and Anthropic Messages. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
 
 ## Architecture
 
@@ -59,8 +59,9 @@ DevUtilities/
 │   │   └── SpeakerMotionView.swift # Animated speaker icon (v2.8.2)
 │   ├── Services/                   # Application services
 │   │   ├── ChatManager.swift       # AI chat session management (stop preserves partial output v2.11.1)
-│   │   ├── ProviderManager.swift   # API provider configuration (built-in model sync v2.11.1)
-│   │   ├── ResponsesAPI.swift      # NEW: OpenAI Responses API with SSE streaming (v2.12.0)
+│   │   ├── ProviderManager.swift   # API provider configuration and protocol-aware connection tests
+│   │   ├── AIChatRouter.swift      # Two-family router + Anthropic Messages transport (v2.16.0)
+│   │   ├── ChatManager.swift       # Chat orchestration + OpenAI Chat/Responses transports
 │   │   ├── OpenAITTSService.swift  # NEW: OpenAI TTS real-time PCM streaming (v2.12.0)
 │   │   ├── EventManager.swift      # Analytics and telemetry
 │   │   ├── AVSpeechService.swift   # macOS native text-to-speech engine
@@ -637,12 +638,15 @@ Quick conversions are exposed system-wide through App Intents:
 ### 19. AI Chat
 **File**: `AIChatView.swift`
 
-**Features** (v2.12.0):
+**Features** (v2.16.0):
 - **Textual Markdown Rendering**: Migrated from MarkdownUI to Textual for richer output — code syntax highlighting, tables, nested lists, inline formatting
 - **Copy Code Snippets**: One-click Copy button on every code block; no text selection needed
-- **OpenAI Responses API**: `useResponsesAPI` flag in `ModelCapabilities` routes messages through `ResponsesAPI.sendChatMessage`; supports SSE streaming and reasoning/thinking output
+- **Two Provider Protocols**: `AIAPIProtocol` exposes OpenAI Compatible and Anthropic Messages; GPT, DeepSeek, Qwen, Kimi, GLM, and Gemini use the first family while Claude uses the second
+- **OpenAI Endpoint Choice**: `AIModelV2.chatEndpoint` selects Chat Completions or Responses inside the OpenAI-compatible family
+- **Anthropic Messages**: Native `/messages` payloads, top-level system prompts, `x-api-key` authentication, image content blocks, text/thinking SSE deltas, and token usage
+- **OpenAI Responses API**: Supports SSE streaming and reasoning/thinking output for models that require or benefit from `/responses`
 - **Reasoning Support**: `response.reasoning_summary_text.delta` and `response.reasoning_text.delta` events routed to collapsible thinking section (same path as DeepSeek)
-- **Multi-Model Support**: GPT-5, GPT-5 variants, DeepSeek, Gemini, and any custom OpenAI-compatible endpoint
+- **Current Model Catalog**: GPT-5.6 Sol/Terra/Luna, DeepSeek V4, Qwen 3.8/3.7, Kimi K3, GLM 5.2, Gemini 3.6 Flash, Claude Fable/Opus/Sonnet 5, and custom compatible endpoints
 - **Session Management**: Multiple chat sessions with independent model and tool selection
 - **Vision Support**: Image upload and analysis
 - **Image Generation**: GPT-5 image generation with Responses API and multi-turn refinement
@@ -657,10 +661,11 @@ Quick conversions are exposed system-wide through App Intents:
 
 **Implementation Details**:
 - **Markdown**: Textual library replaces MarkdownUI; renders during streaming without layout flicker
-- **Responses API**: `ResponsesAPI.swift` handles `response.output_text.delta` and `response.completed` SSE events; `cancelCurrentRequest()` for stop support
-- **Model Routing**: `sendMessage` checks `model.capabilities.useResponsesAPI`; falls back to Chat Completions API
-- **Model Sync**: `ProviderManager.syncBuiltInModels()` on startup reconciles built-in defaults with stored list
-- **API Configuration**: 60-second timeout; `useResponsesAPI` toggle in AddModelView/EditModelView
+- **Unified Router**: `AIChatRouter` is shared by AI Chat and AI Translate and dispatches from provider protocol plus model endpoint
+- **Responses API**: `ResponsesAPI` handles `response.output_text.delta` and `response.completed` SSE events; `cancelCurrentRequest()` supports stop
+- **Migration**: Missing provider protocol decodes as OpenAI Compatible; legacy `useResponsesAPI` decodes into `chatEndpoint = responses`
+- **Model Sync**: startup catalog sync upgrades preset providers, preserves custom models and active states, and retains model UUIDs across known tier migrations
+- **API Configuration**: Provider protocol picker, provider presets, and per-model Chat Completions/Responses endpoint picker
 
 ### 20. Struct Converter
 **Files**: `StructConverterView.swift`, `StructConverterParsers.swift`, `StructConverterGenerators.swift`, `StructIR.swift`
@@ -1044,7 +1049,7 @@ You are a professional translation engine. Please translate the text into {targe
 - **Flexible Layout**: VSplitView allows user to resize input/output areas
 
 ### Integration
-- Reuses `ChatCompletionsAPI` from AI Chat for streaming
+- Reuses `AIChatRouter` from AI Chat for OpenAI-compatible and Anthropic Messages streaming
 - Reuses `ProviderManager` for model and API key management
 - Reuses `AIProviderSettingsView` for configuration
 - Shares AI Chat's model system (no duplicate configuration)

@@ -22,15 +22,38 @@ struct AddProviderView: View {
     @State private var name = ""
     @State private var baseURL = ""
     @State private var apiKey = ""
+    @State private var apiProtocol: AIAPIProtocol = .openAICompatible
+    @State private var selectedPreset: AIProviderPreset?
     @State private var showingKeySecurely = false
     var body: some View {
         Form {
             Section("Provider Details") {
+                Menu("Use Provider Preset") {
+                    ForEach(AIProviderPreset.allCases) { preset in
+                        Button(preset.displayName) {
+                            selectedPreset = preset
+                            name = preset.providerName
+                            baseURL = preset.baseURL
+                            apiProtocol = preset.apiProtocol
+                        }
+                    }
+                }
+
                 TextField("Provider Name", text: $name)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
 
                 TextField("Base URL", text: $baseURL)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                Picker("API Protocol", selection: $apiProtocol) {
+                    ForEach(AIAPIProtocol.allCases) { apiProtocol in
+                        Text(apiProtocol.displayName).tag(apiProtocol)
+                    }
+                }
+
+                Text(apiProtocol.detail)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
 
                 VStack(alignment: .leading, spacing: 8) {
                     Text("API Key")
@@ -76,7 +99,7 @@ struct AddProviderView: View {
                 .disabled(name.isEmpty || baseURL.isEmpty)
             }
         }
-        .frame(width: 500, height: 250)
+        .frame(width: 540, height: 390)
     }
 
     private func addProvider() {
@@ -84,6 +107,8 @@ struct AddProviderView: View {
             name: name.trimmingCharacters(in: .whitespacesAndNewlines),
             baseURL: baseURL.trimmingCharacters(in: .whitespacesAndNewlines),
             apiKey: apiKey.trimmingCharacters(in: .whitespacesAndNewlines),
+            apiProtocol: apiProtocol,
+            preset: selectedPreset ?? AIProviderPreset.infer(fromProviderName: name),
             isBuiltIn: false,
             isActive: true
         )

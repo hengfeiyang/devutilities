@@ -3,7 +3,7 @@
 This file provides guidance to Codex when working with this repository.
 
 ## Project Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities. Version 2.15.0 introduces Spotlight integration: 11 App Intents commands that run inline in Spotlight (macOS 26) with automatic clipboard copy, also available in Shortcuts and Siri.
+DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities. Version 2.16.0 unifies AI integrations behind two provider protocol families: OpenAI Compatible and Anthropic Messages, shared by AI Chat and AI Translate.
 
 ## Key Tools & Status
 
@@ -28,8 +28,8 @@ All 25 tools are ✅ **Complete**:
 18. **JWT** - **HMAC and RSA algorithms** with CryptoKit security
 19. **Parquet** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
 20. **Crypto** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
-21. **AI Chat** - **Enhanced** Textual Markdown rendering, one-click copy code snippets, OpenAI Responses API, DeepSeek reasoning, and custom model support
-22. **AI Translate** - Professional translation with 3 modes, 19 languages, **OpenAI TTS** (13 voices), macOS TTS, and word mode
+21. **AI Chat** - **Enhanced** OpenAI-compatible + Anthropic Messages routing, Textual Markdown rendering, one-click copy code snippets, reasoning streams, and custom model support
+22. **AI Translate** - Professional translation with shared two-protocol routing, 3 modes, 19 languages, **OpenAI TTS** (13 voices), macOS TTS, and word mode
 23. **Currency** - Real-time currency conversion with 38 currencies, 24-hour caching, 30-day price history, and trend indicators
 24. **Struct Converter** - Convert JSON/TOML/YAML/SQL DDL into typed code structures for TypeScript, Python, Go, Java, Rust, Swift, and PHP
 25. **Data Converter** - **NEW** Convert between JSON, YAML, TOML, and CSV data formats with order preservation, nested-to-CSV flattening, and CSV type inference
@@ -52,6 +52,14 @@ xcodebuild -project DevUtilities.xcodeproj -scheme DevUtilities build
 # Using MCP tools
 mcp__XcodeBuildMCP__build_run_macos
 ```
+
+## Recent Updates (v2.16.0)
+- **Two Protocol Families**: Providers explicitly select OpenAI Compatible or Anthropic Messages
+- **Unified Router**: `Services/AIChatRouter.swift` routes both AI Chat and AI Translate; OpenAI Responses remains a model endpoint choice, not a third provider protocol
+- **Anthropic Native Mapping**: Claude requests use `/messages`, `x-api-key`, `anthropic-version`, top-level system prompts, Anthropic image blocks, and Messages SSE events
+- **Current Model Catalog**: GPT-5.6 Sol/Terra/Luna, DeepSeek V4, Qwen 3.8/3.7, Kimi K3, GLM 5.2, Gemini 3.6 Flash, and Claude Fable/Opus/Sonnet 5
+- **Migration**: Providers without a stored protocol default to OpenAI Compatible; legacy `useResponsesAPI` models migrate to `chatEndpoint = responses`
+- **Capabilities**: Image input, image generation, and web search are tracked independently and enforced before OpenAI Responses tools run
 
 ## Recent Updates (v2.15.0)
 - **Spotlight Integration**: 11 commands built on App Intents run inline in Spotlight on macOS 26 — results render in place and are copied to the clipboard automatically

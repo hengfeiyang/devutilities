@@ -28,7 +28,7 @@ struct AITranslateView: View {
     @State private var writingOffset: CGFloat = 0
 
     @State private var providerManager = ProviderManager.shared
-    @State private var chatAPI = ChatCompletionsAPI()
+    @State private var chatRouter = AIChatRouter()
 
     // Computed properties for language access
     private var sourceLanguage: TranslationLanguage {
@@ -483,9 +483,10 @@ struct AITranslateView: View {
         errorMessage = nil
 
         Task { @MainActor in
-            await chatAPI.sendMessage(
+            await chatRouter.sendMessage(
                 messages: messages,
-                modelId: model.model.modelId,
+                model: model.model,
+                apiProtocol: model.provider.apiProtocol,
                 apiKey: apiKey,
                 baseURL: model.provider.baseURL,
                 onToken: { token in

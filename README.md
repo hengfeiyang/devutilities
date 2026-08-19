@@ -26,8 +26,8 @@ A native macOS application for developers, containing 25 essential tools commonl
 - **JWT** - Complete JWT support with HMAC and RSA algorithms using CryptoKit security
 - **Parquet** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading with schema inspection
 - **Crypto** - Comprehensive cryptographic suite with hash functions (MD5, CRC32, SHA-1/256/384/512), symmetric encryption (AES-GCM-256), and asymmetric encryption (RSA-2048/4096)
-- **AI Chat** - Intelligent AI assistant with enhanced Markdown rendering, one-click copy for code snippets, OpenAI Responses API support, DeepSeek reasoning models, and custom model configuration
-- **AI Translate** - Professional translation tool with 3 modes (Translate, Polishing, Summarize), 19 language support, OpenAI TTS with 13 voices, and special word mode
+- **AI Chat** - Intelligent AI assistant with OpenAI-compatible and Anthropic Messages protocols, enhanced Markdown rendering, reasoning streams, and custom model configuration
+- **AI Translate** - Professional translation tool with the same two-protocol model routing, 3 modes (Translate, Polishing, Summarize), 19 languages, OpenAI TTS with 13 voices, and special word mode
 - **Currency** - Real-time currency conversion with 38 currencies, 24-hour caching, 30-day price history, 24-hour trend indicators, and flexible number input formats
 - **Struct Converter** - Convert JSON, TOML, YAML, and SQL DDL into typed code structures for TypeScript, Python, Go, Java, Rust, Swift, and PHP
 - **Data Converter** - **NEW** Convert between JSON, YAML, TOML, and CSV data formats with order preservation, nested-to-CSV flattening, and CSV type inference
@@ -44,7 +44,17 @@ A native macOS application for developers, containing 25 essential tools commonl
 
 ## Version
 
-Current version: 2.15.0
+Current version: 2.16.0
+
+## What's New in v2.16.0
+
+- **Two AI Protocol Families**: Provider configuration is now explicit: OpenAI Compatible or Anthropic Messages
+- **Current Model Catalog**: Presets cover GPT-5.6 Sol/Terra/Luna, DeepSeek V4, Qwen 3.8/3.7, Kimi K3, GLM 5.2, Gemini 3.6 Flash, and Claude 5; custom compatible endpoints remain supported
+- **Unified Runtime Routing**: AI Chat and AI Translate share one router; Claude uses native Messages request/stream semantics instead of OpenAI-shaped payloads
+- **Endpoint Clarity**: OpenAI Chat Completions and Responses are model-level endpoint choices inside the OpenAI-compatible family
+- **Safe Migration**: Existing providers default to OpenAI Compatible, and the old `useResponsesAPI` setting migrates to the Responses endpoint automatically
+- **Capability Enforcement**: Image input, image generation, and web search are separate capabilities; OpenAI Responses-only tools fail clearly on unsupported models
+- **Protocol-aware Connection Tests**: Bearer authentication for OpenAI-compatible providers and `x-api-key` plus `anthropic-version` for Anthropic
 
 ## What's New in v2.15.0
 

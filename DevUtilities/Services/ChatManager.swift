@@ -21,7 +21,7 @@ import SwiftUI
 class ChatManager {
     var chatSessions: [ChatSession] = []
     private let storage = ChatStorage()
-    private let chatAPI = ChatCompletionsAPI()
+    private let chatRouter = AIChatRouter()
     private let responsesAPI = ResponsesAPI()
     private var currentTask: Task<Void, Never>? = nil
     
@@ -30,7 +30,7 @@ class ChatManager {
     func cancelCurrentTask() {
         currentTask?.cancel()
         currentTask = nil
-        chatAPI.cancelCurrentRequest()
+        chatRouter.cancelCurrentRequest()
         responsesAPI.cancelCurrentRequest()
     }
     
@@ -146,9 +146,12 @@ class ChatManager {
         isLoading.wrappedValue = true
         errorMessage.wrappedValue = nil
 
-        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-5.2"
-        let useResponsesAPI = chatSessions[sessionIndex].getCurrentModel()?.capabilities.useResponsesAPI ?? false
-        print("  - Resolved Model ID: \(modelId)")
+        guard let model = chatSessions[sessionIndex].getCurrentModel() else {
+            errorMessage.wrappedValue = "No AI model selected. Please configure your provider in settings."
+            isLoading.wrappedValue = false
+            return
+        }
+        print("  - Resolved Model ID: \(model.modelId)")
 
         guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
             errorMessage.wrappedValue = "No API key configured for the selected provider. Please configure your provider in settings."
@@ -224,31 +227,18 @@ class ChatManager {
             }
         }
 
-        if useResponsesAPI {
-            await responsesAPI.sendChatMessage(
-                messages: currentMessages,
-                modelId: modelId,
-                apiKey: providerInfo.apiKey,
-                baseURL: providerInfo.baseURL,
-                onToken: onToken,
-                onComplete: onComplete,
-                onError: onError,
-                onReasoning: onReasoning,
-                onUsage: onUsage
-            )
-        } else {
-            await chatAPI.sendMessage(
-                messages: currentMessages,
-                modelId: modelId,
-                apiKey: providerInfo.apiKey,
-                baseURL: providerInfo.baseURL,
-                onToken: onToken,
-                onComplete: onComplete,
-                onError: onError,
-                onReasoning: onReasoning,
-                onUsage: onUsage
-            )
-        }
+        await chatRouter.sendMessage(
+            messages: currentMessages,
+            model: model,
+            apiProtocol: providerInfo.apiProtocol,
+            apiKey: providerInfo.apiKey,
+            baseURL: providerInfo.baseURL,
+            onToken: onToken,
+            onComplete: onComplete,
+            onError: onError,
+            onReasoning: onReasoning,
+            onUsage: onUsage
+        )
         } // end Task
 
         await currentTask?.value
@@ -273,8 +263,11 @@ class ChatManager {
         isLoading.wrappedValue = true
         errorMessage.wrappedValue = nil
 
-        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-5.2"
-        let useResponsesAPI = chatSessions[sessionIndex].getCurrentModel()?.capabilities.useResponsesAPI ?? false
+        guard let model = chatSessions[sessionIndex].getCurrentModel() else {
+            errorMessage.wrappedValue = "No AI model selected. Please configure your provider in settings."
+            isLoading.wrappedValue = false
+            return
+        }
 
         guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
             errorMessage.wrappedValue = "No API key configured for the selected provider. Please configure your provider in settings."
@@ -345,31 +338,18 @@ class ChatManager {
             }
         }
 
-        if useResponsesAPI {
-            await responsesAPI.sendChatMessage(
-                messages: currentMessages,
-                modelId: modelId,
-                apiKey: providerInfo.apiKey,
-                baseURL: providerInfo.baseURL,
-                onToken: onToken,
-                onComplete: onComplete,
-                onError: onError,
-                onReasoning: onReasoning,
-                onUsage: onUsage
-            )
-        } else {
-            await chatAPI.sendMessage(
-                messages: currentMessages,
-                modelId: modelId,
-                apiKey: providerInfo.apiKey,
-                baseURL: providerInfo.baseURL,
-                onToken: onToken,
-                onComplete: onComplete,
-                onError: onError,
-                onReasoning: onReasoning,
-                onUsage: onUsage
-            )
-        }
+        await chatRouter.sendMessage(
+            messages: currentMessages,
+            model: model,
+            apiProtocol: providerInfo.apiProtocol,
+            apiKey: providerInfo.apiKey,
+            baseURL: providerInfo.baseURL,
+            onToken: onToken,
+            onComplete: onComplete,
+            onError: onError,
+            onReasoning: onReasoning,
+            onUsage: onUsage
+        )
     }
 
     func sendMessageWithTool(
@@ -437,11 +417,26 @@ class ChatManager {
             errorMessage.wrappedValue = nil
         }
         
-        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-5.2"
+        guard let model = chatSessions[sessionIndex].getCurrentModel() else {
+            await MainActor.run {
+                errorMessage.wrappedValue = "No AI model selected."
+                isLoading.wrappedValue = false
+            }
+            return
+        }
+        let modelId = model.modelId
         
         guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
             await MainActor.run {
                 errorMessage.wrappedValue = "No API key configured for the selected provider. Please configure your provider in settings."
+                isLoading.wrappedValue = false
+            }
+            return
+        }
+
+        guard providerInfo.apiProtocol == .openAICompatible, model.capabilities.supportsWeb else {
+            await MainActor.run {
+                errorMessage.wrappedValue = "The selected model does not support OpenAI Responses web search."
                 isLoading.wrappedValue = false
             }
             return
@@ -513,11 +508,26 @@ class ChatManager {
             errorMessage.wrappedValue = nil
         }
         
-        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-5.2"
+        guard let model = chatSessions[sessionIndex].getCurrentModel() else {
+            await MainActor.run {
+                errorMessage.wrappedValue = "No AI model selected."
+                isLoading.wrappedValue = false
+            }
+            return
+        }
+        let modelId = model.modelId
         
         guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
             await MainActor.run {
                 errorMessage.wrappedValue = "No API key configured for the selected provider. Please configure your provider in settings."
+                isLoading.wrappedValue = false
+            }
+            return
+        }
+
+        guard providerInfo.apiProtocol == .openAICompatible, model.capabilities.supportsImageGeneration else {
+            await MainActor.run {
+                errorMessage.wrappedValue = "The selected model does not support OpenAI Responses image generation."
                 isLoading.wrappedValue = false
             }
             return
@@ -626,11 +636,26 @@ class ChatManager {
             errorMessage.wrappedValue = nil
         }
         
-        let modelId = chatSessions[sessionIndex].getCurrentModelId() ?? "gpt-5.2"
+        guard let model = chatSessions[sessionIndex].getCurrentModel() else {
+            await MainActor.run {
+                errorMessage.wrappedValue = "No AI model selected."
+                isLoading.wrappedValue = false
+            }
+            return
+        }
+        let modelId = model.modelId
         
         guard let providerInfo = chatSessions[sessionIndex].getCurrentProviderInfo() else {
             await MainActor.run {
                 errorMessage.wrappedValue = "No API key configured for the selected provider. Please configure your provider in settings."
+                isLoading.wrappedValue = false
+            }
+            return
+        }
+
+        guard providerInfo.apiProtocol == .openAICompatible, model.capabilities.supportsImageGeneration else {
+            await MainActor.run {
+                errorMessage.wrappedValue = "The selected model does not support OpenAI Responses image generation."
                 isLoading.wrappedValue = false
             }
             return
@@ -840,12 +865,13 @@ final class ChatCompletionsAPI: @unchecked Sendable {
         onUsage: @escaping @Sendable (TokenUsage) -> Void = { _ in }
     ) async {
         do {
-            let url = URL(string: "\(baseURL)/chat/completions")!
+            let url = try AIEndpointURL.make(baseURL: baseURL, path: "chat/completions")
 
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
             request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            AICompatibilityHeaders.apply(to: &request)
             
             // Filter out reasoning content from input messages (DeepSeek requirement)
             let openAIMessages = messages.map { message -> [String: Any] in
@@ -991,12 +1017,13 @@ final class ResponsesAPI: @unchecked Sendable {
         onUsage: @escaping @Sendable (TokenUsage) -> Void = { _ in }
     ) async {
         do {
-            let url = URL(string: "\(baseURL)/responses")!
+            let url = try AIEndpointURL.make(baseURL: baseURL, path: "responses")
 
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
             request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            AICompatibilityHeaders.apply(to: &request)
 
             let inputMessages = messages.map { message -> [String: Any] in
                 if message.hasImages {
@@ -1091,7 +1118,7 @@ final class ResponsesAPI: @unchecked Sendable {
         baseURL: String,
         previousResponseId: String? = nil
     ) async throws -> (imageURL: String, responseId: String) {
-        let url = URL(string: "\(baseURL)/responses")!
+        let url = try AIEndpointURL.make(baseURL: baseURL, path: "responses")
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -1160,7 +1187,7 @@ final class ResponsesAPI: @unchecked Sendable {
         baseURL: String,
         previousResponseId: String? = nil
     ) async throws -> (imageURL: String, responseId: String) {
-        let url = URL(string: "\(baseURL)/responses")!
+        let url = try AIEndpointURL.make(baseURL: baseURL, path: "responses")
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -1250,7 +1277,7 @@ final class ResponsesAPI: @unchecked Sendable {
         apiKey: String,
         baseURL: String
     ) async throws -> String {
-        let url = URL(string: "\(baseURL)/responses")!
+        let url = try AIEndpointURL.make(baseURL: baseURL, path: "responses")
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"

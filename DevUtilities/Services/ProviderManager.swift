@@ -41,25 +41,11 @@ class ProviderManager {
             newProvider.apiKey = ""
         }
 
-        // Auto-populate built-in models when provider name matches a known provider
-        if newProvider.models.isEmpty {
-            let knownProviders: [String: () -> AIProvider] = [
-                "openai": AIProvider.createBuiltInOpenAI,
-                "deepseek": AIProvider.createBuiltInDeepSeek
-            ]
-            if let factory = knownProviders[newProvider.name.lowercased()] {
-                let template = factory()
-                newProvider.models = template.models.map { model in
-                    AIModelV2(
-                        name: model.name,
-                        modelId: model.modelId,
-                        capabilities: model.capabilities,
-                        isActive: model.isActive,
-                        isBuiltIn: false,
-                        providerId: newProvider.id
-                    )
-                }
-            }
+        if newProvider.preset == nil {
+            newProvider.preset = AIProviderPreset.infer(fromProviderName: newProvider.name)
+        }
+        if newProvider.preset != nil {
+            newProvider = AIProviderCatalog.synchronized(newProvider)
         }
 
         providers.append(newProvider)
@@ -143,6 +129,15 @@ class ProviderManager {
         return items.sorted { $0.sortKey < $1.sortKey }
     }
 
+    static func preferredDefaultModel(in items: [ProviderModelItem]) -> ProviderModelItem? {
+        items.first { item in
+            let preset = item.provider.preset
+                ?? AIProviderPreset.infer(fromProviderName: item.provider.name)
+            return preset == AIProviderCatalog.preferredDefaultPreset
+                && item.model.modelId == AIProviderCatalog.preferredDefaultModelId
+        } ?? items.first
+    }
+
     func getProviderById(_ id: UUID) -> AIProvider? {
         return providers.first { $0.id == id }
     }
@@ -160,12 +155,17 @@ class ProviderManager {
         return keychain.getAPIKey(for: providerId)
     }
 
-    /// Returns (baseURL, apiKey) for the active OpenAI provider if configured
+    /// Returns credentials for the active OpenAI provider used by OpenAI TTS.
     func getActiveOpenAIForTTS() -> (baseURL: String, apiKey: String)? {
-        guard let provider = providers.first(where: { $0.name.lowercased() == "openai" && $0.isActive }),
-              let apiKey = keychain.getAPIKey(for: provider.id),
-              !apiKey.isEmpty else { return nil }
-        return (provider.baseURL, apiKey)
+        for provider in providers where provider.isActive && !provider.isBuiltIn {
+            let preset = provider.preset ?? AIProviderPreset.infer(fromProviderName: provider.name)
+            guard preset == .openAI,
+                  provider.apiProtocol == .openAICompatible,
+                  let apiKey = keychain.getAPIKey(for: provider.id),
+                  !apiKey.isEmpty else { continue }
+            return (provider.baseURL, apiKey)
+        }
+        return nil
     }
 
     // MARK: - Connection Testing
@@ -178,47 +178,17 @@ class ProviderManager {
             return (false, "API key is empty")
         }
 
-        // Test connection by calling the /models endpoint (OpenAI-compatible)
-        let baseURL = provider.baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let url = URL(string: "\(baseURL)/models") else {
-            return (false, "Invalid base URL")
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.timeoutInterval = 10
-
         do {
-            let (data, response) = try await URLSession.shared.data(for: request)
-
-            guard let httpResponse = response as? HTTPURLResponse else {
-                return (false, "Invalid HTTP response")
-            }
-
-            // Consider 200-299 status codes as success
-            let success = (200...299).contains(httpResponse.statusCode)
+            let result = try await AIChatRouter.testConnection(provider: provider, apiKey: apiKey)
 
             // Update last tested time if successful
-            if success, let index = providers.firstIndex(where: { $0.id == provider.id }) {
+            if result.success, let index = providers.firstIndex(where: { $0.id == provider.id }) {
                 providers[index].lastTested = Date()
                 saveProviders()
             }
 
-            if !success {
-                // Try to extract error message from response
-                if let errorJson = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                   let error = errorJson["error"] as? [String: Any],
-                   let message = error["message"] as? String {
-                    return (false, "HTTP \(httpResponse.statusCode): \(message)")
-                }
-                return (false, "HTTP status code: \(httpResponse.statusCode)")
-            }
-
-            return (true, nil)
+            return result
         } catch {
-            // Network error or timeout
             return (false, "Network error: \(error.localizedDescription)")
         }
     }
@@ -234,60 +204,35 @@ class ProviderManager {
     }
 
     private func setupBuiltInProvidersIfNeeded() {
-        // Check if built-in providers already exist
-        let hasBuiltInOpenAI = providers.contains { $0.name == "OpenAI" && $0.isBuiltIn }
-        let hasBuiltInDeepSeek = providers.contains { $0.name == "DeepSeek" && $0.isBuiltIn }
+        let existingPresets = Set(providers.filter(\.isBuiltIn).compactMap { provider in
+            provider.preset ?? AIProviderPreset.infer(fromProviderName: provider.name)
+        })
+        let missingProviderTemplates = AIProvider.builtInProviders.filter { template in
+            guard let preset = template.preset else { return false }
+            return !existingPresets.contains(preset)
+        }
 
-        if !hasBuiltInOpenAI || !hasBuiltInDeepSeek {
-            // Add missing built-in providers
-            if !hasBuiltInOpenAI {
-                let openAIProvider = AIProvider.createBuiltInOpenAI()
-                providers.append(openAIProvider)
-            }
-
-            if !hasBuiltInDeepSeek {
-                let deepSeekProvider = AIProvider.createBuiltInDeepSeek()
-                providers.append(deepSeekProvider)
-            }
-
+        if !missingProviderTemplates.isEmpty {
+            providers.append(contentsOf: missingProviderTemplates)
             saveProviders()
         }
 
-        // Sync built-in model lists with current defaults (adds new models, removes removed ones)
+        // Sync both internal templates and user-configured preset providers.
         syncBuiltInModels()
     }
 
     private func syncBuiltInModels() {
-        let defaults: [String: AIProvider] = [
-            "OpenAI": .createBuiltInOpenAI(),
-            "DeepSeek": .createBuiltInDeepSeek()
-        ]
-
         var changed = false
 
-        for i in providers.indices where providers[i].isBuiltIn {
-            guard let defaultProvider = defaults[providers[i].name] else { continue }
-            let defaultModelIds = Set(defaultProvider.models.map { $0.modelId })
-            let currentBuiltInModelIds = Set(providers[i].models.filter { $0.isBuiltIn }.map { $0.modelId })
-
-            guard currentBuiltInModelIds != defaultModelIds else { continue }
-
-            // Rebuild built-in models from defaults, preserving isActive state
-            let updatedBuiltIns = defaultProvider.models.map { defaultModel -> AIModelV2 in
-                let isActive = providers[i].models.first(where: { $0.modelId == defaultModel.modelId })?.isActive ?? defaultModel.isActive
-                return AIModelV2(
-                    name: defaultModel.name,
-                    modelId: defaultModel.modelId,
-                    capabilities: defaultModel.capabilities,
-                    isActive: isActive,
-                    isBuiltIn: true,
-                    providerId: providers[i].id
-                )
+        for index in providers.indices {
+            guard providers[index].preset != nil
+                    || AIProviderPreset.infer(fromProviderName: providers[index].name) != nil else {
+                continue
             }
 
-            // Keep user-added custom models
-            let customModels = providers[i].models.filter { !$0.isBuiltIn }
-            providers[i].models = updatedBuiltIns + customModels
+            let synchronized = AIProviderCatalog.synchronized(providers[index])
+            guard synchronized != providers[index] else { continue }
+            providers[index] = synchronized
             changed = true
         }
 

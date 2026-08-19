@@ -186,13 +186,7 @@ struct AIChatView: View {
             return matchingModel
         }
 
-        // If no provider/model selection found, return nil to use default
-
-        // Default to OpenAI GPT-5 if available, otherwise first available model
-        if let gpt5Model = availableModels.first(where: { $0.provider.name == "OpenAI" && $0.model.modelId == "gpt-5.2" }) {
-            return gpt5Model
-        }
-        return availableModels.first
+        return ProviderManager.preferredDefaultModel(in: availableModels)
     }
 
     private func updateChatProviderModel(_ providerModel: ProviderModelItem, for session: ChatSession) {

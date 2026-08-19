@@ -22,6 +22,7 @@ struct AIProviderDetailView: View {
     @State private var name: String = ""
     @State private var baseURL: String = ""
     @State private var apiKey: String = ""
+    @State private var apiProtocol: AIAPIProtocol = .openAICompatible
     @State private var showingKeySecurely = false
     @State private var isTestingConnection = false
     @State private var testResult: Bool?
@@ -88,16 +89,34 @@ struct AIProviderDetailView: View {
                                         .frame(minWidth: 300)
                                 }
 
+                                HStack {
+                                    Text("API Protocol")
+                                    Spacer()
+                                    Picker("API Protocol", selection: $apiProtocol) {
+                                        ForEach(AIAPIProtocol.allCases) { apiProtocol in
+                                            Text(apiProtocol.displayName).tag(apiProtocol)
+                                        }
+                                    }
+                                    .labelsHidden()
+                                    .frame(minWidth: 220)
+                                    .disabled(provider.preset != nil)
+                                }
+
+                                Text(provider.preset == nil
+                                     ? apiProtocol.detail
+                                     : "The selected provider preset fixes this protocol family.")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+
                         VStack(alignment: .leading, spacing: 8) {
                             HStack {
                                 Text("API Key")
 
-                                // Tip about OpenAI compatibility
                                 HStack(spacing: 4) {
                                     Image(systemName: "info.circle")
                                         .font(.caption)
                                         .foregroundColor(.secondary)
-                                    Text("Only OpenAI compatible API providers are supported")
+                                    Text("Authentication is selected automatically by API protocol")
                                         .font(.caption)
                                         .foregroundColor(.secondary)
                                 }
@@ -254,6 +273,7 @@ struct AIProviderDetailView: View {
     private func loadProviderData(from provider: AIProvider) {
         name = provider.name
         baseURL = provider.baseURL
+        apiProtocol = provider.apiProtocol
         loadAPIKey()
     }
 
@@ -279,6 +299,7 @@ struct AIProviderDetailView: View {
             provider.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
             provider.baseURL = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
             provider.apiKey = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
+            provider.apiProtocol = apiProtocol
 
             // Small delay for better UX (shows the "Saving..." state)
             try? await Task.sleep(nanoseconds: 300_000_000) // 0.3 seconds
@@ -309,6 +330,7 @@ struct AIProviderDetailView: View {
         provider.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
         provider.baseURL = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
         provider.apiKey = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        provider.apiProtocol = apiProtocol
 
         // Save immediately before testing
         providerManager.updateProvider(provider)

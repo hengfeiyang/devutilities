@@ -322,8 +322,11 @@ enum YAMLDataCodec {
             return .object(pairs)
         case .sequence(let sequence):
             return .array(sequence.map { convert($0) })
+        case .alias:
+            // Yams exposes aliases as references without the anchored value here.
+            return .null
         @unknown default:
-            // Aliases / anchors and any future node kinds collapse to null.
+            // Any future node kinds collapse to null.
             return .null
         }
     }
