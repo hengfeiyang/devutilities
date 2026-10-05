@@ -72,7 +72,7 @@ Current version: 3.0
 ## What's New in v3.0
 
 - **Free Download**: 18 tools stay free; AI Chat, AI Translate, Parquet, IP Lookup, Currency, JWT, and Crypto are unlocked with Lifetime Pro
-- **Try Pro for 30 Days**: Start the full trial when ready, then unlock Pro forever with one purchase after it expires
+- **Try Pro for 30 Days**: Start the full trial when ready, then unlock Pro forever with a one-time USD 19.99 purchase after it expires; the final price is localized by the App Store
 - **Early Supporters Keep Pro**: Verified original acquisitions from January 1, 2025 through October 24, 2026, paid or free, automatically receive permanent Pro
 - **Two AI Protocol Families**: OpenAI Compatible and Anthropic Messages are explicit provider choices
 - **Popular Provider Presets**: OpenAI, DeepSeek, Qwen, Kimi, GLM, Gemini, and Anthropic/Claude
