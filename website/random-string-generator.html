@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Random String — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="Cryptographically secure random string generation. Five presets — passwords, API keys, hex strings, PIN codes, readable codes — backed by SecRandomCopyBytes." />
+  <meta name="keywords" content="random string, password generator, API key, hex string, secure random, SecRandomCopyBytes, macOS" />
+  <meta property="og:image" content="images/screenshots/random-string.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400..700;1,400..700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
+
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>Random String</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 15 of 25 · Generate</div><h1 class="page-h">Random, <em>but secure.</em></h1></section>
+  <div class="page-sub"><div></div><p>Cryptographically secure random strings via <code>SecRandomCopyBytes</code> with rejection sampling — no modulo bias, no off-by-one. Five presets cover the daily cases; advanced rules enforce per-class minimums for strict policies.</p></div>
+
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Updated</div><div class="tool-meta-value accent">v2.9</div><div class="tool-meta-sub">First shipped</div></div>
+    <div><div class="tool-meta-label">Presets</div><div class="tool-meta-value">Five</div><div class="tool-meta-sub">Password · API key · hex · PIN · readable</div></div>
+    <div><div class="tool-meta-label">Source</div><div class="tool-meta-value">SecRandomCopyBytes</div><div class="tool-meta-sub">Rejection sampling</div></div>
+    <div><div class="tool-meta-label">Bulk</div><div class="tool-meta-value">Up to 20</div><div class="tool-meta-sub">Per generation</div></div>
+  </div>
+
+  <section class="tool-shot"><figure><img src="images/screenshots/random-string.png" alt="DevUtilities Random String — preset picker, character classes, requirements, output list." /></figure><figcaption>Plate xv — Random String with the preset picker and the per-class minimum rules.</figcaption></section>
+
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Seven things <span class="muted">it does carefully.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Five presets</h4><p>Strong Password (16), API Key (32), Hex String (64), PIN Code (6 digits), Readable Code (no ambiguous characters). Pick and go.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>Customisable charset</h4><p>Toggle uppercase, lowercase, digits, symbols. Compose your own pool when the presets don't fit.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Length 1 – 100</h4><p>From 4-digit PIN to a 100-character secret. Set the length once; the generator obeys.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Per-class minimums</h4><p>Enforce "at least 2 digits" or "at least 1 symbol" — the kind of rule strict password policies still require.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Bulk generation</h4><p>Up to 20 strings per click. Output as a list, copy individually or all at once.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>Rejection sampling</h4><p>Drawing from <code>SecRandomCopyBytes</code> with rejection sampling eliminates modulo bias — every character has equal probability.</p></div></div>
+      <div class="cap"><span class="cap-n">vii</span><div class="cap-body"><h4>State persistence</h4><p>Length, charset, and rule preferences stick across sessions.</p></div></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>to a fresh secret.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Pick a preset</h4><p>Or choose "custom" and toggle character classes by hand.</p><div class="step-key">Preset</div></div>
+      <div class="step"><span class="step-n"></span><h4>Set length and rules</h4><p>Length, plus minimum counts per class if you need them.</p><div class="step-key">Length · rules</div></div>
+      <div class="step"><span class="step-n"></span><h4>Generate</h4><p>One string or twenty. Sub-second, even at 100 characters × 20.</p><div class="step-key">Generate</div></div>
+      <div class="step"><span class="step-n"></span><h4>Copy</h4><p>One-click copy on each, or "copy all" for the whole list.</p><div class="step-key">Copy · <b>⌘ C</b></div></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — Auth</span><h4>Strong passwords</h4><p>Generate one for the user account you're creating; remember to store it somewhere.</p></div>
+      <div class="use"><span class="use-tag">ii — API</span><h4>Secret keys</h4><p>Mint API keys, service tokens, and webhook secrets with the right entropy.</p></div>
+      <div class="use"><span class="use-tag">iii — DB</span><h4>Test fixtures</h4><p>Bulk-generate IDs, slugs, and tokens for seed scripts.</p></div>
+      <div class="use"><span class="use-tag">iv — Identity</span><h4>OAuth state</h4><p>Generate <code>state</code> and <code>nonce</code> values for OAuth flows.</p></div>
+      <div class="use"><span class="use-tag">v — Read</span><h4>Readable codes</h4><p>The Readable preset omits ambiguous characters — useful when humans will read or type the result.</p></div>
+      <div class="use"><span class="use-tag">vi — Crypto</span><h4>HMAC keys</h4><p>Generate hex strings of the right length for HMAC-256/384/512 secrets.</p></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>Where does the randomness come from?</summary><p>From <code>SecRandomCopyBytes</code>, the macOS CSPRNG. Suitable for passwords, API keys, and security tokens.</p></details>
+      <details><summary>Is there modulo bias?</summary><p>No. The generator uses rejection sampling — drawing more bytes than strictly needed and discarding values that would skew the distribution.</p></details>
+      <details><summary>What's in each preset?</summary><p><strong>Strong Password</strong>: 16 chars, all classes. <strong>API Key</strong>: 32 chars, alphanumeric. <strong>Hex String</strong>: 64 hex chars. <strong>PIN</strong>: 6 digits. <strong>Readable</strong>: no <code>0/O</code>, <code>1/l/I</code>, etc.</p></details>
+      <details><summary>Can I enforce minimums per class?</summary><p>Yes. Toggle "at least N digits / uppercase / symbols" — the generator re-rolls until the constraint is met (or warns if the constraint is impossible for the chosen length).</p></details>
+      <details><summary>How many at once?</summary><p>Up to 20 per generation. The whole list copies in one click.</p></details>
+      <details><summary>Are generated strings stored?</summary><p>Only in your local session, until you regenerate. Nothing leaves your machine.</p></details>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="uuid-generator.html"><div class="rel-head"><span>14 · Generate</span><span></span></div><h4>UUID</h4><p>v1, v4, v5, v7 — when an ID, not just a string, is what you need.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="crypto-tools.html"><div class="rel-head"><span>23 · Network</span><span>New · 1.12</span></div><h4>Crypto</h4><p>Hash and encrypt the secrets you generated.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="jwt-encoder.html"><div class="rel-head"><span>13 · Format</span><span></span></div><h4>JWT</h4><p>Use a fresh HMAC secret to sign tokens here.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="qr-code.html"><div class="rel-head"><span>16 · Generate</span><span></span></div><h4>QR Code</h4><p>Encode a fresh token as a QR for an offline transfer.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="base64-encoder.html"><div class="rel-head"><span>12 · Format</span><span></span></div><h4>Base64</h4><p>Encode a binary secret into Base64 for transport.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="hex-converter.html"><div class="rel-head"><span>06 · Convert</span><span>New · 2.2</span></div><h4>Hex String</h4><p>Round-trip hex strings into raw bytes when needed.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
+
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Cryptographically secure, <em>preset-friendly.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
+
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/DevUtilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.15.0</span></div></footer>
+</body>
+</html>

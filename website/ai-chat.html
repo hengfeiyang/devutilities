@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Chat — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="AI Chat in DevUtilities — Markdown rendering, syntax-highlighted code, one-click copy, OpenAI Responses API, and DeepSeek reasoning. A calm developer assistant in a single native macOS window." />
+  <meta name="keywords" content="AI chat, AI assistant, developer AI, Markdown rendering, copy code, OpenAI Responses API, DeepSeek reasoning, custom AI models, coding assistant, macOS AI" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="AI Chat — DevUtilities" />
+  <meta property="og:description" content="An assistant that lives in the same window as your formatters and converters. Markdown that breathes, code blocks you can copy in one click." />
+  <meta property="og:image" content="images/screenshots/aichat.png" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="AI Chat — DevUtilities" />
+  <meta property="twitter:description" content="Markdown rendering, copy code, Responses API, DeepSeek reasoning. Built into a native macOS window." />
+  <meta property="twitter:image" content="images/screenshots/aichat.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400..700;1,400..700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="tool-page">
+  <!-- ─── Nav ─────────────────────────────────────────────────────────── -->
+  <header class="nav nav-static">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="DevUtilities home">
+        <img src="images/icon.png" alt="" width="26" height="26" class="logo-img" />
+        <span>DevUtilities</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary"><a href="index.html">Index</a><a href="index.html#tools">Tools</a>
+        <a href="index.html#feature">Spotlight</a>
+        <a href="index.html#voices">Voices</a>
+        <a href="release-notes.html">Changelog</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="index.html#download" class="nav-pill">
+          <span>Download</span>
+          <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="nav-progress"></div>
+  </header>
+
+  <!-- ─── Crumbs ──────────────────────────────────────────────────────── -->
+  <nav class="tool-crumbs" aria-label="Breadcrumb">
+    <a href="index.html">DevUtilities</a>
+    <span class="sep">/</span>
+    <a href="index.html#tools">Tools</a>
+    <span class="sep">/</span>
+    <strong>AI Chat</strong>
+  </nav>
+
+  <!-- ─── Page head ───────────────────────────────────────────────────── -->
+  <section class="page-head">
+    <div class="page-eyebrow">§ Tool 01 of 25 · AI</div>
+    <h1 class="page-h">AI Chat, rewritten <em>for builders.</em></h1>
+  </section>
+  <div class="page-sub">
+    <div></div>
+    <p>An assistant that lives inside the same window as your formatters and converters. Markdown that breathes, code blocks you can copy in one click, and two clean protocol families: OpenAI Compatible for GPT, DeepSeek, Qwen, Kimi, GLM, and Gemini; Anthropic Messages for Claude. Bring your own key and keep your conversation on disk.</p>
+  </div>
+
+  <!-- ─── Meta strip ──────────────────────────────────────────────────── -->
+  <div class="tool-meta">
+    <div></div>
+    <div>
+      <div class="tool-meta-label">Version</div>
+      <div class="tool-meta-value accent">v2.16</div>
+      <div class="tool-meta-sub">August 2026 — current</div>
+    </div>
+    <div>
+      <div class="tool-meta-label">Models</div>
+      <div class="tool-meta-value">GPT · Claude · open models</div>
+      <div class="tool-meta-sub">OpenAI-compatible + Anthropic Messages</div>
+    </div>
+    <div>
+      <div class="tool-meta-label">Shortcut</div>
+      <div class="tool-meta-value">⌘ N</div>
+      <div class="tool-meta-sub">From anywhere in the app</div>
+    </div>
+    <div>
+      <div class="tool-meta-label">Network</div>
+      <div class="tool-meta-value">Your endpoint only</div>
+      <div class="tool-meta-sub">No proxy, no telemetry, no logs</div>
+    </div>
+  </div>
+
+  <!-- ─── Hero shot ───────────────────────────────────────────────────── -->
+  <section class="tool-shot">
+    <figure>
+      <img src="images/screenshots/aichat.png" alt="DevUtilities AI Chat — Markdown rendering with syntax-highlighted code, copy buttons, and conversation history." />
+    </figure>
+    <figcaption>Plate i — AI Chat with Markdown rendering, syntax-highlighted code, and the v2.12 copy affordance on every fence.</figcaption>
+  </section>
+
+  <main>
+  <!-- ─── § 01 Capabilities ───────────────────────────────────────────── -->
+  <section class="tool-block">
+    <div class="tool-block-meta">
+      <span class="tool-block-num">§ 01</span>
+      <span>Capabilities</span>
+    </div>
+    <div>
+      <h2 class="tool-block-h">
+        Nine quiet things<br />
+        <span class="muted">it does well.</span>
+      </h2>
+      <div class="caps">
+        <div class="cap">
+          <span class="cap-n">i</span>
+          <div class="cap-body">
+            <h4>Markdown that breathes</h4>
+            <p>Rebuilt on the Textual rendering engine. Headings, tables, nested lists and blockquotes are typeset, not just displayed. Streaming updates land without layout flicker.</p>
+          </div>
+        </div>
+        <div class="cap">
+          <span class="cap-n">ii</span>
+          <div class="cap-body">
+            <h4>One-click code copy</h4>
+            <p>Every fenced block carries its own clipboard button. Grab a command, a config, or a snippet without touching your prompt history.</p>
+          </div>
+        </div>
+        <div class="cap">
+          <span class="cap-n">iii</span>
+          <div class="cap-body">
+            <h4>OpenAI Responses API</h4>
+            <p>Full SSE streaming with reasoning output. Chat Completions and Responses are clear model-level endpoint choices inside the OpenAI-compatible family.</p>
+          </div>
+        </div>
+        <div class="cap">
+          <span class="cap-n">iv</span>
+          <div class="cap-body">
+            <h4>DeepSeek deepthink</h4>
+            <p>Models stream their chain of thought into a collapsible section above the answer. Read it, ignore it, fold it away — your call.</p>
+          </div>
+        </div>
+        <div class="cap">
+          <span class="cap-n">v</span>
+          <div class="cap-body">
+            <h4>Claude Messages, natively</h4>
+            <p>Claude uses Anthropic's native request schema, authentication headers, image blocks, and text/thinking SSE events — no OpenAI-shaped proxy required.</p>
+          </div>
+        </div>
+        <div class="cap">
+          <span class="cap-n">vi</span>
+          <div class="cap-body">
+            <h4>Persistent sessions</h4>
+            <p>Multiple chats, each with its own model and history. Pick up the conversation that was interrupted last Tuesday, not a fresh prompt every time.</p>
+          </div>
+        </div>
+        <div class="cap">
+          <span class="cap-n">vii</span>
+          <div class="cap-body">
+            <h4>Stop, without loss</h4>
+            <p>Hit <code>⎋</code> mid-stream and the partial response is preserved exactly as it landed. The streaming indicator goes away; your context doesn't.</p>
+          </div>
+        </div>
+        <div class="cap">
+          <span class="cap-n">viii</span>
+          <div class="cap-body">
+            <h4>Image generation</h4>
+            <p>Generate diagrams and visual references through the Responses API, refined turn by turn — the conversation context comes with you.</p>
+          </div>
+        </div>
+        <div class="cap">
+          <span class="cap-n">ix</span>
+          <div class="cap-body">
+            <h4>Web search, when asked</h4>
+            <p>Optional real-time search for fresh documentation and current best practice. Off by default; opt in per session, never silently.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── § 02 Typical session ────────────────────────────────────────── -->
+  <section class="tool-block">
+    <div class="tool-block-meta">
+      <span class="tool-block-num">§ 02</span>
+      <span>A typical session</span>
+    </div>
+    <div>
+      <h2 class="tool-block-h">
+        Four moves <em>from prompt to paste.</em>
+      </h2>
+      <div class="steps">
+        <div class="step">
+          <span class="step-n"></span>
+          <h4>Pick a model</h4>
+          <p>Choose a preset for OpenAI, DeepSeek, Qwen, Kimi, GLM, Gemini, or Anthropic; then add your key and model ID.</p>
+          <div class="step-key">Settings · <b>⌘ ,</b> · AI · Models</div>
+        </div>
+        <div class="step">
+          <span class="step-n"></span>
+          <h4>Ask the question</h4>
+          <p>Type, paste a stack trace, or drop in a code block. Reasoning models stream their thinking first, in a panel you can fold.</p>
+          <div class="step-key">Send · <b>↩</b></div>
+        </div>
+        <div class="step">
+          <span class="step-n"></span>
+          <h4>Take the code</h4>
+          <p>Every fenced block has its own copy button. The last block is one shortcut away — no selection, no scroll-back.</p>
+          <div class="step-key">Last block · <b>⌘ ⇧ C</b></div>
+        </div>
+        <div class="step">
+          <span class="step-n"></span>
+          <h4>Keep going</h4>
+          <p>The thread persists across launches with its model and history intact. Start a new session for a new line of work; the old one is still on disk.</p>
+          <div class="step-key">New chat · <b>⌘ N</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── § 03 Made for these tasks ───────────────────────────────────── -->
+  <section class="tool-block">
+    <div class="tool-block-meta">
+      <span class="tool-block-num">§ 03</span>
+      <span>Made for these tasks</span>
+    </div>
+    <div>
+      <h2 class="tool-block-h">
+        The work it actually <em>does.</em><br />
+        <span class="muted">Not generic chat — developer chat.</span>
+      </h2>
+      <div class="uses">
+        <div class="use">
+          <span class="use-tag">i — Review</span>
+          <h4>Code reads &amp; second opinions</h4>
+          <p>Paste a function, ask for a critique. The Markdown renderer keeps diffs, lists, and fenced suggestions intact instead of mashing them into prose.</p>
+        </div>
+        <div class="use">
+          <span class="use-tag">ii — Debug</span>
+          <h4>Stack traces, line by line</h4>
+          <p>Drop the error, attach the relevant block, walk the cause. Reasoning models surface their hypothesis path before the fix lands.</p>
+        </div>
+        <div class="use">
+          <span class="use-tag">iii — Architecture</span>
+          <h4>Design conversations</h4>
+          <p>Trade-offs, patterns, the boring questions that decide a system. Persistent sessions mean tomorrow's thread can pick up today's context.</p>
+        </div>
+        <div class="use">
+          <span class="use-tag">iv — Learn</span>
+          <h4>Concept explanations</h4>
+          <p>From a half-understood paper to working examples. Fold the deepthink panel away once the answer clicks; reopen it later if you need to retrace.</p>
+        </div>
+        <div class="use">
+          <span class="use-tag">v — Optimise</span>
+          <h4>Profile-shaped questions</h4>
+          <p>Bring numbers, get specific suggestions. The assistant doesn't guess at hot paths it can't see — it asks for the data, then proposes.</p>
+        </div>
+        <div class="use">
+          <span class="use-tag">vi — Secure</span>
+          <h4>Threat models &amp; review</h4>
+          <p>Walk an auth flow, audit a snippet, reason about a CVE. Web search is opt-in for when documentation needs to be current, not stale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── § 04 FAQ ────────────────────────────────────────────────────── -->
+  <section class="tool-block">
+    <div class="tool-block-meta">
+      <span class="tool-block-num">§ 04</span>
+      <span>Questions, answered</span>
+    </div>
+    <div>
+      <h2 class="tool-block-h">
+        Things people ask <em>before they download.</em>
+      </h2>
+      <div class="faq">
+        <details open>
+          <summary>What's new in v2.16?</summary>
+          <p>Provider setup now exposes two protocol families. AI Chat and AI Translate share one router, Claude uses native Anthropic Messages, and existing OpenAI/Responses settings migrate automatically.</p>
+        </details>
+        <details>
+          <summary>Which models are supported?</summary>
+          <p>Presets cover GPT-6.1 Sol (default), GPT-6 Sol/Luna/Astra, DeepSeek V4.1-Flash with image input and V4-Pro, Qwen 3.8/3.7, Kimi K3, GLM 5.2, Gemini 3.6 Flash, and Claude Fable 5.1 / Opus 5.5 / Sonnet 5.5. You can also add a custom endpoint implementing OpenAI Chat Completions/Responses or Anthropic Messages. Catalog upgrades retain your credentials, custom models, enablement choices, and saved model identities.</p>
+        </details>
+        <details>
+          <summary>How does the copy button work?</summary>
+          <p>Every fenced code block in the response renders with a copy button in its top-right corner. Click it; the entire snippet is on your clipboard. <code>⌘ ⇧ C</code> grabs the most recent block from anywhere in the chat.</p>
+        </details>
+        <details>
+          <summary>What is the OpenAI Responses API?</summary>
+          <p>OpenAI's newer endpoint is required by some models and powers OpenAI-native web and image tools. Select <code>Responses</code> as the model's Chat Endpoint; it remains part of the OpenAI-compatible provider family.</p>
+        </details>
+        <details>
+          <summary>How does DeepSeek reasoning surface in the UI?</summary>
+          <p>DeepSeek <code>v4-pro</code> streams its chain of thought as a collapsible panel above the final answer. The panel opens by default; collapse it from the brain icon. The same panel is used for any Responses-API model that exposes thinking output.</p>
+        </details>
+        <details>
+          <summary>Is conversation history saved?</summary>
+          <p>Yes. Each chat session is persisted on disk, with its own model selection and history. Sessions survive launches, updates, and the rest. Delete a session and its history goes with it.</p>
+        </details>
+        <details>
+          <summary>How do I stop a streaming response?</summary>
+          <p>The stop button cancels the request immediately. Anything the model has already produced is preserved as-is — the streaming indicator is removed and the partial response stays in the thread.</p>
+        </details>
+        <details>
+          <summary>Where do my API keys live?</summary>
+          <p>In macOS UserDefaults on your machine. Keys never reach our servers — there are no servers. The chat goes directly from DevUtilities to the endpoint you configured. See the <a href="privacy_policy.html">privacy policy</a> for the full picture.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── § 05 Companion tools ────────────────────────────────────────── -->
+  <section class="tool-block">
+    <div class="tool-block-meta">
+      <span class="tool-block-num">§ 05</span>
+      <span>Companion tools</span>
+    </div>
+    <div>
+      <h2 class="tool-block-h">
+        Better with the rest <em>of the shelf.</em>
+      </h2>
+      <div class="related-grid">
+        <a class="rel" href="ai-translate.html">
+          <div class="rel-head"><span>02 · AI</span><span>Updated · 2.12</span></div>
+          <h4>AI Translate</h4>
+          <p>Three modes, nineteen languages, real-time TTS streaming. Word mode adds phonetics, meanings, examples, etymology.</p>
+          <span class="rel-arrow">Open →</span>
+        </a>
+        <a class="rel" href="json-formatter.html">
+          <div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div>
+          <h4>JSON</h4>
+          <p>Format, validate, diff. Hand the AI a payload it can actually read; paste its corrections back without losing your cursor.</p>
+          <span class="rel-arrow">Open →</span>
+        </a>
+        <a class="rel" href="http-request.html">
+          <div class="rel-head"><span>20 · Network</span><span></span></div>
+          <h4>HTTP Client</h4>
+          <p>Methods, headers, auth, streaming. Reproduce the request the AI proposes; paste the response back into the next turn.</p>
+          <span class="rel-arrow">Open →</span>
+        </a>
+        <a class="rel" href="text-compare.html">
+          <div class="rel-head"><span>17 · Inspect</span><span>New · 2.11</span></div>
+          <h4>Text Compare</h4>
+          <p>Side-by-side diff with character and line metrics. Compare an AI rewrite against the original; keep what survives.</p>
+          <span class="rel-arrow">Open →</span>
+        </a>
+        <a class="rel" href="jwt-encoder.html">
+          <div class="rel-head"><span>13 · Format</span><span></span></div>
+          <h4>JWT</h4>
+          <p>Encode and decode JSON Web Tokens. Hand the AI a decoded claim set; paste it back as a fresh signed token.</p>
+          <span class="rel-arrow">Open →</span>
+        </a>
+        <a class="rel" href="random-string-generator.html">
+          <div class="rel-head"><span>15 · Generate</span><span>New · 2.9</span></div>
+          <h4>Random String</h4>
+          <p>Cryptographically secure presets — passwords, API keys, tokens, IDs, slugs. The test data the AI keeps asking for.</p>
+          <span class="rel-arrow">Open →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <!-- ─── CTA ─────────────────────────────────────────────────────────── -->
+  <section class="tool-cta">
+    <div>
+      <div class="page-eyebrow" style="padding-bottom:0;">§ Download</div>
+    </div>
+    <h2 class="tool-cta-h">
+      One assistant, twenty-three tools, <em>one quiet window.</em>
+    </h2>
+    <div class="tool-cta-actions">
+      <a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+          <path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" />
+        </svg>
+        Download — Mac App Store
+      </a>
+      <a href="release-notes.html" class="btn-ghost lg">Changelog</a>
+    </div>
+  </section>
+
+  <!-- ─── Footer ──────────────────────────────────────────────────────── -->
+  <footer class="foot">
+    <div class="foot-inner">
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <img src="images/icon.png" alt="" width="26" height="26" class="logo-img" />
+          <span>DevUtilities</span>
+        </a>
+        <p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p>
+      </div>
+      <div class="foot-cols">
+        <div>
+          <h5>Product</h5>
+          <a href="index.html#tools">Tools</a>
+          <a href="index.html#feature">Spotlight</a>
+          <a href="index.html#download">Download</a>
+        </div>
+        <div>
+          <h5>Resources</h5>
+          <a href="release-notes.html">Changelog</a>
+          <a href="https://github.com/hengfeiyang/DevUtilities/issues">Support</a>
+        </div>
+        <div>
+          <h5>Legal</h5>
+          <a href="privacy_policy.html">Privacy policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-rule"></div>
+    <div class="foot-bottom">
+      <span>© 2026 DevUtilities</span>
+      <span>v3.0</span>
+    </div>
+  </footer>
+</body>
+</html>

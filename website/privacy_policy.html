@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy Policy — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="Privacy Policy for DevUtilities — how we handle your information and protect your privacy." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400..700;1,400..700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- ─── Nav ─────────────────────────────────────────────────────────── -->
+  <header class="nav nav-static">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="DevUtilities home">
+        <img src="images/icon.png" alt="" width="26" height="26" class="logo-img" />
+        <span>DevUtilities</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary"><a href="index.html">Index</a><a href="index.html#tools">Tools</a>
+        <a href="index.html#feature">Spotlight</a>
+        <a href="index.html#voices">Voices</a>
+        <a href="release-notes.html">Changelog</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="index.html#download" class="nav-pill">
+          <span>Download</span>
+          <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="nav-progress"></div>
+  </header>
+
+  <!-- ─── Page head ───────────────────────────────────────────────────── -->
+  <section class="page-head">
+    <div class="page-eyebrow">§ Privacy</div>
+    <h1 class="page-h">Your data <em>stays</em> on your machine.</h1>
+  </section>
+  <div class="page-sub">
+    <div></div>
+    <p>DevUtilities respects your privacy. We collect only anonymous usage analytics to improve the app — no personal information, no tracking, no data sales. Your actual work data — JSON, files, API keys — never leaves your device.</p>
+  </div>
+
+  <main class="page-body">
+    <div class="prose">
+
+      <!-- ── Sticky TOC ──────────────────────────────────────────── -->
+      <aside class="prose-aside" aria-label="On this page">
+        <span class="aside-h">Last updated</span>
+        <span style="color:var(--ink); text-transform:none; font-family:var(--serif); font-style:italic; font-size:18px; letter-spacing:-0.01em;">July 2026</span>
+        <span class="aside-h" style="margin-top:18px;">On this page</span>
+        <a href="#overview">Overview</a>
+        <a href="#info">Information we handle</a>
+        <a href="#network">Network usage</a>
+        <a href="#offline">Offline tools</a>
+        <a href="#crypto">Cryptographic features</a>
+        <a href="#third">Third-party services</a>
+        <a href="#children">Children's privacy</a>
+        <a href="#security">Data security</a>
+        <a href="#rights">Your rights</a>
+        <a href="#changes">Changes</a>
+        <a href="#contact">Contact</a>
+        <a href="#analytics">Analytics details</a>
+        <a href="#compliance">Compliance</a>
+      </aside>
+
+      <!-- ── Body ────────────────────────────────────────────────── -->
+      <div class="prose-content">
+
+        <h2 id="overview">Overview</h2>
+        <p>DevUtilities ("the App") is a native macOS developer utility application created by Hengfei Yang. This privacy policy explains how the App handles your information.</p>
+
+        <h2 id="info">Information collection and use</h2>
+        <h3>Anonymous usage analytics</h3>
+        <div class="prose-callout">
+          <p><strong>DevUtilities collects anonymous usage analytics</strong> to improve the app and understand which features are most valuable to users.</p>
+        </div>
+
+        <h4>What we collect</h4>
+        <p>We collect <strong>anonymous usage events only</strong>:</p>
+        <ul>
+          <li><strong>App start events.</strong> When you launch the app.</li>
+          <li><strong>Feature usage.</strong> Which tools you use (e.g., JSON, Base64, JWT).</li>
+          <li><strong>Navigation patterns.</strong> How you navigate between different tools.</li>
+          <li><strong>Product flow.</strong> Trial, purchase, and restore states.</li>
+          <li><strong>Session information.</strong> App version, anonymous session ID.</li>
+        </ul>
+
+        <h4>What we do NOT collect</h4>
+        <p>We do <strong>not</strong> collect any personal or sensitive information:</p>
+        <ul>
+          <li>No personal information (name, email, phone number).</li>
+          <li>No device identifiers (UDID, serial numbers, MAC address).</li>
+          <li>No IP addresses or location data.</li>
+          <li>No file contents or data you process in the tools.</li>
+          <li>No file names or file paths.</li>
+          <li>No API keys or credentials.</li>
+          <li>No chat messages or translation content.</li>
+          <li>No advertising tracking or third-party analytics services.</li>
+        </ul>
+
+        <h4>Anonymous identifiers</h4>
+        <ul>
+          <li><strong>User ID.</strong> A randomly generated UUID stored locally on your device. Not linked to your Apple ID, email, or any personal information. It helps us understand unique users and retention.</li>
+          <li><strong>Session ID.</strong> A temporary UUID generated each time you launch the app. Helps us understand session duration and feature usage patterns within a single session.</li>
+        </ul>
+        <p>Both identifiers are completely anonymous and cannot be used to identify you personally.</p>
+
+        <h3>Local data storage</h3>
+        <p>The App stores the following information <strong>locally on your device only</strong>:</p>
+        <ul>
+          <li><strong>User preferences.</strong> Your customization settings (enabled/disabled tools, tool order).</li>
+          <li><strong>API configuration.</strong> AI feature API keys and endpoints (stored in macOS UserDefaults).</li>
+          <li><strong>Chat history.</strong> AI Chat conversation history (stored locally in app container).</li>
+          <li><strong>Recent history.</strong> Recent conversions, requests, or inputs for convenience.</li>
+        </ul>
+        <p>All this data remains on your device, is never transmitted to our servers, can be deleted by removing the app, and is protected by macOS sandboxing.</p>
+
+        <h2 id="network">Network usage</h2>
+        <p>DevUtilities requires network access for specific features only.</p>
+
+        <h3>1. AI features (AI Chat, AI Translate)</h3>
+        <ul>
+          <li><strong>Purpose.</strong> Connect to user-configured AI API endpoints.</li>
+          <li><strong>User control.</strong> Users must provide their own API keys.</li>
+          <li><strong>Data sent.</strong> Chat messages and translation text to your chosen API provider.</li>
+          <li><strong>We do not.</strong> Store, log, or have access to API keys or conversation content.</li>
+          <li><strong>Third party.</strong> Your data is subject to your chosen AI provider's privacy policy.</li>
+        </ul>
+
+        <h3>2. IP Lookup tool</h3>
+        <ul>
+          <li><strong>Purpose.</strong> Lookup IP address geolocation information.</li>
+          <li><strong>Services used.</strong> ipinfo.io and ip.sb public APIs.</li>
+          <li><strong>Data sent.</strong> IP addresses you choose to query.</li>
+          <li><strong>We do not.</strong> Log or store queried IP addresses.</li>
+        </ul>
+
+        <h3>3. HTTP Client tool</h3>
+        <ul>
+          <li><strong>Purpose.</strong> Developer testing tool for making HTTP requests.</li>
+          <li><strong>Data sent.</strong> Only to endpoints you explicitly specify.</li>
+          <li><strong>We do not.</strong> Log, monitor, or intercept your requests.</li>
+        </ul>
+
+        <h3>4. Usage analytics</h3>
+        <ul>
+          <li><strong>Purpose.</strong> Understand feature usage and improve the app.</li>
+          <li><strong>Service used.</strong> Our analytics server (<code>api.devutilities.feiliwu.com</code>).</li>
+          <li><strong>Data sent.</strong> Anonymous events (see "What we collect" above).</li>
+          <li><strong>Data format.</strong> GET requests with query parameters (version, module, submodule, anonymous user_id, session_id).</li>
+        </ul>
+
+        <h3>5. Update checking</h3>
+        <ul>
+          <li><strong>Purpose.</strong> Check for new app versions on GitHub.</li>
+          <li><strong>Service used.</strong> GitHub Releases API.</li>
+          <li><strong>Data sent.</strong> Standard HTTP request, no personal information.</li>
+        </ul>
+
+        <h2 id="offline">Offline functionality</h2>
+        <p>The following tools work completely offline without any network access:</p>
+        <ul>
+          <li>Timestamp</li>
+          <li>Unit Converter</li>
+          <li>JSON</li>
+          <li>Base64</li>
+          <li>Hex String</li>
+          <li>Regex</li>
+          <li>UUID</li>
+          <li>URL</li>
+          <li>QR Code Generator/Scanner</li>
+          <li>SQL</li>
+          <li>HTML</li>
+          <li>JWT</li>
+          <li>Parquet</li>
+          <li>Crypto</li>
+        </ul>
+
+        <h2 id="crypto">Cryptographic features</h2>
+        <p>The App provides cryptographic tools (hash functions, encryption/decryption) for developer use:</p>
+        <ul>
+          <li>All cryptographic operations are performed locally on your device.</li>
+          <li>The App uses standard Apple frameworks (CryptoKit, Security).</li>
+          <li>No encryption keys are transmitted or stored by us.</li>
+          <li>Users are responsible for securing their own keys.</li>
+        </ul>
+
+        <h2 id="third">Third-party services</h2>
+        <h3>Analytics server</h3>
+        <p>DevUtilities sends anonymous usage events to our own analytics server to understand feature usage. No third-party analytics services (Google Analytics, Mixpanel, etc.) are used. We control the data and do not share it with any third parties.</p>
+        <h3>No advertising or tracking</h3>
+        <ul>
+          <li>No advertising networks.</li>
+          <li>No cross-site tracking.</li>
+          <li>No data brokers.</li>
+          <li>No data sales to third parties.</li>
+        </ul>
+        <h3>AI features</h3>
+        <p>When you use AI Chat or AI Translate with your own API keys, you are directly connecting to third-party AI services (OpenAI, DeepSeek, or custom providers). Your usage is subject to those providers' privacy policies and terms of service.</p>
+
+        <h2 id="children">Children's privacy</h2>
+        <p>DevUtilities is not directed to children under 13. We do not knowingly collect information from children. If you believe a child has used the App, please contact us.</p>
+
+        <h2 id="security">Data security</h2>
+        <ul>
+          <li>All user data is stored locally using macOS sandboxing.</li>
+          <li>API keys are stored in UserDefaults on your device only.</li>
+          <li>Anonymous analytics transmitted over HTTPS with TLS encryption.</li>
+          <li>Events queued locally if network unavailable, sent later.</li>
+          <li>Standard macOS security protections apply.</li>
+          <li>We do not store, log, or have access to your processed data (JSON, text, files, etc.).</li>
+        </ul>
+
+        <h2 id="rights">Your rights</h2>
+        <p>You have complete control over your data:</p>
+        <ul>
+          <li><strong>Access.</strong> All personal data is stored locally and accessible via standard macOS file locations.</li>
+          <li><strong>Deletion.</strong> Remove the App to delete all local data and stop sending analytics events.</li>
+          <li><strong>Portability.</strong> Export any data using standard macOS tools.</li>
+          <li><strong>Anonymous data.</strong> Since analytics are anonymous and not linked to you personally, we cannot retrieve or delete specific analytics data upon request.</li>
+        </ul>
+
+        <h2 id="changes">Changes to this privacy policy</h2>
+        <p>We may update this privacy policy from time to time. Updates will be posted on this page with a new "Last Updated" date. Continued use of the App after changes constitutes acceptance of the updated policy.</p>
+
+        <h2 id="contact">Contact information</h2>
+        <p>If you have questions or concerns about this privacy policy:</p>
+        <ul>
+          <li><strong>Issues.</strong> <a href="https://github.com/hengfeiyang/DevUtilities/issues">Report an issue</a></li>
+          <li><strong>GitHub.</strong> <a href="https://github.com/hengfeiyang/DevUtilities">github.com/hengfeiyang/devutilities</a></li>
+          <li><strong>Website.</strong> <a href="https://hengfeiyang.github.io/devutilities">hengfeiyang.github.io/devutilities</a></li>
+        </ul>
+
+        <h2 id="analytics">Analytics data details</h2>
+        <h3>Example analytics event</h3>
+<pre>GET https://api.devutilities.feiliwu.com/event?
+    user_id=550e8400-e29b-41d4-a716-446655440000&amp;
+    session_id=6ba7b810-9dad-11d1-80b4-00c04fd430c8&amp;
+    version=2.5.0&amp;
+    module=json_formatter&amp;
+    submodule=format</pre>
+        <h4>What this tells us</h4>
+        <ul>
+          <li>An anonymous user (identified by random UUID) used the JSON feature.</li>
+          <li>They're running version 2.5.0 of the app.</li>
+          <li>This was during a specific app session.</li>
+        </ul>
+        <h4>What this does NOT tell us</h4>
+        <ul>
+          <li>Who you are or any identifying information.</li>
+          <li>What data you formatted (your actual JSON content).</li>
+          <li>Your location or IP address.</li>
+          <li>Any other apps you use or personal information.</li>
+        </ul>
+
+        <h3>Data retention</h3>
+        <ul>
+          <li><strong>Local queue.</strong> Anonymous events stored locally for up to 7 days before automatic cleanup.</li>
+          <li><strong>Server storage.</strong> Anonymous usage statistics retained for analytics and product improvement.</li>
+          <li><strong>No personal data.</strong> Since no personal information is collected, there's nothing personally identifiable to delete.</li>
+        </ul>
+
+        <h2 id="compliance">Compliance</h2>
+        <p>This privacy policy complies with:</p>
+        <ul>
+          <li>Apple App Store Review Guidelines.</li>
+          <li>General Data Protection Regulation (GDPR) principles.</li>
+          <li>California Consumer Privacy Act (CCPA) principles.</li>
+          <li>macOS App Sandbox requirements.</li>
+        </ul>
+        <p><strong>GDPR note.</strong> While we collect analytics data, it is completely anonymous and cannot be linked to any individual. The random UUID user_id is not personal data under GDPR as it cannot be used to identify a natural person.</p>
+
+        <hr class="prose-rule" />
+
+        <h2 style="margin-top:0;">Developer information</h2>
+        <ul>
+          <li><strong>Developer.</strong> Hengfei Yang</li>
+          <li><strong>App name.</strong> DevUtilities</li>
+          <li><strong>Bundle ID.</strong> com.hengfeiyang.devutilities</li>
+        </ul>
+
+        <blockquote>DevUtilities respects your privacy. We collect only anonymous usage analytics to improve the app — no personal information, no tracking, no data sales. Your actual work data stays on your device. Network features require explicit user action and configuration.</blockquote>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ─── Footer ──────────────────────────────────────────────────────── -->
+  <footer class="foot">
+    <div class="foot-inner">
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <img src="images/icon.png" alt="" width="26" height="26" class="logo-img" />
+          <span>DevUtilities</span>
+        </a>
+        <p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p>
+      </div>
+      <div class="foot-cols">
+        <div>
+          <h5>Product</h5>
+          <a href="index.html#tools">Tools</a>
+          <a href="index.html#feature">Spotlight</a>
+          <a href="index.html#download">Download</a>
+        </div>
+        <div>
+          <h5>Resources</h5>
+          <a href="release-notes.html">Changelog</a>
+          <a href="https://github.com/hengfeiyang/DevUtilities/issues">Support</a>
+        </div>
+        <div>
+          <h5>Legal</h5>
+          <a href="privacy_policy.html">Privacy policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-rule"></div>
+    <div class="foot-bottom">
+      <span>© 2026 DevUtilities</span>
+      <span>v3.0</span>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Regex — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="Live regex testing with capture groups, common pattern templates, and instant feedback. Native macOS." />
+  <meta name="keywords" content="regex test, regular expression, pattern matching, capture groups, regex tool, macOS regex" />
+  <meta property="og:image" content="images/screenshots/regex.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400..700;1,400..700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
+
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>Regex</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 18 of 25 · Inspect</div><h1 class="page-h">Patterns, <em>matched live.</em></h1></section>
+  <div class="page-sub"><div></div><p>Write a regex; type input; see matches highlight in real time. Capture groups list with their indices and names. A small library of common patterns covers email, URL, IP, date, and a dozen others.</p></div>
+
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Engine</div><div class="tool-meta-value accent">NSRegularExpression</div><div class="tool-meta-sub">ICU-flavoured</div></div>
+    <div><div class="tool-meta-label">Capture groups</div><div class="tool-meta-value">Indexed &amp; named</div><div class="tool-meta-sub">Listed live</div></div>
+    <div><div class="tool-meta-label">Templates</div><div class="tool-meta-value">A library</div><div class="tool-meta-sub">Email, URL, IP, etc.</div></div>
+    <div><div class="tool-meta-label">Network</div><div class="tool-meta-value">Offline</div><div class="tool-meta-sub">Pure local</div></div>
+  </div>
+
+  <section class="tool-shot"><figure><img src="images/screenshots/regex.png" alt="DevUtilities Regex — pattern, flags, input text, highlighted matches, capture group list." /></figure><figcaption>Plate xviii — Regex with capture groups and live highlighting.</figcaption></section>
+
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Six things <span class="muted">it does cleanly.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Live matching</h4><p>Type the pattern; matches highlight in the input as you write. No "run" button.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>Capture groups</h4><p>Indexed and named groups listed in a side panel — the value of each, per match.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Flags</h4><p><code>i</code> case-insensitive, <code>m</code> multiline, <code>s</code> dotall, <code>x</code> extended. Toggle visibly.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Common patterns</h4><p>A library of templates — email, URL, IP, ISO date, hex color, semver — one click to insert.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Match list</h4><p>Every match listed with its position; click to scroll into view.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>Pattern errors inline</h4><p>Bad regex? The error explains where the parser tripped, in plain language.</p></div></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>to a working pattern.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Drop input</h4><p>Paste the text you want to match against.</p><div class="step-key">Paste · <b>⌘ V</b></div></div>
+      <div class="step"><span class="step-n"></span><h4>Write the pattern</h4><p>Type the regex; matches highlight in the input as you go.</p><div class="step-key">Live</div></div>
+      <div class="step"><span class="step-n"></span><h4>Adjust flags</h4><p>Tick case-insensitive or multiline as needed; the result re-evaluates.</p><div class="step-key">Flags</div></div>
+      <div class="step"><span class="step-n"></span><h4>Read groups</h4><p>Side panel shows captured groups — indexed and named — for each match.</p><div class="step-key">Groups panel</div></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — Logs</span><h4>Pulling fields</h4><p>Extract timestamps, IPs, status codes, paths from log lines with named capture groups.</p></div>
+      <div class="use"><span class="use-tag">ii — Validate</span><h4>Email / URL / IP</h4><p>Sanity-check user input against well-known patterns from the template library.</p></div>
+      <div class="use"><span class="use-tag">iii — Refactor</span><h4>Find &amp; replace</h4><p>Verify a regex matches exactly what you intend before running it across a codebase.</p></div>
+      <div class="use"><span class="use-tag">iv — Parse</span><h4>Semi-structured text</h4><p>Tease structure out of CSVs, free-text notes, or migration scripts.</p></div>
+      <div class="use"><span class="use-tag">v — Test</span><h4>Edge cases</h4><p>Try the empty string, the multi-line input, the Unicode quirk — without writing a test harness.</p></div>
+      <div class="use"><span class="use-tag">vi — Learn</span><h4>Reading patterns</h4><p>Visualise what a complex regex actually matches when you inherit one from a colleague.</p></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>Which regex flavour?</summary><p>ICU-flavoured, via <code>NSRegularExpression</code>. The patterns you'd write in Swift, Objective-C, or many command-line tools work directly.</p></details>
+      <details><summary>Are named groups supported?</summary><p>Yes. Named groups list alongside numbered ones; each match's named values appear in the groups panel.</p></details>
+      <details><summary>What's in the template library?</summary><p>Email, URL, IPv4, IPv6, ISO 8601 date, hex color, semver, integer, decimal, phone — and a handful of others.</p></details>
+      <details><summary>How does it handle catastrophic backtracking?</summary><p>The matcher has a sane timeout. Patterns that runaway are flagged so you can refactor; nothing freezes the UI.</p></details>
+      <details><summary>Multiline mode?</summary><p>Toggle the <code>m</code> flag; <code>^</code> and <code>$</code> then anchor per-line. <code>s</code> (dotall) is also available.</p></details>
+      <details><summary>Does this require network access?</summary><p>No. Regex testing is fully local.</p></details>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="text-compare.html"><div class="rel-head"><span>17 · Inspect</span><span>New · 2.11</span></div><h4>Text Compare</h4><p>Diff two passages with character and line metrics.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON</h4><p>Format the JSON whose values you're regex-extracting.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="url-tools.html"><div class="rel-head"><span>21 · Network</span><span></span></div><h4>URL</h4><p>Decode URL components for further matching.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="hex-converter.html"><div class="rel-head"><span>06 · Convert</span><span>New · 2.2</span></div><h4>Hex String</h4><p>Convert hex/text when matching binary-flavoured input.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="ai-chat.html"><div class="rel-head"><span>01 · AI</span><span>Updated · 2.12</span></div><h4>AI Chat</h4><p>Ask the assistant for a regex; paste it here and verify.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="parquet-viewer.html"><div class="rel-head"><span>19 · Inspect</span><span></span></div><h4>Parquet</h4><p>Browse columnar data; export rows for regex inspection.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
+
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Live matches, named groups, <em>no surprises.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
+
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/DevUtilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.15.0</span></div></footer>
+</body>
+</html>

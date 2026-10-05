@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hex String — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="Bidirectional hex-to-string conversion with UTF-8, UTF-16, and ASCII handling. A native macOS tool for binary debugging and protocol work." />
+  <meta name="keywords" content="hex string converter, hex to text, text to hex, UTF-8, UTF-16, ASCII, hex encoder, binary tools, macOS" />
+  <meta property="og:image" content="images/screenshots/hex.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400..700;1,400..700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="tool-page">
+  <header class="nav nav-static">
+    <div class="nav-inner">
+      <a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a>
+      <nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav>
+      <div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div>
+    </div>
+    <div class="nav-progress"></div>
+  </header>
+
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>Hex String</strong></nav>
+
+  <section class="page-head"><div class="page-eyebrow">§ Tool 06 of 25 · Convert</div><h1 class="page-h">Hex to text, <em>and back.</em></h1></section>
+  <div class="page-sub"><div></div><p>Bidirectional hex ↔ string conversion with full encoding control. UTF-8, UTF-16, and ASCII supported; non-printable bytes preserved; clear errors when the input drifts off-format.</p></div>
+
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Version</div><div class="tool-meta-value accent">v2.2</div><div class="tool-meta-sub">First shipped</div></div>
+    <div><div class="tool-meta-label">Encodings</div><div class="tool-meta-value">UTF-8 · UTF-16 · ASCII</div><div class="tool-meta-sub">Switchable per session</div></div>
+    <div><div class="tool-meta-label">Direction</div><div class="tool-meta-value">Bidirectional</div><div class="tool-meta-sub">Auto-routed</div></div>
+    <div><div class="tool-meta-label">Network</div><div class="tool-meta-value">Offline</div><div class="tool-meta-sub">Pure local</div></div>
+  </div>
+
+  <section class="tool-shot"><figure><img src="images/screenshots/hex.png" alt="DevUtilities Hex String — paired hex/text panels with encoding picker." /></figure><figcaption>Plate vi — Hex String with the encoding picker live.</figcaption></section>
+
+  <main>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div>
+    <div>
+      <h2 class="tool-block-h">Six things <span class="muted">it does well.</span></h2>
+      <div class="caps">
+        <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Hex to string</h4><p>Paste raw hex bytes, see the decoded text in your chosen encoding. Spaces and dashes between bytes ignored.</p></div></div>
+        <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>String to hex</h4><p>Type or paste text; get the hex byte sequence in the encoding you specified.</p></div></div>
+        <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>UTF-8 / UTF-16 / ASCII</h4><p>Pick the encoding that matches your data. Non-ASCII characters round-trip cleanly under the right encoding.</p></div></div>
+        <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Real-time conversion</h4><p>Type, see results instantly. Both panels update as you key.</p></div></div>
+        <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Tolerant input</h4><p>Hex input accepts spaces, dashes, mixed case, and the <code>0x</code> prefix. Whitespace is silent; everything else surfaces an error.</p></div></div>
+        <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>One-click copy</h4><p>Copy buttons on both panels. Hex without spaces, or text alone — your call.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div>
+    <div>
+      <h2 class="tool-block-h">Four moves <em>between bytes and text.</em></h2>
+      <div class="steps">
+        <div class="step"><span class="step-n"></span><h4>Pick the encoding</h4><p>UTF-8 by default. Switch to UTF-16 for Windows-flavoured payloads or ASCII for old wire protocols.</p><div class="step-key">Encoding picker</div></div>
+        <div class="step"><span class="step-n"></span><h4>Paste hex or text</h4><p>Drop bytes from a hex dump or plain text. Both panels are bidirectional.</p><div class="step-key">Either field</div></div>
+        <div class="step"><span class="step-n"></span><h4>Read the conversion</h4><p>Live update on the opposite side. Errors surface inline if the hex is malformed.</p><div class="step-key">Live</div></div>
+        <div class="step"><span class="step-n"></span><h4>Copy</h4><p>One-click copy for the side you wanted.</p><div class="step-key">Copy · <b>⌘ C</b></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div>
+    <div>
+      <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+      <div class="uses">
+        <div class="use"><span class="use-tag">i — Debug</span><h4>Hex dumps</h4><p>Decode strings buried in <code>xxd</code> output without leaving the editor.</p></div>
+        <div class="use"><span class="use-tag">ii — Protocols</span><h4>Wire-level inspection</h4><p>Translate ASCII control sequences and binary frames between text and bytes.</p></div>
+        <div class="use"><span class="use-tag">iii — Security</span><h4>Payload analysis</h4><p>Inspect the strings hidden inside hex-encoded blobs from logs, samples, or packet captures.</p></div>
+        <div class="use"><span class="use-tag">iv — Encoding</span><h4>UTF-8 vs UTF-16</h4><p>Compare how the same text serialises under different encodings — visible byte-by-byte.</p></div>
+        <div class="use"><span class="use-tag">v — Test</span><h4>Fixture generation</h4><p>Produce hex test inputs from a clean string spec, exact and reproducible.</p></div>
+        <div class="use"><span class="use-tag">vi — Forensics</span><h4>Reverse engineering</h4><p>Recover printable strings from binary blobs without writing a script.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div>
+    <div>
+      <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+      <div class="faq">
+        <details open><summary>Which encodings are supported?</summary><p>UTF-8, UTF-16, and ASCII. The encoding is switchable per session and persists between launches.</p></details>
+        <details><summary>Does it accept spaces or prefixes in the hex?</summary><p>Yes — spaces, dashes, mixed case, and a leading <code>0x</code> are all tolerated. Other non-hex characters surface an inline error.</p></details>
+        <details><summary>How are non-printable bytes shown?</summary><p>The hex side preserves them; the text side renders them via standard escape sequences for the chosen encoding.</p></details>
+        <details><summary>Does this require network access?</summary><p>No. Hex conversion is fully local; nothing leaves your machine.</p></details>
+        <details><summary>What's the difference between UTF-8 and UTF-16 hex?</summary><p>The same string produces different byte sequences in each. UTF-8 is byte-by-byte; UTF-16 uses two bytes per code unit (and surrogate pairs beyond <code>U+FFFF</code>).</p></details>
+        <details><summary>Can I copy bytes without spaces?</summary><p>Yes. The copy button outputs compact hex without delimiters, ready to paste into code.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div>
+    <div>
+      <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+      <div class="related-grid">
+        <a class="rel" href="base-converter.html"><div class="rel-head"><span>05 · Convert</span><span>Updated · 2.8</span></div><h4>Number Base</h4><p>Numbers across bases — bin, oct, dec, hex, base62.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="base64-encoder.html"><div class="rel-head"><span>12 · Format</span><span></span></div><h4>Base64</h4><p>Encode and decode with URL-safe variants.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="crypto-tools.html"><div class="rel-head"><span>23 · Network</span><span>New · 1.12</span></div><h4>Crypto</h4><p>Hashes return hex digests; this is where you decode them.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="url-tools.html"><div class="rel-head"><span>21 · Network</span><span></span></div><h4>URL</h4><p>Encode and decode percent-escapes for non-ASCII URL parts.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="regex-tester.html"><div class="rel-head"><span>18 · Inspect</span><span></span></div><h4>Regex</h4><p>Pattern-match the hex strings you're decoding.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON</h4><p>Format the JSON whose hex strings you're translating.</p><span class="rel-arrow">Open →</span></a>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <section class="tool-cta">
+    <div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div>
+    <h2 class="tool-cta-h">Bytes to text, text to bytes, <em>without a script.</em></h2>
+    <div class="tool-cta-actions">
+      <a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a>
+      <a href="release-notes.html" class="btn-ghost lg">Changelog</a>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-inner">
+      <div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div>
+      <div class="foot-cols">
+        <div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div>
+        <div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/DevUtilities/issues">Support</a></div>
+        <div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div>
+      </div>
+    </div>
+    <div class="foot-rule"></div>
+    <div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.15.0</span></div>
+  </footer>
+</body>
+</html>

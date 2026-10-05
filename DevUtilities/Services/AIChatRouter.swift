@@ -140,7 +140,8 @@ enum APIErrorParser {
 enum AICompatibilityHeaders {
     static func apply(to request: inout URLRequest) {
         if request.url?.host == "generativelanguage.googleapis.com" {
-            request.setValue("devutilities/2.16.0", forHTTPHeaderField: "x-goog-api-client")
+            let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "3.0"
+            request.setValue("devutilities/\(version)", forHTTPHeaderField: "x-goog-api-client")
         }
     }
 }

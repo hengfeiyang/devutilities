@@ -18,17 +18,20 @@ import AppIntents
 
 extension Notification.Name {
     static let newChatRequested = Notification.Name("newChatRequested")
+    static let licenseSettingsRequested = Notification.Name("licenseSettingsRequested")
 }
 
 @main
 struct DevUtilitiesApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var updateChecker = UpdateChecker()
+    @StateObject private var entitlementManager = EntitlementManager()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(updateChecker)
+                .environmentObject(entitlementManager)
                 .onAppear {
                     Task.detached {
                         await EventManager.shared.reportAppStart()
@@ -36,7 +39,8 @@ struct DevUtilitiesApp: App {
                     
                     // Check for updates after a short delay to not block startup
                     Task {
-                        try await Task.sleep(for: .seconds(2))
+                        try? await Task.sleep(for: .seconds(2))
+                        guard !Task.isCancelled else { return }
                         updateChecker.checkForUpdate()
                     }
                 }
@@ -45,6 +49,12 @@ struct DevUtilitiesApp: App {
         .defaultSize(width: 1024, height: 650)
         .commands {
             CommandGroup(after: .appInfo) {
+                if entitlementManager.isFreemiumEnabled {
+                    Button("DevUtilities Pro…") {
+                        NotificationCenter.default.post(name: .licenseSettingsRequested, object: nil)
+                    }
+                }
+
                 Button("Check for Updates...") {
                     updateChecker.checkForUpdate(manualCheck: true)
                 }

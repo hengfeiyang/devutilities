@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Base64 — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="Base64 encode and decode with URL-safe variants and automatic detection. Native macOS, fully offline." />
+  <meta name="keywords" content="Base64, base64 encode, base64 decode, URL-safe base64, base64 tool, macOS encoder" />
+  <meta property="og:image" content="images/screenshots/base64.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400..700;1,400..700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
+
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>Base64</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 12 of 25 · Format</div><h1 class="page-h">Base64, <em>both directions.</em></h1></section>
+  <div class="page-sub"><div></div><p>Encode and decode Base64 with URL-safe variants and automatic direction detection. Padding handled, line breaks tolerated, output ready for the clipboard.</p></div>
+
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Direction</div><div class="tool-meta-value accent">Bidirectional</div><div class="tool-meta-sub">Auto-detected</div></div>
+    <div><div class="tool-meta-label">Variants</div><div class="tool-meta-value">Standard · URL-safe</div><div class="tool-meta-sub">Both round-trip</div></div>
+    <div><div class="tool-meta-label">Padding</div><div class="tool-meta-value">Handled</div><div class="tool-meta-sub">Optional on input</div></div>
+    <div><div class="tool-meta-label">Network</div><div class="tool-meta-value">Offline</div><div class="tool-meta-sub">Pure local</div></div>
+  </div>
+
+  <section class="tool-shot"><figure><img src="images/screenshots/base64.png" alt="DevUtilities Base64 — paired input/output, encode/decode toggle." /></figure><figcaption>Plate xii — Base64 with the URL-safe variant toggle visible.</figcaption></section>
+
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Six things <span class="muted">it does well.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Encode and decode</h4><p>Both directions in the same panel. Auto-detects which way you mean from the input shape.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>URL-safe variant</h4><p>Toggle to use <code>-_</code> instead of <code>+/</code>. Padding is optional and stripped on output.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Tolerant input</h4><p>Whitespace and line breaks are silently ignored. Paste from a multi-line wrap and it still works.</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Real-time conversion</h4><p>Type, see results immediately. Both panels update as you key.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>One-click copy</h4><p>Copy buttons on both sides. The clipboard gets the value alone.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>State persistence</h4><p>Last input and output stick across sessions.</p></div></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>between forms.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Paste</h4><p>Drop encoded or decoded text into either field.</p><div class="step-key">Paste · <b>⌘ V</b></div></div>
+      <div class="step"><span class="step-n"></span><h4>Pick a variant</h4><p>Standard or URL-safe. The toggle is visible at all times.</p><div class="step-key">Variant toggle</div></div>
+      <div class="step"><span class="step-n"></span><h4>Read the result</h4><p>The opposite field updates immediately.</p><div class="step-key">Live</div></div>
+      <div class="step"><span class="step-n"></span><h4>Copy</h4><p>One-click copy on either side.</p><div class="step-key">Copy · <b>⌘ C</b></div></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — Auth</span><h4>Basic auth headers</h4><p>Encode <code>user:password</code> for an HTTP Basic header in one move.</p></div>
+      <div class="use"><span class="use-tag">ii — Tokens</span><h4>JWT segments</h4><p>Decode the URL-safe Base64 segments of a JWT to inspect headers and claims.</p></div>
+      <div class="use"><span class="use-tag">iii — Embed</span><h4>Inline binaries</h4><p>Encode a small image or font for inline data URLs.</p></div>
+      <div class="use"><span class="use-tag">iv — Webhook</span><h4>Decoding payloads</h4><p>Decode the Base64-wrapped payloads some webhook services pass along.</p></div>
+      <div class="use"><span class="use-tag">v — Email</span><h4>MIME parts</h4><p>Decode quoted-printable / Base64 mail body parts when debugging.</p></div>
+      <div class="use"><span class="use-tag">vi — Storage</span><h4>Round-tripping</h4><p>Stash arbitrary text in a field that only allows ASCII, decode on retrieval.</p></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>What's the difference between standard and URL-safe Base64?</summary><p>Standard uses <code>+</code> and <code>/</code>; URL-safe uses <code>-</code> and <code>_</code> and often omits the trailing <code>=</code> padding. Both round-trip cleanly.</p></details>
+      <details><summary>Do I need to specify direction?</summary><p>No. The tool detects whether your input is encoded or decoded and routes accordingly.</p></details>
+      <details><summary>Are line breaks ignored?</summary><p>Yes. Whitespace and line breaks are silently stripped from encoded input.</p></details>
+      <details><summary>Is padding required?</summary><p>On output, yes — it's added when needed. On input, it's optional; the tool handles either form.</p></details>
+      <details><summary>Does this handle binary?</summary><p>Encoded text is text; decoding produces UTF-8 text by default. Genuine binary round-trips are best done with the Hex String tool.</p></details>
+      <details><summary>Does this require network access?</summary><p>No. Base64 is fully local.</p></details>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="hex-converter.html"><div class="rel-head"><span>06 · Convert</span><span>New · 2.2</span></div><h4>Hex String</h4><p>Bytes ↔ string with UTF-8 / 16 / ASCII handling.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="jwt-encoder.html"><div class="rel-head"><span>13 · Format</span><span></span></div><h4>JWT</h4><p>Decode URL-safe Base64 segments end-to-end with signature checks.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="url-tools.html"><div class="rel-head"><span>21 · Network</span><span></span></div><h4>URL</h4><p>URL encode/decode, plus parser breakdowns.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="crypto-tools.html"><div class="rel-head"><span>23 · Network</span><span>New · 1.12</span></div><h4>Crypto</h4><p>Hashes return Base64 or hex; decode them right next door.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON</h4><p>Format the JSON you decoded out of a Base64 envelope.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="base-converter.html"><div class="rel-head"><span>05 · Convert</span><span>Updated · 2.8</span></div><h4>Number Base</h4><p>Numbers across bases — bin, oct, dec, hex, base62.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
+
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Encode, decode, URL-safe — <em>one panel.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
+
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/DevUtilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.15.0</span></div></footer>
+</body>
+</html>

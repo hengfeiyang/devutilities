@@ -196,10 +196,10 @@ struct AIGeneralSettingsView: View {
     // which is required for the conditional sections to appear/disappear in real time.
     // AIUISettings reads from the same keys, so both stay in sync automatically.
     @AppStorage("ai_tts_mode") private var ttsMode: String = "auto"
-    @AppStorage("ai_tts_openai_voice") private var openAITTSVoice: String = "alloy"
+    @AppStorage("ai_tts_openai_voice") private var openAITTSVoice: String = OpenAITTSConfiguration.defaultVoice
     @AppStorage("ai_tts_macos_voice_id") private var macOSTTSVoiceID: String = ""
 
-    private let openAIVoices = ["alloy", "ash", "ballad", "cedar", "coral", "echo", "fable", "marin", "nova", "onyx", "sage", "shimmer", "verse"]
+    private let openAIVoices = OpenAITTSConfiguration.voices
 
     var body: some View {
         Form {
@@ -242,6 +242,9 @@ struct AIGeneralSettingsView: View {
                         }
                     }
                     .pickerStyle(MenuPickerStyle())
+                    Text("OpenAI Realtime · AI-generated voice. Auto falls back to macOS if playback cannot start.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
 
                 if ttsMode == "macos" || ttsMode == "auto" {

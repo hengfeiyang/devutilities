@@ -47,6 +47,14 @@ struct SpeakerButton: View {
         .buttonStyle(PlainButtonStyle())
         .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
         .help(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "No text to speak" : (viewModel.isSpeaking ? "Stop speaking" : "Speak text"))
+        .alert("Unable to speak", isPresented: Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { if !$0 { viewModel.errorMessage = nil } }
+        )) {
+            Button("OK") { viewModel.errorMessage = nil }
+        } message: {
+            Text(viewModel.errorMessage ?? "")
+        }
     }
 }
 
@@ -54,6 +62,8 @@ struct SpeakerButton: View {
 @MainActor
 class SpeakerViewModel: ObservableObject {
     @Published var isSpeaking = false
+    @Published var errorMessage: String?
+    private var generation = 0
 
     private let avService = AVSpeechService.shared
     private let openAIService = OpenAITTSService.shared
@@ -66,6 +76,7 @@ class SpeakerViewModel: ObservableObject {
     private enum TTSEngine {
         case openai(baseURL: String, apiKey: String, model: String, voice: String)
         case macos(voiceID: String?)
+        case unavailable
     }
 
     private func resolveEngine() -> TTSEngine {
@@ -81,6 +92,7 @@ class SpeakerViewModel: ObservableObject {
                     voice: settings.openAITTSVoice
                 )
             }
+            if mode == "openai" { return .unavailable }
         }
         return .macos(voiceID: settings.macOSTTSVoiceID)
     }
@@ -92,6 +104,11 @@ class SpeakerViewModel: ObservableObject {
             return
         }
 
+        stopSpeaking()
+        errorMessage = nil
+        let gen = generation
+        let mode = AIUISettings.shared.ttsMode
+
         switch resolveEngine() {
         case .openai(let baseURL, let apiKey, let model, let voice):
             activeEngine = .openai
@@ -102,34 +119,52 @@ class SpeakerViewModel: ObservableObject {
                 apiKey: apiKey,
                 baseURL: baseURL,
                 onStart: { [weak self] in
-                    Task { @MainActor in self?.isSpeaking = true }
+                    guard let self, self.generation == gen else { return }
+                    self.isSpeaking = true
                 },
                 onFinish: { [weak self] in
-                    Task { @MainActor in self?.isSpeaking = false }
+                    guard let self, self.generation == gen else { return }
+                    self.isSpeaking = false
+                },
+                onError: { [weak self] error, hadAudio in
+                    guard let self, self.generation == gen else { return }
+                    if OpenAITTSConfiguration.shouldUseLocalFallback(mode: mode, hadAudio: hadAudio) {
+                        self.speakLocally(text: trimmedText, language: language, rate: rate, volume: volume,
+                                          voiceID: AIUISettings.shared.macOSTTSVoiceID, generation: gen)
+                    } else {
+                        self.errorMessage = error.localizedDescription
+                    }
                 }
             )
             // Set speaking immediately so the UI reflects it while the request is in flight
             isSpeaking = true
 
         case .macos(let voiceID):
-            activeEngine = .av
-            avService.speak(
-                text: trimmedText,
-                language: language,
-                rate: rate,
-                volume: volume,
-                voiceIdentifier: voiceID,
-                onStart: { [weak self] in
-                    Task { @MainActor in self?.isSpeaking = true }
-                },
-                onFinish: { [weak self] in
-                    Task { @MainActor in self?.isSpeaking = false }
-                }
-            )
+            speakLocally(text: trimmedText, language: language, rate: rate, volume: volume, voiceID: voiceID, generation: gen)
+        case .unavailable:
+            errorMessage = "Configure an active OpenAI provider with an API key, or choose Auto / macOS in Text-to-Speech settings."
         }
     }
 
+    private func speakLocally(text: String, language: String, rate: Float, volume: Float, voiceID: String?, generation gen: Int) {
+        activeEngine = .av
+        isSpeaking = true
+        avService.speak(text: text, language: language, rate: rate, volume: volume, voiceIdentifier: voiceID,
+                        onStart: { [weak self] in
+            Task { @MainActor in
+                guard let self, self.generation == gen else { return }
+                self.isSpeaking = true
+            }
+        }, onFinish: { [weak self] in
+            Task { @MainActor in
+                guard let self, self.generation == gen else { return }
+                self.isSpeaking = false
+            }
+        })
+    }
+
     func stopSpeaking() {
+        generation += 1
         switch activeEngine {
         case .openai:
             openAIService.stop()

@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DevUtilities — 25 developer tools, one quiet macOS app</title>
+  <meta name="description" content="DevUtilities 3.0 brings free download, 18 free tools, and a 30-day trial of 7 Pro tools. Users who first acquire the app on or before October 24, 2026 get permanent Pro, paid or free." />
+  <meta name="keywords" content="developer tools, macOS app, JSON formatter, timestamp converter, AI chat, AI translate, regex test, base converter, JWT, hex string converter, HTTP client, Base64, UUID generator, SQL formatter, crypto tools" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+  <meta property="og:title" content="DevUtilities — twenty-five developer tools, one quiet macOS app" />
+  <meta property="og:description" content="A single native macOS window with 25 developer utilities, 11 Spotlight commands, and a one-time Lifetime Pro license." />
+  <meta property="og:image" content="images/devhelper-og.png" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="DevUtilities — twenty-five developer tools for macOS" />
+  <meta property="twitter:description" content="Native macOS app with 25 essential developer utilities in one quiet window." />
+  <meta property="twitter:image" content="images/devhelper-og.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "DevUtilities",
+    "description": "DevUtilities is a native macOS application containing 25 essential developer tools including struct converter, text compare, currency converter, random string generator, color picker, AI translate, AI chat, base converter, timestamp converter, JSON formatter with diff, hex string converter, regex test, HTTP client, and more.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "macOS",
+    "softwareVersion": "3.0",
+    "datePublished": "2025-01-01",
+    "dateModified": "2026-10-03",
+    "author": { "@type": "Person", "name": "Hengfei Yang" },
+    "publisher": { "@type": "Organization", "name": "DevUtilities" },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "10",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "downloadUrl": "https://apps.apple.com/app/devutilities/id6753612551",
+    "requirements": "macOS 14.0 or later",
+    "applicationSubCategory": "Developer Tools",
+    "isAccessibleForFree": true,
+    "inLanguage": "en-US"
+  }
+  </script>
+
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400..700;1,400..700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- ─── Nav ─────────────────────────────────────────────────────────── -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="DevUtilities home">
+        <img src="images/icon.png" alt="" width="26" height="26" class="logo-img" />
+        <span>DevUtilities</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#top">Index</a>
+        <a href="#tools">Tools</a>
+        <a href="#feature">Spotlight</a>
+        <a href="#voices">Voices</a>
+        <a href="release-notes.html">Changelog</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="#download" class="nav-pill">
+          <span>Download</span>
+          <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="nav-progress"></div>
+  </header>
+
+  <main>
+    <!-- ─── Hero ──────────────────────────────────────────────────────── -->
+    <section class="hero" id="top">
+      <div class="hero-meta">
+        <span class="meta-dot"></span>
+        <span>Version 3.0 — free download, Lifetime Pro</span>
+        <a href="release-notes.html" class="cl-tag">NEW · Lifetime Pro + AI protocols</a>
+      </div>
+      <h1 class="hero-h">
+        Twenty-five<br />
+        developer tools,<br />
+        <em>one quiet</em> macOS app.
+      </h1>
+      <div class="hero-sub">
+        <p>
+          The small, daily things — formatting, decoding, comparing, generating —
+          gathered into a single native window. No tabs, no spinners, no third-party trackers.
+          And now in Spotlight: press ⌘Space, type the conversion, read the result
+          inline — it's on your clipboard before the app even opens.
+        </p>
+        <div class="hero-rot" aria-live="polite">
+          <span class="rot-label">Currently most-used:</span>
+          <span class="rot-value">JSON.</span>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary">
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+            <path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" />
+          </svg>
+          Download for macOS
+        </a>
+        <a href="#tools" class="btn-ghost">
+          See every tool
+          <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+      <div class="hero-foot">
+        <div><span class="foot-num">25</span><span class="foot-lbl">tools, one window</span></div>
+        <div><span class="foot-num">11</span><span class="foot-lbl">commands in Spotlight</span></div>
+        <div><span class="foot-num">macOS 14+</span><span class="foot-lbl">Apple silicon &amp; Intel</span></div>
+        <div><span class="foot-num">18 + 7</span><span class="foot-lbl">free · Lifetime Pro tools</span></div>
+      </div>
+    </section>
+
+    <!-- ─── Tool index ────────────────────────────────────────────────── -->
+    <section class="tools" id="tools">
+      <div class="section-head">
+        <div class="section-eyebrow">§ 01 — The index</div>
+        <h2 class="section-h">
+          Every tool, listed plainly.<br />
+          <span class="muted">Search the whole shelf, or browse by trade.</span>
+        </h2>
+      </div>
+
+      <div class="tools-controls">
+        <div class="search">
+          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+            <circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.4" />
+            <path d="M11 11l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+          </svg>
+          <input id="tools-search" type="text" placeholder='Search 25 tools — try "struct", "diff", "regex"…' />
+          <button id="tools-search-clear" class="search-clear" aria-label="Clear">✕</button>
+        </div>
+        <div class="cats" id="tools-cats"></div>
+      </div>
+
+      <div class="tools-grid" id="tools-grid"></div>
+    </section>
+
+    <!-- ─── Spotlight ─────────────────────────────────────────────────── -->
+    <section class="spotlight" id="feature">
+      <div class="section-head">
+        <div class="section-eyebrow">§ 02 — Spotlight</div>
+        <h2 class="section-h">
+          Your tools, now <em>in Spotlight</em>.<br />
+          <span class="muted">v2.15 — 11 commands run inline, no app window needed.</span>
+        </h2>
+      </div>
+      <div class="spotlight-grid">
+        <figure class="screen-shot">
+          <img src="images/screenshots/spotlight-hl.svg" alt="DevUtilities Spotlight command — generating an MD5 hash inline with the result shown directly under the Spotlight bar." loading="lazy" />
+        </figure>
+        <div class="spotlight-notes">
+          <div class="note">
+            <span class="note-mark">i</span>
+            <div class="note-body">
+              <h4>⌘Space is the whole workflow</h4>
+              <p>Convert a timestamp, hash a string, generate a UUID — type the command, fill parameters inline, read the result in place. The app never opens.</p>
+            </div>
+          </div>
+          <div class="note">
+            <span class="note-mark">ii</span>
+            <div class="note-body">
+              <h4>Result on your clipboard</h4>
+              <p>Every command copies its output automatically. Run it, ⌘V it, done — no selecting, no extra keystroke.</p>
+            </div>
+          </div>
+          <div class="note">
+            <span class="note-mark">iii</span>
+            <div class="note-body">
+              <h4>Eleven commands, nine tools</h4>
+              <p>Timestamp, number base, units, Base64, URL, JWT, hashes, UUIDs, random strings — the quick-hit conversions you reach for daily.</p>
+            </div>
+          </div>
+          <div class="note">
+            <span class="note-mark">iv</span>
+            <div class="note-body">
+              <h4>Shortcuts &amp; Siri for free</h4>
+              <p>Built on App Intents, so every command is automatable in Shortcuts and callable through Siri — quick keys included on macOS 26.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Voices ────────────────────────────────────────────────────── -->
+    <section class="voices" id="voices">
+      <div class="section-head">
+        <div class="section-eyebrow">§ 03 — Voices</div>
+        <h2 class="section-h">
+          What developers say<br />
+          <span class="muted">when the App Store stops listening.</span>
+        </h2>
+      </div>
+      <div class="voices-grid">
+        <figure class="voice">
+          <div class="voice-stars" aria-label="5 out of 5">
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+          </div>
+          <blockquote>The JSON diff has saved me from at least a dozen late-night API pages. It feels like the tool the Mac always wanted.</blockquote>
+          <figcaption>
+            <span class="voice-who">Sarah J.</span>
+            <span class="voice-role">Senior Full-Stack Engineer</span>
+          </figcaption>
+        </figure>
+        <figure class="voice">
+          <div class="voice-stars" aria-label="5 out of 5">
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+          </div>
+          <blockquote>Crypto, JWT, base64 — the things you reach for at 2am, all in one place. Native enough that I forget it isn't built in.</blockquote>
+          <figcaption>
+            <span class="voice-who">Michael R.</span>
+            <span class="voice-role">Security Engineer</span>
+          </figcaption>
+        </figure>
+        <figure class="voice">
+          <div class="voice-stars" aria-label="5 out of 5">
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+          </div>
+          <blockquote>The timestamp converter and UUID generator are part of my muscle memory. I'd pay for the AI translate alone.</blockquote>
+          <figcaption>
+            <span class="voice-who">Emily W.</span>
+            <span class="voice-role">iOS Developer</span>
+          </figcaption>
+        </figure>
+        <figure class="voice">
+          <div class="voice-stars" aria-label="5 out of 5">
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+          </div>
+          <blockquote>HTTP client with streaming, JSON tree, history. It is what every team's scratch app should grow up to be.</blockquote>
+          <figcaption>
+            <span class="voice-who">David L.</span>
+            <span class="voice-role">Backend Engineer</span>
+          </figcaption>
+        </figure>
+        <figure class="voice">
+          <div class="voice-stars" aria-label="5 out of 5">
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+          </div>
+          <blockquote>Parquet viewer is the unsung hero. Schema, rows, export — the entire debugging loop without leaving the dock.</blockquote>
+          <figcaption>
+            <span class="voice-who">Alex K.</span>
+            <span class="voice-role">Data Engineer</span>
+          </figcaption>
+        </figure>
+        <figure class="voice">
+          <div class="voice-stars" aria-label="5 out of 5">
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+            <svg viewBox="0 0 16 16" width="11" height="11"><path d="M8 1.5l2 4.4 4.8.4-3.6 3.2 1 4.7L8 11.7l-4.2 2.5 1-4.7L1.2 6.3 6 5.9z" fill="currentColor" /></svg>
+          </div>
+          <blockquote>Regex tester with live capture groups; QR codes from clipboard. Tiny tools, but the polish is the point.</blockquote>
+          <figcaption>
+            <span class="voice-who">Jessica M.</span>
+            <span class="voice-role">Frontend Developer</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ─── Changelog (condensed) ─────────────────────────────────────── -->
+    <section class="changelog" id="changelog">
+      <div class="section-head">
+        <div class="section-eyebrow">§ 04 — Changelog</div>
+        <h2 class="section-h">
+          Released, in the open.<br />
+          <span class="muted">Recent versions, in the order they shipped.</span>
+        </h2>
+      </div>
+      <ol class="changes">
+        <li>
+          <span class="ver">3.0</span>
+          <div>
+            <h4>Free tools, Lifetime Pro, current AI models</h4>
+            <p>Eighteen free tools and a 30-day trial of seven Pro tools. All users who first acquire the app on or before October 24, 2026, paid or free, receive permanent Pro. AI presets now include GPT-6.1 Sol, GPT-6 Sol/Luna/Astra, DeepSeek V4.1-Flash with vision, and Claude Fable 5.1 / Opus 5.5 / Sonnet 5.5. Read-aloud moves to OpenAI Realtime with ten voices and local macOS fallback.</p>
+            <span class="when">3.0 release</span>
+          </div>
+        </li>
+        <li>
+          <span class="ver">2.15</span>
+          <div>
+            <h4>Shorter names, one shared vocabulary</h4>
+            <p>Tool labels are now concise and consistent across the app and website — Base64, JWT, JSON, UUID, Crypto, Parquet, and the rest.</p>
+            <span class="when">July 2026</span>
+          </div>
+        </li>
+        <li>
+          <span class="ver">2.14</span>
+          <div>
+            <h4>Data Converter</h4>
+            <p>Convert between JSON, YAML, TOML, and CSV in any direction. Object key order is preserved, nested data flattens to dotted CSV columns, and CSV cells can be type-inferred or kept as strings.</p>
+            <span class="when">June 2026</span>
+          </div>
+        </li>
+        <li>
+          <span class="ver">2.13</span>
+          <div>
+            <h4>Struct Converter</h4>
+            <p>Drop in JSON, TOML, YAML, or SQL DDL. Get back a typed struct or interface in TypeScript, Python, Go, Java, Rust, Swift, or PHP — fields, tags, and nested types included.</p>
+            <span class="when">May 2026</span>
+          </div>
+        </li>
+        <li>
+          <span class="ver">2.12</span>
+          <div>
+            <h4>AI Chat, broadly compatible</h4>
+            <p>One router for OpenAI-compatible models and native Anthropic Messages. Use GPT, DeepSeek, Qwen, Kimi, GLM, Gemini, or Claude; AI Translate shares the same model setup.</p>
+            <span class="when">May 2026</span>
+          </div>
+        </li>
+        <li>
+          <span class="ver">2.11</span>
+          <div>
+            <h4>Diff, everywhere it makes sense</h4>
+            <p>Text Compare arrives as a dedicated tool. JSON, SQL, and HTML each pick up a side-by-side diff mode. Powered by CodeMirror.</p>
+            <span class="when">Apr 2026</span>
+          </div>
+        </li>
+        <li>
+          <span class="ver">2.10</span>
+          <div>
+            <h4>Currency, with memory</h4>
+            <p>38 fiat currencies. 24-hour smart caching. 30-day price history with quiet trend arrows.</p>
+            <span class="when">Mar 2026</span>
+          </div>
+        </li>
+        <li>
+          <span class="ver">2.9</span>
+          <div>
+            <h4>Random String</h4>
+            <p>Five presets — passwords, API keys, tokens, IDs, slugs — backed by SecRandomCopyBytes.</p>
+            <span class="when">Feb 2026</span>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ─── Download ──────────────────────────────────────────────────── -->
+    <section class="download" id="download">
+      <div class="dl-card">
+        <div class="dl-left">
+          <div class="section-eyebrow">§ 05 — Download</div>
+          <h2 class="dl-h">
+            Twenty-five tools.<br />
+            One small Mac app.
+          </h2>
+          <p class="dl-p">
+            Free download with 18 free tools and a 30-day trial of 7 Pro tools. Unlock Lifetime Pro for $29.99. Ships with feature management,
+            drag-and-drop sidebar organization, and full keyboard navigation. No account, no subscription.
+          </p>
+          <p class="dl-p">Prefer to build your own copy? Source builds may customize Pro access under the project license. For the ready-to-use official app, please support development through the Mac App Store and Lifetime Pro. External AI services still require your own credentials.</p>
+          <div class="dl-actions">
+            <a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" />
+              </svg>
+              Download — Mac App Store
+            </a>
+            <a href="https://github.com/hengfeiyang/DevUtilities/issues" class="btn-ghost lg">
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 1.4a5.6 5.6 0 0 1 5.6 5.6c0 .4 0 .8-.1 1.2-.4-.6-1.4-1.4-2.5-1.4-1.5 0-1.6 1-3 1-1.4 0-2-1-3.2-1-1 0-2 .8-2.4 1.4A5.6 5.6 0 0 1 8 2.4z" fill="currentColor" />
+              </svg>
+              Support on GitHub
+            </a>
+          </div>
+        </div>
+        <aside class="dl-right">
+          <div class="dl-spec">
+            <span class="spec-k">Version</span><span class="spec-v">3.0</span>
+            <span class="spec-k">Requires</span><span class="spec-v">macOS 14 Sonoma or later</span>
+            <span class="spec-k">Architectures</span><span class="spec-v">Apple silicon · Intel</span>
+            <span class="spec-k">Footprint</span><span class="spec-v">≈ 55 MB on disk</span>
+            <span class="spec-k">Price</span><span class="spec-v">Free download · $29.99 Lifetime Pro</span>
+            <span class="spec-k">Telemetry</span><span class="spec-v">Anonymous only</span>
+          </div>
+          <div class="dl-built">
+            <span>Built with</span>
+            <strong>Claude Code</strong>
+            <span>and Swift</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- ─── Footer ──────────────────────────────────────────────────────── -->
+  <footer class="foot">
+    <div class="foot-inner">
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <img src="images/icon.png" alt="" width="26" height="26" class="logo-img" />
+          <span>DevUtilities</span>
+        </a>
+        <p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p>
+      </div>
+      <div class="foot-cols">
+        <div>
+          <h5>Product</h5>
+          <a href="#tools">Tools</a>
+          <a href="#feature">Spotlight</a>
+          <a href="#download">Download</a>
+        </div>
+        <div>
+          <h5>Resources</h5>
+          <a href="release-notes.html">Changelog</a>
+          <a href="https://github.com/hengfeiyang/DevUtilities/issues">Support</a>
+          <a href="https://hengfeiyang.github.io/devtables/">DevTables — another app</a>
+        </div>
+        <div>
+          <h5>Legal</h5>
+          <a href="privacy_policy.html">Privacy policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-rule"></div>
+    <div class="foot-bottom">
+      <span>© 2026 DevUtilities</span>
+      <span>v3.0</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

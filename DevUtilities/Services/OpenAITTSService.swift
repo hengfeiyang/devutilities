@@ -15,12 +15,8 @@
 
 import AVFoundation
 
-/// Streams TTS audio from the OpenAI /audio/speech endpoint using PCM format.
-///
-/// The response is streamed as raw 24 kHz / 16-bit / mono PCM bytes.
-/// Each received chunk is immediately converted to Float32 and scheduled on
-/// AVAudioPlayerNode, so playback starts within ~200 ms of the first bytes
-/// arriving — no sentence splitting or multiple API calls required.
+/// Reads text through Realtime WebSocket audio output (24 kHz PCM16, mono).
+/// No microphone capture or conversation history is sent.
 @MainActor
 final class OpenAITTSService: NSObject {
     static let shared = OpenAITTSService()
@@ -28,10 +24,12 @@ final class OpenAITTSService: NSObject {
     private var engine: AVAudioEngine?
     private var playerNode: AVAudioPlayerNode?
     private var speakingTask: Task<Void, Never>?
+    private var realtimeClient: RealtimeTTSClient?
     private var finishCallback: (() -> Void)?
     private var finishFired = false
     /// Incremented every time speak/stop is called to invalidate stale callbacks.
     private var generation = 0
+    private let makeClient: () -> RealtimeTTSClient
 
     // Float32 playback format matching the OpenAI PCM spec (24 kHz, mono)
     private let playbackFormat = AVAudioFormat(
@@ -41,7 +39,15 @@ final class OpenAITTSService: NSObject {
         interleaved: false
     )!
 
-    private override init() { super.init() }
+    private override init() {
+        makeClient = { RealtimeTTSClient() }
+        super.init()
+    }
+
+    init(makeClient: @escaping () -> RealtimeTTSClient) {
+        self.makeClient = makeClient
+        super.init()
+    }
 
     // MARK: - Public API
 
@@ -52,75 +58,40 @@ final class OpenAITTSService: NSObject {
         apiKey: String,
         baseURL: String,
         onStart: (() -> Void)? = nil,
-        onFinish: (() -> Void)? = nil
+        onFinish: (() -> Void)? = nil,
+        onError: ((Error, Bool) -> Void)? = nil
     ) {
-        internalStop(fireCallback: false)
+        internalStop(fireCallback: true)
         finishCallback = onFinish
         finishFired = false
         let gen = generation
+        let client = makeClient()
+        realtimeClient = client
 
-        speakingTask = Task {
+        speakingTask = Task { [self] in
+            var hasScheduledAudio = false
             do {
-                let url = try buildURL(baseURL: baseURL)
-                var request = URLRequest(url: url)
-                request.httpMethod = "POST"
-                request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                // Request raw PCM so we can feed it directly to AVAudioPlayerNode
-                let body: [String: String] = [
-                    "model": model, "input": text,
-                    "voice": voice, "response_format": "pcm"
-                ]
-                request.httpBody = try JSONEncoder().encode(body)
-
-                let (asyncBytes, response) = try await URLSession.shared.bytes(for: request)
-                guard !Task.isCancelled else { return }
-                guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
-                    throw URLError(.badServerResponse)
-                }
-
-                // Set up audio engine
-                let eng = AVAudioEngine()
-                let node = AVAudioPlayerNode()
-                eng.attach(node)
-                eng.connect(node, to: eng.mainMixerNode, format: playbackFormat)
-                try eng.start()
-                node.play()
-                engine = eng
-                playerNode = node
-
-                // Stream PCM bytes into audio buffers
-                // 4800 frames = 0.2 s at 24 kHz; each Int16 frame = 2 bytes
-                let framesPerBuffer = 4800
-                let bytesPerBuffer = framesPerBuffer * 2
-
-                var pending = Data()
-                pending.reserveCapacity(bytesPerBuffer * 2)
-                var onStartFired = false
-
-                for try await byte in asyncBytes {
-                    guard !Task.isCancelled else { break }
-                    pending.append(byte)
-
-                    if pending.count >= bytesPerBuffer {
-                        let usable = pending.count & ~1   // round down to even bytes
-                        if let buf = makePCMBuffer(from: pending, count: usable) {
-                            Self.enqueueBuffer(buf, on: node)
-                            if !onStartFired { onStartFired = true; onStart?() }
-                        }
-                        pending.removeFirst(usable)
+                try await client.stream(text: text, model: model, voice: voice, apiKey: apiKey, baseURL: baseURL) { [self] audio in
+                    guard generation == gen, !Task.isCancelled else { throw CancellationError() }
+                    if engine == nil {
+                        let eng = AVAudioEngine()
+                        let node = AVAudioPlayerNode()
+                        eng.attach(node)
+                        eng.connect(node, to: eng.mainMixerNode, format: playbackFormat)
+                        try eng.start()
+                        node.play()
+                        engine = eng
+                        playerNode = node
                     }
+                    guard let node = playerNode, let buffer = makePCMBuffer(from: audio, count: audio.count) else {
+                        throw RealtimeTTSError.invalidAudio
+                    }
+                    Self.enqueueBuffer(buffer, on: node)
+                    if !hasScheduledAudio { hasScheduledAudio = true; onStart?() }
                 }
 
-                guard !Task.isCancelled else { return }
-
-                // Flush remaining bytes (must be even: complete Int16 frames)
-                let usable = pending.count & ~1
-                if usable > 0, let buf = makePCMBuffer(from: pending, count: usable) {
-                    Self.enqueueBuffer(buf, on: node)
-                    if !onStartFired { onStart?() }
-                }
-
+                guard generation == gen, !Task.isCancelled, let node = playerNode else { return }
+                realtimeClient = nil
                 // Schedule a silent sentinel buffer to detect end of playback
                 if let sentinel = makeSilentBuffer(frames: 1) {
                     node.scheduleBuffer(sentinel, at: nil, options: [],
@@ -135,11 +106,11 @@ final class OpenAITTSService: NSObject {
                 }
 
             } catch {
-                if !(error is CancellationError) {
-                    print("OpenAITTSService error: \(error.localizedDescription)")
-                }
                 guard generation == gen else { return }
                 fireFinish()
+                if !(error is CancellationError), !Task.isCancelled {
+                    onError?(error, hasScheduledAudio)
+                }
             }
         }
     }
@@ -154,6 +125,8 @@ final class OpenAITTSService: NSObject {
         generation += 1   // invalidates any in-flight sentinel callbacks
         speakingTask?.cancel()
         speakingTask = nil
+        realtimeClient?.cancel()
+        realtimeClient = nil
         playerNode?.stop()
         engine?.stop()
         playerNode = nil
@@ -164,6 +137,8 @@ final class OpenAITTSService: NSObject {
     private func fireFinish() {
         guard !finishFired else { return }
         finishFired = true
+        realtimeClient?.cancel()
+        realtimeClient = nil
         playerNode?.stop()
         engine?.stop()
         playerNode = nil
@@ -182,12 +157,11 @@ final class OpenAITTSService: NSObject {
         else { return nil }
         buffer.frameLength = AVAudioFrameCount(frameCount)
 
-        data.withUnsafeBytes { raw in
-            let src = raw.bindMemory(to: Int16.self)
-            let dst = buffer.floatChannelData![0]
-            for i in 0..<frameCount {
-                dst[i] = Float(src[i]) / 32768.0
-            }
+        let dst = buffer.floatChannelData![0]
+        for i in 0..<frameCount {
+            let offset = data.startIndex + i * 2
+            let sample = UInt16(data[offset]) | UInt16(data[offset + 1]) << 8
+            dst[i] = Float(Int16(bitPattern: sample)) / 32768.0
         }
         return buffer
     }
@@ -209,11 +183,4 @@ final class OpenAITTSService: NSObject {
         node.scheduleBuffer(buffer, completionHandler: nil)
     }
 
-    private func buildURL(baseURL: String) throws -> URL {
-        let trimmed = baseURL
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-            .trimmingCharacters(in: CharacterSet(charactersIn: "/"))
-        guard let url = URL(string: "\(trimmed)/audio/speech") else { throw URLError(.badURL) }
-        return url
-    }
 }

@@ -456,7 +456,7 @@ struct ParquetViewerView: View {
         }
         
         // Track file open event
-        EventManager.shared.reportFileOpen(fileType: ext, fileName: fileName)
+        EventManager.shared.reportFileOpen(fileType: ext)
         
         // Get file size
         do {

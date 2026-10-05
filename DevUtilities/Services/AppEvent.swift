@@ -6,7 +6,8 @@ enum EventType {
     case moduleSwitch(from: String?, to: String)
     case submoduleSwitch(module: String, from: String?, to: String)
     case aiChatMessage(messageLength: Int)
-    case fileOpen(fileType: String, fileName: String)
+    case fileOpen(fileType: String)
+    case monetization(action: String, tool: String?)
 }
 
 // MARK: - App Event Data Structure
@@ -88,12 +89,25 @@ struct AppEvent: Codable {
         )
     }
     
-    static func fileOpen(fileType: String, fileName: String, version: String, userId: UUID, sessionId: UUID) -> AppEvent {
+    static func fileOpen(fileType: String, version: String, userId: UUID, sessionId: UUID) -> AppEvent {
         return AppEvent(
             timestamp: Date(),
             version: version,
             module: "parquet_viewer",
             submodule: "file_opened",
+            userId: userId,
+            sessionId: sessionId
+        )
+    }
+
+    static func monetization(action: String, tool: String?, version: String, userId: UUID, sessionId: UUID) -> AppEvent {
+        let sanitizedTool = tool?.replacingOccurrences(of: " ", with: "_").lowercased()
+        let submodule = [action, sanitizedTool].compactMap { $0 }.joined(separator: ":")
+        return AppEvent(
+            timestamp: Date(),
+            version: version,
+            module: "monetization",
+            submodule: submodule,
             userId: userId,
             sessionId: sessionId
         )

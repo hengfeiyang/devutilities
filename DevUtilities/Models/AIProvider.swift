@@ -119,9 +119,23 @@ enum AIProviderPreset: String, Codable, CaseIterable, Identifiable {
         switch self {
         case .openAI:
             return [
-                "gpt-5.4": "gpt-5.6-sol",
-                "gpt-5.4-mini": "gpt-5.6-terra",
-                "gpt-5.4-nano": "gpt-5.6-luna"
+                "gpt-5.4": "gpt-6.1-sol",
+                "gpt-5.4-mini": "gpt-6-sol",
+                "gpt-5.4-nano": "gpt-6-luna",
+                "gpt-5.6-sol": "gpt-6.1-sol",
+                "gpt-5.6-terra": "gpt-6-sol",
+                "gpt-5.6-luna": "gpt-6-luna"
+            ]
+        case .deepSeek:
+            return [
+                "deepseek-v4-flash": "deepseek-flash",
+                "deepseek-v4-flash-vision-exp": "deepseek-flash"
+            ]
+        case .anthropic:
+            return [
+                "claude-fable-5": "claude-fable-5-1",
+                "claude-opus-5": "claude-opus-5-5",
+                "claude-sonnet-5": "claude-sonnet-5-5"
             ]
         case .qwen:
             return [
@@ -137,7 +151,7 @@ enum AIProviderPreset: String, Codable, CaseIterable, Identifiable {
         switch self {
         case .openAI:
             return Set(modelIdMigrations.keys).union(["gpt-5.4-pro"])
-        case .qwen:
+        case .qwen, .deepSeek, .anthropic:
             return Set(modelIdMigrations.keys)
         default:
             return []
@@ -414,8 +428,8 @@ extension AIProvider {
         )
 
         let sol = AIModelV2(
-            name: "GPT-5.6 Sol",
-            modelId: "gpt-5.6-sol",
+            name: "GPT-6.1 Sol",
+            modelId: "gpt-6.1-sol",
             chatEndpoint: .responses,
             capabilities: ModelCapabilities(
                 supportsStreaming: true,
@@ -431,9 +445,9 @@ extension AIProvider {
             providerId: provider.id
         )
 
-        let terra = AIModelV2(
-            name: "GPT-5.6 Terra",
-            modelId: "gpt-5.6-terra",
+        let previousSol = AIModelV2(
+            name: "GPT-6 Sol",
+            modelId: "gpt-6-sol",
             chatEndpoint: .responses,
             capabilities: ModelCapabilities(
                 supportsStreaming: true,
@@ -450,8 +464,8 @@ extension AIProvider {
         )
 
         let luna = AIModelV2(
-            name: "GPT-5.6 Luna",
-            modelId: "gpt-5.6-luna",
+            name: "GPT-6 Luna",
+            modelId: "gpt-6-luna",
             chatEndpoint: .responses,
             capabilities: ModelCapabilities(
                 supportsStreaming: true,
@@ -467,8 +481,17 @@ extension AIProvider {
             providerId: provider.id
         )
 
+        let astra = AIModelV2(
+            name: "GPT-6 Astra",
+            modelId: "gpt-6-astra",
+            chatEndpoint: .responses,
+            capabilities: sol.capabilities,
+            isBuiltIn: true,
+            providerId: provider.id
+        )
+
         var providerWithModels = provider
-        providerWithModels.models = [sol, terra, luna]
+        providerWithModels.models = [sol, previousSol, luna, astra]
         return providerWithModels
     }
 
@@ -483,14 +506,15 @@ extension AIProvider {
         )
 
         let deepSeekV4Flash = AIModelV2(
-            name: "V4-Flash",
-            modelId: "deepseek-v4-flash",
+            name: "V4.1-Flash",
+            modelId: "deepseek-flash",
             capabilities: ModelCapabilities(
                 supportsStreaming: true,
                 supportsReasoning: true,
                 supportsFunctionCalls: true,
-                maxTokens: 384_000,
-                contextWindow: 1_000_000
+                supportsImages: true,
+                maxTokens: 393_216,
+                contextWindow: 1_048_576
             ),
             isBuiltIn: true,
             providerId: provider.id
@@ -503,8 +527,8 @@ extension AIProvider {
                 supportsStreaming: true,
                 supportsReasoning: true,
                 supportsFunctionCalls: true,
-                maxTokens: 384_000,
-                contextWindow: 1_000_000
+                maxTokens: 393_216,
+                contextWindow: 1_048_576
             ),
             isBuiltIn: true,
             providerId: provider.id
@@ -526,8 +550,8 @@ extension AIProvider {
         )
 
         let fable = AIModelV2(
-            name: "Claude Fable 5",
-            modelId: "claude-fable-5",
+            name: "Claude Fable 5.1",
+            modelId: "claude-fable-5-1",
             capabilities: ModelCapabilities(
                 supportsStreaming: true,
                 supportsReasoning: true,
@@ -541,8 +565,8 @@ extension AIProvider {
         )
 
         let opus = AIModelV2(
-            name: "Claude Opus 5",
-            modelId: "claude-opus-5",
+            name: "Claude Opus 5.5",
+            modelId: "claude-opus-5-5",
             capabilities: ModelCapabilities(
                 supportsStreaming: true,
                 supportsReasoning: true,
@@ -556,8 +580,8 @@ extension AIProvider {
         )
 
         let sonnet = AIModelV2(
-            name: "Claude Sonnet 5",
-            modelId: "claude-sonnet-5",
+            name: "Claude Sonnet 5.5",
+            modelId: "claude-sonnet-5-5",
             capabilities: ModelCapabilities(
                 supportsStreaming: true,
                 supportsReasoning: true,
@@ -737,7 +761,7 @@ extension AIProviderPreset {
 
 enum AIProviderCatalog {
     static let preferredDefaultPreset = AIProviderPreset.openAI
-    static let preferredDefaultModelId = "gpt-5.6-sol"
+    static let preferredDefaultModelId = "gpt-6.1-sol"
 
     /// Refreshes catalog-managed models while retaining provider credentials,
     /// custom models, enablement choices, and model UUIDs used by saved chats.

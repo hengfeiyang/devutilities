@@ -532,12 +532,12 @@ class AIUISettings {
     }
 
     var openAITTSModel: String {
-        get { userDefaults.string(forKey: "ai_tts_openai_model") ?? "gpt-4o-mini-tts" }
+        get { OpenAITTSConfiguration.migratedModel(userDefaults.string(forKey: "ai_tts_openai_model")) }
         set { userDefaults.set(newValue, forKey: "ai_tts_openai_model") }
     }
 
     var openAITTSVoice: String {
-        get { userDefaults.string(forKey: "ai_tts_openai_voice") ?? "alloy" }
+        get { OpenAITTSConfiguration.migratedVoice(userDefaults.string(forKey: "ai_tts_openai_voice")) }
         set { userDefaults.set(newValue, forKey: "ai_tts_openai_voice") }
     }
 
@@ -549,5 +549,5 @@ class AIUISettings {
         }
     }
 
-    private init() {}
+    private init() { OpenAITTSConfiguration.migrateSettings(userDefaults) }
 }

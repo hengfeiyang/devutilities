@@ -19,7 +19,7 @@ class EventManager: ObservableObject {
     private let appVersion: String
     
     // Configuration
-    @Published var isEnabled = true
+    private(set) var isEnabled = true
     @Published var isDebugMode = false
     
     // Status
@@ -47,15 +47,6 @@ class EventManager: ObservableObject {
         self.networkService = EventNetworkService()
         self.batchProcessor = EventBatchProcessor(storage: storage, networkService: networkService)
         
-        // Load settings
-        if UserDefaults.standard.object(forKey: "DevUtilities_EventsEnabled") == nil {
-            // First time - default to enabled
-            self.isEnabled = true
-            UserDefaults.standard.set(true, forKey: "DevUtilities_EventsEnabled")
-        } else {
-            self.isEnabled = UserDefaults.standard.bool(forKey: "DevUtilities_EventsEnabled")
-        }
-        
         // Load debug mode
         self.isDebugMode = UserDefaults.standard.bool(forKey: "DevUtilities_EventsDebugMode")
         
@@ -68,12 +59,8 @@ class EventManager: ObservableObject {
         print("   Debug Mode: \(isDebugMode)")
         
         // Start batch processor
-        if isEnabled {
-            startEventProcessing()
-            print("   Background Processing: Started")
-        } else {
-            print("   Background Processing: Disabled")
-        }
+        startEventProcessing()
+        print("   Background Processing: Started")
     }
     
     // MARK: - Public API
@@ -179,7 +166,7 @@ class EventManager: ObservableObject {
         enqueueEvent(event)
     }
     
-    func reportFileOpen(fileType: String, fileName: String) {
+    func reportFileOpen(fileType: String) {
         guard isEnabled else { 
             print("🚫 Event tracking disabled - File open event skipped")
             return 
@@ -187,7 +174,6 @@ class EventManager: ObservableObject {
         
         let event = AppEvent.fileOpen(
             fileType: fileType,
-            fileName: fileName,
             version: appVersion,
             userId: userId,
             sessionId: sessionId
@@ -197,33 +183,30 @@ class EventManager: ObservableObject {
         print("   Module: \(event.module)")
         print("   Submodule: \(event.submodule)")
         print("   File Type: \(fileType)")
-        print("   File Name: \(fileName)")
         print("   User ID: \(userId.uuidString.prefix(8))...")
         print("   Session ID: \(sessionId.uuidString.prefix(8))...")
         print("   Timestamp: \(event.timestamp)")
         
         enqueueEvent(event)
     }
-    
-    // MARK: - Settings Management
-    
-    func setEnabled(_ enabled: Bool) {
-        guard enabled != isEnabled else { return }
-        
-        isEnabled = enabled
-        UserDefaults.standard.set(enabled, forKey: "DevUtilities_EventsEnabled")
-        
-        if enabled {
-            startEventProcessing()
-        } else {
-            stopEventProcessing()
-        }
-        
-        if isDebugMode {
-            print("📊 Event tracking \(enabled ? "enabled" : "disabled")")
-        }
+
+    /// Tracks only product-flow state. Never pass user content, file names,
+    /// request data, keys, or other document-derived values here.
+    func reportMonetization(action: String, tool: ToolType? = nil) {
+        guard isEnabled else { return }
+
+        let event = AppEvent.monetization(
+            action: action,
+            tool: tool?.rawValue,
+            version: appVersion,
+            userId: userId,
+            sessionId: sessionId
+        )
+        enqueueEvent(event)
     }
     
+    // MARK: - Settings Management
+
     func setDebugMode(_ debug: Bool) {
         isDebugMode = debug
         UserDefaults.standard.set(debug, forKey: "DevUtilities_EventsDebugMode")

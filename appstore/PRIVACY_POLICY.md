@@ -1,6 +1,6 @@
 # Privacy Policy for DevUtilities
 
-**Last Updated:** October 2025
+**Last Updated:** July 2026
 
 ## Overview
 
@@ -18,6 +18,7 @@ We collect **anonymous usage events only**:
 - **App Start Events**: When you launch the app
 - **Feature Usage**: Which tools you use (e.g., JSON Formatter, Base64, JWT)
 - **Navigation Patterns**: How you navigate between different tools
+- **Product Flow**: Trial, purchase, and restore states
 - **Session Information**: App version, anonymous session ID
 
 #### What We DO NOT Collect
@@ -27,6 +28,7 @@ We do **not** collect any personal or sensitive information:
 - ❌ No device identifiers (UDID, serial numbers, MAC address)
 - ❌ No IP addresses or location data
 - ❌ No file contents or data you process in the tools
+- ❌ No file names or file paths
 - ❌ No API keys or credentials
 - ❌ No chat messages or translation content
 - ❌ No advertising tracking or third-party analytics services
@@ -80,7 +82,6 @@ DevUtilities requires network access for specific features only:
 - **Service Used:** Our analytics server (api.devutilities.feiliwu.com)
 - **Data Sent:** Anonymous events (see "Anonymous Usage Analytics" section above)
 - **Data Format:** GET requests with query parameters (version, module, submodule, anonymous user_id, session_id)
-- **Opt-Out:** You can disable analytics in app preferences (coming soon)
 
 ### 5. Update Checking
 - **Purpose:** Check for new app versions on GitHub
@@ -146,7 +147,6 @@ You have complete control over your data:
 - **Access:** All personal data is stored locally and accessible via standard macOS file locations
 - **Deletion:** Remove the App to delete all local data and stop sending analytics events
 - **Portability:** Export any data using standard macOS tools
-- **Opt-Out:** Analytics can be disabled in app preferences (feature in development)
 - **Anonymous Data:** Since analytics are anonymous and not linked to you personally, we cannot retrieve or delete specific analytics data upon request
 
 ## Changes to This Privacy Policy

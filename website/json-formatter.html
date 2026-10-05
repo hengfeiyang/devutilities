@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JSON — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="JSON with format, validate, escape/unescape, and a CodeMirror-powered side-by-side diff editor." />
+  <meta name="keywords" content="JSON formatter, JSON diff, JSON validator, JSON escape, CodeMirror JSON, macOS JSON tool" />
+  <meta property="og:image" content="images/screenshots/json.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400..700;1,400..700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="tool-page">
+  <header class="nav nav-static"><div class="nav-inner"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav><div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div></div><div class="nav-progress"></div></header>
+
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>JSON</strong></nav>
+  <section class="page-head"><div class="page-eyebrow">§ Tool 09 of 25 · Format</div><h1 class="page-h">JSON, <em>read like a document.</em></h1></section>
+  <div class="page-sub"><div></div><p>Format, validate, minify, escape, unescape — the daily moves. v2.11 added a CodeMirror diff editor for side-by-side comparison: real-time status, character and line counts, the same gestures as a code review tool.</p></div>
+
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Updated</div><div class="tool-meta-value accent">v2.11</div><div class="tool-meta-sub">Diff mode added</div></div>
+    <div><div class="tool-meta-label">Modes</div><div class="tool-meta-value">Format · Validate · Diff</div><div class="tool-meta-sub">Plus escape / unescape</div></div>
+    <div><div class="tool-meta-label">Editor</div><div class="tool-meta-value">CodeMirror</div><div class="tool-meta-sub">Syntax highlighting</div></div>
+    <div><div class="tool-meta-label">Network</div><div class="tool-meta-value">Offline</div><div class="tool-meta-sub">Pure local</div></div>
+  </div>
+
+  <section class="tool-shot"><figure><img src="images/screenshots/json.png" alt="DevUtilities JSON — formatted output, diff mode, validation messages." /></figure><figcaption>Plate ix — JSON with the diff editor and the live status indicator.</figcaption></section>
+
+  <main>
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div><div>
+    <h2 class="tool-block-h">Eight things <span class="muted">it does precisely.</span></h2>
+    <div class="caps">
+      <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Format with intent</h4><p>Pretty-print with two-space, four-space, or tab indentation. Sort keys when you want a stable diff.</p></div></div>
+      <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>Validation that points</h4><p>Errors land with a line number and a useful message — not "unexpected token" with a shrug.</p></div></div>
+      <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Side-by-side diff</h4><p>CodeMirror diff editor. Additions, removals, and changes highlighted; a status strip says "same" or "different".</p></div></div>
+      <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Escape / unescape</h4><p>Wrap a JSON document into a string literal, or peel one out of an embedded string. The escape modes round-trip cleanly.</p></div></div>
+      <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Minify</h4><p>Strip whitespace, preserve precision. The output is a single line, ready to embed.</p></div></div>
+      <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>Character &amp; line metrics</h4><p>Both sides of the diff display character and line counts — useful when comparing payload sizes.</p></div></div>
+      <div class="cap"><span class="cap-n">vii</span><div class="cap-body"><h4>Auto-format on diff</h4><p>Diff mode automatically formats both sides, so cosmetic differences don't masquerade as real ones.</p></div></div>
+      <div class="cap"><span class="cap-n">viii</span><div class="cap-body"><h4>State persistence</h4><p>The text in both sides survives across sessions. Yesterday's compare is still where you left it.</p></div></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div><div>
+    <h2 class="tool-block-h">Four moves <em>from string to structure.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="step-n"></span><h4>Paste payload</h4><p>From a network panel, a log, or a curl. Format mode receives it raw.</p><div class="step-key">Paste · <b>⌘ V</b></div></div>
+      <div class="step"><span class="step-n"></span><h4>Format or validate</h4><p>Pretty-print to read; validate to confirm. Errors point at the line that broke.</p><div class="step-key">Format · Validate</div></div>
+      <div class="step"><span class="step-n"></span><h4>Switch to diff</h4><p>Compare two payloads. Both sides auto-format; the editor highlights what moved.</p><div class="step-key">Diff mode</div></div>
+      <div class="step"><span class="step-n"></span><h4>Copy or escape</h4><p>Copy the formatted output, or escape it into a string for an embedded fixture.</p><div class="step-key">Copy · Escape</div></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div><div>
+    <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+    <div class="uses">
+      <div class="use"><span class="use-tag">i — API</span><h4>Response inspection</h4><p>Pretty-print a deeply nested response so the structure is actually legible.</p></div>
+      <div class="use"><span class="use-tag">ii — Diff</span><h4>Drift detection</h4><p>Two responses, ten changes — the diff editor names them. Status flips to "different" the moment they part.</p></div>
+      <div class="use"><span class="use-tag">iii — Fixtures</span><h4>Test data</h4><p>Format your fixture; escape it into a string literal for the test source.</p></div>
+      <div class="use"><span class="use-tag">iv — Config</span><h4>Validation</h4><p>Catch a stray comma in a config file before it crashes the build.</p></div>
+      <div class="use"><span class="use-tag">v — Logs</span><h4>Embedded JSON</h4><p>Unescape the JSON-in-a-string format favoured by some loggers; format the result.</p></div>
+      <div class="use"><span class="use-tag">vi — Review</span><h4>PR-style compare</h4><p>Drop two payloads into the diff editor and discuss the change in chat.</p></div>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div><div>
+    <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+    <div class="faq">
+      <details open><summary>What does diff mode actually compare?</summary><p>Both sides are auto-formatted first — same indentation, sorted keys if you choose — so cosmetic differences don't pollute the result. Then a side-by-side diff highlights real changes.</p></details>
+      <details><summary>Does formatting preserve number precision?</summary><p>Yes. The internal representation handles large integers and high-precision floats. Round-trip is loss-free.</p></details>
+      <details><summary>How does validation report errors?</summary><p>Line and column, with a message that names the problem (unexpected token, missing quote, trailing comma, and so on).</p></details>
+      <details><summary>Can I sort object keys?</summary><p>Yes. A toggle sorts keys alphabetically — useful when stabilising a diff.</p></details>
+      <details><summary>Does escape produce a JSON string literal?</summary><p>Yes. Escape mode wraps a JSON document into a JSON string literal you can embed; unescape reverses the process cleanly.</p></details>
+      <details><summary>Does this require network access?</summary><p>No. Formatting, validation, escaping, and diffing are all local.</p></details>
+    </div>
+  </div></section>
+
+  <section class="tool-block"><div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div><div>
+    <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+    <div class="related-grid">
+      <a class="rel" href="text-compare.html"><div class="rel-head"><span>17 · Inspect</span><span>New · 2.11</span></div><h4>Text Compare</h4><p>Diff plain text — for the comparisons that aren't JSON-shaped.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="sql-formatter.html"><div class="rel-head"><span>10 · Format</span><span>Updated · 2.11</span></div><h4>SQL</h4><p>Same diff workflow, applied to queries.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="html-formatter.html"><div class="rel-head"><span>11 · Format</span><span>Updated · 2.11</span></div><h4>HTML</h4><p>Format and diff HTML alongside the JSON it shipped with.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="http-request.html"><div class="rel-head"><span>20 · Network</span><span></span></div><h4>HTTP Client</h4><p>Hit the API; format the response in one move.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="struct-converter.html"><div class="rel-head"><span>24 · Generate</span><span>New · 2.13</span></div><h4>Struct Converter</h4><p>Turn the JSON you just formatted into a typed model — TS, Python, Go, Java, Rust, Swift, PHP.</p><span class="rel-arrow">Open →</span></a>
+      <a class="rel" href="ai-chat.html"><div class="rel-head"><span>01 · AI</span><span>Updated · 2.12</span></div><h4>AI Chat</h4><p>Hand the AI a JSON payload it can actually read.</p><span class="rel-arrow">Open →</span></a>
+    </div>
+  </div></section>
+  </main>
+
+  <section class="tool-cta"><div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div><h2 class="tool-cta-h">Format, validate, diff, <em>and the daily moves.</em></h2><div class="tool-cta-actions"><a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a><a href="release-notes.html" class="btn-ghost lg">Changelog</a></div></section>
+
+  <footer class="foot"><div class="foot-inner"><div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div><div class="foot-cols"><div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div><div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/DevUtilities/issues">Support</a></div><div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div></div></div><div class="foot-rule"></div><div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.15.0</span></div></footer>
+</body>
+</html>

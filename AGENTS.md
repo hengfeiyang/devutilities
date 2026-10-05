@@ -3,7 +3,15 @@
 This file provides guidance to Codex when working with this repository.
 
 ## Project Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities. Version 2.16.0 unifies AI integrations behind two provider protocol families: OpenAI Compatible and Anthropic Messages, shared by AI Chat and AI Translate.
+DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities. Version 3.0 introduces free download with 18 free tools, 7 Lifetime Pro tools, a user-started 30-day trial, and permanent Pro for all verified original acquisitions on or before October 24, 2026, whether paid or free. It also unifies AI integrations behind OpenAI Compatible and Anthropic Messages. The free-download Release flag remains guarded until release readiness is confirmed; the Early Supporter cutoff is independent of storefront pricing.
+
+## Repository maintenance
+
+- App source and `website/` are managed by this single repository. `website/` is a normal tracked directory, not a submodule or independent Git repository.
+- Commit and push from the repository root. Do not recreate `.gitmodules`, a `website/.git` file, or a separate website remote.
+- Self-built copies may customize local Pro access under `LICENSE`. Official App Store purchase rules remain unchanged; do not disable the official release guard as part of documentation or repository maintenance.
+- GitHub repository visibility and Pages deployment are external release operations. A local directory conversion does not make private source public or migrate the live website.
+- GitHub Pages is configured in root `.github/workflows/pages.yml` for `hengfeiyang/DevUtilities`, preserving `https://hengfeiyang.github.io/devutilities/`. Publish only `website/`, never the repository root. The owner will push to the target repository; change its Pages source to GitHub Actions and validate deployment before marking live cutover complete. Repository visibility is a separate decision.
 
 ## Key Tools & Status
 
@@ -29,7 +37,7 @@ All 25 tools are ✅ **Complete**:
 19. **Parquet** - Unified Rust-based ParquetViewer API for Parquet/Arrow file reading
 20. **Crypto** - **Complete cryptographic suite** with hash functions, symmetric and asymmetric encryption
 21. **AI Chat** - **Enhanced** OpenAI-compatible + Anthropic Messages routing, Textual Markdown rendering, one-click copy code snippets, reasoning streams, and custom model support
-22. **AI Translate** - Professional translation with shared two-protocol routing, 3 modes, 19 languages, **OpenAI TTS** (13 voices), macOS TTS, and word mode
+22. **AI Translate** - Professional translation with shared two-protocol routing, 3 modes, 19 languages, **OpenAI Realtime read-aloud** (10 voices), macOS TTS, and word mode
 23. **Currency** - Real-time currency conversion with 38 currencies, 24-hour caching, 30-day price history, and trend indicators
 24. **Struct Converter** - Convert JSON/TOML/YAML/SQL DDL into typed code structures for TypeScript, Python, Go, Java, Rust, Swift, and PHP
 25. **Data Converter** - **NEW** Convert between JSON, YAML, TOML, and CSV data formats with order preservation, nested-to-CSV flattening, and CSV type inference
@@ -39,7 +47,7 @@ All 25 tools are ✅ **Complete**:
 - **Navigation**: NavigationSplitView with sidebar search
 - **Dependencies**: CodeMirror-SwiftUI via SPM, Textual via SPM, Yams via SPM (YAML), ParquetViewer (Rust FFI)
 - **Security**: CryptoKit for JWT HMAC operations, Security framework for RSA operations
-- **TTS**: OpenAI TTS (real-time PCM streaming via AVAudioPlayerNode) + AVFoundation for native macOS TTS
+- **TTS**: OpenAI Realtime WebSocket (PCM24 streaming via AVAudioPlayerNode) + AVFoundation for native macOS TTS
 
 ## Build Commands
 ```bash
@@ -53,15 +61,25 @@ xcodebuild -project DevUtilities.xcodeproj -scheme DevUtilities build
 mcp__XcodeBuildMCP__build_run_macos
 ```
 
-## Recent Updates (v2.16.0)
+## Recent Updates (v3.0)
 - **Two Protocol Families**: Providers explicitly select OpenAI Compatible or Anthropic Messages
 - **Unified Router**: `Services/AIChatRouter.swift` routes both AI Chat and AI Translate; OpenAI Responses remains a model endpoint choice, not a third provider protocol
 - **Anthropic Native Mapping**: Claude requests use `/messages`, `x-api-key`, `anthropic-version`, top-level system prompts, Anthropic image blocks, and Messages SSE events
-- **Current Model Catalog**: GPT-5.6 Sol/Terra/Luna, DeepSeek V4, Qwen 3.8/3.7, Kimi K3, GLM 5.2, Gemini 3.6 Flash, and Claude Fable/Opus/Sonnet 5
+- **Current Model Catalog**: GPT-6.1 Sol (default), GPT-6 Sol/Luna/Astra, DeepSeek V4.1-Flash (`deepseek-flash`, image input) and V4-Pro, Qwen 3.8/3.7, Kimi K3, GLM 5.2, Gemini 3.6 Flash, and Claude Fable 5.1 / Opus 5.5 / Sonnet 5.5
+- **Catalog Migration Tests**: `Tests/AIProviderProtocolTests.swift` covers legacy and current catalog upgrades, saved model UUIDs, active states, custom endpoints/models, and idempotent startup sync
+- **Realtime Read-Aloud**: `Services/RealtimeTTSClient.swift` uses `gpt-realtime-2.1-mini`, GA `session.audio.output` configuration, and `response.output_audio.delta` events. Ten compatible voices; new-user default `marin`; old TTS model IDs and removed voices migrate automatically
+- **TTS Safety and Tests**: No microphone capture or chat context; Auto falls back to macOS only before any OpenAI audio is queued. Tests cover settings, schema, PCM framing, handshake, failures, timeout, cancellation, and stale playback callbacks. Real API pronunciation/verbatim fidelity remains a release validation gate
 - **Migration**: Providers without a stored protocol default to OpenAI Compatible; legacy `useResponsesAPI` models migrate to `chatEndpoint = responses`
 - **Capabilities**: Image input, image generation, and web search are tracked independently and enforced before OpenAI Responses tools run
+- **Free-Download Release**: v3.0 changes the product model to free download with 7 paid Pro tools; validate the IAP and final Release flow before enabling the Release freemium flag and submitting the IAP with 3.0
+- **Lifetime Pro**: One-time StoreKit 2 non-consumable purchase (`com.hengfeiyang.devutilities.pro.lifetime`) with purchase, restore, verification, and transaction-update handling
+- **Early Supporters**: All verified `AppTransaction.originalPurchaseDate` values strictly before 2026-10-25 00:00 Asia/Shanghai (2026-10-24 16:00 UTC) receive permanent Legacy Pro, including all of October 24 and free downloads; successful grants remain cached. User-facing copy shows only the inclusive date, without a timezone label
+- **30-Day Trial**: User-started full Pro trial, persisted in Keychain with a fail-safe local cache
+- **Free / Pro Split**: 18 free tools; AI Chat, AI Translate, Parquet, IP Lookup, Currency, JWT, and Crypto are Pro
+- **Trial Expiration**: After the 30-day trial, Pro tools require Lifetime Pro; selecting a locked tool keeps the current free tool visible and opens the unified purchase window
+- **Privacy-Safe Events**: Tracks only paywall, trial, purchase, and restore states; file names and user content are excluded
 
-## Recent Updates (v2.15.0)
+## Previous Updates (v2.15.0)
 - **Spotlight Integration**: 11 commands built on App Intents run inline in Spotlight on macOS 26 — results render in place and are copied to the clipboard automatically
 - **Command List**: Convert Timestamp, Convert Number Base, Convert Unit, Encode/Decode Base64, URL Encode/Decode, Decode JWT, Hash Text, Generate UUID, Generate Random String
 - **Implementation**: `Services/QuickToolService.swift` (shared conversion logic) + `Services/ToolIntents.swift` (intents, enums, `AppShortcutsProvider`; provider capped at 10 entries — Decode JWT registered as a plain intent)
@@ -295,7 +313,7 @@ When updating the version or adding new features, you must update ALL of these f
 1. README.md (main repository documentation)
 2. AGENTS.md (this file - project guidance)
 3. DESIGN.md (technical design document)
-4. website/README.md (website repository documentation)
+4. website/README.md (website subdirectory documentation)
 5. website/index.html (main website page)
 6. website/release-notes.html (release notes page)
 7. website/ai-translate.html (AI Translate feature page)

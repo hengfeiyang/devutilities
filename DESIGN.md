@@ -1,7 +1,13 @@
 # DevUtilities - Design Document
 
 ## Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities in a single, easy-to-use interface. The current release is v2.16.0, which unifies AI Chat and AI Translate behind two provider protocol families: OpenAI Compatible and Anthropic Messages. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities in a single, easy-to-use interface. Version 3.0 introduces free download with 18 free tools, a user-started 30-day trial of 7 Pro tools, and a one-time Lifetime Pro purchase after trial expiry. All users with a verified original acquisition on or before October 24, 2026, including free downloads, receive permanent Pro. AI Chat and AI Translate share OpenAI Compatible and Anthropic Messages routing. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+
+## Repository and distribution
+
+App code and the static website share one Git repository. `website/` is an ordinary tracked subdirectory; it has no nested Git metadata or submodule registration. Website changes use the same commit and push workflow as app changes. Root `.github/workflows/pages.yml` deploys only the `website/` contents on matching `main` pushes or a manual run. The owner will push the consolidated repository to `hengfeiyang/DevUtilities`, preserving `https://hengfeiyang.github.io/devutilities/`. Switching Pages from the existing branch-root source to GitHub Actions and verifying live deployment remain external steps; local configuration alone does not complete the cutover.
+
+Source builds may customize the Pro checks under the repository license. This does not change the official 3.0 distribution model of free download and one-time Lifetime Pro, or the developer-supplied credentials required by external AI services.
 
 ## Architecture
 
@@ -15,6 +21,7 @@ DevUtilities/
 │   ├── DevUtilitiesApp.swift          # Main app entry point
 │   ├── ContentView.swift           # Navigation split view
 │   ├── Models/
+│   │   ├── AccessState.swift       # Free, trial, Legacy Pro, and purchased Pro states (v3.0)
 │   │   ├── ToolType.swift          # Tool definitions
 │   │   ├── FeatureManager.swift    # Feature preferences management
 │   │   ├── TranslationLanguage.swift   # 19 language definitions + TTS mapping
@@ -26,6 +33,7 @@ DevUtilities/
 │   │   ├── StructIR.swift              # Intermediate representation for Struct Converter (v2.13.0)
 │   │   └── DataValue.swift             # NEW: Order-preserving shared value tree + DataFormat (v2.14.0)
 │   ├── Views/                      # All 25 tool implementations
+│   │   ├── MonetizationViews.swift # Trial, purchase, restore, and unified Pro window UI
 │   │   ├── TimestampConverterView.swift
 │   │   ├── UnitConverterView.swift
 │   │   ├── BaseConverterView.swift
@@ -58,11 +66,13 @@ DevUtilities/
 │   │   ├── SpeakerButton.swift     # TTS playback button — routes OpenAI/macOS TTS (v2.12.0)
 │   │   └── SpeakerMotionView.swift # Animated speaker icon (v2.8.2)
 │   ├── Services/                   # Application services
+│   │   ├── EntitlementManager.swift # StoreKit 2 and local trial entitlement authority
 │   │   ├── ChatManager.swift       # AI chat session management (stop preserves partial output v2.11.1)
 │   │   ├── ProviderManager.swift   # API provider configuration and protocol-aware connection tests
-│   │   ├── AIChatRouter.swift      # Two-family router + Anthropic Messages transport (v2.16.0)
+│   │   ├── AIChatRouter.swift      # Two-family router + Anthropic Messages transport (v3.0)
 │   │   ├── ChatManager.swift       # Chat orchestration + OpenAI Chat/Responses transports
-│   │   ├── OpenAITTSService.swift  # NEW: OpenAI TTS real-time PCM streaming (v2.12.0)
+│   │   ├── OpenAITTSService.swift  # Realtime PCM playback and cancellation lifecycle (v3.0)
+│   │   ├── RealtimeTTSClient.swift # GA WebSocket protocol, migration, PCM framing (v3.0)
 │   │   ├── EventManager.swift      # Analytics and telemetry
 │   │   ├── AVSpeechService.swift   # macOS native text-to-speech engine
 │   │   ├── RandomStringGenerator.swift # Secure random generation (v2.9.0)
@@ -95,6 +105,18 @@ DevUtilities/
 - **Search Bar**: Integrated search to filter tools by name
 
 Tool labels use concise, object-oriented names in the sidebar. Recognizable formats and technologies use their canonical names (for example, JSON, Base64, JWT, and UUID), while potentially ambiguous tools retain a descriptive suffix (for example, Unit Converter, HTTP Client, and IP Lookup). `ToolType` raw values remain stable when display names change so persisted feature preferences continue to decode correctly.
+
+### Lifetime Pro Access Layer (v3.0)
+
+- **Single authority**: `EntitlementManager` resolves Legacy Pro, verified Lifetime Pro, trial, and free states and is injected into the SwiftUI environment.
+- **Free tools**: Timestamp, Unit Converter, Number Base, Color, Text Compare, JSON, Base64, Hex String, Regex, UUID, Random String, URL, QR Code, SQL, HTML, HTTP Client, Struct Converter, and Data Converter.
+- **Pro tools**: AI Chat, AI Translate, Parquet, IP Lookup, Currency, JWT, and Crypto.
+- **Trial**: A full 30-day trial begins only after explicit user action. Trial dates persist in Keychain with a UserDefaults fail-safe cache.
+- **Trial expiry**: After the 30-day trial, all 7 Pro tools require permanent Pro access. There is no daily allowance.
+- **Unified Pro window**: Selecting a locked Pro tool leaves the current tool and sidebar selection unchanged and opens DevUtilities Pro. The window provides trial activation, purchase, and restore according to the current entitlement state.
+- **Purchase**: StoreKit 2 verifies the non-consumable product, listens for transaction updates, supports restore, and finishes verified transactions.
+- **Early Supporter policy**: Verified original acquisitions strictly before 2026-10-25 00:00 Asia/Shanghai (2026-10-24 16:00 UTC) receive permanent Legacy Pro regardless of price, including all of October 24. User-facing copy shows the inclusive date without a timezone label. The fixed cutoff is independent of the storefront transition; cached verified grants survive outages and the cutoff passing. Release remains guarded pending launch validation.
+- **Privacy**: Conversion analytics record only product-flow action and tool identifier. They do not include user text, file names, request bodies, secrets, keys, or document contents.
 
 ### Tool Integration Pattern
 Each tool follows a consistent pattern:
@@ -638,7 +660,7 @@ Quick conversions are exposed system-wide through App Intents:
 ### 19. AI Chat
 **File**: `AIChatView.swift`
 
-**Features** (v2.16.0):
+**Features** (v3.0):
 - **Textual Markdown Rendering**: Migrated from MarkdownUI to Textual for richer output — code syntax highlighting, tables, nested lists, inline formatting
 - **Copy Code Snippets**: One-click Copy button on every code block; no text selection needed
 - **Two Provider Protocols**: `AIAPIProtocol` exposes OpenAI Compatible and Anthropic Messages; GPT, DeepSeek, Qwen, Kimi, GLM, and Gemini use the first family while Claude uses the second
@@ -646,10 +668,11 @@ Quick conversions are exposed system-wide through App Intents:
 - **Anthropic Messages**: Native `/messages` payloads, top-level system prompts, `x-api-key` authentication, image content blocks, text/thinking SSE deltas, and token usage
 - **OpenAI Responses API**: Supports SSE streaming and reasoning/thinking output for models that require or benefit from `/responses`
 - **Reasoning Support**: `response.reasoning_summary_text.delta` and `response.reasoning_text.delta` events routed to collapsible thinking section (same path as DeepSeek)
-- **Current Model Catalog**: GPT-5.6 Sol/Terra/Luna, DeepSeek V4, Qwen 3.8/3.7, Kimi K3, GLM 5.2, Gemini 3.6 Flash, Claude Fable/Opus/Sonnet 5, and custom compatible endpoints
+- **Current Model Catalog**: GPT-6.1 Sol (default), GPT-6 Sol/Luna/Astra, DeepSeek V4.1-Flash and V4-Pro, Qwen 3.8/3.7, Kimi K3, GLM 5.2, Gemini 3.6 Flash, Claude Fable 5.1 / Opus 5.5 / Sonnet 5.5, and custom compatible endpoints
+- **DeepSeek Vision**: `deepseek-flash` accepts image input through the existing Chat Completions image blocks; `deepseek-v4-pro` remains text-only. Both use a 1,048,576-token context and 393,216-token maximum output
 - **Session Management**: Multiple chat sessions with independent model and tool selection
 - **Vision Support**: Image upload and analysis
-- **Image Generation**: GPT-5 image generation with Responses API and multi-turn refinement
+- **Image Generation**: GPT-6 family image generation with Responses API and multi-turn refinement
 - **Streaming**: Real-time token-by-token output with smooth layout updates (deferred scroll via `DispatchQueue.main.async`)
 
 **UI Components**:
@@ -664,7 +687,7 @@ Quick conversions are exposed system-wide through App Intents:
 - **Unified Router**: `AIChatRouter` is shared by AI Chat and AI Translate and dispatches from provider protocol plus model endpoint
 - **Responses API**: `ResponsesAPI` handles `response.output_text.delta` and `response.completed` SSE events; `cancelCurrentRequest()` supports stop
 - **Migration**: Missing provider protocol decodes as OpenAI Compatible; legacy `useResponsesAPI` decodes into `chatEndpoint = responses`
-- **Model Sync**: startup catalog sync upgrades preset providers, preserves custom models and active states, and retains model UUIDs across known tier migrations
+- **Model Sync**: startup catalog sync upgrades preset providers, preserves custom models and active states, and retains model UUIDs across known tier migrations. GPT-5.6 Sol/Terra/Luna migrate to GPT-6.1 Sol / GPT-6 Sol / GPT-6 Luna respectively; Astra is added without replacing the default. Older DeepSeek Flash and Claude 5 IDs migrate to their current equivalents
 - **API Configuration**: Provider protocol picker, provider presets, and per-model Chat Completions/Responses endpoint picker
 
 ### 20. Struct Converter
@@ -1054,7 +1077,21 @@ You are a professional translation engine. Please translate the text into {targe
 - Reuses `AIProviderSettingsView` for configuration
 - Shares AI Chat's model system (no duplicate configuration)
 
-## Text-to-Speech (TTS) for AI Translate (v2.8.2)
+## Text-to-Speech (TTS) for AI Translate (v3.0)
+
+### OpenAI Realtime Read-Aloud
+
+- **Transport**: `RealtimeTTSClient` connects to the selected OpenAI provider's base URL via `wss://…/realtime?model=gpt-realtime-2.1-mini`, using the user's Keychain-managed API key. Custom gateways must support Realtime WebSockets; unsupported gateways are not silently redirected to OpenAI
+- **GA Protocol**: Wait for `session.created`, send `session.update`, wait for `session.updated`, then send one isolated `response.create`. Output configuration uses `session.audio.output.format = {type: audio/pcm, rate: 24000}` and `response.output_audio.delta` events; no beta headers
+- **Read-Aloud Contract**: An empty input context and JSON-quoted passage instruct the model to read the original text without translating, summarizing, answering it, or using tools. This is model-generated speech, not a deterministic verbatim guarantee; multilingual pronunciation, instruction-like passages, and long-text completeness require live validation
+- **Privacy**: No microphone capture, input audio, or saved chat context is sent. Selected text is sent only when the user presses Speak. Settings identify OpenAI audio as AI-generated
+- **Playback**: Decode Base64 PCM16, retain odd trailing bytes across frames, and schedule little-endian samples through `AVAudioPlayerNode`. `response.done` ends generation, while a played-back sentinel ends the UI state after queued audio drains
+- **Lifecycle**: Stop or replacement cancels the Task and closes the socket. Generation tokens prevent stale callbacks; completion fires once. A 30-second idle timeout closes a stalled connection
+- **Migration**: Legacy `tts-1`, `tts-1-hd`, and `gpt-4o-mini-tts` aliases/snapshots migrate to `gpt-realtime-2.1-mini`. Existing compatible voice selections remain; `fable`, `nova`, `onyx`, or invalid selections become `marin`. Ten voices: alloy, ash, ballad, cedar, coral, echo, marin, sage, shimmer, verse
+- **Fallback**: Auto uses macOS speech if credentials are missing or OpenAI fails before audio starts. Explicit OpenAI mode displays errors. Failures after audio has been queued do not replay the whole passage locally
+- **Tests**: `swiftc DevUtilities/Services/RealtimeTTSClient.swift DevUtilities/Services/OpenAITTSService.swift Tests/RealtimeTTSTests.swift -o /tmp/devutilities-realtime-tts-tests` exercises mock WebSocket transport and pre-audio lifecycle paths without credentials or audio output. A successful build/mock test does not establish live API availability or read-aloud fidelity
+
+### Native macOS Engine (introduced v2.8.2)
 
 Native macOS text-to-speech integration for AI Translate, allowing users to listen to both source and translated text.
 

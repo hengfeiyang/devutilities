@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Unit Converter — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="Unit Converter for seven categories — data, time, length, weight, temperature, area, volume — with real-time conversion and accurate precision. Native macOS." />
+  <meta name="keywords" content="unit converter, data unit, time unit, length, weight, temperature, area, volume, byte to mb, macOS converter" />
+  <meta property="og:image" content="images/screenshots/unit.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400..700;1,400..700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="tool-page">
+  <header class="nav nav-static">
+    <div class="nav-inner">
+      <a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a>
+      <nav class="nav-links"><a href="index.html">Index</a><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#voices">Voices</a><a href="release-notes.html">Changelog</a></nav>
+      <div class="nav-cta"><a href="index.html#download" class="nav-pill"><span>Download</span><svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a></div>
+    </div>
+    <div class="nav-progress"></div>
+  </header>
+
+  <nav class="tool-crumbs"><a href="index.html">DevUtilities</a><span class="sep">/</span><a href="index.html#tools">Tools</a><span class="sep">/</span><strong>Unit Converter</strong></nav>
+
+  <section class="page-head">
+    <div class="page-eyebrow">§ Tool 04 of 25 · Convert</div>
+    <h1 class="page-h">Seven categories, <em>one panel.</em></h1>
+  </section>
+  <div class="page-sub"><div></div><p>Real-time conversion across the units a developer actually reaches for: data, time, length, weight, temperature, area, volume. SI and imperial side by side, with accurate precision and no surprise rounding.</p></div>
+
+  <div class="tool-meta">
+    <div></div>
+    <div><div class="tool-meta-label">Categories</div><div class="tool-meta-value accent">Seven</div><div class="tool-meta-sub">Data · time · length · …</div></div>
+    <div><div class="tool-meta-label">Units</div><div class="tool-meta-value">SI &amp; imperial</div><div class="tool-meta-sub">Both, side by side</div></div>
+    <div><div class="tool-meta-label">Precision</div><div class="tool-meta-value">High</div><div class="tool-meta-sub">No silent rounding</div></div>
+    <div><div class="tool-meta-label">Network</div><div class="tool-meta-value">Offline</div><div class="tool-meta-sub">Pure local conversion</div></div>
+  </div>
+
+  <section class="tool-shot"><figure><img src="images/screenshots/unit.png" alt="DevUtilities Unit Converter — category picker, paired input/output, instant updates." /></figure><figcaption>Plate iv — Unit Converter with the category picker and paired input/output.</figcaption></section>
+
+  <main>
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 01</span><span>Capabilities</span></div>
+    <div>
+      <h2 class="tool-block-h">Six things, <span class="muted">all of them obvious.</span></h2>
+      <div class="caps">
+        <div class="cap"><span class="cap-n">i</span><div class="cap-body"><h4>Data units</h4><p>Bits, bytes, KB / MB / GB / TB / PB. Both decimal (1000-based) and binary (1024-based) variants.</p></div></div>
+        <div class="cap"><span class="cap-n">ii</span><div class="cap-body"><h4>Time units</h4><p>Nanoseconds through years, with a few stops in between. Same panel, same precision.</p></div></div>
+        <div class="cap"><span class="cap-n">iii</span><div class="cap-body"><h4>Length, weight, area, volume</h4><p>Metric and imperial together. Centimetres next to inches, grams next to ounces — no mental translation.</p></div></div>
+        <div class="cap"><span class="cap-n">iv</span><div class="cap-body"><h4>Temperature</h4><p>Celsius, Fahrenheit, Kelvin, Rankine. The non-linear ones — they're not a multiplication — handled correctly.</p></div></div>
+        <div class="cap"><span class="cap-n">v</span><div class="cap-body"><h4>Real-time conversion</h4><p>Type, see results instantly. No "convert" button; the output updates as you key the input.</p></div></div>
+        <div class="cap"><span class="cap-n">vi</span><div class="cap-body"><h4>Copy any field</h4><p>Every output has a copy button. Clipboard contents are the value alone, ready to paste into a config or test.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 02</span><span>A typical session</span></div>
+    <div>
+      <h2 class="tool-block-h">Four moves <em>from question to answer.</em></h2>
+      <div class="steps">
+        <div class="step"><span class="step-n"></span><h4>Pick a category</h4><p>Data, time, length, weight, temperature, area, or volume. Switch from the sidebar.</p><div class="step-key">Sidebar</div></div>
+        <div class="step"><span class="step-n"></span><h4>Type a value</h4><p>Enter a number in any unit. Every other unit in the category updates simultaneously.</p><div class="step-key">Live update</div></div>
+        <div class="step"><span class="step-n"></span><h4>Compare</h4><p>SI and imperial sit next to each other. Spot the answer instantly without converting in your head.</p><div class="step-key">Side-by-side</div></div>
+        <div class="step"><span class="step-n"></span><h4>Copy</h4><p>One-click copy on any field. Paste straight into a Slack thread, a doc, or a unit test.</p><div class="step-key">Copy · <b>⌘ C</b></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 03</span><span>Made for these tasks</span></div>
+    <div>
+      <h2 class="tool-block-h">The work it actually <em>does.</em></h2>
+      <div class="uses">
+        <div class="use"><span class="use-tag">i — Storage</span><h4>Disk &amp; network sizes</h4><p>How big is 4 GB really? Translate between marketing GB and binary GiB without the napkin math.</p></div>
+        <div class="use"><span class="use-tag">ii — Time</span><h4>Cron and SLA budgets</h4><p>Convert "5 minutes" into milliseconds, or seconds-since-epoch, when defining schedules and timeouts.</p></div>
+        <div class="use"><span class="use-tag">iii — Hardware</span><h4>Spec sheets</h4><p>Verify weights and sizes when ordering devices for a fleet — millimetres for the chassis, ounces for the box.</p></div>
+        <div class="use"><span class="use-tag">iv — IoT</span><h4>Sensor calibration</h4><p>Keep temperature conversions correct between the sensor's native unit and the dashboard's display.</p></div>
+        <div class="use"><span class="use-tag">v — Geo</span><h4>Map distances</h4><p>Translate kilometres to miles for users in regions that swing the other way.</p></div>
+        <div class="use"><span class="use-tag">vi — Recipe</span><h4>Volume conversions</h4><p>Litres, gallons, fluid ounces, millilitres. The "internal" tool you keep next to the integration spec.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 04</span><span>Questions, answered</span></div>
+    <div>
+      <h2 class="tool-block-h">Things people ask <em>before they download.</em></h2>
+      <div class="faq">
+        <details open><summary>Which categories are supported?</summary><p>Seven: data, time, length, weight, temperature, area, volume.</p></details>
+        <details><summary>Decimal or binary data units?</summary><p>Both. KB (1000) and KiB (1024), MB and MiB, and so on. The values sit next to each other so the difference is obvious.</p></details>
+        <details><summary>Are temperature conversions linear?</summary><p>No — Celsius / Fahrenheit / Kelvin / Rankine relationships involve offsets, not just ratios, and the converter handles them correctly.</p></details>
+        <details><summary>Is precision preserved?</summary><p>Yes. Internal arithmetic uses high-precision representations; the displayed precision is configurable and conservative.</p></details>
+        <details><summary>Does this require network access?</summary><p>No. Unit conversion is fully local; nothing leaves your machine.</p></details>
+        <details><summary>Can I convert between units in different categories?</summary><p>No — units in different categories aren't comparable. The converter scopes you to one category at a time on purpose.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="tool-block">
+    <div class="tool-block-meta"><span class="tool-block-num">§ 05</span><span>Companion tools</span></div>
+    <div>
+      <h2 class="tool-block-h">Better with the rest <em>of the shelf.</em></h2>
+      <div class="related-grid">
+        <a class="rel" href="timestamp-converter.html"><div class="rel-head"><span>03 · Convert</span><span>Updated · 2.1</span></div><h4>Timestamp</h4><p>Time in epoch form, when seconds-since-1970 is the unit you actually need.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="base-converter.html"><div class="rel-head"><span>05 · Convert</span><span>Updated · 2.8</span></div><h4>Number Base</h4><p>Numbers across bases — bin, oct, dec, hex, base62.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="hex-converter.html"><div class="rel-head"><span>06 · Convert</span><span>New · 2.2</span></div><h4>Hex String</h4><p>Encode bytes between hex and string — UTF-8, UTF-16, ASCII.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="currency-converter.html"><div class="rel-head"><span>07 · Convert</span><span>New · 2.10</span></div><h4>Currency</h4><p>Money is a unit too — 38 of them, with 30 days of history.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="color-picker.html"><div class="rel-head"><span>08 · Convert</span><span>New · 2.8</span></div><h4>Color</h4><p>Color formats that round-trip — HEX, RGB(A), HSL(A), HSB, CMYK.</p><span class="rel-arrow">Open →</span></a>
+        <a class="rel" href="json-formatter.html"><div class="rel-head"><span>09 · Format</span><span>Updated · 2.11</span></div><h4>JSON</h4><p>Format the config file your converted values are about to land in.</p><span class="rel-arrow">Open →</span></a>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <section class="tool-cta">
+    <div><div class="page-eyebrow" style="padding-bottom:0;">§ Download</div></div>
+    <h2 class="tool-cta-h">Seven categories of conversion, <em>one quiet window.</em></h2>
+    <div class="tool-cta-actions">
+      <a href="https://apps.apple.com/app/devutilities/id6753612551" class="btn-primary lg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M16.4 2.6a3.7 3.7 0 0 1-.9 2.7 3 3 0 0 1-2.4 1.1 3.4 3.4 0 0 1 .9-2.6 3.7 3.7 0 0 1 2.4-1.2zM19 17.4a8.4 8.4 0 0 1-.8 1.6c-.5.7-.9 1.2-1.2 1.5a2.4 2.4 0 0 1-1.8.8 4.4 4.4 0 0 1-1.7-.4 4.7 4.7 0 0 0-1.8-.4 4.9 4.9 0 0 0-1.8.4 4.6 4.6 0 0 1-1.6.4 2.3 2.3 0 0 1-1.8-.8c-.3-.3-.7-.8-1.3-1.5a8.7 8.7 0 0 1-1.4-2.7A9.5 9.5 0 0 1 3 13a5.6 5.6 0 0 1 .7-2.9 4.3 4.3 0 0 1 1.6-1.6A4.3 4.3 0 0 1 7.5 8a5.5 5.5 0 0 1 1.9.5 4.5 4.5 0 0 0 1.5.5 9.4 9.4 0 0 0 1.7-.6 5.7 5.7 0 0 1 2.3-.4 4.6 4.6 0 0 1 3.6 1.9 4 4 0 0 0-2.1 3.6 4 4 0 0 0 1.3 3 4.4 4.4 0 0 0 1.3.9z" fill="currentColor" /></svg>Download — Mac App Store</a>
+      <a href="release-notes.html" class="btn-ghost lg">Changelog</a>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-inner">
+      <div class="foot-brand"><a href="index.html" class="logo"><img src="images/icon.png" alt="" width="26" height="26" class="logo-img" /><span>DevUtilities</span></a><p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p></div>
+      <div class="foot-cols">
+        <div><h5>Product</h5><a href="index.html#tools">Tools</a><a href="index.html#feature">Spotlight</a><a href="index.html#download">Download</a></div>
+        <div><h5>Resources</h5><a href="release-notes.html">Changelog</a><a href="https://github.com/hengfeiyang/DevUtilities/issues">Support</a></div>
+        <div><h5>Legal</h5><a href="privacy_policy.html">Privacy policy</a></div>
+      </div>
+    </div>
+    <div class="foot-rule"></div>
+    <div class="foot-bottom"><span>© 2026 DevUtilities</span><span>v2.15.0</span></div>
+  </footer>
+</body>
+</html>

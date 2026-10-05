@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Changelog — DevUtilities</title>
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="description" content="DevUtilities release notes and version history — track new tools, improvements, and bug fixes across all versions." />
+  <meta name="keywords" content="devutilities release notes, changelog, version history, updates, developer tools, macOS app" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Changelog — DevUtilities" />
+  <meta property="og:description" content="Track new tools, improvements, and bug fixes across all versions of DevUtilities." />
+  <meta property="og:image" content="images/devhelper-og.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400..700;1,400..700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- ─── Nav ─────────────────────────────────────────────────────────── -->
+  <header class="nav nav-static">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="DevUtilities home">
+        <img src="images/icon.png" alt="" width="26" height="26" class="logo-img" />
+        <span>DevUtilities</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary"><a href="index.html">Index</a><a href="index.html#tools">Tools</a>
+        <a href="index.html#feature">Spotlight</a>
+        <a href="index.html#voices">Voices</a>
+        <a href="release-notes.html">Changelog</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="index.html#download" class="nav-pill">
+          <span>Download</span>
+          <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="nav-progress"></div>
+  </header>
+
+  <!-- ─── Page head ───────────────────────────────────────────────────── -->
+  <section class="page-head">
+    <div class="page-eyebrow">§ Changelog</div>
+    <h1 class="page-h">Released, <em>in the open.</em></h1>
+  </section>
+  <div class="page-sub">
+    <div></div>
+    <p>Track the evolution of DevUtilities through detailed release notes — new tools, improvements, and bug fixes across every version, in the order they shipped.</p>
+  </div>
+
+  <main class="page-body">
+    <div class="cl-list">
+
+      <!-- ── v3.0 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v3.0</span>
+          <span>3.0 release</span>
+          <span class="cl-tag">Latest</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">AI providers</p>
+            <h3>Two protocols, the models people use.</h3>
+            <p>AI Chat and AI Translate now share one protocol-aware runtime. Choose <strong>OpenAI Compatible</strong> for GPT, DeepSeek, Qwen, Kimi, GLM, Gemini, and compatible gateways, or <strong>Anthropic Messages</strong> for Claude.</p>
+            <h4>Claude, natively</h4>
+            <p>Anthropic providers use the native <code>/messages</code> schema and headers, top-level system prompts, image content blocks, and streamed text, thinking, and token-usage events. Claude no longer depends on an OpenAI-shaped proxy.</p>
+            <h4>Chat Completions and Responses, clarified</h4>
+            <p>OpenAI Chat Completions and Responses are model-level endpoint choices inside the OpenAI-compatible family. This keeps provider setup simple while still supporting Responses-only models and OpenAI-native web and image tools.</p>
+            <h4>Presets and safe migration</h4>
+            <p>Provider presets cover OpenAI, DeepSeek, Qwen, Kimi, GLM, Gemini, and Anthropic. The catalog now includes GPT-6.1 Sol (default), GPT-6 Sol/Luna/Astra, DeepSeek V4.1-Flash and V4-Pro, and Claude Fable 5.1 / Opus 5.5 / Sonnet 5.5. DeepSeek Flash now accepts images; Pro remains text-only.</p>
+            <p>Existing configurations upgrade automatically while retaining credentials, custom endpoints/models, enablement choices, and saved model identities. Providers default to OpenAI Compatible, and the old Responses toggle migrates to the new model endpoint field.</p>
+            <h4>Read-aloud, on Realtime</h4>
+            <p>OpenAI read-aloud now uses <code>gpt-realtime-2.1-mini</code> over WebSocket with ten voices. New users start with marin; compatible existing selections are retained, and removed voices migrate to marin. Auto mode uses macOS speech if OpenAI playback cannot start. Stop closes the connection and clears queued playback. No microphone or saved chat context is sent.</p>
+            <p class="cl-section-eyebrow">Lifetime Pro</p>
+            <h3>Free download. Seven Pro tools. Yours forever.</h3>
+            <p>DevUtilities 3.0 moves from paid download to free download. Eighteen everyday tools stay free; AI Chat, AI Translate, Parquet, IP Lookup, Currency, JWT, and Crypto are included in Lifetime Pro.</p>
+            <h4>Try first, then unlock once</h4>
+            <p>The new access model includes a 30-day Pro trial that starts only when requested and 18 tools that remain free. After the trial, AI Chat, AI Translate, Parquet, IP Lookup, Currency, JWT, and Crypto require the one-time Lifetime Pro purchase.</p>
+            <h4>Early Supporters get permanent Pro</h4>
+            <p>Everyone who first acquired DevUtilities on or before October 24, 2026 automatically receives permanent Pro, whether the download was paid or free. Verified original acquisition history determines eligibility, not first launch. The DevUtilities Pro window brings trial status, purchase, and restore together; selecting a locked tool opens it without switching away from your current tool.</p>
+            <h4>One repository for app and website</h4>
+            <p>The website is now maintained alongside the app as a regular directory. Self-built copies may customize Pro access under the project license; choosing the official Mac App Store app and Lifetime Pro supports continued development.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── v2.15.0 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.15.0</span>
+          <span>July 2026</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">Spotlight</p>
+            <h3>Convert without opening the app.</h3>
+            <p>DevUtilities now ships 11 Spotlight commands built on App Intents. Press ⌘Space, type what you need — convert a timestamp, generate a UUID, hash a string — fill the parameters inline, and read the result right in Spotlight. The app never has to open, and results are copied to your clipboard automatically.</p>
+            <h4>11 commands, 9 tools</h4>
+            <p>Convert Timestamp (smart two-way, type <code>now</code> for the current time), Convert Number Base, Convert Unit (all 7 categories, e.g. 1024 MB → GB), Encode/Decode Base64, URL Encode/Decode, Decode JWT, Hash Text (MD5/CRC32/SHA-1/256/384/512), Generate UUID (v4/v7), and Generate Random String.</p>
+            <h4>Shortcuts and Siri included</h4>
+            <p>Every command is a native App Intent, so the same actions appear in the Shortcuts app for automation and can be invoked through Siri. On macOS 26 they surface as inline Spotlight actions with quick-key support.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── v2.14.1 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.14.1</span>
+          <span>July 2026</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">Tool naming</p>
+            <h3>Shorter labels, clearer shelf.</h3>
+            <p>Tool names are now concise and consistent across the app, website, and documentation. Recognizable technologies and formats use their canonical names — Base64, JWT, JSON, SQL, HTML, UUID, Crypto, URL, and Parquet — without repeating actions the tool already makes clear.</p>
+            <h4>Clear where context matters</h4>
+            <p>Ambiguous labels keep enough context: Unit Converter, Struct Converter, and Data Converter remain descriptive; HTTP Request is now HTTP Client, IP Query is now IP Lookup, and Base Converter is now Number Base.</p>
+            <h4>No broken preferences or links</h4>
+            <p>The change is presentational. Stable tool identifiers and existing website URLs remain unchanged, so saved sidebar settings and bookmarked pages continue to work.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── v2.14.0 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.14.0</span>
+          <span>June 2026</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">Data Converter</p>
+            <h3>One format in, another out.</h3>
+            <p>The 25th tool converts between JSON, YAML, TOML, and CSV in any direction. Pick a source and a target format with a from/to picker, or hit the swap button to flip them. Conversion runs instantly and entirely on-device.</p>
+            <h4>Order preserved, dates verbatim</h4>
+            <p>A new shared value model stores objects as ordered key/value pairs and keeps date literals untouched, so conversions don't reshuffle your fields or reformat your timestamps. JSON is parsed with a custom order-preserving scanner, and YAML goes through the Yams library to preserve key order and quoting.</p>
+            <h4>Nested data ↔ CSV</h4>
+            <p>Nested objects and arrays flatten into dotted-key columns (<code>address.city</code>, <code>tags.0</code>) with an ordered union header across rows; reading CSV rebuilds the nesting. An <em>Infer types</em> toggle coerces cells like <code>123</code> and <code>true</code> into numbers and booleans, or keeps every cell as a string.</p>
+            <h4>Shared pipeline</h4>
+            <p>The Struct Converter now parses through the same value model — its output is unchanged.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── v2.13.0 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.13.0</span>
+          <span>May 2026</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">Struct Converter</p>
+            <h3>Sample data in, typed code out.</h3>
+            <p>The 24th tool turns sample data into a ready-to-paste type definition. Drop in JSON, TOML, YAML, or a SQL CREATE TABLE block, and pick an output language — TypeScript, Python, Go, Java, Rust, Swift, or PHP. The tool walks every nested object, infers strings, numbers, booleans, ISO 8601 dates, arrays, and nullable fields, and emits idiomatic field names with serde renames, Swift CodingKeys, or Go struct tags preserving the original keys.</p>
+            <h4>Four input formats</h4>
+            <p>JSON parses via Foundation; TOML supports tables, dotted keys, and arrays of tables; YAML handles block-style mappings and sequences; SQL DDL parses multi-statement CREATE TABLE blocks and maps SQL column types (INT/VARCHAR/DECIMAL/TIMESTAMP/...) to language-native types, respecting NOT NULL.</p>
+            <h4>Seven output languages</h4>
+            <p>TypeScript interface, Python <code>@dataclass</code>, Go struct with JSON tags and aligned columns, Java POJO with getters/setters, Rust struct with <code>#[derive(Serialize, Deserialize)]</code>, Swift Codable struct with <code>CodingKeys</code>, and PHP class with typed properties. Closes <a href="https://github.com/hengfeiyang/DevUtilities/issues/17">issue #17</a>.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── v2.12.0 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.12.0</span>
+          <span>May 2026</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">AI Chat enhancements</p>
+            <h3>Markdown that renders the way you wrote it.</h3>
+            <h4>Enhanced Markdown rendering</h4>
+            <p>Migrated to the Textual rendering engine for richer, more accurate Markdown output. Code blocks now have syntax highlighting across all languages, tables and nested lists render correctly, and streaming updates are smooth with no layout flicker.</p>
+            <h4>One-click copy code snippets</h4>
+            <p>Every code block in AI Chat responses now shows a Copy button. Grab any code snippet instantly without selecting text — perfect for copying commands, code examples, and configuration directly from the chat.</p>
+            <h4>OpenAI Responses API support</h4>
+            <p>Added support for the OpenAI Responses API, enabling compatibility with GPT-5-pro and future models. Includes full SSE streaming and reasoning/thinking output — see the model's chain of thought as it streams. Enable per-model via the <code>Use Responses API</code> toggle in model settings.</p>
+          </div>
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">AI Translate — OpenAI TTS</p>
+            <h3>Real-time text-to-speech, no waiting.</h3>
+            <p>AI Translate now supports OpenAI's TTS engine alongside native macOS voices. PCM audio streams directly to the speaker — playback starts in realtime with no sentence splitting or waiting. Choose from 13 voices including alloy, nova, shimmer, echo, fable, and more. Configure mode (Auto / OpenAI / macOS) and voice in Settings → AI → Text-to-Speech.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── v2.11.1 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.11.1</span>
+          <span>February 2026</span>
+          <span class="cl-tag muted">Bug fixes</span>
+        </div>
+        <div class="cl-body">
+          <h3>Smaller fixes that add up.</h3>
+          <ul>
+            <li><strong>AI Chat stop button.</strong> Clicking stop now preserves partial output already received instead of discarding it. The response is kept as-is with the streaming indicator removed.</li>
+            <li><strong>Built-in model list sync.</strong> Deprecated models (e.g. gpt-4.1, gpt-4.1-mini, gpt-4.1-nano) are automatically removed from the model list on startup. The app now reconciles stored models with current defaults each launch.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ── v2.11.0 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.11.0</span>
+          <span>January 2026</span>
+          <span class="cl-tag">New tool</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">Text Compare</p>
+            <h3>Side-by-side comparison, with a real diff underneath.</h3>
+            <p>A dedicated text comparison tool with visual diff highlighting. Compare any two text documents with real-time status updates, character and line metrics for both sides, and instant visual feedback showing additions, deletions, and modifications.</p>
+          </div>
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">Diff mode for formatters</p>
+            <ul>
+              <li><strong>JSON Diff.</strong> Visual diff editor for comparing two JSON documents side-by-side with syntax highlighting.</li>
+              <li><strong>HTML Diff.</strong> Compare HTML documents with automatic formatting and visual highlighting of differences.</li>
+              <li><strong>SQL Diff.</strong> Side-by-side SQL query comparison with automatic beautification.</li>
+              <li><strong>Unified Diff experience.</strong> All formatters share a consistent diff interface with real-time status updates.</li>
+              <li><strong>State persistence.</strong> All comparison views remember content between sessions.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── v2.10.0 ────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.10.0</span>
+          <span>January 2026</span>
+          <span class="cl-tag">New tool</span>
+        </div>
+        <div class="cl-body">
+          <div class="cl-section">
+            <p class="cl-section-eyebrow">Currency</p>
+            <h3>Thirty-eight currencies, thirty days of history, no API hand-holding.</h3>
+            <p>Real-time currency conversion across 38 major global fiat currencies — USD, EUR, GBP, JPY, CNY, KRW, INR, and 31 others. 24-hour smart caching keeps data fresh while minimising API calls; everything still works offline against the most recent cache.</p>
+            <ul>
+              <li><strong>30-day price history.</strong> Daily snapshots build a complete historical view automatically.</li>
+              <li><strong>24-hour trend indicators.</strong> Visual up/down arrows with percentage change vs. yesterday.</li>
+              <li><strong>Flexible number input.</strong> Supports both formatted (1,000,000) and plain (1000000) numbers.</li>
+              <li><strong>Quick amount shortcuts.</strong> 1, 100, 1K, 10K — and a swap button for the pair.</li>
+              <li><strong>State persistence.</strong> Remembers your last conversion settings between sessions.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── v2.9.0 ─────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.9.0</span>
+          <span>November 2025</span>
+          <span class="cl-tag">New tool</span>
+        </div>
+        <div class="cl-body">
+          <h3>Random String — cryptographically secure by default.</h3>
+          <p>A new tool for cryptographically secure random string generation with customizable character sets and advanced security requirements.</p>
+          <ul>
+            <li><strong>Five built-in presets.</strong> Strong Password (16 chars), API Key (32), Hex String (64), PIN Code (6 digits), Readable Code (no ambiguous characters).</li>
+            <li><strong>SecRandomCopyBytes.</strong> Rejection sampling eliminates modulo bias — suitable for passwords, API keys, and security tokens.</li>
+            <li><strong>Advanced requirements.</strong> Enforce minimum uppercase letters, numbers, or special characters to meet strict password policies.</li>
+            <li><strong>Bulk generation.</strong> Up to 20 strings simultaneously with configurable length (1–100 chars).</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ── v2.8.2 ─────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.8.2</span>
+          <span>October 2025</span>
+          <span class="cl-tag muted">Enhancement</span>
+        </div>
+        <div class="cl-body">
+          <h3>AI Translate gains a voice.</h3>
+          <p>Native macOS text-to-speech is now integrated into AI Translate — listen to both source and translated text with one-click playback.</p>
+          <ul>
+            <li><strong>19 languages.</strong> Automatic voice selection across English, Chinese, Japanese, Korean, Spanish, French, German, Russian, Arabic, and more.</li>
+            <li><strong>Animated speaker icons.</strong> Smooth wave animations during playback, left-aligned to prevent icon jitter.</li>
+            <li><strong>Smart text processing.</strong> SSML character escaping, whitespace validation, and comprehensive error handling.</li>
+            <li><strong>Thread-safe.</strong> Internal state tracking eliminates priority inversion warnings.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ── v2.8.1 ─────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.8.1</span>
+          <span>October 2025</span>
+          <span class="cl-tag muted">Enhancement</span>
+        </div>
+        <div class="cl-body">
+          <h3>Number Base, now with Base62.</h3>
+          <p>Enhanced Number Base with Base62 (0–9, A–Z, a–z) for URL shortening and compact identifiers. Five base systems — binary, octal, decimal, hexadecimal, and Base62 — convert simultaneously as you type, with custom <code>toBase62</code> / <code>fromBase62</code> implementations and character set validation.</p>
+        </div>
+      </article>
+
+      <!-- ── v2.8.0 ─────────────────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.8.0</span>
+          <span>October 2025</span>
+          <span class="cl-tag">New tool</span>
+        </div>
+        <div class="cl-body">
+          <h3>Color — every format, in real time.</h3>
+          <p>A professional color format converter with real-time conversion between HEX, RGB, RGBA, HSL, HSLA, HSB, and CMYK formats. Edit any format directly — changes instantly reflect across all other formats.</p>
+          <ul>
+            <li><strong>Color history.</strong> Quickly access and reuse up to 22 previously selected colors with visual swatches.</li>
+            <li><strong>Visual color preview.</strong> Large preview box with system color panel integration for precise selection.</li>
+            <li><strong>20 essential tools.</strong> A comprehensive toolkit covering all the everyday developer utilities.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ── v2.7.0 → v1.11.1 ───────────────────────────────────────── -->
+      <article class="cl-entry">
+        <div class="cl-meta">
+          <span class="cl-version">v2.7.0 → v1.11.1</span>
+          <span>Aug – Oct 2025</span>
+          <span class="cl-tag muted">Previous releases</span>
+        </div>
+        <div class="cl-body">
+          <h3>Earlier highlights.</h3>
+          <ul>
+            <li><strong>Number Base (v2.7.0).</strong> Mutual conversion between binary, octal, decimal, and hexadecimal.</li>
+            <li><strong>AI Translate (v2.4.0).</strong> Professional translation with 19 languages and 3 modes (Translate, Polish, Summarize), plus a special word mode.</li>
+            <li><strong>Feature Management (v2.3.0).</strong> Customizable tool organization with drag-and-drop enable/disable.</li>
+            <li><strong>Hex String (v2.2.0).</strong> Bidirectional hex-to-string conversion with UTF-8, UTF-16, and ASCII encoding.</li>
+            <li><strong>Custom AI Models (v2.0.0).</strong> Flexible API configuration with custom model support.</li>
+            <li><strong>AI Chat (v1.13.0).</strong> Intelligent assistant with DeepSeek integration and reasoning-process visualization.</li>
+            <li><strong>Crypto (v1.12.0).</strong> Comprehensive cryptographic suite — hash functions, AES-GCM-256, RSA-2048/4096.</li>
+            <li><strong>JWT RSA support (v1.11.1).</strong> Enhanced JWT encoder/decoder with RS256, RS384, RS512.</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- ─── Footer ──────────────────────────────────────────────────────── -->
+  <footer class="foot">
+    <div class="foot-inner">
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <img src="images/icon.png" alt="" width="26" height="26" class="logo-img" />
+          <span>DevUtilities</span>
+        </a>
+        <p>Essential developer tools for macOS.<br />Built by a developer, used every day.</p>
+      </div>
+      <div class="foot-cols">
+        <div>
+          <h5>Product</h5>
+          <a href="index.html#tools">Tools</a>
+          <a href="index.html#feature">Spotlight</a>
+          <a href="index.html#download">Download</a>
+        </div>
+        <div>
+          <h5>Resources</h5>
+          <a href="release-notes.html">Changelog</a>
+          <a href="https://github.com/hengfeiyang/DevUtilities/issues">Support</a>
+        </div>
+        <div>
+          <h5>Legal</h5>
+          <a href="privacy_policy.html">Privacy policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-rule"></div>
+    <div class="foot-bottom">
+      <span>© 2026 DevUtilities</span>
+      <span>v3.0</span>
+    </div>
+  </footer>
+</body>
+</html>
