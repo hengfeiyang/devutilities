@@ -28,6 +28,16 @@ enum AccessState: Equatable {
             return false
         }
     }
+
+    func canUseTool(_ tool: ToolType) -> Bool {
+        guard tool.productAccess == .pro else { return true }
+        switch self {
+        case .legacyPro, .purchasedPro, .trialActive:
+            return true
+        case .loading, .trialNotStarted, .trialExpired:
+            return false
+        }
+    }
 }
 
 enum PurchaseState: Equatable {
@@ -53,34 +63,28 @@ enum MonetizationConfiguration {
     static let lifetimeProductID = "com.hengfeiyang.devutilities.pro.lifetime"
     static let trialDurationDays = 30
 
-    /// v3.0 introduces free download with Lifetime Pro. Debug builds enable
-    /// the new experience; Release retains the rollout guard until configured.
-    /// Enable the Release value only for the verified free-download release.
-    /// Early Supporter eligibility has its own fixed cutoff, independent of
-    /// the storefront price-transition date.
+    /// v3.0 ships free download with Lifetime Pro in both Debug and Release.
+    /// The old paid-transition preview is available only in Debug builds.
     static var isFreemiumEnabled: Bool {
+        #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("--paid-transition") {
             return false
         }
-        if ProcessInfo.processInfo.arguments.contains("--freemium") {
-            return true
-        }
-
-        #if DEBUG
-        return true
-        #else
-        return false
         #endif
+        return true
     }
 
-    /// All verified original acquisitions through October 24, 2026 in
-    /// Asia/Shanghai receive permanent Pro, whether the app was paid or free.
+    /// Verified acquisitions from January 1, 2025 through October 24, 2026
+    /// in Asia/Shanghai receive permanent Pro, whether paid or free.
+    /// The lower bound also excludes Sandbox's fixed 2013 purchase date.
+    static let legacyStartDate = Date(timeIntervalSince1970: 1_735_660_800)
+
     /// The exclusive cutoff is 2026-10-25 00:00:00 (2026-10-24 16:00:00 UTC).
     static let legacyCutoffDate: Date? = Date(timeIntervalSince1970: 1_792_857_600)
 
     static func qualifiesForEarlySupporter(originalPurchaseDate: Date) -> Bool {
         guard let legacyCutoffDate else { return false }
-        return originalPurchaseDate < legacyCutoffDate
+        return originalPurchaseDate >= legacyStartDate && originalPurchaseDate < legacyCutoffDate
     }
 }
 

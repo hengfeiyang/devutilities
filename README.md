@@ -14,7 +14,7 @@ The upcoming 3.0 release moves to free download with 18 permanently free tools a
 
 Start a 30-day Pro trial when you are ready. After the trial, unlock those seven tools with a one-time Lifetime Pro purchase. There is no recurring subscription, and the 18 free tools remain available.
 
-Early Supporters who first acquired the app on or before October 24, 2026 receive permanent Pro, whether the original download was paid or free.
+Early Supporters who first acquired the app from January 1, 2025 through October 24, 2026 receive permanent Pro, whether the original download was paid or free.
 
 AI features require your own provider credentials; external AI service charges are separate from Lifetime Pro.
 

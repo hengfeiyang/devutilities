@@ -1,0 +1,43 @@
+DevUtilities Lifetime Pro is a one-time Non-Consumable In-App Purchase.
+Product ID: com.hengfeiyang.devutilities.pro.lifetime
+It permanently unlocks AI Chat, AI Translate, Parquet, IP Lookup, Currency,
+JWT, and Crypto. There is no recurring subscription or automatic renewal.
+The other 18 tools remain free. Eligible purchases support Family Sharing.
+
+HOW TO REVIEW
+1. Launch DevUtilities 3.0. No DevUtilities account or sign-in is required.
+2. Click the crown at the top of the sidebar, or choose
+   DevUtilities > DevUtilities Pro... from the menu bar.
+3. The Pro window lists all seven tools. It offers Start 30-Day Trial,
+   Unlock Pro Forever with the localized App Store price, and Restore Purchase.
+4. Choose Unlock Pro Forever to start Apple's purchase flow. Starting the
+   trial first is not required. A verified successful purchase unlocks all
+   seven tools immediately and shows Lifetime Pro status.
+5. Restore Purchase uses Apple's restore flow for the same Apple Account.
+   Once permanent Pro is active, purchase prompts are hidden; the sidebar
+   crown remains available to view the entitlement.
+
+EARLY SUPPORTERS AND SANDBOX
+Verified original App Store acquisitions from January 1, 2025 through
+October 24, 2026 receive permanent Pro, whether originally paid or free.
+The precise eligible interval is [2025-01-01 00:00, 2026-10-25 00:00)
+in Asia/Shanghai. This is based on AppTransaction.originalPurchaseDate,
+not first launch. Existing eligible customers do not need to buy again.
+Sandbox's fixed original acquisition date in 2013 is outside this interval,
+so it does not trigger the Early Supporter grant. Sandbox review can use
+the ordinary trial and purchase screen without a special review-only mode.
+A Sandbox account with an existing Lifetime Pro purchase must use a fresh
+test account or reset its test purchase history to review the purchase flow.
+
+TRIAL AND TOOL ACCESS
+The optional 30-day trial is app-managed and starts only when the user chooses
+Start 30-Day Trial. No purchase or recurring charge is created. After expiry,
+selecting a locked Pro tool opens this same purchase window while retaining
+the previously selected free tool. There is no daily usage allowance.
+
+AI FEATURES
+AI Chat and AI Translate require the user's own provider credentials in
+Settings > AI > Providers. Lifetime Pro does not include external API credits.
+JWT, Crypto, and Parquet can demonstrate Pro access without an AI key.
+macOS speech does not require an OpenAI key. Optional OpenAI read-aloud uses
+AI-generated speech and does not capture microphone audio.

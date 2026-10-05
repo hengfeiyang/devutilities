@@ -2,26 +2,26 @@
 
 ## 提交准备结论
 
-检查日期：2026-10-04。**当前尚不能直接提交免费版 3.0。** 本文包含可复制到 App Store Connect 的中英文材料、审核说明和提交前检查项。文案描述最终发布状态，不表示当前 Release 已启用免费模式或已上传审核。
+检查日期：2026-10-05。**Release 免费模式已开启，仍须完成实际分发验收及后台提交资料核对。** 本文包含可复制到 App Store Connect 的中英文材料、审核说明和提交前检查项。代码启用不表示已上传、审核通过或改为免费价格。
 
-产品模式为免费下载、18 个永久免费工具、7 个 Pro 工具、用户主动开启的 30 天试用，以及一次性买断 Lifetime Pro。不是自动续费订阅，没有每日 10 分钟额度。
+产品模式为免费下载、18 个永久免费工具、7 个 Pro 工具、用户主动开启的 30 天试用，以及一次性买断 Lifetime Pro。不是自动续费订阅。
 
-最新首批用户政策：**2026-10-24 当天及之前首次获取应用的用户，无论付费还是免费下载，都赠送永久 Pro。** 内部截止点为 2026-10-25 00:00:00（北京时间），对应 UTC 为 2026-10-24 16:00:00。资格以 verified AppTransaction.originalPurchaseDate 严格小于截止点判断，不按首次启动时间；包含 24 日全天，不包含 25 日零点。页面只显示日期，不显示时区。已获得的永久权限不会在截止点后消失。
+最新首批用户政策：**2025-01-01 至 2026-10-24（含两端日期）首次获取应用的用户，无论付费还是免费下载，都赠送永久 Pro。** 区间为 [2025-01-01 00:00:00, 2026-10-25 00:00:00) Asia/Shanghai，对应 UTC 为 [2024-12-31 16:00:00, 2026-10-24 16:00:00)。资格按 verified AppTransaction.originalPurchaseDate 判断，不按首次启动时间。页面只显示日期，不显示时区。已获得的有效永久权限不会在截止点后消失；Sandbox 固定的 2013 日期不符合资格。
 
 | 项目 | 检查结果 | 剩余事项 |
 | --- | --- | --- |
 | 版本及工具划分 | 3.0 / Build 81；18 免费、7 Pro 已定义 | 最终上传包核对 |
-| 首批用户截止点 | 已配置 2026-10-25 00:00 Asia/Shanghai，严格小于（包含 24 日全天） | App Store 原始获取时间和缓存实测 |
-| Release 免费模式 | 仍为 false | 验证完成后启用并重新构建 |
+| 首批用户日期区间 | 已配置 2025-01-01 起、2026-10-25 零点止（含 24 日全天） | 生产 App Store 原始获取时间和缓存实测 |
+| Release 免费模式 | 已启用；付费转换参数仅 Debug 有效 | 最终签名分发包回归 |
 | AI 自动化测试 | Provider protocol、Realtime TTS 测试通过 | 不替代真实服务验收 |
 | Release 编译 | 更新截止点后的未签名 Release build 成功 | 签名 Archive / Validate 未确认 |
 | StoreKit | 本地同步商品文件和共享 scheme 已存在 | Sandbox、TestFlight、恢复、家庭共享、旧用户升级实测 |
-| 截止点前内购审核入口 | 新用户也自动成为永久 Pro，购买区会隐藏 | 确定真实可用的 IAP 审核路径，不能用 Debug 展示代替 |
+| 内购审核入口 | 2013 Sandbox 日期被排除；旧缓存在线重新核验 | Sandbox / TestFlight 验证真实购买流程，不以 UI 预览代替 |
 | 实际 Realtime 音频 | 尚未验收 | 多语言、长文本、停止及失败回退测试 |
 | 隐私材料和截图 | 存在旧表述，3.0 截图未验收 | 修正政策、隐私标签及截图 |
-| App Store Connect | Safari 已退回登录页，本次未核对后台 | 商品状态、合同、上传 build 和 submission 复核 |
+| App Store Connect | 已核对内购：Prepare for Submission、Family Sharing 开启、175 地区；审核截图 / 说明 / 英文描述已保存并重新加载确认 | 主版本新文案、最终 build、合同及 submission 复核 |
 
-本次不执行价格修改、上传或 Submit for Review。免费价格切换时间仍需安排，但已不再用于计算首批用户资格。
+本次只补充后台内购审核资料草稿，不执行下载价格修改、构建上传或 Submit for Review。免费价格切换时间仍需安排，但不再用于计算首批用户资格。
 
 ## 基本信息
 
@@ -89,7 +89,7 @@ AI Chat and AI Translate support OpenAI-compatible services and Anthropic Messag
 Inspect Parquet and Arrow files, look up IP information, convert currencies, work with JWTs, and use hashing and encryption tools locally.
 
 EARLY SUPPORTERS GET PERMANENT PRO
-Everyone who first acquires DevUtilities on or before October 24, 2026 receives permanent Pro, whether the download is paid or free. Eligibility uses verified original App Store acquisition history, not first launch. The grant remains permanent after the cutoff. Existing paid-download customers do not need to buy again.
+Users who first acquire DevUtilities from January 1, 2025 through October 24, 2026 receive permanent Pro, whether the download is paid or free. Eligibility uses verified original App Store acquisition history, not first launch. The grant remains permanent after the cutoff. Existing eligible paid-download customers do not need to buy again.
 
 30-DAY TRIAL FOR LATER NEW USERS
 Users who first acquire the app at or after the cutoff can choose Start 30-Day Trial when ready. No purchase is required to start it. After the trial, the 18 free tools remain available and the seven Pro tools require Lifetime Pro.
@@ -123,7 +123,7 @@ AI Chat 与 AI Translate 支持 OpenAI 兼容接口、Anthropic Messages、自�
 查看 Parquet 和 Arrow 文件，查询 IP 信息，换算汇率，处理 JWT，并在本地使用哈希和加解密工具。
 
 首批用户赠送永久 Pro
-2026 年 10 月 24 日当天及之前首次获取应用的用户，无论付费还是免费下载，都赠送永久 Pro。资格按 App Store 验证的首次获取时间判断，不按首次启动时间；赠送权限在截止点后仍永久有效。已有付费下载用户无需再次购买。
+2025 年 1 月 1 日至 2026 年 10 月 24 日（含当天）首次获取应用的用户，无论付费还是免费下载，都赠送永久 Pro。资格按 App Store 验证的首次获取时间判断，不按首次启动时间；赠送权限在截止点后仍永久有效。符合日期范围的已有付费下载用户无需再次购买。
 
 之后的新用户可免费试用 30 天
 截止点及之后首次获取应用的用户，点击 Start 30-Day Trial 才开始计时，无需先购买。试用到期后，18 个免费工具仍可使用，7 个 Pro 工具需要 Lifetime Pro。
@@ -146,7 +146,7 @@ English:
 ```text
 DevUtilities 3.0 is now free to download, with 18 everyday tools free forever.
 
-Early Supporters get permanent Pro: everyone who first acquires the app on or before October 24, 2026 qualifies, whether the download is paid or free. Existing paid-download customers do not need to buy again.
+Early Supporters get permanent Pro: users who first acquire the app from January 1, 2025 through October 24, 2026 qualify, whether the download is paid or free. Existing eligible paid-download customers do not need to buy again.
 
 Later new users can start a full 30-day trial of AI Chat, AI Translate, Parquet, IP Lookup, Currency, JWT, and Crypto. After the trial, unlock Lifetime Pro permanently with one purchase, not a recurring subscription.
 
@@ -162,7 +162,7 @@ OpenAI read-aloud now uses Realtime with 10 voices, stop controls, and macOS spe
 ```text
 DevUtilities 3.0 现可免费下载，18 个常用工具永久免费。
 
-首批用户赠送永久 Pro：2026 年 10 月 24 日当天及之前首次获取应用的用户，无论付费还是免费下载，均可获得永久 Pro。已有付费下载用户无需再次购买。
+首批用户赠送永久 Pro：2025 年 1 月 1 日至 2026 年 10 月 24 日（含当天）首次获取应用的用户，无论付费还是免费下载，均可获得永久 Pro。符合日期范围的已有付费下载用户无需再次购买。
 
 之后的新用户可主动开启 AI Chat、AI Translate、Parquet、IP Lookup、Currency、JWT 和 Crypto 共 7 个 Pro 工具的 30 天完整试用。到期后一次性购买 Lifetime Pro 永久解锁，不是按期续费的订阅。
 
@@ -181,7 +181,7 @@ json,yaml,toml,csv,base64,jwt,regex,uuid,hash,diff,parquet,struct,unix,crypto,ti
 
 ## Lifetime Pro 商品
 
-以下来自现有配置记录及 `Configuration.storekit`，不是本次对 App Store Connect 实时状态的确认。
+2026-10-05 已在 App Store Connect 核对商品 ID、类型、Family Sharing、地区和审核资料。USD 29.99 来自本地商品文件及 Xcode StoreKit 显示，后台各地区实际价格和合同仍须最终复核。
 
 | 字段 | 配置记录或待填内容 |
 | --- | --- |
@@ -190,21 +190,29 @@ json,yaml,toml,csv,base64,jwt,regex,uuid,hash,diff,parquet,struct,unix,crypto,ti
 | Reference name | DevUtilities Pro Lifetime |
 | Product ID | `com.hengfeiyang.devutilities.pro.lifetime` |
 | Base price | USD 29.99；核对各地区价格，应用展示 StoreKit 本地化价格 |
-| Family Sharing | 开启；本地文件为 true，后台及真实共享仍需复核 |
+| Family Sharing | 后台开启已核对；真实共享仍需实测 |
 | English display name | Pro Lifetime |
-| English description | Unlock all Pro tools forever with one purchase. |
+| English description | Unlock all 7 Pro tools with one purchase.（后台已保存） |
 | 简体中文名称草稿 | Pro 永久版 |
 | 简体中文描述草稿 | 一次购买，永久解锁全部 Pro 工具。 |
-| Availability | 按最终销售地区配置，不以本地文件推断后台范围 |
-| Review screenshot | DevUtilities Pro 的购买区、恢复入口及加载成功的本地化价格 |
+| Availability | 后台为全部 175 个国家 / 地区 |
+| Review screenshot | 1280×800 的 Pro 购买区截图已上传并保存草稿 |
 
-Pro 窗口入口为侧边栏皇冠或应用菜单 **DevUtilities > DevUtilities Pro…**，不是 Settings 中的 License 页面。当前永久 Pro 状态不显示购买区；因此截止点前新审核账户也可能无法看到商品。**提交 IAP 前需确定合适的审核路径或调整提交安排，不能要求审核员等待到截止日期，也不能用视觉预览伪装真实授权。** 本次不擅自增加重复购买、付费赠送或审核专用后门。
+Pro 窗口入口为侧边栏皇冠或应用菜单 **DevUtilities > DevUtilities Pro…**，不是 Settings 中的 License 页面。永久 Pro 状态不显示购买区。首批用户识别加入 2025-01-01 下限后，Sandbox 固定的 2013 日期不再触发赠送，可使用正常试用 / 购买入口；不需要审核专用后门。旧 Sandbox 赠送缓存会在有效 AppTransaction 返回时重新判定。实际 Sandbox / TestFlight 流程仍需验收，不能把 Debug 展示当作真实交易成功。
+
+### 内购审核材料
+
+- English description：使用 `Unlock all 7 Pro tools with one purchase.`（41 字符），本地及后台已更新。旧描述为 47 字符；Apple 公开文档列 45 字符上限，而此次后台实际显示 55 字符额度。采用更短文案以兼容两者，不宣称旧文案必然被后台拒绝。
+- Review Notes：复制 [`LIFETIME_PRO_REVIEW_NOTES.txt`](LIFETIME_PRO_REVIEW_NOTES.txt) 全文（2572 字符，小于 4000 上限）。包括商品类型、7 个工具、购买 / 恢复路径、首批区间、Sandbox 行为及自备 AI Key 说明。
+- Review Screenshot：上传 [`Review_Screenshots/lifetime-pro-review-1280x800.png`](Review_Screenshots/lifetime-pro-review-1280x800.png)。来自本次 Xcode 本地 StoreKit 运行的真实 Pro 窗口，显示 7 工具、$29.99 买断按钮和 Restore Purchase；原始截图为 [`lifetime-pro-window.png`](Review_Screenshots/lifetime-pro-window.png)。导出只做等比缩放和白色留边，1280×800、RGB、无透明通道，未合成 UI 或价格。当前设备有尚未到期的试用，因此画面显示 29 days left。此图说明商品界面，不证明生产内购可用。
+- 上传位置：Monetization > In-App Purchases > DevUtilities Pro Lifetime > Review Information。审核截图仅供 Apple 审核，不是商品推广用 1024×1024 图片；使用支持的 Mac 截图尺寸，无透明通道。
+- 规格来源：[Apple 内购资料说明](https://developer.apple.com/help/app-store-connect/reference/in-app-purchases-and-subscriptions/in-app-purchase-information)、[Mac 截图尺寸](https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications)。
 
 首次 Non-Consumable IAP 与新 app version 应放在同一份审核 submission 中，不需先等待它单独批准。见 [Apple 提交内购说明](https://developer.apple.com/help/app-store-connect/manage-submissions-to-app-review/submit-an-in-app-purchase)。商品仍需完整元数据、审核截图、销售地区及有效合同。
 
 ## Review Notes 草稿
 
-以下可用于解释 3.0 行为。**IAP 可实际操作的审核路径尚未确定，不能把该草稿当作已完备的内购审核说明直接提交。** 联系资料沿用后台有效信息；不要在仓库写入生产 API Key。
+以下可用于 App Version 的 Review Notes；商品本身使用上面的独立内购说明。联系资料沿用后台有效信息；不要在仓库写入生产 API Key。提交前以实际上传包核验这些行为。
 
 ```text
 DevUtilities 3.0 changes from paid download to free download.
@@ -213,14 +221,16 @@ DevUtilities 3.0 changes from paid download to free download.
 Parquet, IP Lookup, Currency, JWT, and Crypto.
 
 EARLY SUPPORTER GRANT
-All verified original app acquisitions before 2026-10-25 00:00 Asia/Shanghai
-(2026-10-24 16:00 UTC), paid or free, receive permanent Pro, including all of October 24. Eligibility is
+All verified original app acquisitions in [2025-01-01 00:00,
+2026-10-25 00:00) Asia/Shanghai, paid or free, receive permanent Pro,
+including all of October 24. Eligibility is
 based on AppTransaction.originalPurchaseDate, not first launch. Existing
 paid customers do not need to buy again. Grants remain permanent.
 
-Before the cutoff, a fresh review account may therefore automatically receive
-Early Supporter Pro. Open the sidebar crown or DevUtilities > DevUtilities Pro…
-to inspect the status. This is an intentional grant, not a free subscription.
+Sandbox's fixed 2013 original acquisition date is outside this interval,
+so Sandbox accounts do not receive the Early Supporter grant. Open the sidebar
+crown or DevUtilities > DevUtilities Pro… to review the ordinary purchase flow.
+This uses the same date policy as production, not a review-only override.
 
 LATER USER ACCESS
 New users at or after the cutoff can explicitly start a 30-day app-managed
@@ -255,7 +265,7 @@ results require macOS 26. Existing quick actions remain available.
 
 - [ ] 更新主界面截图，准确区分免费 / Pro，并说明首批用户永久赠送。
 - [ ] 保存真实 Early Supporter 状态截图，不能宣称截止点前所有新用户都需要试用或购买。
-- [ ] 补 IAP 购买区截图及审核路径。内部试用前、试用中、到期截图只证明视觉效果。
+- [x] 补 IAP 购买区截图及正常 Sandbox 路径说明。截图来自本地 StoreKit；真实 Sandbox 交易仍需验收。内部试用前、试用中、到期截图只证明视觉效果。
 - [ ] 更新 AI Chat / AI Translate 示例，去掉真实密钥及旧音色数量。
 - [ ] 核对现有 `appstore/AppStore_Screenshots/` 资产、后台尺寸及本地化；旧文件存在不代表 3.0 截图已完成。
 
@@ -277,13 +287,15 @@ results require macOS 26. Existing quick actions remain available.
 
 下面是待完成的验收，不是已通过报告。本地 StoreKit、Sandbox / TestFlight 和真实商店升级应分开记录。
 
-Apple 的 Sandbox 中 `AppTransaction.originalPurchaseDate` 固定为 2013-08-01，而不是真实首次获取时间。因此按当前代码，Sandbox 账户会符合首批赠送条件，即使实际测试发生在截止点之后；也会隐藏购买区。不能仅把审核日期延后就认为该问题消失。真实老用户日期需由生产 App Store 交易验证，Sandbox 的内购测试路径仍需单独确定。见 [Apple 日期字段说明](https://developer.apple.com/documentation/storekit/apptransaction/originalpurchasedate)。
+Apple 的 Sandbox 中 `AppTransaction.originalPurchaseDate` 固定为 2013-08-01，而不是真实首次获取时间。本次加入 2025-01-01 下限，2013 日期被排除，并在在线验证时重新核验旧缓存，因此 Sandbox 可走普通试用与购买流程。边界自动化测试覆盖此日期，但不替代 Sandbox 真实交易验收；真实老用户日期仍需由生产 App Store 交易验证。见 [Apple 日期字段说明](https://developer.apple.com/documentation/storekit/apptransaction/originalpurchasedate)。
 
 | 状态或操作 | 预期结果 |
 | --- | --- |
 | 截止点前的付费用户升级 | 验证原始获取时间，永久 Legacy Pro，无再次购买 |
 | 截止点前首次免费下载 | 也永久 Legacy Pro，无需启动试用；截止点之后仍保留 |
 | 截止点前 1 秒、恰好截止点、之后 1 秒 | 仅截止点前符合首批赠送资格 |
+| 起点前 1 秒、恰好 2025-01-01 零点、之后 1 秒 | 起点前不符合；起点及之后符合（直到截止点） |
+| Sandbox 2013 日期及旧赠送缓存 | 不赠送 Legacy Pro；在线验证清理旧赠送，保留真实内购或试用状态 |
 | 截止点后新用户 | 18 工具可用；Pro 提供试用 / 买断，试用不自动计时 |
 | 启动试用、重启、离线和到期 | 时间持久化；不重启试用；到期拦截切换，不显示空白页 |
 | 成功、取消、pending、失败 | 仅 verified 成功交易解锁；按钮正常恢复 |
@@ -305,9 +317,9 @@ Mock 测试不能替代音频验收。Realtime 是生成式输出，不保证确
 
 ## 提交与上线顺序
 
-1. 复核固定首批 cutoff 和真实授权。该截止点独立于实际免费价格转换，不再附加未确认宽限。
-2. 确定截止点前如何审核 IAP 的真实可用路径或提交安排，补齐商品配置、截图、合同和上述验收。
-3. 修正隐私材料，确认后启用 Release freemium。它是编译期默认开关，不是发布后远程开关；不能提交始终关闭免费模式的包来审核新流程。
+1. 复核首批日期区间和真实授权。日期独立于实际免费价格转换，不再附加未确认宽限。
+2. 使用排除 2013 日期后的正常 Sandbox 购买路径，补齐商品配置、截图、合同和上述验收。
+3. 修正隐私材料，验证已启用的 Release freemium。它是编译期默认开关，不是发布后远程开关。
 4. 冻结最终 revision，用 App Store 签名 Archive，Validate、上传，等待 processing，核对版本 / build。当前 Build 81 是否已上传需后台确认。
 5. 使用实际上传包完成 TestFlight 回归。Debug UI 和未签名 build 不替代分发包验收。
 6. 选择最终 build，填文案、Review Notes 和联系资料，把 Lifetime Pro 与 3.0 加入同一审核 submission，核对 App Privacy、出口合规和截图。
@@ -317,6 +329,22 @@ Mock 测试不能替代音频验收。Realtime 是生成式输出，不保证确
 发布方式见 [Apple 版本发布说明](https://developer.apple.com/help/app-store-connect/manage-your-apps-availability/select-an-app-store-version-release-option)。本文件不表示外部发布操作已执行。
 
 ## 本地验证记录
+
+### 2026-10-05 上线调整验证
+
+- Release 免费模式已启用；`--paid-transition` 限于 Debug，Release 不接受此旧模式开关。
+- 首批区间调整为 [2025-01-01 00:00, 2026-10-25 00:00) Asia/Shanghai。Release 模式的 `EarlySupporterPolicyTests` 执行通过：起点前 / 起点 / 起点后、2013 Sandbox 日期排除、24 日全天、截止点前 / 截止点 / 截止点后、18 免费 / 7 Pro、六种授权状态的工具权限。携带旧转换及预览参数运行仍保持 Release 免费模式。
+- `EntitlementManager` 在线取得 verified AppTransaction 时重新核验并覆盖旧布尔 Legacy Pro 缓存；新赠送记录保存已验证日期，后续无需等待商店即可使用永久权限。异常或未验证响应保留旧赠送，不把验证失败当作撤销证据。`EarlySupporterCacheTests` 编译执行通过，覆盖旧 JSON 兼容、日期持久化及缓存日期资格；尚不代表生产 App Store 交易及离线缓存全链路实测。
+- 本次 `AIProviderProtocolTests` 和 `RealtimeTTSTests` 重新编译执行通过。TTS 为 Mock 与本地播放生命周期测试，不是外部服务音频验收。
+- 本次未签名 Release 编译成功：`/tmp/devutilities-3-launch-release.log`；现有 ChatManager 捕获 self 的 4 处警告仍存在，不是本次调整引入。不是最终 App Store 签名 Archive 或 Validate 记录。
+- 最终缓存调整后，Debug 与 Release 增量构建再次通过；Debug 日志为 `/tmp/devutilities-3-launch-final-debug.log`。日期／权限、缓存兼容、Provider migration、Realtime TTS 四组自动化测试均通过。临时预览启动参数没有留在共享 scheme 中，未提交代码或推送。
+- 内购英文说明已补充；商品英文描述缩短为 41 字符。审核截图已生成并视觉检查，1280×800 PNG、RGB、无 alpha；说明、截图及商品描述均在后台保存并重新加载确认。Family Sharing 开启、全部 175 地区及 Non-Consumable 类型已核对，未提交审核或改价格。
+- 本地 StoreKit 商品价格及 7 个工具购买区正常显示，点击购买出现明确标注 Xcode / 不收费的测试确认页，取消后返回原购买区。试用开始前的两个并排入口及到期后点击 Currency 拦截、关闭后仍停留在 JSON 均已实测。额外截图 [`trial-not-started-preview.png`](Review_Screenshots/trial-not-started-preview.png) 和 [`trial-expired-preview.png`](Review_Screenshots/trial-expired-preview.png) 是 Debug 视觉预览，不改变真实试用日期；临时 scheme 参数已还原。
+- 本地交易验收仍未通过完整闭环。后续复测中，重启应用后识别到此前创建的测试购买；测试退款后重启回到试用状态。普通 Xcode 支付确认页仍缺少确认按钮；临时启用无支付对话框模式后，购买延迟成功，产生新的已完成交易并解锁 Lifetime Pro。Restore Purchase 仍持续忙碌，退款实时通知也尚未完成验收。临时配置已还原，未修改正式购买逻辑；本地购买成功不能替代真实 Sandbox / TestFlight 的购买、恢复及撤销验收。
+- 额外检查仍发现隐私政策把 API Key 存储写成 UserDefaults，而 ProviderManager 实际使用 Keychain；卸载即可删除全部资料、数据始终不离开设备及 UUID 法律性质的确定性表述也需复核。此次仅报告，不更改统计行为或擅自填写后台合规答案。
+- 后台主版本为 3.0.0 / Prepare for Submission；已将旧 2.16 审核备注更新为本文件 3.0 说明并保存。商店描述与截图仍旧、What's New 为空，未看到已选中的 Build，发布方式为自动发布；未改变这些设置。签名包上传、真实交易／恢复／撤销、Family Sharing 实际共享、TestFlight、生产老用户升级仍未验收。当前不能仅凭以上本地通过结果标记 Ready to Submit。
+
+### 历史验证记录（不代表本次最终包）
 
 - 基线：HEAD `6fe4023` 加工作区改动，含 website 普通目录改动；不是已冻结的发布 revision。2026-10-05 已完成本地子模块转普通目录，仓库公开状态和 Pages 部署来源迁移未执行。
 - 截止点已在 `AccessState.swift` 配置；`EntitlementManager` 通过已验证 AppTransaction 及统一严格小于策略判定，成功赠送继续缓存。
@@ -331,7 +359,7 @@ Mock 测试不能替代音频验收。Realtime 是生成式输出，不保证确
 ### Ready to Submit 签核
 
 - [ ] 新首批用户政策与真实 AppTransaction / 缓存验证通过。
-- [ ] 截止点前 IAP 审核路径已确定并可实际操作。
+- [ ] 日期区间排除 Sandbox 2013 后，正常 IAP 审核路径已实际验收。
 - [ ] Release 免费开关启用；购买、恢复、家庭共享及实际分发回归通过。
 - [ ] 真实 Realtime 音频通过。
 - [ ] 隐私政策、App Privacy、出口合规、截图及本地化完成。

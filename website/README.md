@@ -73,7 +73,7 @@ Current version: 3.0
 
 - **Free Download**: 18 tools stay free; AI Chat, AI Translate, Parquet, IP Lookup, Currency, JWT, and Crypto are unlocked with Lifetime Pro
 - **Try Pro for 30 Days**: Start the full trial when ready, then unlock Pro forever with one purchase after it expires
-- **Early Supporters Keep Pro**: All verified original acquisitions on or before October 24, 2026, paid or free, automatically receive permanent Pro
+- **Early Supporters Keep Pro**: Verified original acquisitions from January 1, 2025 through October 24, 2026, paid or free, automatically receive permanent Pro
 - **Two AI Protocol Families**: OpenAI Compatible and Anthropic Messages are explicit provider choices
 - **Popular Provider Presets**: OpenAI, DeepSeek, Qwen, Kimi, GLM, Gemini, and Anthropic/Claude
 - **Latest Models**: GPT-6.1 Sol (default), GPT-6 Sol/Luna/Astra, DeepSeek V4.1-Flash with image input and V4-Pro, and Claude Fable 5.1 / Opus 5.5 / Sonnet 5.5; upgrades retain saved model identities and user preferences
@@ -83,11 +83,11 @@ Current version: 3.0
 - **Safe Migration**: Existing provider/model settings are upgraded automatically
 - **Protocol-aware Testing**: Correct authentication headers and `/models` checks for each family
 - **Lifetime Pro Foundation**: StoreKit 2 support for a one-time Lifetime Pro purchase
-- **Early Supporters Stay Pro**: Users who first acquired the app on or before October 24, 2026 keep permanent access to every Pro tool, including free-download users
+- **Early Supporters Stay Pro**: Users who first acquired the app from January 1, 2025 through October 24, 2026 keep permanent access to every Pro tool, including free-download users
 - **30-Day Trial**: The full Pro trial starts only when the user chooses to begin
 - **18 Free Tools**: Core formatters, encoders, generators, converters, HTTP Client, and Spotlight commands remain free
 - **7 Pro Tools**: AI Chat, AI Translate, Parquet, IP Lookup, Currency, JWT, and Crypto require Lifetime Pro after the 30-day trial
-- **Publishing Prerequisites**: Validate Lifetime Pro and submit it with 3.0, verify the Release freemium flow, and coordinate the Free download price. Eligibility includes all of October 24, with an exclusive cutoff of October 25, 2026 at 00:00 Asia/Shanghai, independent of the storefront transition date
+- **Publishing Prerequisites**: Release freemium is enabled. Validate Lifetime Pro and submit it with 3.0, verify the signed distribution flow, and coordinate the Free download price. Eligibility begins January 1, 2025 at 00:00 and includes all of October 24, 2026, with an exclusive cutoff of October 25 at 00:00 Asia/Shanghai, independent of storefront pricing
 
 ## What's New in v2.15.0
 

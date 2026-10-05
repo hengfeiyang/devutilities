@@ -1,57 +1,57 @@
-# DevUtilities 30 天试用与 Lifetime Pro 产品需求文档（PRD）
+# DevUtilities 30-Day Trial and Lifetime Pro Product Requirements Document
 
-版本：3.0
+Version: 3.0
 
-状态：已确认，进入实现与发布验证
+Status: Approved; implementation and release validation in progress
 
-适用平台：macOS 15+
+Platform: macOS 15+
 
-商业模式：免费下载 + 30 天完整 Pro 试用 + Lifetime Pro 一次性买断
+Business model: Free download + full 30-day Pro trial + one-time Lifetime Pro purchase
 
-## 1. 产品摘要
+## 1. Product Summary
 
-DevUtilities 3.0 从收费下载切换为免费下载。新用户可以永久使用 18 个常用工具，并可主动开始一次 30 天完整 Pro 试用。试用结束后，7 个 Pro 工具必须购买 Lifetime Pro 才能继续使用。已有付费下载用户自动获得永久 Pro 权限，无需重复购买。
+DevUtilities 3.0 moves from paid download to free download. New users can use 18 everyday tools permanently for free and choose to start a single, full 30-day Pro trial. After the trial ends, a Lifetime Pro purchase is required to continue using the seven Pro tools. Existing paid-download customers automatically receive permanent Pro access without purchasing again.
 
-Lifetime Pro 是 StoreKit 2 非消耗型内购，不是自动续费订阅。购买后永久解锁当前 Apple Account 下的全部 Pro 工具，并支持家庭共享和恢复购买。
+Lifetime Pro is a StoreKit 2 non-consumable in-app purchase, not an auto-renewable subscription. It permanently unlocks all Pro tools for the current Apple Account and supports Family Sharing and purchase restoration.
 
-源码与网站由同一个 Git 仓库维护，`website/` 为普通子目录。愿意自行构建的用户可以遵循仓库许可证修改本地授权逻辑；不希望自行构建的用户可通过官方 App Store 版本及 Lifetime Pro 支持开发。此说明不改变官方 3.0 免费下载与一次性买断规则，也不提供外部 AI API 额度。仓库公开状态与网站发布仍需单独执行。
+The app source and website are maintained in a single Git repository, with `website/` as an ordinary subdirectory. Users who build their own copy may customize local entitlement logic under the repository license; users who prefer not to build locally can support development through the official App Store app and Lifetime Pro. This does not change the official 3.0 free-download and one-time purchase policy or include external AI API credits. Repository visibility and website publication remain separate operations.
 
-核心原则：
+Core principles:
 
-- 免费工具足以形成完整、长期可用的开发者工具箱。
-- 需要外部付费服务、较稀缺或专业安全能力的工具归入 Pro。
-- 30 天试用由用户主动开始，不在安装或首次启动时自动倒计时。
-- 试用到期后不再提供每日免费额度。
-- 点击未解锁的 Pro 工具时，不切换当前工具页面，直接显示统一的 Pro 窗口。
-- 2026-10-24 当天及之前首次获取 App 的用户，无论付费还是免费，永久获得 Legacy Pro。
+- Free tools must form a complete developer toolkit that remains useful over time.
+- Tools that require external paid services, provide less commonly available capabilities, or offer specialized security capabilities belong to Pro.
+- Users explicitly start the 30-day trial; it does not start automatically on installation or first launch.
+- No daily free allowance is available after the trial expires.
+- Selecting a locked Pro tool keeps the current tool visible and opens the unified Pro window directly.
+- Users who first acquired the app from January 1, 2025 through October 24, 2026 receive permanent Legacy Pro, whether the download was paid or free.
 
-## 2. 产品目标
+## 2. Product Goals
 
-### 2.1 业务目标
+### 2.1 Business Goals
 
-- 降低首次下载门槛，提高安装和激活量。
-- 用完整的 30 天体验证明 Pro 工具价值。
-- 用清晰的一次性买断路径提高付费转化。
-- 保护历史付费用户，避免重复购买和负面口碑。
+- Reduce the initial download barrier and increase installs and activation.
+- Demonstrate the value of Pro tools through a full 30-day experience.
+- Improve purchase conversion with a clear, one-time purchase path.
+- Protect existing paid customers from duplicate purchases and negative experiences.
 
-### 2.2 用户目标
+### 2.2 User Goals
 
-- 下载后立即使用常用工具。
-- 在需要时自行开始 30 天完整试用。
-- 清楚知道哪些工具属于 Pro、试用何时结束、购买后获得什么。
-- 试用结束后仍可无障碍使用全部免费工具。
+- Use everyday tools immediately after downloading.
+- Start a full 30-day trial when needed.
+- Clearly understand which tools require Pro, when the trial ends, and what a purchase includes.
+- Continue using all free tools without interruption after the trial ends.
 
-### 2.3 非目标
+### 2.3 Non-Goals
 
-- 不做自动续费订阅。
-- 不做按月、按年收费。
-- 不做每日分钟数、每日次数或广告解锁。
-- 不锁定用户已经输入或生成的数据。
-- 不让免费工具显示购买拦截。
+- No auto-renewable subscriptions.
+- No monthly or annual billing.
+- No daily minute limits, daily usage counts, or ad-based unlocking.
+- No locking of data the user has already entered or generated.
+- No purchase gates on free tools.
 
-## 3. 工具权限
+## 3. Tool Access
 
-### 3.1 永久免费工具：18 个
+### 3.1 Permanently Free Tools: 18
 
 1. Timestamp
 2. Unit Converter
@@ -72,7 +72,7 @@ Lifetime Pro 是 StoreKit 2 非消耗型内购，不是自动续费订阅。购�
 17. Struct Converter
 18. Data Converter
 
-### 3.2 Pro 工具：7 个
+### 3.2 Pro Tools: 7
 
 1. AI Chat
 2. AI Translate
@@ -82,120 +82,120 @@ Lifetime Pro 是 StoreKit 2 非消耗型内购，不是自动续费订阅。购�
 6. JWT
 7. Crypto
 
-归类原则：
+Classification principles:
 
-- AI Chat、AI Translate 可能调用外部付费服务。
-- Parquet、IP Lookup、Currency 属于一般工具集合中较稀缺的能力。
-- JWT、Crypto 属于专业、安全相关且相对低频的能力。
+- AI Chat and AI Translate may use external paid services.
+- Parquet, IP Lookup, and Currency provide capabilities less commonly available in general-purpose tool collections.
+- JWT and Crypto provide specialized, security-related capabilities that are used less frequently.
 
-### 3.3 Spotlight 与 Shortcuts
+### 3.3 Spotlight and Shortcuts
 
-现有 App Intents 保持免费，不因用户未购买 Pro 而失败。快捷命令不触发 Pro 窗口。
+Existing App Intents remain free and must not fail because the user has not purchased Pro. Quick commands do not open the Pro window.
 
-## 4. StoreKit 商品
+## 4. StoreKit Product
 
-| 字段 | 内容 |
+| Field | Value |
 |---|---|
-| 类型 | Non-Consumable |
+| Type | Non-Consumable |
 | Product ID | `com.hengfeiyang.devutilities.pro.lifetime` |
-| 展示名称 | Lifetime Pro |
-| 基准价格 | USD 29.99，最终以 App Store 本地价格为准 |
-| 家庭共享 | 开启 |
-| 自动续费 | 无 |
+| Display name | Lifetime Pro |
+| Base price | USD 29.99; the final price is the localized App Store price |
+| Family Sharing | Enabled |
+| Auto-renewal | None |
 
-用户界面统一使用：
+Use the following UI wording consistently:
 
 - `Unlock Pro Forever`
 - `One-time purchase`
 - `Restore Purchase`
 
-禁止使用可能暗示订阅的文案，例如 `Subscribe`、`per month`、`renews automatically`。
+Do not use wording that implies a subscription, such as `Subscribe`, `per month`, or `renews automatically`.
 
-## 5. 试用规则
+## 5. Trial Rules
 
-### 5.1 开始试用
+### 5.1 Starting the Trial
 
-- 新用户初始状态为 `trialNotStarted`。
-- 只有用户点击 `Start 30-Day Trial` 后才记录开始时间。
-- 试用开始时间和结束时间保存在 Keychain，并保留本地容错缓存。
-- 同一设备不能通过普通重装重新获得试用。
+- New users initially have the `trialNotStarted` state.
+- Record the trial start time only after the user selects `Start 30-Day Trial`.
+- Store the trial start and expiration times in Keychain, with a fail-safe local cache.
+- A normal reinstall on the same device must not grant another trial.
 
-### 5.2 试用期间
+### 5.2 During the Trial
 
-- 30 天内所有 7 个 Pro 工具完整可用。
-- 不显示工具级购买拦截。
-- DevUtilities Pro 页面显示剩余天数和准确结束时间。
-- 用户可以在试用期间随时购买 Lifetime Pro。
+- All seven Pro tools are fully available for 30 days.
+- Do not show tool-level purchase gates.
+- The DevUtilities Pro page shows the remaining days and the exact expiration time.
+- Users may purchase Lifetime Pro at any time during the trial.
 
-### 5.3 试用结束
+### 5.3 After the Trial
 
-- 状态立即切换为 `trialExpired`。
-- 18 个免费工具继续正常使用。
-- 7 个 Pro 工具停止授权，不提供额外分钟数或次数。
-- 试用结束不删除任何输入、历史或工具配置。
-- 用户购买或恢复购买成功后立即解锁全部 Pro 工具。
+- Switch the state to `trialExpired` immediately.
+- All 18 free tools remain available.
+- Access to the seven Pro tools ends, with no additional minutes or usage allowance.
+- Trial expiration must not delete any input, history, or tool settings.
+- A successful purchase or restore immediately unlocks all Pro tools.
 
-## 6. 统一 Pro 窗口
+## 6. Unified Pro Window
 
-### 6.1 打开方式
+### 6.1 Entry Points
 
-以下入口显示同一个 `LicenseSettingsView`：
+The following entry points open the same `LicenseSettingsView`:
 
-- 侧边栏顶部 Crown 按钮。
-- 侧边栏底部 Pro 状态卡片，仅未买断的用户显示；已购买及首批赠送的永久 Pro 用户隐藏此区域。
-- 顶部 Crown 按钮对永久 Pro 用户仍保留，可主动查看授权状态。
-- 用户点击当前无权使用的 Pro 工具。
-- 应用收到 `licenseSettingsRequested` 通知。
+- The crown button at the top of the sidebar.
+- The Pro status card at the bottom of the sidebar, shown only to users without permanent Pro access. Hide this area for purchased Pro and Early Supporter users.
+- Keep the top crown button available to permanent Pro users so they can inspect their entitlement status.
+- Selecting a Pro tool the user is not currently entitled to use.
+- Receiving the `licenseSettingsRequested` notification.
 
-### 6.2 导航拦截
+### 6.2 Navigation Interception
 
-用户点击未授权的 Pro 工具时：
+When a user selects a locked Pro tool:
 
-1. 在侧边栏选择提交前检查权限。
-2. 不修改 `selectedTool`。
-3. 保留当前免费工具的页面和状态。
-4. 直接以 Sheet 显示统一 Pro 窗口。
-5. 关闭窗口后仍停留在原工具。
+1. Check entitlement before committing the sidebar selection.
+2. Do not change `selectedTool`.
+3. Preserve the current free tool's page and state.
+4. Present the unified Pro window directly as a sheet.
+5. Keep the user on the original tool after the window is dismissed.
 
-不允许先切换到 Pro 工具后再用空白页、遮罩页或占位页拦截。
+Do not navigate to the Pro tool first and then block it with a blank page, overlay, or placeholder.
 
-如果用户正在 Pro 工具中且试用恰好到期：
+If the trial expires while the user is using a Pro tool:
 
-1. 切换回最近使用的免费工具；找不到时回到 JSON。
-2. 保留 Pro 工具已持久化的数据。
-3. 显示统一 Pro 窗口。
+1. Return to the most recently used free tool, or JSON if none is available.
+2. Preserve the Pro tool's persisted data.
+3. Show the unified Pro window.
 
-### 6.3 未开始试用
+### 6.3 Trial Not Started
 
-统一窗口显示：
+The unified window shows:
 
 - `30-day Pro trial available`
 - `Start 30-Day Trial`
 - `Unlock Pro Forever — {localized price}`
 - `Restore Purchase`
-- 7 个 Pro 工具以三列网格直接平铺名称及图标，不再合并为 AI / Network / Security 等分类
+- The seven Pro tools displayed individually with names and icons in a three-column grid, rather than grouped into categories such as AI, Network, or Security
 
-### 6.4 试用进行中
+### 6.4 Trial Active
 
-统一窗口显示：
+The unified window shows:
 
-- 剩余天数
-- 准确结束时间
-- Lifetime Pro 一次性购买按钮
-- 恢复购买
+- Remaining days
+- Exact expiration time
+- A one-time Lifetime Pro purchase button
+- Restore Purchase
 
-### 6.5 试用已结束
+### 6.5 Trial Expired
 
-统一窗口显示：
+The unified window shows:
 
 - `Pro trial ended`
 - `Your 30-day Pro trial has ended. Unlock Lifetime Pro to continue using Pro tools.`
-- Lifetime Pro 一次性购买按钮
-- 恢复购买
-- 不显示再次开始试用按钮
-- 不显示继续若干分钟、明日恢复或每日额度相关文案
+- A one-time Lifetime Pro purchase button
+- Restore Purchase
+- No button to start another trial
+- No wording about extra minutes, access returning tomorrow, or daily allowances
 
-## 7. 权限状态机
+## 7. Access State Machine
 
 ```text
 loading
@@ -212,47 +212,47 @@ trialNotStarted/trialActive/trialExpired
   -- purchase or restore succeeds --------> purchasedPro
 ```
 
-权限优先级：
+Entitlement priority:
 
 1. Legacy Pro
-2. 已验证的 Lifetime Pro
-3. 进行中的 30 天试用
-4. 未开始试用或试用已结束
+2. Verified Lifetime Pro purchase
+3. Active 30-day trial
+4. Trial not started or trial expired
 
-Pro 工具只有在 `legacyPro`、`purchasedPro` 或 `trialActive` 时可用。
+Pro tools are available only in the `legacyPro`, `purchasedPro`, or `trialActive` state.
 
-## 8. Legacy Pro 与分阶段发布
+## 8. Legacy Pro and Phased Release
 
 ### 8.1 Early Supporter
 
-- 2026-10-24 当天及之前首次获取 App 的用户永久获得 Legacy Pro，包括付费及免费下载用户；页面只显示日期，不显示时区。
-- 使用已验证的 `AppTransaction.originalPurchaseDate` 严格小于 2026-10-25 00:00:00（Asia/Shanghai）判断，包含 24 日全天，不包含 25 日零点；不按首次启动或首次使用计算。对应 UTC 为 2026-10-24 16:00:00。
-- 成功判断后写入 Keychain 和本地容错缓存。
-- App Store 暂时不可用时，已有成功缓存不得失效。
+- Users who first acquired the app from January 1, 2025 through October 24, 2026 receive permanent Legacy Pro, including paid and free downloads. User-facing copy displays dates without a timezone label.
+- Eligibility requires a verified `AppTransaction.originalPurchaseDate` at or after January 1, 2025 at 00:00:00 and strictly before October 25, 2026 at 00:00:00 in Asia/Shanghai. This includes all of October 24 and excludes midnight on October 25. It is not based on first launch or first use. The equivalent UTC interval is [December 31, 2024 at 16:00:00, October 24, 2026 at 16:00:00). The lower bound excludes Sandbox's fixed 2013 acquisition date.
+- Cache a successful eligibility decision in Keychain and the fail-safe local cache.
+- Revalidate old boolean-only grants when the App Store returns a verified transaction. Replace stale decisions, including old Sandbox grants. New grants persist the verified original acquisition date and provide immediate offline access under the current date policy. Missing or unverified responses must not revoke a previously granted entitlement.
 
-### 8.2 发布阶段
+### 8.2 Release Phases
 
-首批用户赠送包含 2026-10-24 全天，截止时间已配置为 2026-10-25 00:00（北京时间），独立于免费下载价格切换日期，不再追加宽限。免费切换到该截止点之前新增的免费用户也永久获得 Pro。当前 Release 保护开关仍保留；App Store 价格修改和网站发布尚未执行。
+The Early Supporter grant starts January 1, 2025 and includes all of October 24, 2026. The cutoff is October 25, 2026 at 00:00 in Asia/Shanghai, independent of storefront pricing, with no additional grace period. Paid and free acquisitions within this interval receive permanent Pro. Release freemium is enabled by the owner's launch instruction; `--paid-transition` is Debug-only. Actual distribution testing, the App Store price change, and version release remain external steps.
 
-1. 验证历史付费用户以及截止点前免费用户的 AppTransaction 永久授权。
-2. 完成 Lifetime Pro 配置、Sandbox 测试和上线时间安排。
-3. 验证后开启 Release freemium，Archive、上传并执行 TestFlight 回归。
-4. Lifetime Pro 和 3.0 一起提交审核；保留人工发布控制，协调 App Store 免费价格与版本上线。
-5. 验证截止点前后的新用户、已有首批用户、购买、共享和恢复购买路径。
+1. Verify permanent AppTransaction-based entitlements for existing paid customers and free-download users who acquired the app before the cutoff.
+2. Complete Lifetime Pro configuration, Sandbox testing, and release scheduling.
+3. Validate enabled Release freemium, archive, upload, and run TestFlight regression tests.
+4. Submit Lifetime Pro together with version 3.0 for review. Keep manual release control and coordinate the free App Store price with the version's release.
+5. Verify new users on both sides of the cutoff, existing Early Supporters, purchases, Family Sharing, and restoration.
 
-## 9. 技术实现
+## 9. Technical Implementation
 
-### 9.1 核心文件
+### 9.1 Core Files
 
-- `Models/AccessState.swift`：权限状态和 Pro 工具映射。
-- `Services/EntitlementManager.swift`：StoreKit 2、Legacy Pro、试用和本地状态。
-- `Views/MonetizationViews.swift`：统一 Pro 窗口、购买和恢复购买 UI。
-- `ContentView.swift`：侧边栏导航拦截和 Sheet 展示。
-- `Configuration.storekit`：本地 StoreKit 测试商品。
+- `Models/AccessState.swift`: Access states and Pro tool mapping.
+- `Services/EntitlementManager.swift`: StoreKit 2, Legacy Pro, trial handling, and local state.
+- `Views/MonetizationViews.swift`: Unified Pro window, purchase UI, and restore UI.
+- `ContentView.swift`: Sidebar navigation interception and sheet presentation.
+- `Configuration.storekit`: Product configuration for local StoreKit testing.
 
-### 9.2 本地状态
+### 9.2 Local State
 
-Keychain 状态包含：
+Keychain state includes:
 
 - `trialStartedAt`
 - `trialExpiresAt`
@@ -260,108 +260,110 @@ Keychain 状态包含：
 - `legacyProVerified`
 - `lifetimeProVerified`
 
-旧版本遗留的每日额度字段读取时忽略，不再参与任何权限判断。
+Ignore legacy daily-allowance fields when reading stored data. They no longer participate in entitlement decisions.
 
-### 9.3 时间处理
+### 9.3 Time Handling
 
-- 使用最近可信本地时间降低简单回拨系统时间绕过试用的风险。
-- 应用重新激活、系统时钟变化或自然日变化时刷新试用状态。
-- 试用运行中安排到期任务，到点切换为 `trialExpired`。
+- Use the latest trusted local time to reduce the risk of bypassing the trial by simply rolling back the system clock.
+- Refresh trial status when the app becomes active, the system clock changes, or the calendar day changes.
+- Schedule an expiration task during an active trial and switch to `trialExpired` when the expiration time is reached.
 
-### 9.4 Debug 预览
+### 9.4 Debug Previews
 
-Debug 构建支持：
+Debug builds support:
 
 - `--preview-trial-not-started`
 - `--preview-trial-active`
 - `--preview-trial-expired`
 
-预览参数不修改真实 Keychain、StoreKit 权益或试用日期，并且不能进入 Release 二进制。
+Preview arguments must not modify actual Keychain records, StoreKit entitlements, or trial dates, and must not be included in Release binaries.
 
-## 10. 购买与恢复
+## 10. Purchase and Restore
 
-- 使用 `Product.products(for:)` 加载本地化价格。
-- 使用 StoreKit 2 `purchase()` 完成购买。
-- 只接受已验证交易。
-- pending 状态不提前授权。
-- 取消购买保持原状态。
-- 使用 `AppStore.sync()` 恢复购买。
-- 收到 `Transaction.updates` 后刷新权益。
-- 退款或撤销后取消 `purchasedPro`，再回落到有效试用或 `trialExpired`。
+- Load localized prices with `Product.products(for:)`.
+- Complete purchases with StoreKit 2 `purchase()`.
+- Accept only verified transactions.
+- Do not grant access while a purchase is pending.
+- Preserve the existing access state when a purchase is canceled.
+- Restore purchases with `AppStore.sync()`.
+- Refresh entitlements when receiving `Transaction.updates`.
+- After a refund or revocation, remove `purchasedPro` and fall back to a valid trial or `trialExpired`.
 
-## 11. 埋点与隐私
+## 11. Analytics and Privacy
 
-允许记录：
+Allowed events:
 
-- 试用入口展示、开始和结束。
-- 试用结束后的统一 Pro 窗口展示。
-- 购买开始、成功、失败、取消、pending。
-- 恢复购买开始、成功、失败、未找到购买。
+- Trial entry shown, trial started, and trial ended.
+- Unified Pro window shown after trial expiration.
+- Purchase started, succeeded, failed, canceled, or pending.
+- Restore started, succeeded, failed, or no purchase found.
 
-禁止记录：
+Do not collect:
 
-- 用户输入、输出或剪贴板内容。
-- 文件名、文件路径和文件内容。
-- API Key、请求体、JWT、密钥或模型对话。
-- 可识别个人身份的数据。
+- User input, output, or clipboard contents.
+- File names, file paths, or file contents.
+- API keys, request bodies, JWTs, cryptographic keys, or model conversations.
+- Personally identifiable information.
 
-## 12. 验收标准
+## 12. Acceptance Criteria
 
-### 12.1 免费工具
+### 12.1 Free Tools
 
-- 18 个免费工具始终可打开。
-- 免费工具不显示 Pro 窗口。
-- 试用到期不影响免费工具数据和功能。
+- All 18 free tools can always be opened.
+- Free tools do not show the Pro window.
+- Trial expiration does not affect free tools' data or functionality.
 
-### 12.2 试用
+### 12.2 Trial
 
-- 试用不会自动开始。
-- 点击开始后立即解锁全部 Pro 工具。
-- 剩余时间跨重启保持一致。
-- 到期后状态变为 `trialExpired`。
-- 不能再次开始试用。
+- The trial does not start automatically.
+- Starting the trial immediately unlocks all Pro tools.
+- Remaining time is consistent across app restarts.
+- The state changes to `trialExpired` at expiration.
+- The trial cannot be started again.
 
-### 12.3 Pro 导航拦截
+### 12.3 Pro Navigation Interception
 
-- 未开始试用或试用已结束时，点击任意 Pro 工具不会改变当前选中的工具。
-- 统一 Pro 窗口立即出现。
-- 不出现空白详情页、工具级提示卡或覆盖层。
-- 关闭窗口后仍停留在原免费工具。
-- Pro 工具中途到期时自动回到最近使用的免费工具并显示统一 Pro 窗口。
+- Before the trial starts or after it expires, selecting any Pro tool does not change the currently selected tool.
+- The unified Pro window appears immediately.
+- No blank detail page, tool-level prompt card, or overlay appears.
+- Dismissing the window leaves the user on the original free tool.
+- If the trial expires while a Pro tool is open, the app returns to the most recently used free tool and shows the unified Pro window.
 
-### 12.4 购买
+### 12.4 Purchase
 
-- 显示 App Store 本地化价格。
-- 购买成功后全部 Pro 工具立即可用。
-- 重启后购买状态保持。
-- 恢复购买可恢复全部 Pro 工具。
-- 所有购买文案明确为一次性永久解锁。
+- Display the localized App Store price.
+- A successful purchase immediately makes all Pro tools available.
+- Purchase status persists across restarts.
+- Restoring a purchase restores access to all Pro tools.
+- All purchase copy clearly describes a one-time, permanent unlock.
 
 ### 12.5 Legacy Pro
 
-- 历史付费用户不看到购买拦截。
-- App Store 暂时不可用时，已缓存的 Legacy Pro 仍有效。
-- 截止点之前首次获取的免费用户按策略获得永久 Legacy Pro；截止点及之后获取的新用户不得自动获得 Legacy Pro。
+- Existing paid customers do not encounter purchase gates.
+- Cached Legacy Pro remains valid during temporary App Store outages.
+- Paid and free-download users who first acquired the app within the eligible interval receive permanent Legacy Pro. Dates before January 1, 2025 or at/after the cutoff must not automatically receive Legacy Pro. Sandbox users can therefore test the normal trial and purchase flow without a review-only override.
 
-## 13. 测试矩阵
+## 13. Test Matrix
 
-| 场景 | 预期结果 |
+| Scenario | Expected result |
 |---|---|
-| 新用户首次启动 | 18 个免费工具可用，Pro 工具有标记 |
-| 未开始试用点击 Pro | 当前工具不变，统一窗口显示试用和购买 |
-| 点击开始试用 | 全部 Pro 工具立即可用 |
-| 试用中重启 | 剩余时间保持 |
-| 试用到期时停留在免费工具 | 免费工具继续使用 |
-| 试用到期时停留在 Pro 工具 | 回到最近免费工具并显示统一窗口 |
-| 试用到期后点击 Pro | 当前工具不变，统一窗口显示购买 |
-| 购买成功 | 全部 Pro 工具永久解锁 |
-| 购买 pending | 不提前授权，窗口显示等待状态 |
-| 用户取消购买 | 保持原权限状态 |
-| 恢复购买成功 | 全部 Pro 工具立即解锁 |
-| 无历史购买时恢复 | 显示明确错误，不授权 |
-| Legacy Pro 用户 | 全部 Pro 工具永久可用 |
-| Release 构建携带预览参数 | 参数无效且二进制不包含预览字符串 |
+| New user's first launch | All 18 free tools are available; Pro tools are marked |
+| Select Pro before starting the trial | Current tool stays selected; the unified window offers trial and purchase |
+| Start the trial | All Pro tools become available immediately |
+| Restart during the trial | Remaining time is preserved |
+| Trial expires while a free tool is open | The free tool remains usable |
+| Trial expires while a Pro tool is open | Return to the most recently used free tool and show the unified window |
+| Select Pro after trial expiration | Current tool stays selected; the unified window offers purchase |
+| Successful purchase | All Pro tools are permanently unlocked |
+| Purchase pending | No access is granted early; the window shows the waiting state |
+| User cancels purchase | Existing entitlement state is preserved |
+| Successful restore | All Pro tools are unlocked immediately |
+| Restore with no previous purchase | Show a clear error; do not grant access |
+| Legacy Pro user | All Pro tools remain permanently available |
+| Acquisition before January 1, 2025, including Sandbox's 2013 date | No Early Supporter grant; regular trial and purchase options |
+| Verified ineligible date with an old Legacy Pro cache | Clear the stale grant; preserve genuine IAP access or trial state |
+| Release build launched with preview arguments | Arguments have no effect, and preview strings are absent from the binary |
 
-## 14. 最终产品承诺
+## 14. Final Product Promise
 
-> DevUtilities 可以免费下载。18 个常用工具永久免费；7 个高级工具可完整试用 30 天。试用结束后，可通过一次性购买 Lifetime Pro 永久解锁，不自动续费。所有早期付费用户永久保留 Pro 权益。
+> DevUtilities is free to download. Eighteen everyday tools are permanently free, and seven advanced tools can be tried in full for 30 days. After the trial, a one-time Lifetime Pro purchase unlocks them permanently, with no automatic renewal. All early paid customers keep permanent Pro access.

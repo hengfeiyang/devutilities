@@ -11,18 +11,27 @@ import Security
 import StoreKit
 import SwiftUI
 
-private struct LocalMonetizationState: Codable {
+struct LocalMonetizationState: Codable {
     var trialStartedAt: Date?
     var trialExpiresAt: Date?
     var lastTrustedLocalDate: Date?
     var legacyProVerified: Bool?
+    var legacyOriginalPurchaseDate: Date?
     var lifetimeProVerified: Bool?
+
+    var hasEligibleCachedLegacyPro: Bool {
+        guard legacyProVerified == true, let legacyOriginalPurchaseDate else { return false }
+        return MonetizationConfiguration.qualifiesForEarlySupporter(
+            originalPurchaseDate: legacyOriginalPurchaseDate
+        )
+    }
 
     static let initial = LocalMonetizationState(
         trialStartedAt: nil,
         trialExpiresAt: nil,
         lastTrustedLocalDate: nil,
         legacyProVerified: nil,
+        legacyOriginalPurchaseDate: nil,
         lifetimeProVerified: nil
     )
 }
@@ -292,14 +301,7 @@ final class EntitlementManager: ObservableObject {
     }
 
     func canUseTool(_ tool: ToolType) -> Bool {
-        guard tool.productAccess == .pro else { return true }
-
-        switch accessState {
-        case .legacyPro, .purchasedPro, .trialActive:
-            return true
-        case .loading, .trialNotStarted, .trialExpired:
-            return false
-        }
+        accessState.canUseTool(tool)
     }
 
     func gateReason(for tool: ToolType) -> ProGateReason? {
@@ -402,35 +404,42 @@ final class EntitlementManager: ObservableObject {
     }
 
     private func hasLegacyProEntitlement() async -> Bool {
-        if localState.legacyProVerified == true {
+        // A cached date already verified against the current policy remains
+        // usable offline without waiting for another App Store response.
+        if localState.hasEligibleCachedLegacyPro {
             return true
         }
 
-        // Migrate the earlier UserDefaults cache into the Keychain-backed
-        // state so reinstalling the app does not discard a verified decision.
-        if defaults.bool(forKey: "DevUtilities_LegacyProVerified") {
-            localState.legacyProVerified = true
-            saveLocalState()
-            return true
-        }
-
+        // Older boolean-only caches may include Sandbox's fixed 2013 date.
+        // Revalidate those once when a verified transaction is available.
         do {
             let result = try await AppTransaction.shared
-            guard case .verified(let appTransaction) = result else { return false }
+            guard case .verified(let appTransaction) = result else {
+                return cachedLegacyProEntitlement()
+            }
             let isLegacyPro = MonetizationConfiguration.qualifiesForEarlySupporter(
                 originalPurchaseDate: appTransaction.originalPurchaseDate
             )
-            if isLegacyPro {
-                localState.legacyProVerified = true
-                defaults.set(true, forKey: "DevUtilities_LegacyProVerified")
-                saveLocalState()
-            }
+            localState.legacyProVerified = isLegacyPro
+            localState.legacyOriginalPurchaseDate = appTransaction.originalPurchaseDate
+            defaults.set(isLegacyPro, forKey: "DevUtilities_LegacyProVerified")
+            saveLocalState()
             return isLegacyPro
         } catch {
-            // A previous successful legacy decision is cached so an App Store
-            // outage never locks a paid downloader out.
-            return defaults.bool(forKey: "DevUtilities_LegacyProVerified")
+            return cachedLegacyProEntitlement()
         }
+    }
+
+    private func cachedLegacyProEntitlement() -> Bool {
+        // Missing or unverified responses are not evidence to revoke an
+        // existing grant. Only a verified ineligible date clears the cache.
+        let cachedGrant = localState.legacyProVerified == true
+            || defaults.bool(forKey: "DevUtilities_LegacyProVerified")
+        if cachedGrant, localState.legacyProVerified != true {
+            localState.legacyProVerified = true
+            saveLocalState()
+        }
+        return cachedGrant
     }
 
     private func updateLocalAccessState() {

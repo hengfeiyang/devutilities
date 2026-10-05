@@ -151,7 +151,7 @@ struct LicenseSettingsView: View {
     private var statusDescription: String {
         switch entitlementManager.accessState {
         case .legacyPro:
-            return "You joined DevUtilities on or before October 24, 2026. Every Pro tool is permanently unlocked."
+            return "You joined DevUtilities between January 1, 2025 and October 24, 2026. Every Pro tool is permanently unlocked."
         case .purchasedPro:
             return "Every Pro tool is permanently unlocked on this Apple Account."
         case .trialNotStarted:

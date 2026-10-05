@@ -3,13 +3,13 @@
 This file provides guidance to Codex when working with this repository.
 
 ## Project Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities. Version 3.0 introduces free download with 18 free tools, 7 Lifetime Pro tools, a user-started 30-day trial, and permanent Pro for all verified original acquisitions on or before October 24, 2026, whether paid or free. It also unifies AI integrations behind OpenAI Compatible and Anthropic Messages. The free-download Release flag remains guarded until release readiness is confirmed; the Early Supporter cutoff is independent of storefront pricing.
+DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities. Version 3.0 introduces free download with 18 free tools, 7 Lifetime Pro tools, a user-started 30-day trial, and permanent Pro for verified original acquisitions from January 1, 2025 through October 24, 2026, whether paid or free. It also unifies AI integrations behind OpenAI Compatible and Anthropic Messages. Free-download mode is enabled in Release by the owner's launch instruction; actual StoreKit distribution validation and App Store submission remain separate release gates. Early Supporter dates are independent of storefront pricing.
 
 ## Repository maintenance
 
 - App source and `website/` are managed by this single repository. `website/` is a normal tracked directory, not a submodule or independent Git repository.
 - Commit and push from the repository root. Do not recreate `.gitmodules`, a `website/.git` file, or a separate website remote.
-- Self-built copies may customize local Pro access under `LICENSE`. Official App Store purchase rules remain unchanged; do not disable the official release guard as part of documentation or repository maintenance.
+- Self-built copies may customize local Pro access under `LICENSE`. Official App Store purchase rules remain unchanged; do not change official access rules as part of documentation or repository maintenance.
 - GitHub repository visibility and Pages deployment are external release operations. A local directory conversion does not make private source public or migrate the live website.
 - GitHub Pages is configured in root `.github/workflows/pages.yml` for `hengfeiyang/DevUtilities`, preserving `https://hengfeiyang.github.io/devutilities/`. Publish only `website/`, never the repository root. The owner will push to the target repository; change its Pages source to GitHub Actions and validate deployment before marking live cutover complete. Repository visibility is a separate decision.
 
@@ -71,9 +71,9 @@ mcp__XcodeBuildMCP__build_run_macos
 - **TTS Safety and Tests**: No microphone capture or chat context; Auto falls back to macOS only before any OpenAI audio is queued. Tests cover settings, schema, PCM framing, handshake, failures, timeout, cancellation, and stale playback callbacks. Real API pronunciation/verbatim fidelity remains a release validation gate
 - **Migration**: Providers without a stored protocol default to OpenAI Compatible; legacy `useResponsesAPI` models migrate to `chatEndpoint = responses`
 - **Capabilities**: Image input, image generation, and web search are tracked independently and enforced before OpenAI Responses tools run
-- **Free-Download Release**: v3.0 changes the product model to free download with 7 paid Pro tools; validate the IAP and final Release flow before enabling the Release freemium flag and submitting the IAP with 3.0
+- **Free-Download Release**: v3.0 free-download mode is enabled in Release; `--paid-transition` is Debug-only. Validate actual purchase, restore, Family Sharing, and the final signed distribution build before submitting the IAP with 3.0
 - **Lifetime Pro**: One-time StoreKit 2 non-consumable purchase (`com.hengfeiyang.devutilities.pro.lifetime`) with purchase, restore, verification, and transaction-update handling
-- **Early Supporters**: All verified `AppTransaction.originalPurchaseDate` values strictly before 2026-10-25 00:00 Asia/Shanghai (2026-10-24 16:00 UTC) receive permanent Legacy Pro, including all of October 24 and free downloads; successful grants remain cached. User-facing copy shows only the inclusive date, without a timezone label
+- **Early Supporters**: Verified `AppTransaction.originalPurchaseDate` values in [2025-01-01 00:00, 2026-10-25 00:00) Asia/Shanghai receive permanent Legacy Pro, including all of October 24 and free downloads. This excludes Sandbox's fixed 2013 date. Online verification rechecks old boolean-only caches; new grants cache their verified acquisition date for immediate offline access. Missing/unverified responses do not revoke existing grants. User-facing copy shows dates without timezone labels
 - **30-Day Trial**: User-started full Pro trial, persisted in Keychain with a fail-safe local cache
 - **Free / Pro Split**: 18 free tools; AI Chat, AI Translate, Parquet, IP Lookup, Currency, JWT, and Crypto are Pro
 - **Trial Expiration**: After the 30-day trial, Pro tools require Lifetime Pro; selecting a locked tool keeps the current free tool visible and opens the unified purchase window

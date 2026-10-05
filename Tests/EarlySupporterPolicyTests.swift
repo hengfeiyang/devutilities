@@ -5,6 +5,15 @@ struct EarlySupporterPolicyTests {
     static func main() {
         let cutoff = ISO8601DateFormatter().date(from: "2026-10-25T00:00:00+08:00")!
         precondition(MonetizationConfiguration.legacyCutoffDate == cutoff)
+        let start = ISO8601DateFormatter().date(from: "2025-01-01T00:00:00+08:00")!
+        precondition(MonetizationConfiguration.legacyStartDate == start)
+        precondition(!MonetizationConfiguration.qualifiesForEarlySupporter(
+            originalPurchaseDate: start.addingTimeInterval(-1)))
+        precondition(MonetizationConfiguration.qualifiesForEarlySupporter(originalPurchaseDate: start))
+        precondition(MonetizationConfiguration.qualifiesForEarlySupporter(
+            originalPurchaseDate: start.addingTimeInterval(1)))
+        precondition(!MonetizationConfiguration.qualifiesForEarlySupporter(
+            originalPurchaseDate: Date(timeIntervalSince1970: 1_375_340_400)))
         // Include the entire last eligible day, not just dates before it.
         for timestamp in [
             "2026-10-24T00:00:00+08:00",
@@ -34,9 +43,17 @@ struct EarlySupporterPolicyTests {
         precondition(!AccessState.trialNotStarted.hasPermanentProAccess)
         precondition(!AccessState.trialActive(expiresAt: cutoff).hasPermanentProAccess)
         precondition(!AccessState.trialExpired.hasPermanentProAccess)
+        for state in [AccessState.loading, .trialNotStarted, .trialExpired] {
+            for tool in ToolType.allCases {
+                precondition(state.canUseTool(tool) == (tool.productAccess == .free))
+            }
+        }
+        for state in [AccessState.legacyPro, .purchasedPro, .trialActive(expiresAt: cutoff)] {
+            precondition(ToolType.allCases.allSatisfy { state.canUseTool($0) })
+        }
         #if !DEBUG
-        precondition(!MonetizationConfiguration.isFreemiumEnabled)
+        precondition(MonetizationConfiguration.isFreemiumEnabled)
         #endif
-        print("Early Supporter policy tests passed (UTC+8 cutoff, exclusive boundary, free/Pro split, Release guard)")
+        print("Early Supporter policy tests passed (inclusive 2025 start, exclusive 2026 cutoff, Sandbox exclusion, free/Pro split, Release freemium)")
     }
 }

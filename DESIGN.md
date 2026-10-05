@@ -1,7 +1,7 @@
 # DevUtilities - Design Document
 
 ## Overview
-DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities in a single, easy-to-use interface. Version 3.0 introduces free download with 18 free tools, a user-started 30-day trial of 7 Pro tools, and a one-time Lifetime Pro purchase after trial expiry. All users with a verified original acquisition on or before October 24, 2026, including free downloads, receive permanent Pro. AI Chat and AI Translate share OpenAI Compatible and Anthropic Messages routing. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
+DevUtilities is a native macOS application built with SwiftUI that provides 25 essential developer utilities in a single, easy-to-use interface. Version 3.0 introduces free download with 18 free tools, a user-started 30-day trial of 7 Pro tools, and a one-time Lifetime Pro purchase after trial expiry. Users with a verified original acquisition from January 1, 2025 through October 24, 2026, including free downloads, receive permanent Pro. AI Chat and AI Translate share OpenAI Compatible and Anthropic Messages routing. The app follows Apple's Human Interface Guidelines and provides a consistent, professional experience across all tools.
 
 ## Repository and distribution
 
@@ -115,7 +115,7 @@ Tool labels use concise, object-oriented names in the sidebar. Recognizable form
 - **Trial expiry**: After the 30-day trial, all 7 Pro tools require permanent Pro access. There is no daily allowance.
 - **Unified Pro window**: Selecting a locked Pro tool leaves the current tool and sidebar selection unchanged and opens DevUtilities Pro. The window provides trial activation, purchase, and restore according to the current entitlement state.
 - **Purchase**: StoreKit 2 verifies the non-consumable product, listens for transaction updates, supports restore, and finishes verified transactions.
-- **Early Supporter policy**: Verified original acquisitions strictly before 2026-10-25 00:00 Asia/Shanghai (2026-10-24 16:00 UTC) receive permanent Legacy Pro regardless of price, including all of October 24. User-facing copy shows the inclusive date without a timezone label. The fixed cutoff is independent of the storefront transition; cached verified grants survive outages and the cutoff passing. Release remains guarded pending launch validation.
+- **Early Supporter policy**: Verified original acquisitions in [2025-01-01 00:00, 2026-10-25 00:00) Asia/Shanghai receive permanent Legacy Pro regardless of price, including all of October 24. The lower bound excludes Sandbox's fixed 2013 date. Online verification replaces stale boolean-only cache decisions; new grants persist their verified acquisition date and provide immediate offline access. Missing/unverified responses preserve existing grants. User-facing dates have no timezone label. The fixed interval is independent of storefront pricing. Release freemium is enabled; signed distribution and actual StoreKit acceptance remain required.
 - **Privacy**: Conversion analytics record only product-flow action and tool identifier. They do not include user text, file names, request bodies, secrets, keys, or document contents.
 
 ### Tool Integration Pattern
